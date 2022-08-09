@@ -1,0 +1,24 @@
+{
+  "name": "example",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "run-p type-check build-only",
+    "preview": "vite preview --port 4173",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --noEmit",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "@halo-dev/richtext-editor": "workspace:*",
+    "rehype-format": "^4.0.1",
+    "rehype-parse": "^8.0.4",
+    "rehype-stringify": "^9.0.3",
+    "unified": "^10.1.2"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.8",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8"
+  }
+}

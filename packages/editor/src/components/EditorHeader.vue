@@ -1,0 +1,157 @@
+<script lang="ts" setup>
+import type { Component, PropType } from "vue";
+import { Editor } from "@tiptap/vue-3";
+import { Menu as VMenu } from "floating-vue";
+import MdiFormatBold from "~icons/mdi/format-bold";
+import MdiFormatItalic from "~icons/mdi/format-italic";
+import MdiFormatStrikethrough from "~icons/mdi/format-strikethrough";
+import MdiFormatHeaderPound from "~icons/mdi/format-header-pound";
+import MdiFormatHeader1 from "~icons/mdi/format-header-1";
+import MdiFormatHeader2 from "~icons/mdi/format-header-2";
+import MdiFormatHeader3 from "~icons/mdi/format-header-3";
+import MdiFormatHeader4 from "~icons/mdi/format-header-4";
+import MdiFormatHeader5 from "~icons/mdi/format-header-5";
+import MdiFormatHeader6 from "~icons/mdi/format-header-6";
+
+const props = defineProps({
+  editor: {
+    type: Object as PropType<Editor>,
+    required: true,
+  },
+});
+
+interface MenuItem {
+  type: "button" | "separator";
+  icon?: Component;
+  title?: string;
+  action?: () => void;
+  isActive?: () => boolean;
+  children?: MenuItem[];
+}
+
+const menuItems: MenuItem[] = [
+  {
+    type: "button",
+    icon: MdiFormatBold,
+    title: "Bold",
+    action: () => props.editor.chain().focus().toggleBold().run(),
+    isActive: () => props.editor.isActive("bold"),
+  },
+  {
+    type: "button",
+    icon: MdiFormatItalic,
+    title: "Italic",
+    action: () => props.editor.chain().focus().toggleItalic().run(),
+    isActive: () => props.editor.isActive("italic"),
+  },
+  {
+    type: "button",
+    icon: MdiFormatStrikethrough,
+    title: "Strike",
+    action: () => props.editor.chain().focus().toggleStrike().run(),
+    isActive: () => props.editor.isActive("strike"),
+  },
+  {
+    type: "button",
+    icon: MdiFormatHeaderPound,
+    title: "标题",
+    isActive: () => props.editor.isActive("heading"),
+    children: [
+      {
+        type: "button",
+        icon: MdiFormatHeader1,
+        title: "标题 1",
+        action: () =>
+          props.editor.chain().focus().toggleHeading({ level: 1 }).run(),
+        isActive: () => props.editor.isActive("heading", { level: 1 }),
+      },
+      {
+        type: "button",
+        icon: MdiFormatHeader2,
+        title: "标题 2",
+        action: () =>
+          props.editor.chain().focus().toggleHeading({ level: 2 }).run(),
+        isActive: () => props.editor.isActive("heading", { level: 1 }),
+      },
+      {
+        type: "button",
+        icon: MdiFormatHeader3,
+        title: "标题 3",
+        action: () =>
+          props.editor.chain().focus().toggleHeading({ level: 3 }).run(),
+        isActive: () => props.editor.isActive("heading", { level: 1 }),
+      },
+      {
+        type: "button",
+        icon: MdiFormatHeader4,
+        title: "标题 4",
+        action: () =>
+          props.editor.chain().focus().toggleHeading({ level: 4 }).run(),
+        isActive: () => props.editor.isActive("heading", { level: 1 }),
+      },
+      {
+        type: "button",
+        icon: MdiFormatHeader5,
+        title: "标题 5",
+        action: () =>
+          props.editor.chain().focus().toggleHeading({ level: 5 }).run(),
+        isActive: () => props.editor.isActive("heading", { level: 1 }),
+      },
+      {
+        type: "button",
+        icon: MdiFormatHeader6,
+        title: "标题 6",
+        action: () =>
+          props.editor.chain().focus().toggleHeading({ level: 6 }).run(),
+        isActive: () => props.editor.isActive("heading", { level: 1 }),
+      },
+    ],
+  },
+];
+</script>
+<template>
+  <div class="editor-header flex items-center py-1 space-x-0.5">
+    <div
+      v-for="(menuItem, index) in menuItems"
+      :key="index"
+      class="inline-flex items-center justify-center"
+    >
+      <button
+        v-if="!menuItem.children?.length"
+        :class="{ 'bg-gray-200': menuItem.isActive() }"
+        class="hover:bg-gray-100 p-1 rounded-sm"
+        @click="menuItem.action"
+      >
+        <component :is="menuItem.icon" />
+      </button>
+      <VMenu v-else>
+        <button
+          :class="{ 'bg-gray-200': menuItem.isActive() }"
+          class="hover:bg-gray-100 p-1 rounded-sm"
+        >
+          <component :is="menuItem.icon" />
+        </button>
+        <template #popper>
+          <div class="w-24 flex flex-col">
+            <div
+              v-for="(child, childIndex) in menuItem.children"
+              :key="childIndex"
+              :class="{ 'bg-gray-200': child.isActive() }"
+              class="p-1 hover:bg-gray-100"
+            >
+              <button
+                class="flex flex-row gap-2 items-center justify-center"
+                @click="child.action"
+              >
+                <component :is="child.icon" />
+                <span class="text-sm">
+                  {{ child.title }}
+                </span>
+              </button>
+            </div>
+          </div>
+        </template>
+      </VMenu>
+    </div>
+  </div>
+</template>

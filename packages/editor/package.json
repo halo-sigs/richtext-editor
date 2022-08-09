@@ -1,0 +1,56 @@
+{
+  "name": "@halo-dev/richtext-editor",
+  "version": "1.0.0",
+  "description": "",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/rich-text-editor.iife.js",
+  "module": "./dist/rich-text-editor.es.js",
+  "unpkg": "./dist/rich-text-editor.iife.js",
+  "jsdelivr": "./dist/rich-text-editor.iife.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vite build",
+    "test:unit": "vitest --environment jsdom --run",
+    "test:unit:watch": "vitest --environment jsdom --watch",
+    "test:unit:ui": "vitest --environment jsdom --watch --ui",
+    "test:unit:coverage": "vitest run --environment jsdom --coverage",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
+    "lint": "eslint ./src --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts",
+    "prettier": "prettier --write './src/**/*.{vue,js,jsx,ts,tsx,css,scss,json,yml,yaml,html}'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "vue": "^3.2.37"
+  },
+  "devDependencies": {
+    "@iconify/json": "^2.1.88",
+    "@vue/compiler-sfc": "^3.2.37",
+    "autoprefixer": "^10.4.8",
+    "postcss": "^8.4.16",
+    "tailwindcss": "^3.1.8",
+    "unplugin-icons": "^0.14.8",
+    "vite-plugin-dts": "^1.4.1"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/rich-text-editor.es.js"
+    },
+    "./dist/style.css": "./dist/style.css"
+  },
+  "dependencies": {
+    "@tiptap/core": "2.0.0-beta.182",
+    "@tiptap/extension-image": "2.0.0-beta.30",
+    "@tiptap/starter-kit": "2.0.0-beta.191",
+    "@tiptap/suggestion": "2.0.0-beta.97",
+    "@tiptap/vue-3": "2.0.0-beta.96",
+    "floating-vue": "2.0.0-beta.19",
+    "github-markdown-css": "^5.1.0",
+    "tippy.js": "^6.3.7"
+  }
+}
