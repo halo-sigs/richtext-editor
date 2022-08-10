@@ -1,3 +1,72 @@
+<script lang="ts" setup>
+import { PropType, ref, watch } from "vue";
+import type { Item } from "./suggestion";
+
+const props = defineProps({
+  items: {
+    type: Array as PropType<Item[]>,
+    required: true,
+  },
+
+  command: {
+    type: Function as PropType<(item: Item) => void>,
+    required: true,
+  },
+});
+
+const selectedIndex = ref(0);
+
+watch(
+  () => props.items,
+  () => {
+    selectedIndex.value = 0;
+  }
+);
+
+function onKeyDown({ event }: { event: KeyboardEvent }) {
+  if (event.key === "ArrowUp" || (event.key === "k" && event.ctrlKey)) {
+    handleKeyUp();
+    return true;
+  }
+
+  if (event.key === "ArrowDown" || (event.key === "j" && event.ctrlKey)) {
+    handleKeyDown();
+    return true;
+  }
+
+  if (event.key === "Enter") {
+    handleKeyEnter();
+    return true;
+  }
+
+  return false;
+}
+
+function handleKeyUp() {
+  selectedIndex.value =
+    (selectedIndex.value + props.items.length - 1) % props.items.length;
+}
+
+function handleKeyDown() {
+  selectedIndex.value = (selectedIndex.value + 1) % props.items.length;
+}
+
+function handleKeyEnter() {
+  handleSelectItem(selectedIndex.value);
+}
+
+function handleSelectItem(index: number) {
+  const item = props.items[index];
+
+  if (item) {
+    props.command(item);
+  }
+}
+
+defineExpose({
+  onKeyDown,
+});
+</script>
 <template>
   <div class="items">
     <template v-if="items.length">
@@ -6,7 +75,7 @@
         :key="index"
         :class="{ 'is-selected': index === selectedIndex }"
         class="item flex flex-row gap-5 items-center w-32 rounded"
-        @click="selectItem(index)"
+        @click="handleSelectItem(index)"
       >
         <component :is="item.icon" class="bg-gray-100 p-0.5 rounded-sm" />
         {{ item.title }}
@@ -15,77 +84,6 @@
     <div v-else class="item">No result</div>
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    items: {
-      type: Array,
-      required: true,
-    },
-
-    command: {
-      type: Function,
-      required: true,
-    },
-  },
-
-  data() {
-    return {
-      selectedIndex: 0,
-    };
-  },
-
-  watch: {
-    items() {
-      this.selectedIndex = 0;
-    },
-  },
-
-  methods: {
-    onKeyDown({ event }) {
-      if (event.key === "ArrowUp") {
-        this.upHandler();
-        return true;
-      }
-
-      if (event.key === "ArrowDown") {
-        this.downHandler();
-        return true;
-      }
-
-      if (event.key === "Enter") {
-        this.enterHandler();
-        return true;
-      }
-
-      return false;
-    },
-
-    upHandler() {
-      this.selectedIndex =
-        (this.selectedIndex + this.items.length - 1) % this.items.length;
-    },
-
-    downHandler() {
-      this.selectedIndex = (this.selectedIndex + 1) % this.items.length;
-    },
-
-    enterHandler() {
-      this.selectItem(this.selectedIndex);
-    },
-
-    selectItem(index) {
-      const item = this.items[index];
-
-      if (item) {
-        this.command(item);
-      }
-    },
-  },
-};
-</script>
-
 <style>
 .items {
   padding: 0.2rem;

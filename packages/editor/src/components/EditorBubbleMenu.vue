@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { roundArrow } from "tippy.js";
+import "tippy.js/dist/svg-arrow.css";
 import type { PropType } from "vue";
 import { BubbleMenu, Editor } from "@tiptap/vue-3";
 import type { MenuItem } from "@/types";
@@ -78,7 +80,10 @@ const menuItems: MenuItem[] = [
 ];
 </script>
 <template>
-  <bubble-menu :editor="editor" :tippy-options="{ duration: 100 }">
+  <bubble-menu
+    :editor="editor"
+    :tippy-options="{ duration: 100, arrow: roundArrow }"
+  >
     <div
       class="bg-white flex items-center rounded p-1 border drop-shadow space-x-0.5"
     >
