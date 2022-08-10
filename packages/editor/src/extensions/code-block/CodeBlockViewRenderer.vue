@@ -19,21 +19,21 @@ const selectedLanguage = computed({
 });
 </script>
 <template>
-  <node-view-wrapper class="code-block relative">
-    <select
-      v-model="selectedLanguage"
-      class="right-1 top-1 absolute"
-      contenteditable="false"
-    >
-      <option :value="null">auto</option>
-      <option
-        v-for="(language, index) in languages"
-        :key="index"
-        :value="language"
-      >
-        {{ language }}
-      </option>
-    </select>
+  <node-view-wrapper
+    class="code-block divide-gray-100 bg-gray-100 rounded-sm overflow-hidden"
+  >
+    <div class="py-0.5 px-1">
+      <select v-model="selectedLanguage" contenteditable="false">
+        <option :value="null">auto</option>
+        <option
+          v-for="(language, index) in languages"
+          :key="index"
+          :value="language"
+        >
+          {{ language }}
+        </option>
+      </select>
+    </div>
     <pre><node-view-content as="code" /></pre>
   </node-view-wrapper>
 </template>

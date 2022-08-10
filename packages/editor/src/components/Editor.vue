@@ -4,6 +4,11 @@ import EditorHeader from "./EditorHeader.vue";
 import EditorBubbleMenu from "./EditorBubbleMenu.vue";
 import StarterKit from "@tiptap/starter-kit";
 import ExtensionImage from "@tiptap/extension-image";
+import ExtensionTaskList from "@tiptap/extension-task-list";
+import ExtensionTaskItem from "@tiptap/extension-task-item";
+import ExtensionLink from "@tiptap/extension-link";
+import ExtensionTextAlign from "@tiptap/extension-text-align";
+import ExtensionUnderline from "@tiptap/extension-underline";
 import { watch } from "vue";
 import "github-markdown-css/github-markdown-light.css";
 import {
@@ -30,6 +35,14 @@ const editor = useEditor({
         loading: "lazy",
       },
     }),
+    ExtensionTaskList,
+    ExtensionTaskItem,
+    ExtensionLink.configure({
+      autolink: true,
+      openOnClick: false,
+    }),
+    ExtensionTextAlign,
+    ExtensionUnderline,
     ExtensionCommands.configure({
       suggestion: CommandsSuggestion,
     }),
