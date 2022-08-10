@@ -59,13 +59,5 @@ const formatContent = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-row gap-2 w-full m-4">
-    <main class="w-1/2">
-      <Editor v-model="content" />
-    </main>
-    <div class="w-1/2">
-      <pre class="w-full whitespace-pre-wrap">{{ formatContent }}</pre>
-    </div>
-  </div>
+  <Editor v-model="content" />
 </template>
-

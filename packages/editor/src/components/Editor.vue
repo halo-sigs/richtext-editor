@@ -41,7 +41,9 @@ const editor = useEditor({
       autolink: true,
       openOnClick: false,
     }),
-    ExtensionTextAlign,
+    ExtensionTextAlign.configure({
+      types: ["heading", "paragraph"],
+    }),
     ExtensionUnderline,
     ExtensionCommands.configure({
       suggestion: CommandsSuggestion,

@@ -13,6 +13,13 @@ import MdiFormatHeader3 from "~icons/mdi/format-header-3";
 import MdiFormatHeader4 from "~icons/mdi/format-header-4";
 import MdiFormatHeader5 from "~icons/mdi/format-header-5";
 import MdiFormatHeader6 from "~icons/mdi/format-header-6";
+import MdiUndoVariant from "~icons/mdi/undo-variant";
+import MdiRedoVariant from "~icons/mdi/redo-variant";
+import MdiFormatUnderline from "~icons/mdi/format-underline";
+import MdiFormatAlignLeft from "~icons/mdi/format-align-left";
+import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
+import MdiFormatAlignRight from "~icons/mdi/format-align-right";
+import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
 
 const props = defineProps({
   editor: {
@@ -22,6 +29,21 @@ const props = defineProps({
 });
 
 const menuItems: MenuItem[] = [
+  {
+    type: "button",
+    icon: MdiUndoVariant,
+    title: "Undo",
+    action: () => props.editor.chain().undo().run(),
+    isActive: () => false,
+  },
+  {
+    type: "button",
+    icon: MdiRedoVariant,
+    title: "Redo",
+    action: () => props.editor.chain().redo().run(),
+    isActive: () => false,
+  },
+
   {
     type: "button",
     icon: MdiFormatBold,
@@ -38,6 +60,13 @@ const menuItems: MenuItem[] = [
   },
   {
     type: "button",
+    icon: MdiFormatUnderline,
+    title: "Underline",
+    action: () => props.editor.chain().focus().toggleUnderline().run(),
+    isActive: () => props.editor.isActive("underline"),
+  },
+  {
+    type: "button",
     icon: MdiFormatStrikethrough,
     title: "Strike",
     action: () => props.editor.chain().focus().toggleStrike().run(),
@@ -46,7 +75,7 @@ const menuItems: MenuItem[] = [
   {
     type: "button",
     icon: MdiFormatHeaderPound,
-    title: "标题",
+    title: "普通文本",
     isActive: () => props.editor.isActive("heading"),
     children: [
       {
@@ -98,6 +127,34 @@ const menuItems: MenuItem[] = [
         isActive: () => props.editor.isActive("heading", { level: 1 }),
       },
     ],
+  },
+  {
+    type: "button",
+    icon: MdiFormatAlignLeft,
+    title: "Align left",
+    action: () => props.editor.chain().focus().setTextAlign("left").run(),
+    isActive: () => props.editor.isActive({ textAlign: "left" }),
+  },
+  {
+    type: "button",
+    icon: MdiFormatAlignCenter,
+    title: "Align center",
+    action: () => props.editor.chain().focus().setTextAlign("center").run(),
+    isActive: () => props.editor.isActive({ textAlign: "center" }),
+  },
+  {
+    type: "button",
+    icon: MdiFormatAlignRight,
+    title: "Align right",
+    action: () => props.editor.chain().focus().setTextAlign("right").run(),
+    isActive: () => props.editor.isActive({ textAlign: "right" }),
+  },
+  {
+    type: "button",
+    icon: MdiFormatAlignJustify,
+    title: "Align justify",
+    action: () => props.editor.chain().focus().setTextAlign("justify").run(),
+    isActive: () => props.editor.isActive({ textAlign: "justify" }),
   },
 ];
 </script>
