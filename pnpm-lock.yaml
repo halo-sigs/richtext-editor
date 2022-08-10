@@ -86,10 +86,12 @@ importers:
       '@tiptap/starter-kit': 2.0.0-beta.191
       '@tiptap/suggestion': 2.0.0-beta.97
       '@tiptap/vue-3': 2.0.0-beta.96
+      '@types/katex': ^0.14.0
       '@vue/compiler-sfc': ^3.2.37
       autoprefixer: ^10.4.8
       floating-vue: 2.0.0-beta.19
       github-markdown-css: ^5.1.0
+      katex: ^0.16.0
       lowlight: ^2.7.0
       postcss: ^8.4.16
       sass: ^1.54.4
@@ -115,10 +117,12 @@ importers:
       '@tiptap/vue-3': 2.0.0-beta.96_jdrcmhoxj44u3cq7gnenksjiqq
       floating-vue: 2.0.0-beta.19
       github-markdown-css: 5.1.0
+      katex: 0.16.0
       lowlight: 2.7.0
       tippy.js: 6.3.7
     devDependencies:
       '@iconify/json': 2.1.88
+      '@types/katex': 0.14.0
       '@vue/compiler-sfc': 3.2.37
       autoprefixer: 10.4.8_postcss@8.4.16
       postcss: 8.4.16
@@ -1042,6 +1046,10 @@ packages:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: true
 
+  /@types/katex/0.14.0:
+    resolution: {integrity: sha512-+2FW2CcT0K3P+JMR8YG846bmDwplKUTsWgT2ENwdQ1UdVfRk3GQrh6Mi4sTopy30gI8Uau5CEqHTDZ6YvWIUPA==}
+    dev: true
+
   /@types/lowlight/0.0.3:
     resolution: {integrity: sha512-R83q/yPX2nIlo9D3WtSjyUDd57t8s+GVLaL8YIv3k7zMMWpYpOXqjJgrWp80qXUJB/a1t76nTyBpxrv0JNYaEg==}
     dev: false
@@ -1716,6 +1724,11 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /commander/8.3.0:
+    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
+    engines: {node: '>= 12'}
+    dev: false
 
   /concat-map/0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
@@ -3043,6 +3056,13 @@ packages:
     optionalDependencies:
       graceful-fs: 4.2.10
     dev: true
+
+  /katex/0.16.0:
+    resolution: {integrity: sha512-wPRB4iUPysfH97wTgG5/tRLYxmKVq6Q4jRAWRVOUxXB1dsiv4cvcNjqabHkrOvJHM1Bpk3WrgmllSO1vIvP24w==}
+    hasBin: true
+    dependencies:
+      commander: 8.3.0
+    dev: false
 
   /kolorist/1.5.1:
     resolution: {integrity: sha512-lxpCM3HTvquGxKGzHeknB/sUjuVoUElLlfYnXZT73K8geR9jQbroGlSCFBax9/0mpGoD3kzcMLnOlGQPJJNyqQ==}

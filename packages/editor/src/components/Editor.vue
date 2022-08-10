@@ -13,6 +13,7 @@ import ExtensionTable from "@tiptap/extension-table";
 import ExtensionTableHeader from "@tiptap/extension-table-header";
 import ExtensionTableCell from "@tiptap/extension-table-cell";
 import ExtensionTableRow from "@tiptap/extension-table-row";
+import { KatexBlock as ExtensionKatexBlock } from "../extensions/katex/index";
 import { watch } from "vue";
 import "github-markdown-css/github-markdown-light.css";
 import {
@@ -61,6 +62,7 @@ const editor = useEditor({
     ExtensionCodeBlock.configure({
       lowlight,
     }),
+    ExtensionKatexBlock,
   ],
   onUpdate: () => {
     emit("update:modelValue", editor.value?.getHTML());

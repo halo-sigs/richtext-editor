@@ -23,6 +23,7 @@ import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
 import MdiFormatQuoteOpen from "~icons/mdi/format-quote-open";
 import MdiCodeTags from "~icons/mdi/code-tags";
 import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
+import MdiMathCompass from "~icons/mdi/math-compass";
 
 const props = defineProps({
   editor: {
@@ -95,6 +96,13 @@ const menuItems: MenuItem[] = [
     title: "Code Block",
     action: () => props.editor.chain().focus().toggleCodeBlock().run(),
     isActive: () => props.editor.isActive("codeBlock"),
+  },
+  {
+    type: "button",
+    icon: MdiMathCompass,
+    title: "Math",
+    action: () => props.editor.chain().addKatex().run(),
+    isActive: () => props.editor.isActive("katexBlock"),
   },
   {
     type: "button",
