@@ -12,6 +12,9 @@ import MdiFormatAlignLeft from "~icons/mdi/format-align-left";
 import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
 import MdiFormatAlignRight from "~icons/mdi/format-align-right";
 import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
+import MdiFormatQuoteOpen from "~icons/mdi/format-quote-open";
+import MdiCodeTags from "~icons/mdi/code-tags";
+import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
 
 const props = defineProps({
   editor: {
@@ -48,6 +51,27 @@ const menuItems: MenuItem[] = [
     title: "Strike",
     action: () => props.editor.chain().focus().toggleStrike().run(),
     isActive: () => props.editor.isActive("strike"),
+  },
+  {
+    type: "button",
+    icon: MdiFormatQuoteOpen,
+    title: "Quote",
+    action: () => props.editor.chain().focus().toggleBlockquote().run(),
+    isActive: () => props.editor.isActive("blockquote"),
+  },
+  {
+    type: "button",
+    icon: MdiCodeTags,
+    title: "Code",
+    action: () => props.editor.chain().focus().toggleCode().run(),
+    isActive: () => props.editor.isActive("code"),
+  },
+  {
+    type: "button",
+    icon: MdiCodeBracesBox,
+    title: "Code Block",
+    action: () => props.editor.chain().focus().toggleCodeBlock().run(),
+    isActive: () => props.editor.isActive("codeBlock"),
   },
   {
     type: "button",
