@@ -1,9 +1,9 @@
-import { Extension, Editor } from "@tiptap/vue-3";
-import Suggestion from "@tiptap/suggestion";
 import type { Range } from "@tiptap/vue-3";
+import { Editor, Extension } from "@tiptap/vue-3";
+import Suggestion from "@tiptap/suggestion";
 
 export default Extension.create({
-  name: "commands",
+  name: "commands-menu",
 
   addOptions() {
     return {

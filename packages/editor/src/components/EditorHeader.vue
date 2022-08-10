@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import type { Component, PropType } from "vue";
+import type { PropType } from "vue";
 import { Editor } from "@tiptap/vue-3";
 import { Menu as VMenu } from "floating-vue";
+import type { MenuItem } from "@/types";
 import MdiFormatBold from "~icons/mdi/format-bold";
 import MdiFormatItalic from "~icons/mdi/format-italic";
 import MdiFormatStrikethrough from "~icons/mdi/format-strikethrough";
@@ -19,15 +20,6 @@ const props = defineProps({
     required: true,
   },
 });
-
-interface MenuItem {
-  type: "button" | "separator";
-  icon?: Component;
-  title?: string;
-  action?: () => void;
-  isActive?: () => boolean;
-  children?: MenuItem[];
-}
 
 const menuItems: MenuItem[] = [
   {
@@ -110,7 +102,9 @@ const menuItems: MenuItem[] = [
 ];
 </script>
 <template>
-  <div class="editor-header flex items-center py-1 space-x-0.5">
+  <div
+    class="editor-header flex items-center py-1 space-x-0.5 justify-center border-b drop-shadow-sm"
+  >
     <div
       v-for="(menuItem, index) in menuItems"
       :key="index"

@@ -1,11 +1,16 @@
 <script lang="ts" setup>
 import { EditorContent, useEditor } from "@tiptap/vue-3";
 import EditorHeader from "./EditorHeader.vue";
+import EditorBubbleMenu from "./EditorBubbleMenu.vue";
 import StarterKit from "@tiptap/starter-kit";
 import ExtensionImage from "@tiptap/extension-image";
 import { watch } from "vue";
 import "github-markdown-css/github-markdown-light.css";
-import { ExtensionCommands, CommandsSuggestion } from "../extensions/commands";
+import {
+  CommandsSuggestion,
+  ExtensionCommands,
+} from "../extensions/commands-menu";
+import { ExtensionCodeBlock, lowlight } from "@/extensions/code-block";
 
 const props = defineProps({
   modelValue: {
@@ -28,6 +33,9 @@ const editor = useEditor({
     ExtensionCommands.configure({
       suggestion: CommandsSuggestion,
     }),
+    ExtensionCodeBlock.configure({
+      lowlight,
+    }),
   ],
   onUpdate: () => {
     emit("update:modelValue", editor.value?.getHTML());
@@ -48,6 +56,13 @@ watch(
 );
 </script>
 <template>
-  <editor-header v-if="editor" :editor="editor" />
-  <editor-content v-if="editor" :editor="editor" class="markdown-body" />
+  <div class="border">
+    <editor-bubble-menu v-if="editor" :editor="editor" />
+    <editor-header v-if="editor" :editor="editor" />
+    <editor-content
+      v-if="editor"
+      :editor="editor"
+      class="editor-content markdown-body"
+    />
+  </div>
 </template>

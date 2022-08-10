@@ -32,6 +32,7 @@
     "@vue/compiler-sfc": "^3.2.37",
     "autoprefixer": "^10.4.8",
     "postcss": "^8.4.16",
+    "sass": "^1.54.4",
     "tailwindcss": "^3.1.8",
     "unplugin-icons": "^0.14.8",
     "vite-plugin-dts": "^1.4.1"
@@ -45,12 +46,14 @@
   },
   "dependencies": {
     "@tiptap/core": "2.0.0-beta.182",
+    "@tiptap/extension-code-block-lowlight": "2.0.0-beta.73",
     "@tiptap/extension-image": "2.0.0-beta.30",
     "@tiptap/starter-kit": "2.0.0-beta.191",
     "@tiptap/suggestion": "2.0.0-beta.97",
     "@tiptap/vue-3": "2.0.0-beta.96",
     "floating-vue": "2.0.0-beta.19",
     "github-markdown-css": "^5.1.0",
+    "lowlight": "^2.7.0",
     "tippy.js": "^6.3.7"
   }
 }
