@@ -4,14 +4,14 @@ import type { Instance } from "tippy.js";
 import tippy, { roundArrow } from "tippy.js";
 import "tippy.js/dist/svg-arrow.css";
 import CommandsView from "./CommandsView.vue";
-import MdiFormatBold from "~icons/mdi/format-bold";
-import MdiFormatItalic from "~icons/mdi/format-italic";
 import MdiFormatHeader1 from "~icons/mdi/format-header-1";
 import MdiFormatHeader2 from "~icons/mdi/format-header-2";
 import MdiFormatHeader3 from "~icons/mdi/format-header-3";
 import MdiFormatHeader4 from "~icons/mdi/format-header-4";
 import MdiFormatHeader5 from "~icons/mdi/format-header-5";
 import MdiFormatHeader6 from "~icons/mdi/format-header-6";
+import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
+import MdiMathCompass from "~icons/mdi/math-compass";
 import type { Component } from "vue";
 
 export interface Item {
@@ -103,19 +103,19 @@ export default {
         },
       },
       {
-        icon: MdiFormatBold,
-        title: "粗体",
-        keywords: ["bold", "cuti"],
+        icon: MdiCodeBracesBox,
+        title: "代码块",
+        keywords: ["codeblock", "daimakuai"],
         command: ({ editor, range }: { editor: Editor; range: Range }) => {
-          editor.chain().focus().deleteRange(range).setMark("bold").run();
+          editor.chain().focus().deleteRange(range).setNode("codeBlock").run();
         },
       },
       {
-        icon: MdiFormatItalic,
-        title: "斜体",
-        keywords: ["italic", "xieiti"],
+        icon: MdiMathCompass,
+        title: "数学公式",
+        keywords: ["katex", "math", "shuxuegongshi"],
         command: ({ editor, range }: { editor: Editor; range: Range }) => {
-          editor.chain().focus().deleteRange(range).setMark("italic").run();
+          editor.chain().focus().deleteRange(range).setNode("katexBlock").run();
         },
       },
     ]
