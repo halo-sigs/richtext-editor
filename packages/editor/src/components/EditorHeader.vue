@@ -24,6 +24,8 @@ import MdiFormatQuoteOpen from "~icons/mdi/format-quote-open";
 import MdiCodeTags from "~icons/mdi/code-tags";
 import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
 import MdiMathCompass from "~icons/mdi/math-compass";
+import MdiFormatSuperscript from "~icons/mdi/format-superscript";
+import MdiFormatSubscript from "~icons/mdi/format-subscript";
 
 const props = defineProps({
   editor: {
@@ -89,6 +91,20 @@ const menuItems: MenuItem[] = [
     title: "Code",
     action: () => props.editor.chain().focus().toggleCode().run(),
     isActive: () => props.editor.isActive("code"),
+  },
+  {
+    type: "button",
+    icon: MdiFormatSuperscript,
+    title: "SuperScript",
+    action: () => props.editor.chain().focus().toggleSuperscript().run(),
+    isActive: () => props.editor.isActive("superscript"),
+  },
+  {
+    type: "button",
+    icon: MdiFormatSubscript,
+    title: "SubScript",
+    action: () => props.editor.chain().focus().toggleSubscript().run(),
+    isActive: () => props.editor.isActive("subscript"),
   },
   {
     type: "button",

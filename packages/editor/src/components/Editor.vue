@@ -13,6 +13,8 @@ import ExtensionTable from "@tiptap/extension-table";
 import ExtensionTableHeader from "@tiptap/extension-table-header";
 import ExtensionTableCell from "@tiptap/extension-table-cell";
 import ExtensionTableRow from "@tiptap/extension-table-row";
+import ExtensionSubscript from "@tiptap/extension-subscript";
+import ExtensionSuperscript from "@tiptap/extension-superscript";
 import { KatexBlock as ExtensionKatexBlock } from "../extensions/katex/index";
 import { watch } from "vue";
 import "github-markdown-css/github-markdown-light.css";
@@ -56,6 +58,8 @@ const editor = useEditor({
     ExtensionTableHeader,
     ExtensionTableCell,
     ExtensionTableRow,
+    ExtensionSuperscript,
+    ExtensionSubscript,
     ExtensionCommands.configure({
       suggestion: CommandsSuggestion,
     }),

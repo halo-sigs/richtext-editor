@@ -15,6 +15,8 @@ import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
 import MdiFormatQuoteOpen from "~icons/mdi/format-quote-open";
 import MdiCodeTags from "~icons/mdi/code-tags";
 import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
+import MdiFormatSuperscript from "~icons/mdi/format-superscript";
+import MdiFormatSubscript from "~icons/mdi/format-subscript";
 
 const props = defineProps({
   editor: {
@@ -75,6 +77,20 @@ const menuItems: MenuItem[] = [
   },
   {
     type: "button",
+    icon: MdiFormatSuperscript,
+    title: "SuperScript",
+    action: () => props.editor.chain().focus().toggleSuperscript().run(),
+    isActive: () => props.editor.isActive("superscript"),
+  },
+  {
+    type: "button",
+    icon: MdiFormatSubscript,
+    title: "SubScript",
+    action: () => props.editor.chain().focus().toggleSubscript().run(),
+    isActive: () => props.editor.isActive("subscript"),
+  },
+  {
+    type: "button",
     icon: MdiFormatAlignLeft,
     title: "Align left",
     action: () => props.editor.chain().focus().setTextAlign("left").run(),
@@ -106,7 +122,7 @@ const menuItems: MenuItem[] = [
 <template>
   <bubble-menu
     :editor="editor"
-    :tippy-options="{ duration: 100, arrow: roundArrow }"
+    :tippy-options="{ duration: 100, arrow: roundArrow, maxWidth: '100%' }"
   >
     <div
       class="bg-white flex items-center rounded p-1 border drop-shadow space-x-0.5"
