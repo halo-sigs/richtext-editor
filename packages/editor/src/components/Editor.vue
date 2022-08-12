@@ -15,6 +15,7 @@ import ExtensionTableCell from "@tiptap/extension-table-cell";
 import ExtensionTableRow from "@tiptap/extension-table-row";
 import ExtensionSubscript from "@tiptap/extension-subscript";
 import ExtensionSuperscript from "@tiptap/extension-superscript";
+import ExtensionPlaceholder from "@tiptap/extension-placeholder";
 import { KatexBlock as ExtensionKatexBlock } from "../extensions/katex/index";
 import { watch } from "vue";
 import "github-markdown-css/github-markdown-light.css";
@@ -60,6 +61,9 @@ const editor = useEditor({
     ExtensionTableRow,
     ExtensionSuperscript,
     ExtensionSubscript,
+    ExtensionPlaceholder.configure({
+      placeholder: "输入 / 以选择输入类型",
+    }),
     ExtensionCommands.configure({
       suggestion: CommandsSuggestion,
     }),

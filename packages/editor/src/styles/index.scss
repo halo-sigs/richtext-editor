@@ -4,6 +4,15 @@
   width: 100%;
 
   .ProseMirror {
+
+    p.is-empty::before {
+      content: attr(data-placeholder);
+      float: left;
+      color: #adb5bd;
+      pointer-events: none;
+      height: 0;
+    }
+
     > * + * {
       margin-top: 0.75em;
     }

@@ -75,6 +75,7 @@ importers:
       '@tiptap/extension-code-block-lowlight': 2.0.0-beta.73
       '@tiptap/extension-image': 2.0.0-beta.30
       '@tiptap/extension-link': 2.0.0-beta.43
+      '@tiptap/extension-placeholder': 2.0.0-beta.53
       '@tiptap/extension-subscript': 2.0.0-beta.13
       '@tiptap/extension-superscript': 2.0.0-beta.13
       '@tiptap/extension-table': 2.0.0-beta.54
@@ -107,6 +108,7 @@ importers:
       '@tiptap/extension-code-block-lowlight': 2.0.0-beta.73_giic42g7xysntyllbw3z33pheu
       '@tiptap/extension-image': 2.0.0-beta.30_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-link': 2.0.0-beta.43_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-placeholder': 2.0.0-beta.53_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-subscript': 2.0.0-beta.13_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-superscript': 2.0.0-beta.13_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-table': 2.0.0-beta.54_jdrcmhoxj44u3cq7gnenksjiqq
@@ -881,6 +883,17 @@ packages:
       '@tiptap/core': ^2.0.0-beta.1
     dependencies:
       '@tiptap/core': 2.0.0-beta.182
+    dev: false
+
+  /@tiptap/extension-placeholder/2.0.0-beta.53_jdrcmhoxj44u3cq7gnenksjiqq:
+    resolution: {integrity: sha512-NGU/a+GvcJVBjFqb2vI45+rNa3Cjsq/M+R/2xg9olb1w/HBr17NKf/5WSoqcc1S2cdnmMH6rB0/mVhG7Ciur+Q==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0-beta.1
+    dependencies:
+      '@tiptap/core': 2.0.0-beta.182
+      prosemirror-model: 1.18.1
+      prosemirror-state: 1.4.1
+      prosemirror-view: 1.26.2
     dev: false
 
   /@tiptap/extension-strike/2.0.0-beta.29_jdrcmhoxj44u3cq7gnenksjiqq:

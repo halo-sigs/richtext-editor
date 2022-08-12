@@ -1,6 +1,5 @@
 import { mergeAttributes, Node, VueNodeViewRenderer } from "@tiptap/vue-3";
 import KatexBlockViewRenderer from "./KatexBlockViewRenderer.vue";
-import type { HTMLAttributes } from "vue";
 
 export const KatexBlock = Node.create({
   name: "katexBlock",
