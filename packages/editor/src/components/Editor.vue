@@ -91,13 +91,9 @@ watch(
 );
 </script>
 <template>
-  <div class="border">
-    <editor-bubble-menu v-if="editor" :editor="editor" />
-    <editor-header v-if="editor" :editor="editor" />
-    <editor-content
-      v-if="editor"
-      :editor="editor"
-      class="editor-content markdown-body"
-    />
+  <div v-if="editor" class="halo-rich-text-editor">
+    <editor-bubble-menu :editor="editor" />
+    <editor-header :editor="editor" />
+    <editor-content :editor="editor" class="editor-content markdown-body" />
   </div>
 </template>

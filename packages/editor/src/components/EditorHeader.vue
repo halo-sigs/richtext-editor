@@ -208,7 +208,7 @@ const menuItems: MenuItem[] = [
 </script>
 <template>
   <div
-    class="editor-header flex items-center py-1 space-x-0.5 justify-center border-b drop-shadow-sm"
+    class="editor-header flex items-center py-1 space-x-0.5 justify-center border-b drop-shadow-sm bg-white"
   >
     <div
       v-for="(menuItem, index) in menuItems"
