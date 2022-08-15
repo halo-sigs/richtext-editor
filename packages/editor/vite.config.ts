@@ -6,6 +6,7 @@ import VueJsx from "@vitejs/plugin-vue-jsx";
 import Icons from "unplugin-icons/vite";
 import Dts from "vite-plugin-dts";
 import path from "path";
+import { FALSE } from "sass";
 
 export default defineConfig({
   plugins: [
@@ -33,6 +34,7 @@ export default defineConfig({
       formats: ["es", "iife"],
       fileName: (format) => `rich-text-editor.${format}.js`,
     },
+    minify:false,
     rollupOptions: {
       external: ["vue"],
       output: {
@@ -40,7 +42,6 @@ export default defineConfig({
           vue: "Vue",
         },
         exports: "named",
-        generatedCode: "es5",
       },
     },
     sourcemap: true,
