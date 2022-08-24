@@ -70,12 +70,29 @@ importers:
 
   packages/editor:
     specifiers:
-      '@iconify/json': ^2.1.93
+      '@iconify/json': ^2.1.96
       '@tiptap/core': 2.0.0-beta.182
+      '@tiptap/extension-blockquote': ^2.0.0-beta.29
+      '@tiptap/extension-bold': ^2.0.0-beta.28
+      '@tiptap/extension-bullet-list': ^2.0.0-beta.29
+      '@tiptap/extension-code': ^2.0.0-beta.28
+      '@tiptap/extension-code-block': ^2.0.0-beta.42
       '@tiptap/extension-code-block-lowlight': 2.0.0-beta.73
+      '@tiptap/extension-document': ^2.0.0-beta.17
+      '@tiptap/extension-dropcursor': ^2.0.0-beta.29
+      '@tiptap/extension-gapcursor': ^2.0.0-beta.39
+      '@tiptap/extension-hard-break': ^2.0.0-beta.33
+      '@tiptap/extension-heading': ^2.0.0-beta.29
+      '@tiptap/extension-history': ^2.0.0-beta.26
+      '@tiptap/extension-horizontal-rule': ^2.0.0-beta.36
       '@tiptap/extension-image': 2.0.0-beta.30
+      '@tiptap/extension-italic': ^2.0.0-beta.28
       '@tiptap/extension-link': 2.0.0-beta.43
+      '@tiptap/extension-list-item': ^2.0.0-beta.23
+      '@tiptap/extension-ordered-list': ^2.0.0-beta.30
+      '@tiptap/extension-paragraph': ^2.0.0-beta.26
       '@tiptap/extension-placeholder': 2.0.0-beta.53
+      '@tiptap/extension-strike': ^2.0.0-beta.29
       '@tiptap/extension-subscript': 2.0.0-beta.13
       '@tiptap/extension-superscript': 2.0.0-beta.13
       '@tiptap/extension-table': 2.0.0-beta.54
@@ -84,9 +101,9 @@ importers:
       '@tiptap/extension-table-row': 2.0.0-beta.22
       '@tiptap/extension-task-item': 2.0.0-beta.37
       '@tiptap/extension-task-list': 2.0.0-beta.29
+      '@tiptap/extension-text': ^2.0.0-beta.17
       '@tiptap/extension-text-align': 2.0.0-beta.31
       '@tiptap/extension-underline': 2.0.0-beta.25
-      '@tiptap/starter-kit': 2.0.0-beta.191
       '@tiptap/suggestion': 2.0.0-beta.97
       '@tiptap/vue-3': 2.0.0-beta.96
       '@types/katex': ^0.14.0
@@ -98,17 +115,34 @@ importers:
       katex: ^0.16.0
       lowlight: ^2.7.0
       postcss: ^8.4.16
-      sass: ^1.54.4
+      sass: ^1.54.5
       tailwindcss: ^3.1.8
       tippy.js: ^6.3.7
       unplugin-icons: ^0.14.8
       vite-plugin-dts: ^1.4.1
     dependencies:
       '@tiptap/core': 2.0.0-beta.182
+      '@tiptap/extension-blockquote': 2.0.0-beta.29_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-bold': 2.0.0-beta.28_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-bullet-list': 2.0.0-beta.29_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-code': 2.0.0-beta.28_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-code-block': 2.0.0-beta.42_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-code-block-lowlight': 2.0.0-beta.73_giic42g7xysntyllbw3z33pheu
+      '@tiptap/extension-document': 2.0.0-beta.17_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-dropcursor': 2.0.0-beta.29_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-gapcursor': 2.0.0-beta.39_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-hard-break': 2.0.0-beta.33_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-heading': 2.0.0-beta.29_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-history': 2.0.0-beta.26_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-horizontal-rule': 2.0.0-beta.36_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-image': 2.0.0-beta.30_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-italic': 2.0.0-beta.28_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-link': 2.0.0-beta.43_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-list-item': 2.0.0-beta.23_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-ordered-list': 2.0.0-beta.30_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-paragraph': 2.0.0-beta.26_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-placeholder': 2.0.0-beta.53_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-strike': 2.0.0-beta.29_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-subscript': 2.0.0-beta.13_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-superscript': 2.0.0-beta.13_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-table': 2.0.0-beta.54_jdrcmhoxj44u3cq7gnenksjiqq
@@ -117,9 +151,9 @@ importers:
       '@tiptap/extension-table-row': 2.0.0-beta.22_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-task-item': 2.0.0-beta.37_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-task-list': 2.0.0-beta.29_jdrcmhoxj44u3cq7gnenksjiqq
+      '@tiptap/extension-text': 2.0.0-beta.17_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-text-align': 2.0.0-beta.31_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/extension-underline': 2.0.0-beta.25_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/starter-kit': 2.0.0-beta.191
       '@tiptap/suggestion': 2.0.0-beta.97_jdrcmhoxj44u3cq7gnenksjiqq
       '@tiptap/vue-3': 2.0.0-beta.96_jdrcmhoxj44u3cq7gnenksjiqq
       floating-vue: 2.0.0-beta.19
@@ -128,13 +162,13 @@ importers:
       lowlight: 2.7.0
       tippy.js: 6.3.7
     devDependencies:
-      '@iconify/json': 2.1.93
+      '@iconify/json': 2.1.96
       '@types/katex': 0.14.0
       '@vue/compiler-sfc': 3.2.37
       autoprefixer: 10.4.8_postcss@8.4.16
       bumpp: 8.2.1
       postcss: 8.4.16
-      sass: 1.54.4
+      sass: 1.54.5
       tailwindcss: 3.1.8
       unplugin-icons: 0.14.8_@vue+compiler-sfc@3.2.37
       vite-plugin-dts: 1.4.1
@@ -514,8 +548,8 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@iconify/json/2.1.93:
-    resolution: {integrity: sha512-gFmjXeSKI7NXHU8i1mwPJCjpUwignMh2ZIoarC87cp3nHyAyT5R/v2cH/VhAaJGPU3hM+Sl9r/yFYxhwwsU2qA==}
+  /@iconify/json/2.1.96:
+    resolution: {integrity: sha512-wmc5KRqvKAlAr0bQz3P1UnUCXC9hYu1o89GZFR5Mr5NiUhhNHdbZyosOPnDHXduOa9lTM/ve8/Vo1vR55hCF5A==}
     dependencies:
       '@iconify/types': 1.1.0
       pathe: 0.3.3
@@ -995,30 +1029,6 @@ packages:
       '@tiptap/core': ^2.0.0-beta.1
     dependencies:
       '@tiptap/core': 2.0.0-beta.182
-    dev: false
-
-  /@tiptap/starter-kit/2.0.0-beta.191:
-    resolution: {integrity: sha512-YRrBCi9W4jiH/xLTJJOCdD7pL4Wb98Ip8qCJ94RElShDj0O1i5tT9wWlgVWoGIU+CRAds5XENRwZ97sJ+YfYyg==}
-    dependencies:
-      '@tiptap/core': 2.0.0-beta.182
-      '@tiptap/extension-blockquote': 2.0.0-beta.29_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-bold': 2.0.0-beta.28_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-bullet-list': 2.0.0-beta.29_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-code': 2.0.0-beta.28_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-code-block': 2.0.0-beta.42_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-document': 2.0.0-beta.17_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-dropcursor': 2.0.0-beta.29_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-gapcursor': 2.0.0-beta.39_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-hard-break': 2.0.0-beta.33_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-heading': 2.0.0-beta.29_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-history': 2.0.0-beta.26_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-horizontal-rule': 2.0.0-beta.36_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-italic': 2.0.0-beta.28_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-list-item': 2.0.0-beta.23_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-ordered-list': 2.0.0-beta.30_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-paragraph': 2.0.0-beta.26_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-strike': 2.0.0-beta.29_jdrcmhoxj44u3cq7gnenksjiqq
-      '@tiptap/extension-text': 2.0.0-beta.17_jdrcmhoxj44u3cq7gnenksjiqq
     dev: false
 
   /@tiptap/suggestion/2.0.0-beta.97_jdrcmhoxj44u3cq7gnenksjiqq:
@@ -3911,8 +3921,8 @@ packages:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: true
 
-  /sass/1.54.4:
-    resolution: {integrity: sha512-3tmF16yvnBwtlPrNBHw/H907j8MlOX8aTBnlNX1yrKx24RKcJGPyLhFUwkoKBKesR3unP93/2z14Ll8NicwQUA==}
+  /sass/1.54.5:
+    resolution: {integrity: sha512-p7DTOzxkUPa/63FU0R3KApkRHwcVZYC0PLnLm5iyZACyp15qSi32x7zVUhRdABAATmkALqgGrjCJAcWvobmhHw==}
     engines: {node: '>=12.0.0'}
     hasBin: true
     dependencies:
