@@ -1,10 +1,18 @@
 .halo-rich-text-editor {
-
   box-sizing: border-box;
+  height: calc(100% - 48px);
+  width: 100%;
+
+  .editor-header {
+    height: 48px;
+  }
 
   .editor-content {
+    height: 100%;
 
     .ProseMirror {
+      height: 100%;
+      overflow: auto;
 
       p.is-empty::before {
         content: attr(data-placeholder);

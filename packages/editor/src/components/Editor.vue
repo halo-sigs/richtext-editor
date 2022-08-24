@@ -94,6 +94,11 @@ watch(
   <div v-if="editor" class="halo-rich-text-editor">
     <editor-bubble-menu :editor="editor" />
     <editor-header :editor="editor" />
-    <editor-content :editor="editor" class="editor-content markdown-body" />
+    <div class="h-full flex flex-row w-full">
+      <editor-content :editor="editor" class="editor-content markdown-body" />
+      <div class="h-full">
+        <slot name="extra"></slot>
+      </div>
+    </div>
   </div>
 </template>
