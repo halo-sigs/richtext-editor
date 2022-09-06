@@ -115,7 +115,7 @@ export default {
         title: "数学公式",
         keywords: ["katex", "math", "shuxuegongshi"],
         command: ({ editor, range }: { editor: Editor; range: Range }) => {
-          editor.chain().focus().deleteRange(range).setNode("katexBlock").run();
+          editor.chain().focus().deleteRange(range).addKatex().run();
         },
       },
     ]

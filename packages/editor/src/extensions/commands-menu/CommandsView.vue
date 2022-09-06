@@ -97,7 +97,6 @@ defineExpose({
 }
 
 .item {
-  display: block;
   margin: 0;
   width: 100%;
   text-align: left;

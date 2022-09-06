@@ -112,6 +112,10 @@
           }
         }
       }
+
+      ul {
+        @apply list-disc;
+      }
     }
   }
 }
