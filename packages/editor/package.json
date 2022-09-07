@@ -20,7 +20,7 @@
     "typecheck": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "lint": "eslint ./src --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts",
     "prettier": "prettier --write './src/**/*.{vue,js,jsx,ts,tsx,css,scss,json,yml,yaml,html}'",
-    "release": "bumpp"
+    "release": "release-it"
   },
   "keywords": [],
   "author": "",
@@ -33,12 +33,12 @@
     "@types/katex": "^0.14.0",
     "@vue/compiler-sfc": "^3.2.37",
     "autoprefixer": "^10.4.8",
-    "bumpp": "^8.2.1",
     "postcss": "^8.4.16",
     "sass": "^1.54.5",
     "tailwindcss": "^3.1.8",
     "unplugin-icons": "^0.14.8",
-    "vite-plugin-dts": "^1.4.1"
+    "vite-plugin-dts": "^1.4.1",
+    "release-it": "^15.4.1"
   },
   "exports": {
     ".": {

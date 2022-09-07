@@ -2,20 +2,6 @@
   "name": "@halo-dev/richtext-editor-monorepo",
   "version": "0.0.0",
   "private": "true",
-  "workspaces": [
-    "packages/**"
-  ],
-  "release-it": {
-    "git": {
-      "commitMessage": "chore: release v${version}"
-    },
-    "github": {
-      "release": true
-    },
-    "plugins": {
-      "@release-it-plugins/workspaces": true
-    }
-  },
   "scripts": {
     "dev": "vite",
     "packages:dev": "pnpm --filter './packages/**' dev",
@@ -28,14 +14,13 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "example:dev": "pnpm --filter './example/' run dev",
     "example:build": "pnpm --filter './example/' run build",
-    "release": "release-it"
+    "packages:release": "pnpm --filter './packages/**' release"
   },
   "dependencies": {
     "pinia": "^2.0.22",
     "vue": "^3.2.38"
   },
   "devDependencies": {
-    "@release-it-plugins/workspaces": "^3.2.0",
     "@rushstack/eslint-patch": "^1.1.4",
     "@types/jsdom": "^16.2.15",
     "@types/node": "^16.11.57",
@@ -50,7 +35,6 @@
     "jsdom": "^20.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
-    "release-it": "^15.4.1",
     "typescript": "~4.7.4",
     "vite": "^3.1.0",
     "vitest": "^0.18.1",
