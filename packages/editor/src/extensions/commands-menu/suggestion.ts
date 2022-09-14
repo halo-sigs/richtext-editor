@@ -12,7 +12,7 @@ import MdiFormatHeader5 from "~icons/mdi/format-header-5";
 import MdiFormatHeader6 from "~icons/mdi/format-header-6";
 import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
 import MdiMathCompass from "~icons/mdi/math-compass";
-import type { Component } from "vue";
+import { markRaw, type Component } from "vue";
 
 export interface Item {
   icon: Component;
@@ -25,7 +25,7 @@ export default {
   items: ({ query }: { query: string }): Item[] => {
     return [
       {
-        icon: MdiFormatHeader1,
+        icon: markRaw(MdiFormatHeader1),
         title: "一级标题",
         keywords: ["h1", "header1", "1", "yijibiaoti"],
         command: ({ editor, range }: { editor: Editor; range: Range }) => {
@@ -38,7 +38,7 @@ export default {
         },
       },
       {
-        icon: MdiFormatHeader2,
+        icon: markRaw(MdiFormatHeader2),
         title: "二级标题",
         keywords: ["h2", "header2", "2", "erjibiaoti"],
         command: ({ editor, range }: { editor: Editor; range: Range }) => {
@@ -51,7 +51,7 @@ export default {
         },
       },
       {
-        icon: MdiFormatHeader3,
+        icon: markRaw(MdiFormatHeader3),
         title: "三级标题",
         keywords: ["h3", "header3", "3", "sanjibiaoti"],
         command: ({ editor, range }: { editor: Editor; range: Range }) => {
@@ -64,7 +64,7 @@ export default {
         },
       },
       {
-        icon: MdiFormatHeader4,
+        icon: markRaw(MdiFormatHeader4),
         title: "四级标题",
         keywords: ["h4", "header4", "4", "sijibiaoti"],
         command: ({ editor, range }: { editor: Editor; range: Range }) => {
@@ -77,7 +77,7 @@ export default {
         },
       },
       {
-        icon: MdiFormatHeader5,
+        icon: markRaw(MdiFormatHeader5),
         title: "五级标题",
         keywords: ["h5", "header5", "5", "wujibiaoti"],
         command: ({ editor, range }: { editor: Editor; range: Range }) => {
@@ -90,7 +90,7 @@ export default {
         },
       },
       {
-        icon: MdiFormatHeader6,
+        icon: markRaw(MdiFormatHeader6),
         title: "六级标题",
         keywords: ["h6", "header6", "6", "liujibiaoti"],
         command: ({ editor, range }: { editor: Editor; range: Range }) => {
@@ -103,15 +103,15 @@ export default {
         },
       },
       {
-        icon: MdiCodeBracesBox,
+        icon: markRaw(MdiCodeBracesBox),
         title: "代码块",
         keywords: ["codeblock", "daimakuai"],
         command: ({ editor, range }: { editor: Editor; range: Range }) => {
-          editor.chain().focus().deleteRange(range).setNode("codeBlock").run();
+          editor.chain().focus().deleteRange(range).setCodeBlock().run();
         },
       },
       {
-        icon: MdiMathCompass,
+        icon: markRaw(MdiMathCompass),
         title: "数学公式",
         keywords: ["katex", "math", "shuxuegongshi"],
         command: ({ editor, range }: { editor: Editor; range: Range }) => {

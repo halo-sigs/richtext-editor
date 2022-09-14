@@ -34,6 +34,6 @@ const selectedLanguage = computed({
         </option>
       </select>
     </div>
-    <pre><node-view-content as="code" /></pre>
+    <pre><code><node-view-content /></code></pre>
   </node-view-wrapper>
 </template>
