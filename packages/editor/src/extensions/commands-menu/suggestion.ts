@@ -11,7 +11,7 @@ import MdiFormatHeader4 from "~icons/mdi/format-header-4";
 import MdiFormatHeader5 from "~icons/mdi/format-header-5";
 import MdiFormatHeader6 from "~icons/mdi/format-header-6";
 import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
-import MdiMathCompass from "~icons/mdi/math-compass";
+// import MdiMathCompass from "~icons/mdi/math-compass";
 import { markRaw, type Component } from "vue";
 
 export interface Item {
@@ -110,14 +110,14 @@ export default {
           editor.chain().focus().deleteRange(range).setCodeBlock().run();
         },
       },
-      {
-        icon: markRaw(MdiMathCompass),
-        title: "数学公式",
-        keywords: ["katex", "math", "shuxuegongshi"],
-        command: ({ editor, range }: { editor: Editor; range: Range }) => {
-          editor.chain().focus().deleteRange(range).addKatex().run();
-        },
-      },
+      // {
+      //   icon: markRaw(MdiMathCompass),
+      //   title: "数学公式",
+      //   keywords: ["katex", "math", "shuxuegongshi"],
+      //   command: ({ editor, range }: { editor: Editor; range: Range }) => {
+      //     editor.chain().focus().deleteRange(range).addKatex().run();
+      //   },
+      // },
     ]
       .filter((item) =>
         [...item.keywords, item.title].some((keyword) =>

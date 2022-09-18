@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PropType, ref, watch } from "vue";
+import { type PropType, ref, watch } from "vue";
 import type { Item } from "./suggestion";
 
 const props = defineProps({

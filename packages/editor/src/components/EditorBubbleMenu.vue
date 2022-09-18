@@ -130,10 +130,10 @@ const menuItems: MenuItem[] = [
       <button
         v-for="(menuItem, index) in menuItems"
         :key="index"
-        :class="{ 'bg-gray-200 !text-black': menuItem.isActive() }"
+        :class="{ 'bg-gray-200 !text-black': menuItem.isActive?.() }"
         :title="menuItem.title"
         class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
-        @click="menuItem.action()"
+        @click="menuItem.action?.()"
       >
         <component :is="menuItem.icon" />
       </button>

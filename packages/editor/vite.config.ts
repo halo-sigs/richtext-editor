@@ -2,16 +2,13 @@ import { fileURLToPath, URL } from "url";
 
 import { defineConfig } from "vite";
 import Vue from "@vitejs/plugin-vue";
-import VueJsx from "@vitejs/plugin-vue-jsx";
 import Icons from "unplugin-icons/vite";
 import Dts from "vite-plugin-dts";
 import path from "path";
-import { FALSE } from "sass";
 
 export default defineConfig({
   plugins: [
     Vue(),
-    VueJsx(),
     Icons({
       compiler: "vue3",
     }),
@@ -34,7 +31,7 @@ export default defineConfig({
       formats: ["es", "iife"],
       fileName: (format) => `rich-text-editor.${format}.js`,
     },
-    minify:false,
+    minify: false,
     rollupOptions: {
       external: ["vue"],
       output: {

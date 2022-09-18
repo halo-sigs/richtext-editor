@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { PropType } from "vue";
-import { Editor } from "@tiptap/vue-3";
+import type { Editor } from "@tiptap/vue-3";
 import { Menu as VMenu } from "floating-vue";
 import type { MenuItem } from "@/types";
 import MdiFormatBold from "~icons/mdi/format-bold";
@@ -23,7 +23,7 @@ import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
 import MdiFormatQuoteOpen from "~icons/mdi/format-quote-open";
 import MdiCodeTags from "~icons/mdi/code-tags";
 import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
-import MdiMathCompass from "~icons/mdi/math-compass";
+// import MdiMathCompass from "~icons/mdi/math-compass";
 import MdiFormatSuperscript from "~icons/mdi/format-superscript";
 import MdiFormatSubscript from "~icons/mdi/format-subscript";
 
@@ -113,13 +113,13 @@ const menuItems: MenuItem[] = [
     action: () => props.editor.chain().focus().toggleCodeBlock().run(),
     isActive: () => props.editor.isActive("codeBlock"),
   },
-  {
-    type: "button",
-    icon: MdiMathCompass,
-    title: "Math",
-    action: () => props.editor.chain().addKatex().run(),
-    isActive: () => props.editor.isActive("katexBlock"),
-  },
+  // {
+  //   type: "button",
+  //   icon: MdiMathCompass,
+  //   title: "Math",
+  //   action: () => props.editor.chain().addKatex().run(),
+  //   isActive: () => props.editor.isActive("katexBlock"),
+  // },
   {
     type: "button",
     icon: MdiFormatHeaderPound,
@@ -217,7 +217,7 @@ const menuItems: MenuItem[] = [
     >
       <button
         v-if="!menuItem.children?.length"
-        :class="{ 'bg-gray-200': menuItem.isActive() }"
+        :class="{ 'bg-gray-200': menuItem.isActive?.() }"
         class="hover:bg-gray-100 p-1 rounded-sm"
         @click="menuItem.action"
       >
@@ -225,7 +225,7 @@ const menuItems: MenuItem[] = [
       </button>
       <VMenu v-else>
         <button
-          :class="{ 'bg-gray-200': menuItem.isActive() }"
+          :class="{ 'bg-gray-200': menuItem.isActive?.() }"
           class="hover:bg-gray-100 p-1 rounded-sm"
         >
           <component :is="menuItem.icon" />
@@ -235,7 +235,7 @@ const menuItems: MenuItem[] = [
             <div
               v-for="(child, childIndex) in menuItem.children"
               :key="childIndex"
-              :class="{ 'bg-gray-200': child.isActive() }"
+              :class="{ 'bg-gray-200': child.isActive?.() }"
               class="p-1 hover:bg-gray-100"
             >
               <button
