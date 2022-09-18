@@ -1,7 +1,7 @@
 import type { Editor, Range } from "@tiptap/vue-3";
 import { VueRenderer } from "@tiptap/vue-3";
 import type { Instance } from "tippy.js";
-import tippy, { roundArrow } from "tippy.js";
+import tippy from "tippy.js";
 import "tippy.js/dist/svg-arrow.css";
 import CommandsView from "./CommandsView.vue";
 import MdiFormatHeader1 from "~icons/mdi/format-header-1";
@@ -146,7 +146,6 @@ export default {
           getReferenceClientRect: props.clientRect,
           appendTo: () => document.body,
           content: component.element,
-          arrow: roundArrow,
           showOnCreate: true,
           interactive: true,
           trigger: "manual",

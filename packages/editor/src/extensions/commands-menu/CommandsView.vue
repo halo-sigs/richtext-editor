@@ -68,44 +68,57 @@ defineExpose({
 });
 </script>
 <template>
-  <div class="items">
+  <div class="command-items">
     <template v-if="items.length">
-      <button
+      <div
         v-for="(item, index) in items"
         :key="index"
         :class="{ 'is-selected': index === selectedIndex }"
-        class="item flex flex-row gap-5 items-center w-32 rounded"
+        class="command-item"
         @click="handleSelectItem(index)"
       >
-        <component :is="item.icon" class="bg-gray-100 p-0.5 rounded-sm" />
-        {{ item.title }}
-      </button>
+        <component :is="item.icon" class="command-icon" />
+        <span class="command-title">
+          {{ item.title }}
+        </span>
+      </div>
     </template>
     <div v-else class="item">No result</div>
   </div>
 </template>
-<style>
-.items {
-  padding: 0.2rem;
-  position: relative;
-  border-radius: 0.5rem;
-  background: #fff;
-  color: rgba(0, 0, 0, 0.8);
-  overflow: hidden;
-  font-size: 0.9rem;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0px 10px 20px rgba(0, 0, 0, 0.1);
-}
+<style lang="scss">
+.command-items {
+  @apply relative
+  rounded-md
+  bg-white
+  overflow-hidden
+  drop-shadow
+  w-44
+  p-1;
 
-.item {
-  margin: 0;
-  width: 100%;
-  text-align: left;
-  background: transparent;
-  border: 1px solid transparent;
-  padding: 0.2rem 0.4rem;
-}
+  .command-item {
+    @apply flex flex-row items-center rounded gap-4 p-1;
 
-.item.is-selected {
-  border-color: #000;
+    &.is-selected {
+      @apply bg-gray-100;
+
+      .command-icon {
+        @apply bg-white;
+      }
+
+      .command-title {
+        @apply text-gray-900 font-medium;
+      }
+    }
+
+    .command-icon {
+      @apply bg-gray-100 p-1 rounded w-6 h-6;
+    }
+
+    .command-title {
+      @apply text-xs 
+      text-gray-600;
+    }
+  }
 }
 </style>
