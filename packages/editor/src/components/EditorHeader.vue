@@ -32,6 +32,11 @@ const props = defineProps({
     type: Object as PropType<Editor>,
     required: true,
   },
+  addtionalMenuItems: {
+    type: Array as PropType<MenuItem[]>,
+    required: false,
+    default: () => [],
+  },
 });
 
 const menuItems: MenuItem[] = [
@@ -204,6 +209,7 @@ const menuItems: MenuItem[] = [
     action: () => props.editor.chain().focus().setTextAlign("justify").run(),
     isActive: () => props.editor.isActive({ textAlign: "justify" }),
   },
+  ...props.addtionalMenuItems,
 ];
 </script>
 <template>

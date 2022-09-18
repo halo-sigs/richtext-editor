@@ -83,7 +83,9 @@ defineExpose({
         </span>
       </div>
     </template>
-    <div v-else class="item">No result</div>
+    <div v-else class="command-empty">
+      <span>没有搜索结果</span>
+    </div>
   </div>
 </template>
 <style lang="scss">
@@ -119,6 +121,10 @@ defineExpose({
       @apply text-xs 
       text-gray-600;
     }
+  }
+
+  .command-empty {
+    @apply flex justify-center items-center p-1 text-xs text-gray-600;
   }
 }
 </style>
