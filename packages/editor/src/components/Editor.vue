@@ -10,7 +10,7 @@ defineProps({
     type: Object as PropType<Editor>,
     required: true,
   },
-  addtionalMenuItems: {
+  additionalMenuItems: {
     type: Array as PropType<MenuItem[]>,
     required: false,
     default: () => [],
@@ -20,7 +20,10 @@ defineProps({
 <template>
   <div v-if="editor" class="halo-rich-text-editor">
     <editor-bubble-menu :editor="editor" />
-    <editor-header :editor="editor" :addtionalMenuItems="addtionalMenuItems" />
+    <editor-header
+      :editor="editor"
+      :additionalMenuItems="additionalMenuItems"
+    />
     <div class="h-full flex flex-row w-full">
       <editor-content :editor="editor" class="editor-content markdown-body" />
       <div class="h-full">
