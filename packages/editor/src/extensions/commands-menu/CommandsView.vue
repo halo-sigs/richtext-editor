@@ -45,10 +45,12 @@ function onKeyDown({ event }: { event: KeyboardEvent }) {
 function handleKeyUp() {
   selectedIndex.value =
     (selectedIndex.value + props.items.length - 1) % props.items.length;
+  scrollToSelected();
 }
 
 function handleKeyDown() {
   selectedIndex.value = (selectedIndex.value + 1) % props.items.length;
+  scrollToSelected();
 }
 
 function handleKeyEnter() {
@@ -63,6 +65,18 @@ function handleSelectItem(index: number) {
   }
 }
 
+function scrollToSelected() {
+  const selected = document.getElementById(
+    `command-item-${selectedIndex.value}`
+  );
+
+  if (selected) {
+    selected.scrollIntoView({
+      behavior: "smooth",
+    });
+  }
+}
+
 defineExpose({
   onKeyDown,
 });
@@ -73,6 +87,7 @@ defineExpose({
       <div
         v-for="(item, index) in items"
         :key="index"
+        :id="`command-item-${index}`"
         :class="{ 'is-selected': index === selectedIndex }"
         class="command-item"
         @click="handleSelectItem(index)"
@@ -95,8 +110,10 @@ defineExpose({
   bg-white
   overflow-hidden
   drop-shadow
-  w-44
-  p-1;
+  w-52
+  p-1
+  max-h-72
+  overflow-y-auto;
 
   .command-item {
     @apply flex flex-row items-center rounded gap-4 p-1;
