@@ -3,18 +3,13 @@
   "version": "0.0.0",
   "private": "true",
   "scripts": {
-    "dev": "vite",
     "packages:dev": "pnpm --filter './packages/**' dev",
-    "build": "run-p type-check build-only",
     "packages:build": "pnpm --filter './packages/**' build",
-    "preview": "vite preview --port 4173",
-    "test:unit": "vitest --environment jsdom",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "packages:release": "pnpm --filter './packages/**' release",
     "example:dev": "pnpm --filter './example/' run dev",
     "example:build": "pnpm --filter './example/' run build",
-    "packages:release": "pnpm --filter './packages/**' release"
+    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
     "pinia": "^2.0.23",
@@ -22,6 +17,7 @@
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
+    "@tailwindcss/typography": "^0.5.7",
     "@types/jsdom": "^16.2.15",
     "@types/node": "^16.18.2",
     "@vitejs/plugin-vue": "^3.2.0",

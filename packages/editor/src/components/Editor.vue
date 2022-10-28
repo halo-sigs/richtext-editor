@@ -25,7 +25,10 @@ defineProps({
       :additionalMenuItems="additionalMenuItems"
     />
     <div class="h-full flex flex-row w-full">
-      <editor-content :editor="editor" class="editor-content markdown-body" />
+      <editor-content
+        :editor="editor"
+        class="editor-content prose prose-base !max-w-none prose-pre:p-0"
+      />
       <div class="h-full">
         <slot name="extra"></slot>
       </div>

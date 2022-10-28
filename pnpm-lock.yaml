@@ -5,6 +5,7 @@ importers:
   .:
     specifiers:
       '@rushstack/eslint-patch': ^1.2.0
+      '@tailwindcss/typography': ^0.5.7
       '@types/jsdom': ^16.2.15
       '@types/node': ^16.18.2
       '@vitejs/plugin-vue': ^3.2.0
@@ -29,6 +30,7 @@ importers:
       vue: 3.2.41
     devDependencies:
       '@rushstack/eslint-patch': 1.2.0
+      '@tailwindcss/typography': 0.5.7
       '@types/jsdom': 16.2.15
       '@types/node': 16.18.2
       '@vitejs/plugin-vue': 3.2.0_vite@3.2.0+vue@3.2.41
@@ -103,7 +105,6 @@ importers:
       '@vue/compiler-sfc': ^3.2.41
       autoprefixer: ^10.4.13
       floating-vue: 2.0.0-beta.20
-      github-markdown-css: ^5.1.0
       katex: ^0.16.3
       lowlight: ^2.7.0
       postcss: ^8.4.18
@@ -150,7 +151,6 @@ importers:
       '@tiptap/suggestion': 2.0.0-beta.195_ujyaqudhnf6lg6m3pea2tubg4a
       '@tiptap/vue-3': 2.0.0-beta.195_ujyaqudhnf6lg6m3pea2tubg4a
       floating-vue: 2.0.0-beta.20
-      github-markdown-css: 5.1.0
       katex: 0.16.3
       lowlight: 2.7.0
       tippy.js: 6.3.7
@@ -892,6 +892,17 @@ packages:
     engines: {node: '>=14.16'}
     dependencies:
       defer-to-connect: 2.0.1
+    dev: true
+
+  /@tailwindcss/typography/0.5.7:
+    resolution: {integrity: sha512-JTTSTrgZfp6Ki4svhPA4mkd9nmQ/j9EfE7SbHJ1cLtthKkpW2OxsFXzSmxbhYbEkfNIyAyhle5p4SYyKRbz/jg==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || insiders'
+    dependencies:
+      lodash.castarray: 4.4.0
+      lodash.isplainobject: 4.0.6
+      lodash.merge: 4.6.2
+      postcss-selector-parser: 6.0.10
     dev: true
 
   /@tiptap/core/2.0.0-beta.195:
@@ -3245,10 +3256,6 @@ packages:
       git-up: 7.0.0
     dev: true
 
-  /github-markdown-css/5.1.0:
-    resolution: {integrity: sha512-QLtORwHHtUHhPMHu7i4GKfP6Vx5CWZn+NKQXe+cBhslY1HEt0CTEkP4d/vSROKV0iIJSpl4UtlQ16AD8C6lMug==}
-    dev: false
-
   /glob-parent/5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
     engines: {node: '>= 6'}
@@ -4097,12 +4104,20 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash.castarray/4.4.0:
+    resolution: {integrity: sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q==}
+    dev: true
+
   /lodash.get/4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
     dev: true
 
   /lodash.isequal/4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+    dev: true
+
+  /lodash.isplainobject/4.0.6:
+    resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
     dev: true
 
   /lodash.merge/4.6.2:

@@ -57,6 +57,7 @@ const allExtensions = [
   ExtensionStrike,
   ExtensionText,
   ExtensionImage.configure({
+    inline: true,
     HTMLAttributes: {
       loading: "lazy",
     },
