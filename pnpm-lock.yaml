@@ -50,12 +50,9 @@ importers:
   example:
     specifiers:
       '@halo-dev/richtext-editor': workspace:*
-      autoprefixer: ^10.4.11
-      postcss: ^8.4.16
       rehype-format: ^4.0.1
       rehype-parse: ^8.0.4
       rehype-stringify: ^9.0.3
-      tailwindcss: ^3.1.8
       unified: ^10.1.2
     dependencies:
       '@halo-dev/richtext-editor': link:../packages/editor
@@ -63,10 +60,6 @@ importers:
       rehype-parse: 8.0.4
       rehype-stringify: 9.0.3
       unified: 10.1.2
-    devDependencies:
-      autoprefixer: 10.4.11_postcss@8.4.16
-      postcss: 8.4.16
-      tailwindcss: 3.1.8_postcss@8.4.16
 
   packages/editor:
     specifiers:

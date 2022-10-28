@@ -15,10 +15,5 @@
     "rehype-parse": "^8.0.4",
     "rehype-stringify": "^9.0.3",
     "unified": "^10.1.2"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.11",
-    "postcss": "^8.4.16",
-    "tailwindcss": "^3.1.8"
   }
 }
