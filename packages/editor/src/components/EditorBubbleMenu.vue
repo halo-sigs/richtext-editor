@@ -4,120 +4,17 @@ import "tippy.js/dist/svg-arrow.css";
 import type { PropType } from "vue";
 import { BubbleMenu, Editor } from "@tiptap/vue-3";
 import type { MenuItem } from "@/types";
-import MdiFormatBold from "~icons/mdi/format-bold";
-import MdiFormatItalic from "~icons/mdi/format-italic";
-import MdiFormatStrikethrough from "~icons/mdi/format-strikethrough";
-import MdiFormatUnderline from "~icons/mdi/format-underline";
-import MdiFormatAlignLeft from "~icons/mdi/format-align-left";
-import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
-import MdiFormatAlignRight from "~icons/mdi/format-align-right";
-import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
-import MdiFormatQuoteOpen from "~icons/mdi/format-quote-open";
-import MdiCodeTags from "~icons/mdi/code-tags";
-import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
-import MdiFormatSuperscript from "~icons/mdi/format-superscript";
-import MdiFormatSubscript from "~icons/mdi/format-subscript";
-
-const props = defineProps({
+defineProps({
   editor: {
     type: Object as PropType<Editor>,
     required: true,
   },
+  menuItems: {
+    type: Array as PropType<MenuItem[]>,
+    required: false,
+    default: () => [],
+  },
 });
-
-const menuItems: MenuItem[] = [
-  {
-    type: "button",
-    icon: MdiFormatBold,
-    title: "Bold",
-    action: () => props.editor.chain().focus().toggleBold().run(),
-    isActive: () => props.editor.isActive("bold"),
-  },
-  {
-    type: "button",
-    icon: MdiFormatItalic,
-    title: "Italic",
-    action: () => props.editor.chain().focus().toggleItalic().run(),
-    isActive: () => props.editor.isActive("italic"),
-  },
-  {
-    type: "button",
-    icon: MdiFormatUnderline,
-    title: "Underline",
-    action: () => props.editor.chain().focus().toggleUnderline().run(),
-    isActive: () => props.editor.isActive("underline"),
-  },
-  {
-    type: "button",
-    icon: MdiFormatStrikethrough,
-    title: "Strike",
-    action: () => props.editor.chain().focus().toggleStrike().run(),
-    isActive: () => props.editor.isActive("strike"),
-  },
-  {
-    type: "button",
-    icon: MdiFormatQuoteOpen,
-    title: "Quote",
-    action: () => props.editor.chain().focus().toggleBlockquote().run(),
-    isActive: () => props.editor.isActive("blockquote"),
-  },
-  {
-    type: "button",
-    icon: MdiCodeTags,
-    title: "Code",
-    action: () => props.editor.chain().focus().toggleCode().run(),
-    isActive: () => props.editor.isActive("code"),
-  },
-  {
-    type: "button",
-    icon: MdiCodeBracesBox,
-    title: "Code Block",
-    action: () => props.editor.chain().focus().toggleCodeBlock().run(),
-    isActive: () => props.editor.isActive("codeBlock"),
-  },
-  {
-    type: "button",
-    icon: MdiFormatSuperscript,
-    title: "SuperScript",
-    action: () => props.editor.chain().focus().toggleSuperscript().run(),
-    isActive: () => props.editor.isActive("superscript"),
-  },
-  {
-    type: "button",
-    icon: MdiFormatSubscript,
-    title: "SubScript",
-    action: () => props.editor.chain().focus().toggleSubscript().run(),
-    isActive: () => props.editor.isActive("subscript"),
-  },
-  {
-    type: "button",
-    icon: MdiFormatAlignLeft,
-    title: "Align left",
-    action: () => props.editor.chain().focus().setTextAlign("left").run(),
-    isActive: () => props.editor.isActive({ textAlign: "left" }),
-  },
-  {
-    type: "button",
-    icon: MdiFormatAlignCenter,
-    title: "Align center",
-    action: () => props.editor.chain().focus().setTextAlign("center").run(),
-    isActive: () => props.editor.isActive({ textAlign: "center" }),
-  },
-  {
-    type: "button",
-    icon: MdiFormatAlignRight,
-    title: "Align right",
-    action: () => props.editor.chain().focus().setTextAlign("right").run(),
-    isActive: () => props.editor.isActive({ textAlign: "right" }),
-  },
-  {
-    type: "button",
-    icon: MdiFormatAlignJustify,
-    title: "Align justify",
-    action: () => props.editor.chain().focus().setTextAlign("justify").run(),
-    isActive: () => props.editor.isActive({ textAlign: "justify" }),
-  },
-];
 </script>
 <template>
   <bubble-menu

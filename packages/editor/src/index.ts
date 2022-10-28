@@ -17,3 +17,4 @@ export { RichTextEditor };
 
 export * from "@tiptap/vue-3";
 export * from "./extensions";
+export * from "./menus";

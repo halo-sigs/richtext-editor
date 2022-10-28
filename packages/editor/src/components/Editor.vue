@@ -15,15 +15,22 @@ defineProps({
     required: false,
     default: () => [],
   },
+  toolbarMenuItems: {
+    type: Array as PropType<MenuItem[]>,
+    required: false,
+    default: () => [],
+  },
+  bubbleMenuItems: {
+    type: Array as PropType<MenuItem[]>,
+    required: false,
+    default: () => [],
+  },
 });
 </script>
 <template>
   <div v-if="editor" class="halo-rich-text-editor">
-    <editor-bubble-menu :editor="editor" />
-    <editor-header
-      :editor="editor"
-      :additionalMenuItems="additionalMenuItems"
-    />
+    <editor-bubble-menu :editor="editor" :menu-items="bubbleMenuItems" />
+    <editor-header :menu-items="toolbarMenuItems" />
     <div class="h-full flex flex-row w-full">
       <editor-content
         :editor="editor"
