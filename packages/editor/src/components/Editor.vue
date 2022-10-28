@@ -34,7 +34,7 @@ defineProps({
     <div class="h-full flex flex-row w-full">
       <editor-content
         :editor="editor"
-        class="editor-content prose prose-base !max-w-none prose-pre:p-0"
+        class="editor-content prose prose-base !max-w-none prose-pre:p-0 bg-white"
       />
       <div class="h-full">
         <slot name="extra"></slot>
