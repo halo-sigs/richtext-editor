@@ -84,7 +84,7 @@ const allExtensions = [
     placeholder: "输入 / 以选择输入类型",
   }),
   ExtensionCommands.configure({
-    suggestion: CommandsSuggestion,
+    suggestion: {},
   }),
   ExtensionCodeBlock.configure({
     lowlight,

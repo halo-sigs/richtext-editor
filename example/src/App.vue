@@ -6,7 +6,48 @@ import rehypeParse from "rehype-parse";
 import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 import {
-  allExtensions,
+  ExtensionBlockquote,
+  ExtensionBold,
+  ExtensionBulletList,
+  ExtensionCode,
+  ExtensionDocument,
+  ExtensionDropcursor,
+  ExtensionGapcursor,
+  ExtensionHardBreak,
+  ExtensionHeading,
+  ExtensionHistory,
+  ExtensionHorizontalRule,
+  ExtensionItalic,
+  ExtensionListItem,
+  ExtensionOrderedList,
+  ExtensionParagraph,
+  ExtensionStrike,
+  ExtensionText,
+  ExtensionImage,
+  ExtensionTaskList,
+  ExtensionTaskItem,
+  ExtensionLink,
+  ExtensionTextAlign,
+  ExtensionUnderline,
+  ExtensionTable,
+  ExtensionTableHeader,
+  ExtensionTableCell,
+  ExtensionTableRow,
+  ExtensionSubscript,
+  ExtensionSuperscript,
+  ExtensionPlaceholder,
+  ExtensionCommands,
+  CommandsSuggestion,
+  CommandHeader1,
+  CommandHeader2,
+  CommandHeader3,
+  CommandHeader4,
+  CommandHeader5,
+  CommandHeader6,
+  CommandCodeBlock,
+  ExtensionCodeBlock,
+  lowlight,
+  ExtensionKatexBlock,
   RichTextEditor,
   useEditor,
   UndoMenuItem,
@@ -31,7 +72,76 @@ const content = ref("");
 
 const editor = useEditor({
   content: content.value,
-  extensions: [...allExtensions],
+  extensions: [
+    ExtensionBlockquote,
+    ExtensionBold,
+    ExtensionBulletList,
+    ExtensionCode,
+    ExtensionDocument,
+    ExtensionDropcursor,
+    ExtensionGapcursor,
+    ExtensionHardBreak,
+    ExtensionHeading,
+    ExtensionHistory,
+    ExtensionHorizontalRule,
+    ExtensionItalic,
+    ExtensionListItem,
+    ExtensionOrderedList,
+    ExtensionParagraph,
+    ExtensionStrike,
+    ExtensionText,
+    ExtensionImage.configure({
+      inline: true,
+      HTMLAttributes: {
+        loading: "lazy",
+      },
+    }),
+    ExtensionTaskList,
+    ExtensionTaskItem,
+    ExtensionLink.configure({
+      autolink: true,
+      openOnClick: false,
+    }),
+    ExtensionTextAlign.configure({
+      types: ["heading", "paragraph"],
+    }),
+    ExtensionUnderline,
+    ExtensionTable.configure({
+      resizable: true,
+    }),
+    ExtensionTableHeader,
+    ExtensionTableCell,
+    ExtensionTableRow,
+    ExtensionSubscript,
+    ExtensionSuperscript,
+    ExtensionPlaceholder.configure({
+      placeholder: "输入 / 以选择输入类型",
+    }),
+    ExtensionCommands.configure({
+      suggestion: {
+        ...CommandsSuggestion,
+        items: ({ query }: { query: string }) => {
+          return [
+            CommandHeader1,
+            CommandHeader2,
+            CommandHeader3,
+            CommandHeader4,
+            CommandHeader5,
+            CommandHeader6,
+            CommandCodeBlock,
+          ].filter((item) =>
+            [...item.keywords, item.title].some((keyword) =>
+              keyword.includes(query)
+            )
+          );
+        },
+      },
+    }),
+    ExtensionCodeBlock.configure({
+      lowlight,
+    }),
+    ExtensionKatexBlock,
+  ],
   onUpdate: () => {
     content.value = editor.value?.getHTML() + "";
   },
