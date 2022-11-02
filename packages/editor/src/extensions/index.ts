@@ -36,7 +36,6 @@ import {
   ExtensionCommands,
 } from "../extensions/commands-menu";
 import { ExtensionCodeBlock, lowlight } from "@/extensions/code-block";
-import { KatexBlock as ExtensionKatexBlock } from "../extensions/katex/index";
 
 const allExtensions = [
   ExtensionBlockquote,
@@ -89,7 +88,6 @@ const allExtensions = [
   ExtensionCodeBlock.configure({
     lowlight,
   }),
-  ExtensionKatexBlock,
 ];
 
 export {
@@ -128,5 +126,4 @@ export {
   CommandsSuggestion,
   ExtensionCodeBlock,
   lowlight,
-  ExtensionKatexBlock,
 };

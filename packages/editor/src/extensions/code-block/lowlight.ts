@@ -1,4 +1,3 @@
 import { lowlight } from "lowlight";
-import "lowlight/lib/all";
-
+import "lowlight/lib/common";
 export default lowlight;
