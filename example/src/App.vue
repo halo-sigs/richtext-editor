@@ -47,7 +47,6 @@ import {
   CommandCodeBlock,
   ExtensionCodeBlock,
   lowlight,
-  ExtensionKatexBlock,
   RichTextEditor,
   useEditor,
   UndoMenuItem,
@@ -140,7 +139,6 @@ const editor = useEditor({
     ExtensionCodeBlock.configure({
       lowlight,
     }),
-    ExtensionKatexBlock,
   ],
   onUpdate: () => {
     content.value = editor.value?.getHTML() + "";
