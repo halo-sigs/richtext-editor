@@ -86,14 +86,16 @@ defineExpose({
     <template v-if="items.length">
       <div
         v-for="(item, index) in items"
-        :key="index"
         :id="`command-item-${index}`"
+        :key="index"
         :class="{ 'is-selected': index === selectedIndex }"
-        class="command-item"
+        class="command-item group hover:bg-gray-100"
         @click="handleSelectItem(index)"
       >
-        <component :is="item.icon" class="command-icon" />
-        <span class="command-title">
+        <component :is="item.icon" class="command-icon group-hover:!bg-white" />
+        <span
+          class="command-title group-hover:text-gray-900 group-hover:font-medium"
+        >
           {{ item.title }}
         </span>
       </div>

@@ -27,7 +27,7 @@ defineProps({
       >
         <component :is="menuItem.icon" />
       </button>
-      <VMenu v-else>
+      <VMenu v-else class="inline-flex">
         <button
           :class="{ 'bg-gray-200': menuItem.isActive?.() }"
           class="hover:bg-gray-100 p-1 rounded-sm"
@@ -35,22 +35,27 @@ defineProps({
           <component :is="menuItem.icon" />
         </button>
         <template #popper>
-          <div class="w-24 flex flex-col">
+          <div
+            class="relative rounded-md bg-white overflow-hidden drop-shadow w-48 p-1 max-h-72 overflow-y-auto"
+          >
             <div
               v-for="(child, childIndex) in menuItem.children"
               :key="childIndex"
-              :class="{ 'bg-gray-200': child.isActive?.() }"
-              class="p-1 hover:bg-gray-100"
+              :class="{ '!bg-gray-100': child.isActive?.() }"
+              class="flex flex-row items-center rounded gap-4 p-1 hover:bg-gray-100 group cursor-pointer"
+              @click="child.action"
             >
-              <button
-                class="flex flex-row gap-2 items-center justify-center"
-                @click="child.action"
+              <component
+                :is="child.icon"
+                class="bg-gray-100 p-1 rounded w-6 h-6 group-hover:bg-white"
+                :class="{ '!bg-white': child.isActive?.() }"
+              />
+              <span
+                class="text-xs text-gray-600 group-hover:text-gray-900 group-hover:font-medium"
+                :class="{ '!text-gray-900 !font-medium': child.isActive?.() }"
               >
-                <component :is="child.icon" />
-                <span class="text-sm">
-                  {{ child.title }}
-                </span>
-              </button>
+                {{ child.title }}
+              </span>
             </div>
           </div>
         </template>
