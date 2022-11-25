@@ -12,6 +12,7 @@ import MdiFormatHeader5 from "~icons/mdi/format-header-5";
 import MdiFormatHeader6 from "~icons/mdi/format-header-6";
 import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
 // import MdiMathCompass from "~icons/mdi/math-compass";
+import MdiWeb from "~icons/mdi/web";
 import { markRaw, type Component } from "vue";
 import type { SuggestionOptions } from "@tiptap/suggestion";
 
@@ -112,6 +113,23 @@ export const CommandCodeBlock: Item = {
   keywords: ["codeblock", "daimakuai"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor.chain().focus().deleteRange(range).setCodeBlock().run();
+  },
+};
+
+export const CommandIframe: Item = {
+  icon: markRaw(MdiWeb),
+  title: "嵌入网页",
+  keywords: ["iframe", "qianruwangye"],
+  command: ({ editor, range }: { editor: Editor; range: Range }) => {
+    editor
+      .chain()
+      .focus()
+      .deleteRange(range)
+      .insertContent([
+        { type: "iframe", attrs: { src: "" } },
+        { type: "paragraph", content: "" },
+      ])
+      .run();
   },
 };
 

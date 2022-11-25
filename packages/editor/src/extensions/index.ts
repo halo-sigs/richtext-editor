@@ -36,6 +36,7 @@ import {
   ExtensionCommands,
 } from "../extensions/commands-menu";
 import { ExtensionCodeBlock, lowlight } from "@/extensions/code-block";
+import ExtensionIframe from "./iframe";
 
 const allExtensions = [
   ExtensionBlockquote,
@@ -83,6 +84,7 @@ const allExtensions = [
   ExtensionCodeBlock.configure({
     lowlight,
   }),
+  ExtensionIframe,
 ];
 
 export {
@@ -121,4 +123,5 @@ export {
   CommandsSuggestion,
   ExtensionCodeBlock,
   lowlight,
+  ExtensionIframe,
 };

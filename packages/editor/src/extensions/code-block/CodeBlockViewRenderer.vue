@@ -31,7 +31,7 @@ const selectedLanguage = computed({
 </script>
 <template>
   <node-view-wrapper
-    class="code-block divide-gray-100 bg-gray-100 overflow-hidden rounded-md"
+    class="code-block divide-gray-100 bg-gray-100 overflow-hidden rounded-md my-3"
   >
     <div class="px-2 py-1.5">
       <select
