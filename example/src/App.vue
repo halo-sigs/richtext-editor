@@ -37,6 +37,7 @@ import {
   ExtensionSuperscript,
   ExtensionPlaceholder,
   ExtensionCommands,
+  ExtensionIframe,
   CommandsSuggestion,
   CommandHeader1,
   CommandHeader2,
@@ -45,6 +46,7 @@ import {
   CommandHeader5,
   CommandHeader6,
   CommandCodeBlock,
+  CommandIframe,
   ExtensionCodeBlock,
   lowlight,
   RichTextEditor,
@@ -128,6 +130,7 @@ const editor = useEditor({
             CommandHeader5,
             CommandHeader6,
             CommandCodeBlock,
+            CommandIframe,
           ].filter((item) =>
             [...item.keywords, item.title].some((keyword) =>
               keyword.includes(query)
@@ -139,6 +142,7 @@ const editor = useEditor({
     ExtensionCodeBlock.configure({
       lowlight,
     }),
+    ExtensionIframe,
   ],
   onUpdate: () => {
     content.value = editor.value?.getHTML() + "";
