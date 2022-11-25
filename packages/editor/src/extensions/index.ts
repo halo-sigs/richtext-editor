@@ -16,7 +16,7 @@ import ExtensionOrderedList from "@tiptap/extension-ordered-list";
 import ExtensionParagraph from "@tiptap/extension-paragraph";
 import ExtensionStrike from "@tiptap/extension-strike";
 import ExtensionText from "@tiptap/extension-text";
-import ExtensionImage from "@tiptap/extension-image";
+import ExtensionImage from "./image";
 import ExtensionTaskList from "@tiptap/extension-task-list";
 import ExtensionTaskItem from "@tiptap/extension-task-item";
 import ExtensionLink from "@tiptap/extension-link";
@@ -55,12 +55,7 @@ const allExtensions = [
   ExtensionParagraph,
   ExtensionStrike,
   ExtensionText,
-  ExtensionImage.configure({
-    inline: true,
-    HTMLAttributes: {
-      loading: "lazy",
-    },
-  }),
+  ExtensionImage,
   ExtensionTaskList,
   ExtensionTaskItem,
   ExtensionLink.configure({

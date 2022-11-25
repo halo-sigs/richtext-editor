@@ -1,9 +1,20 @@
 <script lang="ts" setup>
-import { NodeViewContent, nodeViewProps, NodeViewWrapper } from "@tiptap/vue-3";
+import type { Node as ProseMirrorNode } from "prosemirror-model";
+import type { Decoration } from "prosemirror-view";
+import { NodeViewContent, NodeViewWrapper, Editor, Node } from "@tiptap/vue-3";
 import lowlight from "./lowlight";
 import { computed } from "vue";
 
-const props = defineProps(nodeViewProps);
+const props = defineProps<{
+  editor: Editor;
+  node: ProseMirrorNode;
+  decorations: Decoration[];
+  selected: boolean;
+  extension: Node<any, any>;
+  getPos: () => number;
+  updateAttributes: (attributes: Record<string, any>) => void;
+  deleteNode: () => void;
+}>();
 
 const languages = computed(() => {
   return lowlight.listLanguages();
