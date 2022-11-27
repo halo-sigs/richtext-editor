@@ -30,9 +30,6 @@ import {
   ExtensionTextAlign,
   ExtensionUnderline,
   ExtensionTable,
-  ExtensionTableHeader,
-  ExtensionTableCell,
-  ExtensionTableRow,
   ExtensionSubscript,
   ExtensionSuperscript,
   ExtensionPlaceholder,
@@ -67,6 +64,7 @@ import {
   AlignCenterMenuItem,
   AlignRightMenuItem,
   AlignJustifyMenuItem,
+  TableMenuItem,
 } from "@halo-dev/richtext-editor";
 
 const content = ref("");
@@ -110,9 +108,6 @@ const editor = useEditor({
     ExtensionTable.configure({
       resizable: true,
     }),
-    ExtensionTableHeader,
-    ExtensionTableCell,
-    ExtensionTableRow,
     ExtensionSubscript,
     ExtensionSuperscript,
     ExtensionPlaceholder.configure({
@@ -166,6 +161,7 @@ const toolbarMenuItems = computed(() => {
   return [
     UndoMenuItem(editor.value),
     RedoMenuItem(editor.value),
+    HeadingMenuItem(editor.value),
     BoldMenuItem(editor.value),
     ItalicMenuItem(editor.value),
     UnderlineMenuItem(editor.value),
@@ -175,7 +171,7 @@ const toolbarMenuItems = computed(() => {
     SuperScriptMenuItem(editor.value),
     SubScriptMenuItem(editor.value),
     CodeBlockMenuItem(editor.value),
-    HeadingMenuItem(editor.value),
+    TableMenuItem(editor.value),
     AlignLeftMenuItem(editor.value),
     AlignCenterMenuItem(editor.value),
     AlignRightMenuItem(editor.value),

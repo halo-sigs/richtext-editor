@@ -16,16 +16,11 @@ import ExtensionOrderedList from "@tiptap/extension-ordered-list";
 import ExtensionParagraph from "@tiptap/extension-paragraph";
 import ExtensionStrike from "@tiptap/extension-strike";
 import ExtensionText from "@tiptap/extension-text";
-import ExtensionImage from "./image";
 import ExtensionTaskList from "@tiptap/extension-task-list";
 import ExtensionTaskItem from "@tiptap/extension-task-item";
 import ExtensionLink from "@tiptap/extension-link";
 import ExtensionTextAlign from "@tiptap/extension-text-align";
 import ExtensionUnderline from "@tiptap/extension-underline";
-import ExtensionTable from "@tiptap/extension-table";
-import ExtensionTableHeader from "@tiptap/extension-table-header";
-import ExtensionTableCell from "@tiptap/extension-table-cell";
-import ExtensionTableRow from "@tiptap/extension-table-row";
 import ExtensionSubscript from "@tiptap/extension-subscript";
 import ExtensionSuperscript from "@tiptap/extension-superscript";
 import ExtensionPlaceholder from "@tiptap/extension-placeholder";
@@ -37,6 +32,8 @@ import {
 } from "../extensions/commands-menu";
 import { ExtensionCodeBlock, lowlight } from "@/extensions/code-block";
 import ExtensionIframe from "./iframe";
+import ExtensionImage from "./image";
+import ExtensionTable from "./table";
 
 const allExtensions = [
   ExtensionBlockquote,
@@ -70,9 +67,6 @@ const allExtensions = [
   ExtensionTable.configure({
     resizable: true,
   }),
-  ExtensionTableHeader,
-  ExtensionTableCell,
-  ExtensionTableRow,
   ExtensionSubscript,
   ExtensionSuperscript,
   ExtensionPlaceholder.configure({
@@ -113,9 +107,6 @@ export {
   ExtensionTextAlign,
   ExtensionUnderline,
   ExtensionTable,
-  ExtensionTableHeader,
-  ExtensionTableCell,
-  ExtensionTableRow,
   ExtensionSubscript,
   ExtensionSuperscript,
   ExtensionPlaceholder,

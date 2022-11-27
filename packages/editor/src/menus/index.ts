@@ -5,6 +5,7 @@ import MdiFormatBold from "~icons/mdi/format-bold";
 import MdiFormatItalic from "~icons/mdi/format-italic";
 import MdiFormatStrikethrough from "~icons/mdi/format-strikethrough";
 import MdiFormatHeaderPound from "~icons/mdi/format-header-pound";
+import MdiFormatParagraph from "~icons/mdi/format-paragraph";
 import MdiFormatHeader1 from "~icons/mdi/format-header-1";
 import MdiFormatHeader2 from "~icons/mdi/format-header-2";
 import MdiFormatHeader3 from "~icons/mdi/format-header-3";
@@ -24,6 +25,18 @@ import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
 // import MdiMathCompass from "~icons/mdi/math-compass";
 import MdiFormatSuperscript from "~icons/mdi/format-superscript";
 import MdiFormatSubscript from "~icons/mdi/format-subscript";
+import MdiTable from "~icons/mdi/table";
+import MdiTablePlus from "~icons/mdi/table-plus";
+import MdiTableColumnPlusBefore from "~icons/mdi/table-column-plus-before";
+import MdiTableColumnPlusAfter from "~icons/mdi/table-column-plus-after";
+import MdiTableRowPlusAfter from "~icons/mdi/table-row-plus-after";
+import MdiTableRowPlusBefore from "~icons/mdi/table-row-plus-before";
+import MdiTableColumnRemove from "~icons/mdi/table-column-remove";
+import MdiTableRowRemove from "~icons/mdi/table-row-remove";
+import MdiTableRemove from "~icons/mdi/table-remove";
+import MdiTableHeadersEye from "~icons/mdi/table-headers-eye";
+import MdiTableMergeCells from "~icons/mdi/table-merge-cells";
+import MdiTableSplitCell from "~icons/mdi/table-split-cell";
 
 export interface MenuItem {
   type: "button" | "separator";
@@ -149,8 +162,15 @@ export function HeadingMenuItem(editor: Editor): MenuItem {
     type: "button",
     icon: MdiFormatHeaderPound,
     title: "普通文本",
-    isActive: () => editor.isActive("heading"),
+    isActive: () => editor.isActive("heading") || editor.isActive("paragraph"),
     children: [
+      {
+        type: "button",
+        icon: MdiFormatParagraph,
+        title: "普通文本",
+        action: () => editor.chain().focus().setParagraph().run(),
+        isActive: () => editor.isActive("paragraph"),
+      },
       {
         type: "button",
         icon: MdiFormatHeader1,
@@ -234,5 +254,105 @@ export function AlignJustifyMenuItem(editor: Editor): MenuItem {
     title: "Align Justify",
     action: () => editor.chain().focus().setTextAlign("justify").run(),
     isActive: () => editor.isActive({ textAlign: "justify" }),
+  };
+}
+
+export function TableMenuItem(editor: Editor): MenuItem {
+  return {
+    type: "button",
+    icon: MdiTable,
+    title: "表格",
+    isActive: () => editor.isActive("heading"),
+    children: [
+      {
+        type: "button",
+        icon: MdiTablePlus,
+        title: "插入表格",
+        action: () =>
+          editor
+            .chain()
+            .focus()
+            .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+            .run(),
+        isActive: () => false,
+      },
+      {
+        type: "button",
+        icon: MdiTableColumnPlusBefore,
+        title: "向前插入列",
+        action: () => editor.chain().focus().addColumnBefore().run(),
+        isActive: () => false,
+      },
+      {
+        type: "button",
+        icon: MdiTableColumnPlusAfter,
+        title: "向后插入列",
+        action: () => editor.chain().focus().addColumnAfter().run(),
+        isActive: () => false,
+      },
+      {
+        type: "button",
+        icon: MdiTableHeadersEye,
+        title: "显示/隐藏列表头",
+        action: () => editor.chain().focus().toggleHeaderColumn().run(),
+        isActive: () => false,
+      },
+      {
+        type: "button",
+        icon: MdiTableColumnRemove,
+        title: "删除当前列",
+        action: () => editor.chain().focus().deleteColumn().run(),
+        isActive: () => false,
+      },
+      {
+        type: "button",
+        icon: MdiTableRowPlusBefore,
+        title: "向上插入行",
+        action: () => editor.chain().focus().addRowBefore().run(),
+        isActive: () => false,
+      },
+      {
+        type: "button",
+        icon: MdiTableRowPlusAfter,
+        title: "向下插入行",
+        action: () => editor.chain().focus().addRowAfter().run(),
+        isActive: () => false,
+      },
+      {
+        type: "button",
+        icon: MdiTableHeadersEye,
+        title: "显示/隐藏行表头",
+        action: () => editor.chain().focus().toggleHeaderRow().run(),
+        isActive: () => false,
+      },
+      {
+        type: "button",
+        icon: MdiTableRowRemove,
+        title: "删除当前行",
+        action: () => editor.chain().focus().deleteRow().run(),
+        isActive: () => false,
+      },
+      {
+        type: "button",
+        icon: MdiTableMergeCells,
+        title: "合并单元格",
+        action: () => editor.chain().focus().mergeCells().run(),
+        isActive: () => false,
+      },
+      {
+        type: "button",
+        icon: MdiTableSplitCell,
+        title: "分割单元格",
+        action: () => editor.chain().focus().splitCell().run(),
+        isActive: () => false,
+      },
+      {
+        type: "button",
+        icon: MdiTableRemove,
+        title: "删除表格",
+        action: () => editor.chain().focus().deleteTable().run(),
+        isActive: () => false,
+      },
+    ],
   };
 }
