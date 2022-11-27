@@ -65,6 +65,9 @@ import {
   AlignRightMenuItem,
   AlignJustifyMenuItem,
   TableMenuItem,
+  BulletListMenuItem,
+  OrderedListMenuItem,
+  TaskListMenuItem,
 } from "@halo-dev/richtext-editor";
 
 const content = ref("");
@@ -170,6 +173,9 @@ const toolbarMenuItems = computed(() => {
     CodeMenuItem(editor.value),
     SuperScriptMenuItem(editor.value),
     SubScriptMenuItem(editor.value),
+    BulletListMenuItem(editor.value),
+    OrderedListMenuItem(editor.value),
+    TaskListMenuItem(editor.value),
     CodeBlockMenuItem(editor.value),
     TableMenuItem(editor.value),
     AlignLeftMenuItem(editor.value),

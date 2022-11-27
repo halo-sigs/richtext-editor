@@ -37,6 +37,9 @@ import MdiTableRemove from "~icons/mdi/table-remove";
 import MdiTableHeadersEye from "~icons/mdi/table-headers-eye";
 import MdiTableMergeCells from "~icons/mdi/table-merge-cells";
 import MdiTableSplitCell from "~icons/mdi/table-split-cell";
+import MdiFormatListBulleted from "~icons/mdi/format-list-bulleted";
+import MdiFormatListCheckbox from "~icons/mdi/format-list-checkbox";
+import MdiFormatListNumbered from "~icons/mdi/format-list-numbered";
 
 export interface MenuItem {
   type: "button" | "separator";
@@ -354,5 +357,35 @@ export function TableMenuItem(editor: Editor): MenuItem {
         isActive: () => false,
       },
     ],
+  };
+}
+
+export function BulletListMenuItem(editor: Editor): MenuItem {
+  return {
+    type: "button",
+    icon: MdiFormatListBulleted,
+    title: "无序列表",
+    action: () => editor.chain().focus().toggleBulletList().run(),
+    isActive: () => editor.isActive("bulletList"),
+  };
+}
+
+export function OrderedListMenuItem(editor: Editor): MenuItem {
+  return {
+    type: "button",
+    icon: MdiFormatListNumbered,
+    title: "有序列表",
+    action: () => editor.chain().focus().toggleOrderedList().run(),
+    isActive: () => editor.isActive("orderedList"),
+  };
+}
+
+export function TaskListMenuItem(editor: Editor): MenuItem {
+  return {
+    type: "button",
+    icon: MdiFormatListCheckbox,
+    title: "待办列表",
+    action: () => editor.chain().focus().toggleTaskList().run(),
+    isActive: () => editor.isActive("taskList"),
   };
 }
