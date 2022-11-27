@@ -1,5 +1,5 @@
 import type { Editor } from "@tiptap/vue-3";
-import type { Component } from "vue";
+import { markRaw, type Component } from "vue";
 
 import MdiFormatBold from "~icons/mdi/format-bold";
 import MdiFormatItalic from "~icons/mdi/format-italic";
@@ -54,7 +54,7 @@ export interface MenuItem {
 export function UndoMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiUndoVariant,
+    icon: markRaw(MdiUndoVariant),
     title: "撤销",
     action: () => editor.chain().undo().run(),
     isActive: () => false,
@@ -64,7 +64,7 @@ export function UndoMenuItem(editor: Editor): MenuItem {
 export function RedoMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiRedoVariant,
+    icon: markRaw(MdiRedoVariant),
     title: "恢复",
     action: () => editor.chain().redo().run(),
     isActive: () => false,
@@ -74,7 +74,7 @@ export function RedoMenuItem(editor: Editor): MenuItem {
 export function BoldMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatBold,
+    icon: markRaw(MdiFormatBold),
     title: "粗体",
     action: () => editor.chain().focus().toggleBold().run(),
     isActive: () => editor.isActive("bold"),
@@ -84,7 +84,7 @@ export function BoldMenuItem(editor: Editor): MenuItem {
 export function ItalicMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatItalic,
+    icon: markRaw(MdiFormatItalic),
     title: "斜体",
     action: () => editor.chain().focus().toggleItalic().run(),
     isActive: () => editor.isActive("italic"),
@@ -94,7 +94,7 @@ export function ItalicMenuItem(editor: Editor): MenuItem {
 export function UnderlineMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatUnderline,
+    icon: markRaw(MdiFormatUnderline),
     title: "下划线",
     action: () => editor.chain().focus().toggleUnderline().run(),
     isActive: () => editor.isActive("underline"),
@@ -104,7 +104,7 @@ export function UnderlineMenuItem(editor: Editor): MenuItem {
 export function StrikeMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatStrikethrough,
+    icon: markRaw(MdiFormatStrikethrough),
     title: "删除线",
     action: () => editor.chain().focus().toggleStrike().run(),
     isActive: () => editor.isActive("strike"),
@@ -114,7 +114,7 @@ export function StrikeMenuItem(editor: Editor): MenuItem {
 export function QuoteMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatQuoteOpen,
+    icon: markRaw(MdiFormatQuoteOpen),
     title: "引用",
     action: () => editor.chain().focus().toggleBlockquote().run(),
     isActive: () => editor.isActive("blockquote"),
@@ -124,7 +124,7 @@ export function QuoteMenuItem(editor: Editor): MenuItem {
 export function CodeMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiCodeTags,
+    icon: markRaw(MdiCodeTags),
     title: "行内代码",
     action: () => editor.chain().focus().toggleCode().run(),
     isActive: () => editor.isActive("code"),
@@ -134,7 +134,7 @@ export function CodeMenuItem(editor: Editor): MenuItem {
 export function SuperScriptMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatSuperscript,
+    icon: markRaw(MdiFormatSuperscript),
     title: "上角标",
     action: () => editor.chain().focus().toggleSuperscript().run(),
     isActive: () => editor.isActive("superscript"),
@@ -144,7 +144,7 @@ export function SuperScriptMenuItem(editor: Editor): MenuItem {
 export function SubScriptMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatSubscript,
+    icon: markRaw(MdiFormatSubscript),
     title: "下角标",
     action: () => editor.chain().focus().toggleSubscript().run(),
     isActive: () => editor.isActive("subscript"),
@@ -154,7 +154,7 @@ export function SubScriptMenuItem(editor: Editor): MenuItem {
 export function CodeBlockMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiCodeBracesBox,
+    icon: markRaw(MdiCodeBracesBox),
     title: "代码块",
     action: () => editor.chain().focus().toggleCodeBlock().run(),
     isActive: () => editor.isActive("codeBlock"),
@@ -164,55 +164,55 @@ export function CodeBlockMenuItem(editor: Editor): MenuItem {
 export function HeadingMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatHeaderPound,
+    icon: markRaw(MdiFormatHeaderPound),
     title: "文本类型",
     isActive: () => editor.isActive("heading") || editor.isActive("paragraph"),
     children: [
       {
         type: "button",
-        icon: MdiFormatParagraph,
+        icon: markRaw(MdiFormatParagraph),
         title: "普通文本",
         action: () => editor.chain().focus().setParagraph().run(),
         isActive: () => editor.isActive("paragraph"),
       },
       {
         type: "button",
-        icon: MdiFormatHeader1,
+        icon: markRaw(MdiFormatHeader1),
         title: "标题 1",
         action: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
         isActive: () => editor.isActive("heading", { level: 1 }),
       },
       {
         type: "button",
-        icon: MdiFormatHeader2,
+        icon: markRaw(MdiFormatHeader2),
         title: "标题 2",
         action: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
         isActive: () => editor.isActive("heading", { level: 2 }),
       },
       {
         type: "button",
-        icon: MdiFormatHeader3,
+        icon: markRaw(MdiFormatHeader3),
         title: "标题 3",
         action: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
         isActive: () => editor.isActive("heading", { level: 3 }),
       },
       {
         type: "button",
-        icon: MdiFormatHeader4,
+        icon: markRaw(MdiFormatHeader4),
         title: "标题 4",
         action: () => editor.chain().focus().toggleHeading({ level: 4 }).run(),
         isActive: () => editor.isActive("heading", { level: 4 }),
       },
       {
         type: "button",
-        icon: MdiFormatHeader5,
+        icon: markRaw(MdiFormatHeader5),
         title: "标题 5",
         action: () => editor.chain().focus().toggleHeading({ level: 5 }).run(),
         isActive: () => editor.isActive("heading", { level: 5 }),
       },
       {
         type: "button",
-        icon: MdiFormatHeader6,
+        icon: markRaw(MdiFormatHeader6),
         title: "标题 6",
         action: () => editor.chain().focus().toggleHeading({ level: 6 }).run(),
         isActive: () => editor.isActive("heading", { level: 6 }),
@@ -224,7 +224,7 @@ export function HeadingMenuItem(editor: Editor): MenuItem {
 export function AlignLeftMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatAlignLeft,
+    icon: markRaw(MdiFormatAlignLeft),
     title: "左对齐",
     action: () => editor.chain().focus().setTextAlign("left").run(),
     isActive: () => editor.isActive({ textAlign: "left" }),
@@ -234,7 +234,7 @@ export function AlignLeftMenuItem(editor: Editor): MenuItem {
 export function AlignCenterMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatAlignCenter,
+    icon: markRaw(MdiFormatAlignCenter),
     title: "居中",
     action: () => editor.chain().focus().setTextAlign("center").run(),
     isActive: () => editor.isActive({ textAlign: "center" }),
@@ -244,7 +244,7 @@ export function AlignCenterMenuItem(editor: Editor): MenuItem {
 export function AlignRightMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatAlignRight,
+    icon: markRaw(MdiFormatAlignRight),
     title: "右对齐",
     action: () => editor.chain().focus().setTextAlign("right").run(),
     isActive: () => editor.isActive({ textAlign: "right" }),
@@ -254,7 +254,7 @@ export function AlignRightMenuItem(editor: Editor): MenuItem {
 export function AlignJustifyMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatAlignJustify,
+    icon: markRaw(MdiFormatAlignJustify),
     title: "两端对齐",
     action: () => editor.chain().focus().setTextAlign("justify").run(),
     isActive: () => editor.isActive({ textAlign: "justify" }),
@@ -264,13 +264,13 @@ export function AlignJustifyMenuItem(editor: Editor): MenuItem {
 export function TableMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiTable,
+    icon: markRaw(MdiTable),
     title: "表格",
     isActive: () => editor.isActive("heading"),
     children: [
       {
         type: "button",
-        icon: MdiTablePlus,
+        icon: markRaw(MdiTablePlus),
         title: "插入表格",
         action: () =>
           editor
@@ -282,77 +282,77 @@ export function TableMenuItem(editor: Editor): MenuItem {
       },
       {
         type: "button",
-        icon: MdiTableColumnPlusBefore,
+        icon: markRaw(MdiTableColumnPlusBefore),
         title: "向前插入列",
         action: () => editor.chain().focus().addColumnBefore().run(),
         isActive: () => false,
       },
       {
         type: "button",
-        icon: MdiTableColumnPlusAfter,
+        icon: markRaw(MdiTableColumnPlusAfter),
         title: "向后插入列",
         action: () => editor.chain().focus().addColumnAfter().run(),
         isActive: () => false,
       },
       {
         type: "button",
-        icon: MdiTableHeadersEye,
+        icon: markRaw(MdiTableHeadersEye),
         title: "显示/隐藏列表头",
         action: () => editor.chain().focus().toggleHeaderColumn().run(),
         isActive: () => false,
       },
       {
         type: "button",
-        icon: MdiTableColumnRemove,
+        icon: markRaw(MdiTableColumnRemove),
         title: "删除当前列",
         action: () => editor.chain().focus().deleteColumn().run(),
         isActive: () => false,
       },
       {
         type: "button",
-        icon: MdiTableRowPlusBefore,
+        icon: markRaw(MdiTableRowPlusBefore),
         title: "向上插入行",
         action: () => editor.chain().focus().addRowBefore().run(),
         isActive: () => false,
       },
       {
         type: "button",
-        icon: MdiTableRowPlusAfter,
+        icon: markRaw(MdiTableRowPlusAfter),
         title: "向下插入行",
         action: () => editor.chain().focus().addRowAfter().run(),
         isActive: () => false,
       },
       {
         type: "button",
-        icon: MdiTableHeadersEye,
+        icon: markRaw(MdiTableHeadersEye),
         title: "显示/隐藏行表头",
         action: () => editor.chain().focus().toggleHeaderRow().run(),
         isActive: () => false,
       },
       {
         type: "button",
-        icon: MdiTableRowRemove,
+        icon: markRaw(MdiTableRowRemove),
         title: "删除当前行",
         action: () => editor.chain().focus().deleteRow().run(),
         isActive: () => false,
       },
       {
         type: "button",
-        icon: MdiTableMergeCells,
+        icon: markRaw(MdiTableMergeCells),
         title: "合并单元格",
         action: () => editor.chain().focus().mergeCells().run(),
         isActive: () => false,
       },
       {
         type: "button",
-        icon: MdiTableSplitCell,
+        icon: markRaw(MdiTableSplitCell),
         title: "分割单元格",
         action: () => editor.chain().focus().splitCell().run(),
         isActive: () => false,
       },
       {
         type: "button",
-        icon: MdiTableRemove,
+        icon: markRaw(MdiTableRemove),
         title: "删除表格",
         action: () => editor.chain().focus().deleteTable().run(),
         isActive: () => false,
@@ -364,7 +364,7 @@ export function TableMenuItem(editor: Editor): MenuItem {
 export function BulletListMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatListBulleted,
+    icon: markRaw(MdiFormatListBulleted),
     title: "无序列表",
     action: () => editor.chain().focus().toggleBulletList().run(),
     isActive: () => editor.isActive("bulletList"),
@@ -374,7 +374,7 @@ export function BulletListMenuItem(editor: Editor): MenuItem {
 export function OrderedListMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatListNumbered,
+    icon: markRaw(MdiFormatListNumbered),
     title: "有序列表",
     action: () => editor.chain().focus().toggleOrderedList().run(),
     isActive: () => editor.isActive("orderedList"),
@@ -384,8 +384,8 @@ export function OrderedListMenuItem(editor: Editor): MenuItem {
 export function TaskListMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatListCheckbox,
-    title: "待办列表",
+    icon: markRaw(MdiFormatListCheckbox),
+    title: "任务列表",
     action: () => editor.chain().focus().toggleTaskList().run(),
     isActive: () => editor.isActive("taskList"),
   };
@@ -394,9 +394,15 @@ export function TaskListMenuItem(editor: Editor): MenuItem {
 export function HighlightMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
-    icon: MdiFormatColorHighlight,
+    icon: markRaw(MdiFormatColorHighlight),
     title: "高亮",
     action: () => editor.chain().focus().toggleHighlight().run(),
     isActive: () => editor.isActive("highlight"),
+  };
+}
+
+export function Separator(): MenuItem {
+  return {
+    type: "separator",
   };
 }
