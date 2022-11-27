@@ -4,6 +4,8 @@ import "tippy.js/dist/svg-arrow.css";
 import type { PropType } from "vue";
 import { BubbleMenu, Editor } from "@tiptap/vue-3";
 import type { MenuItem } from "@/types";
+import { VTooltip } from "floating-vue";
+
 defineProps({
   editor: {
     type: Object as PropType<Editor>,
@@ -32,7 +34,7 @@ defineProps({
         class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
         @click="menuItem.action?.()"
       >
-        <component :is="menuItem.icon" />
+        <component :is="menuItem.icon" v-tooltip="menuItem.title" />
       </button>
     </div>
   </bubble-menu>

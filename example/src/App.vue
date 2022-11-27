@@ -33,6 +33,7 @@ import {
   ExtensionSubscript,
   ExtensionSuperscript,
   ExtensionPlaceholder,
+  ExtensionHighlight,
   ExtensionCommands,
   ExtensionIframe,
   CommandsSuggestion,
@@ -68,6 +69,7 @@ import {
   BulletListMenuItem,
   OrderedListMenuItem,
   TaskListMenuItem,
+  HighlightMenuItem,
 } from "@halo-dev/richtext-editor";
 
 const content = ref("");
@@ -116,6 +118,7 @@ const editor = useEditor({
     ExtensionPlaceholder.configure({
       placeholder: "输入 / 以选择输入类型",
     }),
+    ExtensionHighlight,
     ExtensionCommands.configure({
       suggestion: {
         ...CommandsSuggestion,
@@ -169,6 +172,7 @@ const toolbarMenuItems = computed(() => {
     ItalicMenuItem(editor.value),
     UnderlineMenuItem(editor.value),
     StrikeMenuItem(editor.value),
+    HighlightMenuItem(editor.value),
     QuoteMenuItem(editor.value),
     CodeMenuItem(editor.value),
     SuperScriptMenuItem(editor.value),
@@ -192,6 +196,7 @@ const bubbleMenuItems = computed(() => {
     ItalicMenuItem(editor.value),
     UnderlineMenuItem(editor.value),
     StrikeMenuItem(editor.value),
+    HighlightMenuItem(editor.value),
     QuoteMenuItem(editor.value),
     CodeMenuItem(editor.value),
     CodeBlockMenuItem(editor.value),

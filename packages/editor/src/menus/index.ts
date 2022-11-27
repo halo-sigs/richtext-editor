@@ -40,6 +40,7 @@ import MdiTableSplitCell from "~icons/mdi/table-split-cell";
 import MdiFormatListBulleted from "~icons/mdi/format-list-bulleted";
 import MdiFormatListCheckbox from "~icons/mdi/format-list-checkbox";
 import MdiFormatListNumbered from "~icons/mdi/format-list-numbered";
+import MdiFormatColorHighlight from "~icons/mdi/format-color-highlight";
 
 export interface MenuItem {
   type: "button" | "separator";
@@ -54,7 +55,7 @@ export function UndoMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiUndoVariant,
-    title: "Undo",
+    title: "撤销",
     action: () => editor.chain().undo().run(),
     isActive: () => false,
   };
@@ -64,7 +65,7 @@ export function RedoMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiRedoVariant,
-    title: "Redo",
+    title: "恢复",
     action: () => editor.chain().redo().run(),
     isActive: () => false,
   };
@@ -74,7 +75,7 @@ export function BoldMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiFormatBold,
-    title: "Bold",
+    title: "粗体",
     action: () => editor.chain().focus().toggleBold().run(),
     isActive: () => editor.isActive("bold"),
   };
@@ -84,7 +85,7 @@ export function ItalicMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiFormatItalic,
-    title: "Italic",
+    title: "斜体",
     action: () => editor.chain().focus().toggleItalic().run(),
     isActive: () => editor.isActive("italic"),
   };
@@ -94,7 +95,7 @@ export function UnderlineMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiFormatUnderline,
-    title: "Underline",
+    title: "下划线",
     action: () => editor.chain().focus().toggleUnderline().run(),
     isActive: () => editor.isActive("underline"),
   };
@@ -104,7 +105,7 @@ export function StrikeMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiFormatStrikethrough,
-    title: "Strikethrough",
+    title: "删除线",
     action: () => editor.chain().focus().toggleStrike().run(),
     isActive: () => editor.isActive("strike"),
   };
@@ -114,7 +115,7 @@ export function QuoteMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiFormatQuoteOpen,
-    title: "Quote",
+    title: "引用",
     action: () => editor.chain().focus().toggleBlockquote().run(),
     isActive: () => editor.isActive("blockquote"),
   };
@@ -124,7 +125,7 @@ export function CodeMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiCodeTags,
-    title: "Code",
+    title: "行内代码",
     action: () => editor.chain().focus().toggleCode().run(),
     isActive: () => editor.isActive("code"),
   };
@@ -134,7 +135,7 @@ export function SuperScriptMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiFormatSuperscript,
-    title: "Superscript",
+    title: "上角标",
     action: () => editor.chain().focus().toggleSuperscript().run(),
     isActive: () => editor.isActive("superscript"),
   };
@@ -144,7 +145,7 @@ export function SubScriptMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiFormatSubscript,
-    title: "Subscript",
+    title: "下角标",
     action: () => editor.chain().focus().toggleSubscript().run(),
     isActive: () => editor.isActive("subscript"),
   };
@@ -154,7 +155,7 @@ export function CodeBlockMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiCodeBracesBox,
-    title: "Code Block",
+    title: "代码块",
     action: () => editor.chain().focus().toggleCodeBlock().run(),
     isActive: () => editor.isActive("codeBlock"),
   };
@@ -164,7 +165,7 @@ export function HeadingMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiFormatHeaderPound,
-    title: "普通文本",
+    title: "文本类型",
     isActive: () => editor.isActive("heading") || editor.isActive("paragraph"),
     children: [
       {
@@ -224,7 +225,7 @@ export function AlignLeftMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiFormatAlignLeft,
-    title: "Align Left",
+    title: "左对齐",
     action: () => editor.chain().focus().setTextAlign("left").run(),
     isActive: () => editor.isActive({ textAlign: "left" }),
   };
@@ -234,7 +235,7 @@ export function AlignCenterMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiFormatAlignCenter,
-    title: "Align Center",
+    title: "居中",
     action: () => editor.chain().focus().setTextAlign("center").run(),
     isActive: () => editor.isActive({ textAlign: "center" }),
   };
@@ -244,7 +245,7 @@ export function AlignRightMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiFormatAlignRight,
-    title: "Align Right",
+    title: "右对齐",
     action: () => editor.chain().focus().setTextAlign("right").run(),
     isActive: () => editor.isActive({ textAlign: "right" }),
   };
@@ -254,7 +255,7 @@ export function AlignJustifyMenuItem(editor: Editor): MenuItem {
   return {
     type: "button",
     icon: MdiFormatAlignJustify,
-    title: "Align Justify",
+    title: "两端对齐",
     action: () => editor.chain().focus().setTextAlign("justify").run(),
     isActive: () => editor.isActive({ textAlign: "justify" }),
   };
@@ -387,5 +388,15 @@ export function TaskListMenuItem(editor: Editor): MenuItem {
     title: "待办列表",
     action: () => editor.chain().focus().toggleTaskList().run(),
     isActive: () => editor.isActive("taskList"),
+  };
+}
+
+export function HighlightMenuItem(editor: Editor): MenuItem {
+  return {
+    type: "button",
+    icon: MdiFormatColorHighlight,
+    title: "高亮",
+    action: () => editor.chain().focus().toggleHighlight().run(),
+    isActive: () => editor.isActive("highlight"),
   };
 }

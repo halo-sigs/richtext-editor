@@ -24,6 +24,7 @@ import ExtensionUnderline from "@tiptap/extension-underline";
 import ExtensionSubscript from "@tiptap/extension-subscript";
 import ExtensionSuperscript from "@tiptap/extension-superscript";
 import ExtensionPlaceholder from "@tiptap/extension-placeholder";
+import ExtensionHighlight from "@tiptap/extension-highlight";
 
 // Custom extensions
 import {
@@ -56,6 +57,7 @@ const allExtensions = [
   ExtensionImage,
   ExtensionTaskList,
   ExtensionTaskItem,
+  ExtensionHighlight,
   ExtensionLink.configure({
     autolink: true,
     openOnClick: false,
@@ -110,6 +112,7 @@ export {
   ExtensionSubscript,
   ExtensionSuperscript,
   ExtensionPlaceholder,
+  ExtensionHighlight,
   ExtensionCommands,
   CommandsSuggestion,
   ExtensionCodeBlock,

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { PropType } from "vue";
-import { Menu as VMenu } from "floating-vue";
+import { Menu as VMenu, VTooltip } from "floating-vue";
 import type { MenuItem } from "@/types";
 defineProps({
   menuItems: {
@@ -21,6 +21,7 @@ defineProps({
     >
       <button
         v-if="!menuItem.children?.length"
+        v-tooltip="menuItem.title"
         :class="{ 'bg-gray-200': menuItem.isActive?.() }"
         class="hover:bg-gray-100 p-1 rounded-sm"
         @click="menuItem.action"
