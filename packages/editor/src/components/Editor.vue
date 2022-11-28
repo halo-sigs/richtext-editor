@@ -2,7 +2,7 @@
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import EditorHeader from "./EditorHeader.vue";
 import EditorBubbleMenu from "./EditorBubbleMenu.vue";
-import type { PropType } from "vue";
+import type { CSSProperties, PropType } from "vue";
 import type { MenuItem } from "@/types";
 
 defineProps({
@@ -25,6 +25,11 @@ defineProps({
     required: false,
     default: () => [],
   },
+  contentStyles: {
+    type: Object as PropType<CSSProperties>,
+    required: false,
+    default: () => ({}),
+  },
 });
 </script>
 <template>
@@ -34,6 +39,7 @@ defineProps({
     <div class="h-full flex flex-row w-full">
       <editor-content
         :editor="editor"
+        :style="contentStyles"
         class="editor-content prose prose-base !max-w-none prose-pre:p-0 bg-white prose-p:mt-3 prose-p:mb-3 prose-img:mt-0 prose-img:mb-0"
       />
       <div class="h-full">
