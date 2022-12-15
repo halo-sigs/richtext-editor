@@ -120,8 +120,8 @@ const Iframe = Node.create({
 
   renderHTML({ HTMLAttributes }) {
     return [
-      "p",
-      ["iframe", mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)],
+      "iframe",
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
     ];
   },
 
