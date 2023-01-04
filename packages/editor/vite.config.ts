@@ -12,11 +12,11 @@ export default defineConfig({
     Icons({
       compiler: "vue3",
     }),
-    Dts({
-      entryRoot: "./src",
-      outputDir: "./dist",
-      insertTypesEntry: true,
-    }),
+    // Dts({
+    //   entryRoot: "./src",
+    //   outputDir: "./dist",
+    //   insertTypesEntry: true,
+    // }),
   ],
   resolve: {
     alias: {
