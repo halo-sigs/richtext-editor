@@ -1,10 +1,13 @@
 <script lang="ts" setup>
 import type { Node as ProseMirrorNode } from "prosemirror-model";
 import type { Decoration } from "prosemirror-view";
-import { Editor, NodeViewWrapper, Node, nodeInputRule } from "@tiptap/vue-3";
+import { Editor, NodeViewWrapper, Node } from "@tiptap/vue-3";
 import { computed } from "vue";
 import BlockCard from "@/components/BlockCard.vue";
 import MdiLinkVariant from "~icons/mdi/link-variant";
+import MdiCellphoneIphone from "~icons/mdi/cellphone-iphone";
+import MdiTabletIpad from "~icons/mdi/tablet-ipad";
+import MdiDesktopMac from "~icons/mdi/desktop-mac";
 import { VTooltip } from "floating-vue";
 
 const props = defineProps<{
@@ -31,6 +34,11 @@ function handleSetFocus() {
   props.editor.commands.setNodeSelection(props.getPos());
 }
 
+function handleSetSize(width: string, height: string) {
+  props.updateAttributes({ width, height });
+  props.editor.chain().focus().setNodeSelection(props.getPos()).run();
+}
+
 function handleOpenLink() {
   window.open(src.value, "_blank");
 }
@@ -45,12 +53,17 @@ function handleOpenLink() {
       :selected="selected"
     >
       <template #content>
-        <div class="block w-full relative overflow-auto">
+        <div
+          class="inline-block overflow-hidden transition-all text-center relative h-full"
+          :style="{
+            width: node.attrs.width,
+          }"
+        >
           <div class="py-1.5">
             <input
-              v-model="src"
+              v-model.lazy="src"
               class="block px-2 w-full py-1.5 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="输入链接"
+              placeholder="输入链接，按回车确定"
               tabindex="-1"
               @focus="handleSetFocus"
             />
@@ -70,6 +83,53 @@ function handleOpenLink() {
         </div>
       </template>
       <template #dropdownItems>
+        <div
+          v-tooltip="'手机尺寸'"
+          class="editor-block__dropdown-item"
+          :class="{
+            'editor-block__dropdown-item--selected': node.attrs.width === '25%',
+          }"
+          @click="handleSetSize('390px', '844px')"
+        >
+          <MdiCellphoneIphone />
+        </div>
+
+        <div
+          v-tooltip="'平板电脑纵向尺寸'"
+          class="editor-block__dropdown-item"
+          :class="{
+            'editor-block__dropdown-item--selected': node.attrs.width === '50%',
+          }"
+          @click="handleSetSize('834px', '1194px')"
+        >
+          <MdiTabletIpad />
+        </div>
+
+        <div
+          v-tooltip="'平板电脑横向尺寸'"
+          class="editor-block__dropdown-item"
+          :class="{
+            'editor-block__dropdown-item--selected': node.attrs.width === '50%',
+          }"
+          @click="handleSetSize('1194px', '834px')"
+        >
+          <MdiTabletIpad class="-rotate-90" />
+        </div>
+
+        <div
+          v-tooltip="'桌面电脑尺寸'"
+          class="editor-block__dropdown-item"
+          :class="{
+            'editor-block__dropdown-item--selected':
+              node.attrs.width === '100%',
+          }"
+          @click="handleSetSize('100%', '834px')"
+        >
+          <MdiDesktopMac />
+        </div>
+
+        <div class="editor-block__dropdown-separator"></div>
+
         <div
           v-tooltip="'打开链接'"
           class="editor-block__dropdown-item"

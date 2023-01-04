@@ -13,7 +13,13 @@ declare module "@tiptap/core" {
 const Iframe = Node.create({
   name: "iframe",
 
-  group: "block",
+  inline() {
+    return true;
+  },
+
+  group() {
+    return "inline";
+  },
 
   addAttributes() {
     return {
@@ -102,6 +108,13 @@ const Iframe = Node.create({
         renderHTML: (attributes) => {
           return {
             framespacing: attributes.framespacing,
+          };
+        },
+      },
+      style: {
+        renderHTML() {
+          return {
+            style: "display: inline-block",
           };
         },
       },

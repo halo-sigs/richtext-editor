@@ -58,7 +58,7 @@ onMounted(() => {
     >
       <template #content>
         <div
-          class="resize mt-4 mb-4 inline-block overflow-hidden transition-all text-center relative"
+          class="inline-block overflow-hidden transition-all text-center relative"
           :class="{
             'ring-2 rounded': selected,
           }"
