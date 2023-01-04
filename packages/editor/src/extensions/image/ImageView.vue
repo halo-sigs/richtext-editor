@@ -1,9 +1,8 @@
 <script lang="ts" setup>
 import type { Node as ProseMirrorNode } from "prosemirror-model";
 import type { Decoration } from "prosemirror-view";
-import { Editor, NodeViewWrapper, Node, nodeInputRule } from "@tiptap/vue-3";
-import { computed, onMounted, ref } from "vue";
-import { useResizeObserver } from "@vueuse/core";
+import { Editor, NodeViewWrapper, Node } from "@tiptap/vue-3";
+import { computed, onMounted } from "vue";
 import BlockCard from "@/components/BlockCard.vue";
 import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiImageSizeSelectActual from "~icons/mdi/image-size-select-actual";
@@ -37,6 +36,7 @@ const alt = computed({
 
 function handleSetSize(width: string, height: string) {
   props.updateAttributes({ width, height });
+  props.editor.chain().focus().setNodeSelection(props.getPos()).run();
 }
 
 function handleOpenLink() {
@@ -62,15 +62,16 @@ onMounted(() => {
           :class="{
             'ring-2 rounded': selected,
           }"
+          :style="{
+            width: node.attrs.width,
+            height: node.attrs.height,
+          }"
         >
           <img
             :src="src"
             :title="node.attrs.title"
             :alt="alt"
-            :style="{
-              width: node.attrs.width,
-              height: node.attrs.height,
-            }"
+            class="w-full h-full"
           />
         </div>
       </template>
