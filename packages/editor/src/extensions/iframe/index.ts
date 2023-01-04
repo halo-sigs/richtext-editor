@@ -15,8 +15,6 @@ const Iframe = Node.create({
 
   group: "block",
 
-  selectable: false,
-
   addAttributes() {
     return {
       ...this.parent?.(),
