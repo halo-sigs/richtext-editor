@@ -3,12 +3,14 @@ import type { Node as ProseMirrorNode } from "prosemirror-model";
 import type { Decoration } from "prosemirror-view";
 import { Editor, NodeViewWrapper, Node } from "@tiptap/vue-3";
 import { computed } from "vue";
-import BlockCard from "@/components/BlockCard.vue";
+import BlockCard from "@/components/block/BlockCard.vue";
+import BlockActionButton from "@/components/block/BlockActionButton.vue";
+import BlockActionInput from "@/components/block/BlockActionInput.vue";
+import BlockActionSeparator from "@/components/block/BlockActionSeparator.vue";
 import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiCellphoneIphone from "~icons/mdi/cellphone-iphone";
 import MdiTabletIpad from "~icons/mdi/tablet-ipad";
 import MdiDesktopMac from "~icons/mdi/desktop-mac";
-import { VTooltip } from "floating-vue";
 
 const props = defineProps<{
   editor: Editor;
@@ -27,6 +29,24 @@ const src = computed({
   },
   set: (src: string) => {
     props.updateAttributes({ src: src });
+  },
+});
+
+const width = computed({
+  get: () => {
+    return props.node?.attrs.width;
+  },
+  set: (value: string) => {
+    handleSetSize(value, height.value);
+  },
+});
+
+const height = computed({
+  get: () => {
+    return props.node?.attrs.height;
+  },
+  set: (value: string) => {
+    handleSetSize(width.value, value);
   },
 });
 
@@ -86,69 +106,66 @@ function handleOpenLink() {
           ></iframe>
         </div>
       </template>
-      <template #dropdownItems>
-        <div
-          v-tooltip="'手机尺寸'"
-          class="editor-block__dropdown-item"
-          :class="{
-            'editor-block__dropdown-item--selected': sizeMatch(
-              '390px',
-              '844px'
-            ),
-          }"
+      <template #actions>
+        <BlockActionInput
+          v-model.lazy.trim="width"
+          tooltip="自定义宽度，按回车键生效"
+        />
+
+        <BlockActionInput
+          v-model.lazy.trim="height"
+          tooltip="自定义高度，按回车键生效"
+        />
+
+        <BlockActionSeparator />
+
+        <BlockActionButton
+          tooltip="手机尺寸"
+          :selected="sizeMatch('390px', '844px')"
           @click="handleSetSize('390px', '844px')"
         >
-          <MdiCellphoneIphone />
-        </div>
+          <template #icon>
+            <MdiCellphoneIphone />
+          </template>
+        </BlockActionButton>
 
-        <div
-          v-tooltip="'平板电脑纵向尺寸'"
-          class="editor-block__dropdown-item"
-          :class="{
-            'editor-block__dropdown-item--selected': sizeMatch(
-              '834px',
-              '1194px'
-            ),
-          }"
+        <BlockActionButton
+          tooltip="平板电脑纵向尺寸"
+          :selected="sizeMatch('834px', '1194px')"
           @click="handleSetSize('834px', '1194px')"
         >
-          <MdiTabletIpad />
-        </div>
+          <template #icon>
+            <MdiTabletIpad />
+          </template>
+        </BlockActionButton>
 
-        <div
-          v-tooltip="'平板电脑横向尺寸'"
-          class="editor-block__dropdown-item"
-          :class="{
-            'editor-block__dropdown-item--selected': sizeMatch(
-              '1194px',
-              '834px'
-            ),
-          }"
+        <BlockActionButton
+          tooltip="平板电脑横向尺寸"
+          :selected="sizeMatch('1194px', '834px')"
           @click="handleSetSize('1194px', '834px')"
         >
-          <MdiTabletIpad class="-rotate-90" />
-        </div>
+          <template #icon>
+            <MdiTabletIpad class="-rotate-90" />
+          </template>
+        </BlockActionButton>
 
-        <div
-          v-tooltip="'桌面电脑尺寸'"
-          class="editor-block__dropdown-item"
-          :class="{
-            'editor-block__dropdown-item--selected': sizeMatch('100%', '834px'),
-          }"
+        <BlockActionButton
+          tooltip="桌面电脑尺寸"
+          :selected="sizeMatch('100%', '834px')"
           @click="handleSetSize('100%', '834px')"
         >
-          <MdiDesktopMac />
-        </div>
+          <template #icon>
+            <MdiDesktopMac />
+          </template>
+        </BlockActionButton>
 
-        <div class="editor-block__dropdown-separator"></div>
+        <BlockActionSeparator />
 
-        <div
-          v-tooltip="'打开链接'"
-          class="editor-block__dropdown-item"
-          @click="handleOpenLink"
-        >
-          <MdiLinkVariant />
-        </div>
+        <BlockActionButton tooltip="打开链接" @click="handleOpenLink">
+          <template #icon>
+            <MdiLinkVariant />
+          </template>
+        </BlockActionButton>
       </template>
     </block-card>
   </node-view-wrapper>

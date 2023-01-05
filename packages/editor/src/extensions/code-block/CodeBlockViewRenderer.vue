@@ -4,7 +4,7 @@ import type { Decoration } from "prosemirror-view";
 import { NodeViewContent, NodeViewWrapper, Editor, Node } from "@tiptap/vue-3";
 import lowlight from "./lowlight";
 import { computed } from "vue";
-import BlockCard from "@/components/BlockCard.vue";
+import BlockCard from "@/components/block/BlockCard.vue";
 
 const props = defineProps<{
   editor: Editor;

@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import type { Editor } from "@tiptap/vue-3";
-import { Dropdown as VDropdown, VTooltip } from "floating-vue";
+import { Dropdown as VDropdown } from "floating-vue";
 import { computed, ref } from "vue";
 import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
 import MdiArrowULeftBottom from "~icons/mdi/arrow-u-left-bottom";
+import BlockActionSeparator from "./BlockActionSeparator.vue";
+import BlockActionButton from "./BlockActionButton.vue";
 
 const props = withDefaults(
   defineProps<{
@@ -56,26 +58,22 @@ function handleInsertNewLine() {
         <slot name="content" />
       </div>
       <template #popper>
-        <div class="editor-block__dropdown">
-          <slot name="dropdownItems" />
+        <div class="editor-block__actions">
+          <slot name="actions" />
 
-          <div
-            v-tooltip="'换行'"
-            class="editor-block__dropdown-item"
-            @click="handleInsertNewLine()"
-          >
-            <MdiArrowULeftBottom />
-          </div>
+          <BlockActionButton tooltip="换行" @click="handleInsertNewLine">
+            <template #icon>
+              <MdiArrowULeftBottom />
+            </template>
+          </BlockActionButton>
 
-          <div class="editor-block__dropdown-separator"></div>
+          <BlockActionSeparator />
 
-          <div
-            v-tooltip="'删除'"
-            class="editor-block__dropdown-item"
-            @click="deleteNode()"
-          >
-            <MdiDeleteForeverOutline />
-          </div>
+          <BlockActionButton tooltip="删除" @click="deleteNode">
+            <template #icon>
+              <MdiDeleteForeverOutline />
+            </template>
+          </BlockActionButton>
         </div>
       </template>
     </VDropdown>
@@ -92,20 +90,8 @@ function handleInsertNewLine() {
     p-2;
   }
 
-  &__dropdown {
+  &__actions {
     @apply p-1 flex flex-row gap-0.5 items-center;
-    &-item {
-      @apply p-1.5 bg-gray-50 rounded-md cursor-pointer hover:bg-gray-100;
-
-      &--selected {
-        @apply bg-gray-200;
-      }
-    }
-
-    &-separator {
-      @apply h-5 bg-gray-100 mx-1.5;
-      width: 1px;
-    }
   }
 
   &:hover & {

@@ -2,13 +2,15 @@
 import type { Node as ProseMirrorNode } from "prosemirror-model";
 import type { Decoration } from "prosemirror-view";
 import { Editor, NodeViewWrapper, Node } from "@tiptap/vue-3";
-import { computed, onMounted } from "vue";
-import BlockCard from "@/components/BlockCard.vue";
+import { computed } from "vue";
+import BlockCard from "@/components/block/BlockCard.vue";
+import BlockActionButton from "@/components/block/BlockActionButton.vue";
+import BlockActionSeparator from "@/components/block/BlockActionSeparator.vue";
+import BlockActionInput from "@/components/block/BlockActionInput.vue";
 import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiImageSizeSelectActual from "~icons/mdi/image-size-select-actual";
 import MdiImageSizeSelectSmall from "~icons/mdi/image-size-select-small";
 import MdiImageSizeSelectLarge from "~icons/mdi/image-size-select-large";
-import { VTooltip } from "floating-vue";
 
 const props = defineProps<{
   editor: Editor;
@@ -34,6 +36,24 @@ const alt = computed({
   },
 });
 
+const width = computed({
+  get: () => {
+    return props.node?.attrs.width;
+  },
+  set: (value: string) => {
+    handleSetSize(value, height.value);
+  },
+});
+
+const height = computed({
+  get: () => {
+    return props.node?.attrs.height;
+  },
+  set: (value: string) => {
+    handleSetSize(width.value, value);
+  },
+});
+
 function handleSetSize(width: string, height: string) {
   props.updateAttributes({ width, height });
   props.editor.chain().focus().setNodeSelection(props.getPos()).run();
@@ -42,10 +62,6 @@ function handleSetSize(width: string, height: string) {
 function handleOpenLink() {
   window.open(src.value, "_blank");
 }
-
-onMounted(() => {
-  console.log(props.node);
-});
 </script>
 
 <template>
@@ -75,50 +91,56 @@ onMounted(() => {
           />
         </div>
       </template>
-      <template #dropdownItems>
-        <div
-          v-tooltip="'小尺寸'"
-          class="editor-block__dropdown-item"
-          :class="{
-            'editor-block__dropdown-item--selected': node.attrs.width === '25%',
-          }"
+      <template #actions>
+        <BlockActionInput
+          v-model.lazy.trim="width"
+          tooltip="自定义宽度，按回车键生效"
+        />
+
+        <BlockActionInput
+          v-model.lazy.trim="height"
+          tooltip="自定义高度，按回车键生效"
+        />
+
+        <BlockActionSeparator />
+
+        <BlockActionButton
+          tooltip="小尺寸"
+          :selected="node.attrs.width === '25%'"
           @click="handleSetSize('25%', 'auto')"
         >
-          <MdiImageSizeSelectSmall />
-        </div>
+          <template #icon>
+            <MdiImageSizeSelectSmall />
+          </template>
+        </BlockActionButton>
 
-        <div
-          v-tooltip="'中尺寸'"
-          class="editor-block__dropdown-item"
-          :class="{
-            'editor-block__dropdown-item--selected': node.attrs.width === '50%',
-          }"
+        <BlockActionButton
+          tooltip="中尺寸"
+          :selected="node.attrs.width === '50%'"
           @click="handleSetSize('50%', 'auto')"
         >
-          <MdiImageSizeSelectLarge />
-        </div>
+          <template #icon>
+            <MdiImageSizeSelectLarge />
+          </template>
+        </BlockActionButton>
 
-        <div
-          v-tooltip="'全尺寸'"
-          class="editor-block__dropdown-item"
-          :class="{
-            'editor-block__dropdown-item--selected':
-              node.attrs.width === '100%',
-          }"
+        <BlockActionButton
+          tooltip="全尺寸"
+          :selected="node.attrs.width === '100%'"
           @click="handleSetSize('100%', '100%')"
         >
-          <MdiImageSizeSelectActual />
-        </div>
+          <template #icon>
+            <MdiImageSizeSelectActual />
+          </template>
+        </BlockActionButton>
 
-        <div class="editor-block__dropdown-separator"></div>
+        <BlockActionSeparator />
 
-        <div
-          v-tooltip="'打开链接'"
-          class="editor-block__dropdown-item"
-          @click="handleOpenLink"
-        >
-          <MdiLinkVariant />
-        </div>
+        <BlockActionButton tooltip="打开链接" @click="handleOpenLink">
+          <template #icon>
+            <MdiLinkVariant />
+          </template>
+        </BlockActionButton>
       </template>
     </block-card>
   </node-view-wrapper>
