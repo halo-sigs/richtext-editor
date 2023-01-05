@@ -39,6 +39,10 @@ function handleSetSize(width: string, height: string) {
   props.editor.chain().focus().setNodeSelection(props.getPos()).run();
 }
 
+function sizeMatch(width: string, height: string) {
+  return width === props.node.attrs.width && height === props.node.attrs.height;
+}
+
 function handleOpenLink() {
   window.open(src.value, "_blank");
 }
@@ -87,7 +91,10 @@ function handleOpenLink() {
           v-tooltip="'手机尺寸'"
           class="editor-block__dropdown-item"
           :class="{
-            'editor-block__dropdown-item--selected': node.attrs.width === '25%',
+            'editor-block__dropdown-item--selected': sizeMatch(
+              '390px',
+              '844px'
+            ),
           }"
           @click="handleSetSize('390px', '844px')"
         >
@@ -98,7 +105,10 @@ function handleOpenLink() {
           v-tooltip="'平板电脑纵向尺寸'"
           class="editor-block__dropdown-item"
           :class="{
-            'editor-block__dropdown-item--selected': node.attrs.width === '50%',
+            'editor-block__dropdown-item--selected': sizeMatch(
+              '834px',
+              '1194px'
+            ),
           }"
           @click="handleSetSize('834px', '1194px')"
         >
@@ -109,7 +119,10 @@ function handleOpenLink() {
           v-tooltip="'平板电脑横向尺寸'"
           class="editor-block__dropdown-item"
           :class="{
-            'editor-block__dropdown-item--selected': node.attrs.width === '50%',
+            'editor-block__dropdown-item--selected': sizeMatch(
+              '1194px',
+              '834px'
+            ),
           }"
           @click="handleSetSize('1194px', '834px')"
         >
@@ -120,8 +133,7 @@ function handleOpenLink() {
           v-tooltip="'桌面电脑尺寸'"
           class="editor-block__dropdown-item"
           :class="{
-            'editor-block__dropdown-item--selected':
-              node.attrs.width === '100%',
+            'editor-block__dropdown-item--selected': sizeMatch('100%', '834px'),
           }"
           @click="handleSetSize('100%', '834px')"
         >

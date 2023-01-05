@@ -43,10 +43,10 @@ const Iframe = Node.create({
         },
       },
       height: {
-        default: 200,
+        default: "300px",
         parseHTML: (element) => {
           const height = element.getAttribute("height");
-          return height ? parseInt(height, 10) : null;
+          return height;
         },
         renderHTML: (attributes) => {
           return {
