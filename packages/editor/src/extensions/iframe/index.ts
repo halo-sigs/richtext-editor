@@ -1,4 +1,9 @@
-import { mergeAttributes, Node, nodeInputRule } from "@tiptap/core";
+import {
+  mergeAttributes,
+  Node,
+  nodeInputRule,
+  nodePasteRule,
+} from "@tiptap/core";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import IframeView from "./IframeView.vue";
 
@@ -144,6 +149,17 @@ const Iframe = Node.create({
         type: this.type,
         getAttributes: () => {
           return { width: "100%" };
+        },
+      }),
+    ];
+  },
+  addPasteRules() {
+    return [
+      nodePasteRule({
+        find: /<iframe.*?src="(.*?)".*?<\/iframe>/g,
+        type: this.type,
+        getAttributes: (match) => {
+          return { src: match[1] };
         },
       }),
     ];
