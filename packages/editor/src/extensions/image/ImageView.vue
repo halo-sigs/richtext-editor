@@ -2,8 +2,15 @@
 import type { Node as ProseMirrorNode } from "prosemirror-model";
 import type { Decoration } from "prosemirror-view";
 import { Editor, NodeViewWrapper, Node } from "@tiptap/vue-3";
-import { computed, ref } from "vue";
-import { useResizeObserver } from "@vueuse/core";
+import { computed } from "vue";
+import BlockCard from "@/components/block/BlockCard.vue";
+import BlockActionButton from "@/components/block/BlockActionButton.vue";
+import BlockActionSeparator from "@/components/block/BlockActionSeparator.vue";
+import BlockActionInput from "@/components/block/BlockActionInput.vue";
+import MdiLinkVariant from "~icons/mdi/link-variant";
+import MdiImageSizeSelectActual from "~icons/mdi/image-size-select-actual";
+import MdiImageSizeSelectSmall from "~icons/mdi/image-size-select-small";
+import MdiImageSizeSelectLarge from "~icons/mdi/image-size-select-large";
 
 const props = defineProps<{
   editor: Editor;
@@ -29,34 +36,112 @@ const alt = computed({
   },
 });
 
-const resizeRef = ref<HTMLElement>();
-
-useResizeObserver(resizeRef, (entries) => {
-  const entry = entries[0];
-  const { width, height } = entry.contentRect;
-  props.updateAttributes({ width: width, height: height });
+const width = computed({
+  get: () => {
+    return props.node?.attrs.width;
+  },
+  set: (value: string) => {
+    handleSetSize(value, height.value);
+  },
 });
+
+const height = computed({
+  get: () => {
+    return props.node?.attrs.height;
+  },
+  set: (value: string) => {
+    handleSetSize(width.value, value);
+  },
+});
+
+function handleSetSize(width: string, height: string) {
+  props.updateAttributes({ width, height });
+  props.editor.chain().focus().setNodeSelection(props.getPos()).run();
+}
+
+function handleOpenLink() {
+  window.open(src.value, "_blank");
+}
 </script>
 
 <template>
   <node-view-wrapper as="div">
-    <div
-      ref="resizeRef"
-      class="resize mt-4 mb-4 inline-block overflow-hidden transition-all text-center relative"
-      :class="{
-        'ring-2 rounded': selected,
-      }"
-      :style="{
-        width: `${props.node.attrs.width}px`,
-        height: `${props.node.attrs.height}px`,
-      }"
+    <block-card
+      :selected="selected"
+      :editor="editor"
+      :delete-node="deleteNode"
+      :get-pos="getPos"
     >
-      <img
-        :src="src"
-        :title="node.attrs.title"
-        :alt="alt"
-        class="w-full h-full"
-      />
-    </div>
+      <template #content>
+        <div
+          class="inline-block overflow-hidden transition-all text-center relative"
+          :class="{
+            'ring-2 rounded': selected,
+          }"
+          :style="{
+            width: node.attrs.width,
+            height: node.attrs.height,
+          }"
+        >
+          <img
+            :src="src"
+            :title="node.attrs.title"
+            :alt="alt"
+            class="w-full h-full"
+          />
+        </div>
+      </template>
+      <template #actions>
+        <BlockActionInput
+          v-model.lazy.trim="width"
+          tooltip="自定义宽度，按回车键生效"
+        />
+
+        <BlockActionInput
+          v-model.lazy.trim="height"
+          tooltip="自定义高度，按回车键生效"
+        />
+
+        <BlockActionSeparator />
+
+        <BlockActionButton
+          tooltip="小尺寸"
+          :selected="node.attrs.width === '25%'"
+          @click="handleSetSize('25%', 'auto')"
+        >
+          <template #icon>
+            <MdiImageSizeSelectSmall />
+          </template>
+        </BlockActionButton>
+
+        <BlockActionButton
+          tooltip="中尺寸"
+          :selected="node.attrs.width === '50%'"
+          @click="handleSetSize('50%', 'auto')"
+        >
+          <template #icon>
+            <MdiImageSizeSelectLarge />
+          </template>
+        </BlockActionButton>
+
+        <BlockActionButton
+          tooltip="全尺寸"
+          :selected="node.attrs.width === '100%'"
+          @click="handleSetSize('100%', '100%')"
+        >
+          <template #icon>
+            <MdiImageSizeSelectActual />
+          </template>
+        </BlockActionButton>
+
+        <BlockActionSeparator />
+
+        <BlockActionButton tooltip="打开链接" @click="handleOpenLink">
+          <template #icon>
+            <MdiLinkVariant />
+          </template>
+        </BlockActionButton>
+      </template>
+    </block-card>
   </node-view-wrapper>
 </template>

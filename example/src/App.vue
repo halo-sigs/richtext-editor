@@ -5,6 +5,7 @@ import { unified } from "unified";
 import rehypeParse from "rehype-parse";
 import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
+import { useLocalStorage } from "@vueuse/core";
 import {
   ExtensionBlockquote,
   ExtensionBold,
@@ -77,7 +78,7 @@ import {
   Separator,
 } from "@halo-dev/richtext-editor";
 
-const content = ref("");
+const content = useLocalStorage("content", "");
 
 const editor = useEditor({
   content: content.value,
@@ -100,7 +101,6 @@ const editor = useEditor({
     ExtensionStrike,
     ExtensionText,
     ExtensionImage.configure({
-      inline: true,
       HTMLAttributes: {
         loading: "lazy",
       },

@@ -109,3 +109,13 @@
     }
   }
 }
+
+.v-popper--theme-editor-block-dropdown {
+  .v-popper__inner {
+    @apply bg-white drop-shadow-md rounded-md;
+  }
+
+  .v-popper__arrow-container {
+    display: none;
+  }
+}

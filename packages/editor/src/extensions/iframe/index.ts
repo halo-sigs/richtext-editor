@@ -1,4 +1,9 @@
-import { mergeAttributes, Node, nodeInputRule } from "@tiptap/core";
+import {
+  mergeAttributes,
+  Node,
+  nodeInputRule,
+  nodePasteRule,
+} from "@tiptap/core";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import IframeView from "./IframeView.vue";
 
@@ -13,9 +18,13 @@ declare module "@tiptap/core" {
 const Iframe = Node.create({
   name: "iframe",
 
-  group: "block",
+  inline() {
+    return true;
+  },
 
-  selectable: false,
+  group() {
+    return "inline";
+  },
 
   addAttributes() {
     return {
@@ -39,10 +48,10 @@ const Iframe = Node.create({
         },
       },
       height: {
-        default: 200,
+        default: "300px",
         parseHTML: (element) => {
           const height = element.getAttribute("height");
-          return height ? parseInt(height, 10) : null;
+          return height;
         },
         renderHTML: (attributes) => {
           return {
@@ -61,20 +70,8 @@ const Iframe = Node.create({
           };
         },
       },
-      border: {
-        default: 0,
-        parseHTML: (element) => {
-          const border = element.getAttribute("border");
-          return border ? parseInt(border, 10) : null;
-        },
-        renderHTML: (attributes) => {
-          return {
-            border: attributes.border,
-          };
-        },
-      },
       frameborder: {
-        default: "no",
+        default: "0",
         parseHTML: (element) => {
           return element.getAttribute("frameborder");
         },
@@ -104,6 +101,13 @@ const Iframe = Node.create({
         renderHTML: (attributes) => {
           return {
             framespacing: attributes.framespacing,
+          };
+        },
+      },
+      style: {
+        renderHTML() {
+          return {
+            style: "display: inline-block",
           };
         },
       },
@@ -145,6 +149,31 @@ const Iframe = Node.create({
         type: this.type,
         getAttributes: () => {
           return { width: "100%" };
+        },
+      }),
+    ];
+  },
+  addPasteRules() {
+    return [
+      nodePasteRule({
+        find: /<iframe.*?src="(.*?)".*?<\/iframe>/g,
+        type: this.type,
+        getAttributes: (match) => {
+          const parse = document
+            .createRange()
+            .createContextualFragment(match[0]);
+
+          const iframe = parse.querySelector("iframe");
+
+          if (!iframe) {
+            return;
+          }
+
+          return {
+            src: iframe.src,
+            width: iframe.width || "100%",
+            height: iframe.height || "300px",
+          };
         },
       }),
     ];
