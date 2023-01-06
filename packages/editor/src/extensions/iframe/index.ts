@@ -159,7 +159,21 @@ const Iframe = Node.create({
         find: /<iframe.*?src="(.*?)".*?<\/iframe>/g,
         type: this.type,
         getAttributes: (match) => {
-          return { src: match[1] };
+          const parse = document
+            .createRange()
+            .createContextualFragment(match[0]);
+
+          const iframe = parse.querySelector("iframe");
+
+          if (!iframe) {
+            return;
+          }
+
+          return {
+            src: iframe.src,
+            width: iframe.width || "100%",
+            height: iframe.height || "300px",
+          };
         },
       }),
     ];
