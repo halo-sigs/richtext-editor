@@ -11,6 +11,8 @@ import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiCellphoneIphone from "~icons/mdi/cellphone-iphone";
 import MdiTabletIpad from "~icons/mdi/tablet-ipad";
 import MdiDesktopMac from "~icons/mdi/desktop-mac";
+import MdiBorderAllVariant from "~icons/mdi/border-all-variant";
+import MdiBorderNoneVariant from "~icons/mdi/border-none-variant";
 
 const props = defineProps<{
   editor: Editor;
@@ -34,7 +36,7 @@ const src = computed({
 
 const width = computed({
   get: () => {
-    return props.node?.attrs.width;
+    return props.node.attrs.width;
   },
   set: (value: string) => {
     handleSetSize(value, height.value);
@@ -43,11 +45,15 @@ const width = computed({
 
 const height = computed({
   get: () => {
-    return props.node?.attrs.height;
+    return props.node.attrs.height;
   },
   set: (value: string) => {
     handleSetSize(width.value, value);
   },
+});
+
+const frameborder = computed(() => {
+  return props.node.attrs.frameborder;
 });
 
 function handleSetFocus() {
@@ -56,6 +62,13 @@ function handleSetFocus() {
 
 function handleSetSize(width: string, height: string) {
   props.updateAttributes({ width, height });
+  props.editor.chain().focus().setNodeSelection(props.getPos()).run();
+}
+
+function handleToggleFrameborder() {
+  props.updateAttributes({
+    frameborder: props.node.attrs.frameborder === "0" ? "1" : "0",
+  });
   props.editor.chain().focus().setNodeSelection(props.getPos()).run();
 }
 
@@ -99,14 +112,29 @@ function handleOpenLink() {
             :width="node.attrs.width"
             :height="node.attrs.height"
             scrolling="yes"
-            border="0"
-            frameborder="no"
+            :frameborder="frameborder"
             framespacing="0"
             allowfullscreen="true"
+            :class="{
+              'border-2': frameborder === '1',
+            }"
           ></iframe>
         </div>
       </template>
       <template #actions>
+        <BlockActionButton
+          :selected="frameborder === '1'"
+          :tooltip="`${frameborder === '1' ? '取消边框' : '设置边框'}`"
+          @click="handleToggleFrameborder"
+        >
+          <template #icon>
+            <MdiBorderAllVariant v-if="frameborder === '1'" />
+            <MdiBorderNoneVariant v-else />
+          </template>
+        </BlockActionButton>
+
+        <BlockActionSeparator />
+
         <BlockActionInput
           v-model.lazy.trim="width"
           tooltip="自定义宽度，按回车键生效"

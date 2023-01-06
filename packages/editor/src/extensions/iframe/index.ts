@@ -65,20 +65,8 @@ const Iframe = Node.create({
           };
         },
       },
-      border: {
-        default: 0,
-        parseHTML: (element) => {
-          const border = element.getAttribute("border");
-          return border ? parseInt(border, 10) : null;
-        },
-        renderHTML: (attributes) => {
-          return {
-            border: attributes.border,
-          };
-        },
-      },
       frameborder: {
-        default: "no",
+        default: "0",
         parseHTML: (element) => {
           return element.getAttribute("frameborder");
         },
