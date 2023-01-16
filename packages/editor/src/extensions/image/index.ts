@@ -58,7 +58,9 @@ const Image = TiptapImage.extend({
   parseHTML() {
     return [
       {
-        tag: "img[src]",
+        tag: this.options.allowBase64
+          ? "img[src]"
+          : 'img[src]:not([src^="data:"])',
       },
     ];
   },
