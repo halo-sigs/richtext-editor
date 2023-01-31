@@ -1,6 +1,6 @@
 {
   "name": "@halo-dev/richtext-editor",
-  "version": "0.0.0-alpha.17",
+  "version": "0.0.0-alpha.18-0",
   "description": "",
   "files": [
     "dist"
@@ -84,7 +84,6 @@
     "@tiptap/extension-underline": "2.0.0-beta.209",
     "@tiptap/suggestion": "2.0.0-beta.209",
     "@tiptap/vue-3": "2.0.0-beta.209",
-    "@vueuse/core": "^9.10.0",
     "floating-vue": "2.0.0-beta.20",
     "highlight.js": "11.7.0",
     "katex": "^0.16.4",

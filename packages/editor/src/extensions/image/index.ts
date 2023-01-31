@@ -15,11 +15,12 @@ const Image = TiptapImage.extend({
     return {
       ...this.parent?.(),
       width: {
-        default: null,
+        default: "100%",
         parseHTML: (element) => {
+          console.log(element);
           const width =
-            element.style.width || element.getAttribute("width") || null;
-          return width == null ? null : parseInt(width, 10);
+            element.getAttribute("width") || element.style.width || null;
+          return width;
         },
         renderHTML: (attributes) => {
           return {
@@ -28,15 +29,22 @@ const Image = TiptapImage.extend({
         },
       },
       height: {
-        default: null,
+        default: "100%",
         parseHTML: (element) => {
           const height =
-            element.style.height || element.getAttribute("height") || null;
-          return height == null ? null : parseInt(height, 10);
+            element.getAttribute("height") || element.style.height || null;
+          return height;
         },
         renderHTML: (attributes) => {
           return {
             height: attributes.height,
+          };
+        },
+      },
+      style: {
+        renderHTML() {
+          return {
+            style: "display: inline-block",
           };
         },
       },
@@ -50,7 +58,9 @@ const Image = TiptapImage.extend({
   parseHTML() {
     return [
       {
-        tag: "img[src]",
+        tag: this.options.allowBase64
+          ? "img[src]"
+          : 'img[src]:not([src^="data:"])',
       },
     ];
   },

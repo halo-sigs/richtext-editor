@@ -14,6 +14,7 @@ importers:
       '@vue/eslint-config-typescript': ^11.0.2
       '@vue/test-utils': ^2.2.6
       '@vue/tsconfig': ^0.1.3
+      '@vueuse/core': ^9.10.0
       eslint: ^8.31.0
       eslint-plugin-vue: ^9.8.0
       jsdom: ^20.0.3
@@ -27,6 +28,7 @@ importers:
       vue: ^3.2.45
       vue-tsc: ^0.40.13
     dependencies:
+      '@vueuse/core': 9.10.0_vue@3.2.45
       pinia: 2.0.28_e7lp6ggkpgyi5vqd44m2kxvk6i
       vue: 3.2.45
     devDependencies:
@@ -106,7 +108,6 @@ importers:
       '@tiptap/vue-3': 2.0.0-beta.209
       '@types/katex': ^0.16.0
       '@vue/compiler-sfc': ^3.2.45
-      '@vueuse/core': ^9.10.0
       autoprefixer: ^10.4.13
       floating-vue: 2.0.0-beta.20
       highlight.js: 11.7.0
@@ -157,7 +158,6 @@ importers:
       '@tiptap/extension-underline': 2.0.0-beta.209_f4ffqkgz5d3wev7su7t7l2rrua
       '@tiptap/suggestion': 2.0.0-beta.209_p6swxjr7orgpplcvvb7gqvyyt4
       '@tiptap/vue-3': 2.0.0-beta.209_k7etesvycb7y3ilfqlci6eqtpq
-      '@vueuse/core': 9.10.0_vue@3.2.45
       floating-vue: 2.0.0-beta.20_vue@3.2.45
       highlight.js: 11.7.0
       katex: 0.16.4
