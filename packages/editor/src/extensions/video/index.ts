@@ -31,7 +31,7 @@ const Video = Node.create({
         },
       },
       width: {
-        default: "50%",
+        default: "100%",
         parseHTML: (element) => {
           return element.getAttribute("width");
         },
