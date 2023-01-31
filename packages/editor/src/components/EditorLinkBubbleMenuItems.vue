@@ -4,6 +4,7 @@ import { computed, type PropType } from "vue";
 import { VTooltip, Dropdown as VDropdown } from "floating-vue";
 import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiLinkVariantOff from "~icons/mdi/link-variant-off";
+import MdiShare from "~icons/mdi/share";
 
 const props = defineProps({
   editor: {
@@ -82,4 +83,14 @@ function handleUnSetLink() {
   >
     <MdiLinkVariantOff />
   </button>
+
+  <a
+    v-if="editor.isActive('link')"
+    v-tooltip="`打开链接`"
+    class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
+    :href="editor.getAttributes('link')?.href"
+    target="_blank"
+  >
+    <MdiShare />
+  </a>
 </template>
