@@ -33,6 +33,8 @@ import {
 } from "../extensions/commands-menu";
 import { ExtensionCodeBlock, lowlight } from "@/extensions/code-block";
 import ExtensionIframe from "./iframe";
+import ExtensionVideo from "./video";
+import ExtensionAudio from "./audio";
 import ExtensionImage from "./image";
 import ExtensionTable from "./table";
 
@@ -81,6 +83,8 @@ const allExtensions = [
     lowlight,
   }),
   ExtensionIframe,
+  ExtensionVideo,
+  ExtensionAudio,
 ];
 
 export {
@@ -118,4 +122,6 @@ export {
   ExtensionCodeBlock,
   lowlight,
   ExtensionIframe,
+  ExtensionVideo,
+  ExtensionAudio,
 };

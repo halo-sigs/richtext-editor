@@ -37,6 +37,8 @@ import {
   ExtensionHighlight,
   ExtensionCommands,
   ExtensionIframe,
+  ExtensionVideo,
+  ExtensionAudio,
   CommandsSuggestion,
   CommandHeader1,
   CommandHeader2,
@@ -46,6 +48,8 @@ import {
   CommandHeader6,
   CommandCodeBlock,
   CommandIframe,
+  CommandVideo,
+  CommandAudio,
   CommandTable,
   CommandBulletList,
   CommandOrderedList,
@@ -124,6 +128,8 @@ const editor = useEditor({
       placeholder: "输入 / 以选择输入类型",
     }),
     ExtensionHighlight,
+    ExtensionVideo,
+    ExtensionAudio,
     ExtensionCommands.configure({
       suggestion: {
         ...CommandsSuggestion,
@@ -141,6 +147,8 @@ const editor = useEditor({
             CommandOrderedList,
             CommandTaskList,
             CommandIframe,
+            CommandVideo,
+            CommandAudio,
           ].filter((item) =>
             [...item.keywords, item.title].some((keyword) =>
               keyword.includes(query)
