@@ -5,6 +5,7 @@ import type { PropType } from "vue";
 import { BubbleMenu, Editor } from "@tiptap/vue-3";
 import type { MenuItem } from "@/types";
 import { VTooltip } from "floating-vue";
+import EditorLinkBubbleMenuItems from "./EditorLinkBubbleMenuItems.vue";
 
 defineProps({
   editor: {
@@ -29,13 +30,20 @@ defineProps({
       <button
         v-for="(menuItem, index) in menuItems"
         :key="index"
+        v-tooltip="menuItem.title"
         :class="{ 'bg-gray-200 !text-black': menuItem.isActive?.() }"
         :title="menuItem.title"
         class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
         @click="menuItem.action?.()"
       >
-        <component :is="menuItem.icon" v-tooltip="menuItem.title" />
+        <component :is="menuItem.icon" />
       </button>
+
+      <div class="px-1">
+        <div class="h-5 bg-gray-100" style="width: 1px"></div>
+      </div>
+
+      <EditorLinkBubbleMenuItems :editor="editor" />
     </div>
   </bubble-menu>
 </template>
