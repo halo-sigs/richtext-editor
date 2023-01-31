@@ -118,6 +118,7 @@ function handleOpenLink() {
             :class="{
               'border-2': frameborder === '1',
             }"
+            @mouseenter="handleSetFocus"
           ></iframe>
         </div>
       </template>
