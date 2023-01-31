@@ -18,6 +18,8 @@ import MdiFormatListCheckbox from "~icons/mdi/format-list-checkbox";
 import MdiFormatListNumbered from "~icons/mdi/format-list-numbered";
 import MdiTable from "~icons/mdi/table";
 import MdiWeb from "~icons/mdi/web";
+import MdiVideo from "~icons/mdi/video";
+import MdiMusicCircleOutline from "~icons/mdi/music-circle-outline";
 import { markRaw, type Component } from "vue";
 import type { SuggestionOptions } from "@tiptap/suggestion";
 
@@ -147,6 +149,40 @@ export const CommandIframe: Item = {
   },
 };
 
+export const CommandVideo: Item = {
+  icon: markRaw(MdiVideo),
+  title: "视频",
+  keywords: ["video", "shipin"],
+  command: ({ editor, range }: { editor: Editor; range: Range }) => {
+    editor
+      .chain()
+      .focus()
+      .deleteRange(range)
+      .insertContent([
+        { type: "video", attrs: { src: "" } },
+        { type: "paragraph", content: "" },
+      ])
+      .run();
+  },
+};
+
+export const CommandAudio: Item = {
+  icon: markRaw(MdiMusicCircleOutline),
+  title: "音频",
+  keywords: ["audio", "yinpin"],
+  command: ({ editor, range }: { editor: Editor; range: Range }) => {
+    editor
+      .chain()
+      .focus()
+      .deleteRange(range)
+      .insertContent([
+        { type: "audio", attrs: { src: "" } },
+        { type: "paragraph", content: "" },
+      ])
+      .run();
+  },
+};
+
 export const CommandTable: Item = {
   icon: markRaw(MdiTable),
   title: "表格",
@@ -204,6 +240,8 @@ export default {
       CommandOrderedList,
       CommandTaskList,
       CommandIframe,
+      CommandVideo,
+      CommandAudio,
     ]
       .filter((item) =>
         [...item.keywords, item.title].some((keyword) =>
