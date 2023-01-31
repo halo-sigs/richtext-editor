@@ -108,7 +108,7 @@ const editor = useEditor({
     ExtensionTaskList,
     ExtensionTaskItem,
     ExtensionLink.configure({
-      autolink: true,
+      autolink: false,
       openOnClick: false,
     }),
     ExtensionTextAlign.configure({
