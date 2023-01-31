@@ -47,7 +47,7 @@ function handleInsertNewLine() {
     @mouseleave="hover = false"
   >
     <VDropdown
-      placement="top-end"
+      placement="bottom-end"
       :shown="dropdownVisible"
       :auto-hide="false"
       :triggers="[]"
