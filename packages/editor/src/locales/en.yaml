@@ -1,0 +1,94 @@
+editor:
+  menus:
+    undo: Undo
+    redo: Redo
+    table:
+      title: Table
+      add: Add table
+      add_column_before: Add column before
+      add_column_after: Add column after
+      toggle_header_column: Show/Hide column header
+      delete_column: Delete column
+      add_row_before: Add row before
+      add_row_after: Add row after
+      toggle_header_row: Show/Hide row header
+      delete_row: Delete row
+      merge_cells: Merge cells
+      split_cell: Split cell
+      delete_table: Delete table
+  extensions:
+    commands_menu:
+      iframe: Iframe
+      video: Video
+      audio: Audio
+      table: Table
+      no_results: No results
+      placeholder: "Enter / to select input type"
+    link:
+      add_link: Add link
+      edit_link: Edit link
+      placeholder: Link address
+      open_in_new_window: Open in new window
+      cancel_link: Cancel link
+    audio:
+      disable_autoplay: Disable auto play
+      enable_autoplay: Enable auto play
+      disable_loop: Disable loop
+      enable_loop: Disable loop
+    iframe:
+      disable_frameborder: Hide frameborder
+      enable_frameborder: Show frameborder
+      phone_size: Mobile phone size
+      tablet_vertical_size: Tablet portrait size
+      tablet_horizontal_size: Tablet landscape size
+      desktop_size: Desktop size
+    image:
+      small_size: Small size
+      medium_size: Medium size
+      large_size: Large size
+    video:
+      disable_controls: Hide controls
+      enable_controls: Show controls
+      disable_autoplay: Disable auto play
+      enable_autoplay: Enable auto play
+      disable_loop: Disable loop
+      enable_loop: Enable loop
+      small_size: Small size
+      medium_size: Medium size
+      large_size: Large size
+  common:
+    align_left: Align left
+    align_center: Align center
+    align_right: Align right
+    align_justify: Align justify
+    bold: Bold
+    italic: Italic
+    underline: Underline
+    strike: Strike
+    quote: Quote
+    code: Code
+    superscript: Super Script
+    subscript: Sub Script
+    codeblock: Code block
+    heading:
+      title: Text type
+      paragraph: Paragraph
+      header1: Header 1
+      header2: Header 2
+      header3: Header 3
+      header4: Header 4
+      header5: Header 5
+      header6: Header 6
+    bullet_list: Bullet list
+    ordered_list: Ordered list
+    task_list: Task list
+    highlight: Highlight
+    tooltip:
+      custom_width_input: Custom width, press Enter to take effect
+      custom_height_input: Customize height, press Enter to take effect
+      open_link: Open link
+    placeholder:
+      link_input: Enter the link and press enter to confirm.
+    button:
+      new_line: New line
+      delete: Delete

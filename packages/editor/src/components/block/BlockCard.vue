@@ -6,6 +6,7 @@ import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red
 import MdiArrowULeftBottom from "~icons/mdi/arrow-u-left-bottom";
 import BlockActionSeparator from "./BlockActionSeparator.vue";
 import BlockActionButton from "./BlockActionButton.vue";
+import { i18n } from "@/locales";
 
 const props = withDefaults(
   defineProps<{
@@ -61,7 +62,10 @@ function handleInsertNewLine() {
         <div class="editor-block__actions">
           <slot name="actions" />
 
-          <BlockActionButton tooltip="换行" @click="handleInsertNewLine">
+          <BlockActionButton
+            :tooltip="i18n.global.t('editor.common.button.new_line')"
+            @click="handleInsertNewLine"
+          >
             <template #icon>
               <MdiArrowULeftBottom />
             </template>
@@ -69,7 +73,10 @@ function handleInsertNewLine() {
 
           <BlockActionSeparator />
 
-          <BlockActionButton tooltip="删除" @click="deleteNode">
+          <BlockActionButton
+            :tooltip="i18n.global.t('editor.common.button.delete')"
+            @click="deleteNode"
+          >
             <template #icon>
               <MdiDeleteForeverOutline />
             </template>

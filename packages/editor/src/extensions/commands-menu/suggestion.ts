@@ -1,4 +1,4 @@
-import { EditorContent, type Editor, type Range } from "@tiptap/vue-3";
+import { type Editor, type Range } from "@tiptap/vue-3";
 import { VueRenderer } from "@tiptap/vue-3";
 import type { Instance } from "tippy.js";
 import tippy from "tippy.js";
@@ -22,6 +22,7 @@ import MdiVideo from "~icons/mdi/video";
 import MdiMusicCircleOutline from "~icons/mdi/music-circle-outline";
 import { markRaw, type Component } from "vue";
 import type { SuggestionOptions } from "@tiptap/suggestion";
+import { i18n } from "@/locales";
 
 export interface Item {
   icon: Component;
@@ -32,8 +33,8 @@ export interface Item {
 
 export const CommentParagraph: Item = {
   icon: markRaw(MdiFormatParagraph),
-  title: "普通文本",
-  keywords: ["paragraph", "text", "普通文本", "putongwenben"],
+  title: i18n.global.t("editor.common.paragraph"),
+  keywords: ["paragraph", "text", "putongwenben"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor.chain().focus().deleteRange(range).setParagraph().run();
   },
@@ -41,7 +42,7 @@ export const CommentParagraph: Item = {
 
 export const CommandHeader1: Item = {
   icon: markRaw(MdiFormatHeader1),
-  title: "一级标题",
+  title: i18n.global.t("editor.common.heading.header1"),
   keywords: ["h1", "header1", "1", "yijibiaoti"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor
@@ -55,7 +56,7 @@ export const CommandHeader1: Item = {
 
 export const CommandHeader2: Item = {
   icon: markRaw(MdiFormatHeader2),
-  title: "二级标题",
+  title: i18n.global.t("editor.common.heading.header2"),
   keywords: ["h2", "header2", "2", "erjibiaoti"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor
@@ -69,7 +70,7 @@ export const CommandHeader2: Item = {
 
 export const CommandHeader3: Item = {
   icon: markRaw(MdiFormatHeader3),
-  title: "三级标题",
+  title: i18n.global.t("editor.common.heading.header3"),
   keywords: ["h3", "header3", "3", "sanjibiaoti"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor
@@ -83,7 +84,7 @@ export const CommandHeader3: Item = {
 
 export const CommandHeader4: Item = {
   icon: markRaw(MdiFormatHeader4),
-  title: "四级标题",
+  title: i18n.global.t("editor.common.heading.header4"),
   keywords: ["h4", "header4", "4", "sijibiaoti"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor
@@ -97,7 +98,7 @@ export const CommandHeader4: Item = {
 
 export const CommandHeader5: Item = {
   icon: markRaw(MdiFormatHeader5),
-  title: "五级标题",
+  title: i18n.global.t("editor.common.heading.header5"),
   keywords: ["h5", "header5", "5", "wujibiaoti"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor
@@ -111,7 +112,7 @@ export const CommandHeader5: Item = {
 
 export const CommandHeader6: Item = {
   icon: markRaw(MdiFormatHeader6),
-  title: "六级标题",
+  title: i18n.global.t("editor.common.heading.header6"),
   keywords: ["h6", "header6", "6", "liujibiaoti"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor
@@ -125,7 +126,7 @@ export const CommandHeader6: Item = {
 
 export const CommandCodeBlock: Item = {
   icon: markRaw(MdiCodeBracesBox),
-  title: "代码块",
+  title: i18n.global.t("editor.common.codeblock"),
   keywords: ["codeblock", "daimakuai"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor.chain().focus().deleteRange(range).setCodeBlock().run();
@@ -134,7 +135,7 @@ export const CommandCodeBlock: Item = {
 
 export const CommandIframe: Item = {
   icon: markRaw(MdiWeb),
-  title: "嵌入网页",
+  title: i18n.global.t("editor.extensions.commands_menu.iframe"),
   keywords: ["iframe", "qianruwangye"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor
@@ -151,7 +152,7 @@ export const CommandIframe: Item = {
 
 export const CommandVideo: Item = {
   icon: markRaw(MdiVideo),
-  title: "视频",
+  title: i18n.global.t("editor.extensions.commands_menu.video"),
   keywords: ["video", "shipin"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor
@@ -168,7 +169,7 @@ export const CommandVideo: Item = {
 
 export const CommandAudio: Item = {
   icon: markRaw(MdiMusicCircleOutline),
-  title: "音频",
+  title: i18n.global.t("editor.extensions.commands_menu.audio"),
   keywords: ["audio", "yinpin"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor
@@ -185,7 +186,7 @@ export const CommandAudio: Item = {
 
 export const CommandTable: Item = {
   icon: markRaw(MdiTable),
-  title: "表格",
+  title: i18n.global.t("editor.extensions.commands_menu.table"),
   keywords: ["table", "biaoge"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor
@@ -199,7 +200,7 @@ export const CommandTable: Item = {
 
 export const CommandBulletList: Item = {
   icon: markRaw(MdiFormatListBulleted),
-  title: "无序列表",
+  title: i18n.global.t("editor.common.bullet_list"),
   keywords: ["bulletlist", "wuxuliebiao"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor.chain().focus().deleteRange(range).toggleBulletList().run();
@@ -208,7 +209,7 @@ export const CommandBulletList: Item = {
 
 export const CommandOrderedList: Item = {
   icon: markRaw(MdiFormatListNumbered),
-  title: "有序列表",
+  title: i18n.global.t("editor.common.ordered_list"),
   keywords: ["orderedlist", "youxuliebiao"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor.chain().focus().deleteRange(range).toggleOrderedList().run();
@@ -217,7 +218,7 @@ export const CommandOrderedList: Item = {
 
 export const CommandTaskList: Item = {
   icon: markRaw(MdiFormatListCheckbox),
-  title: "任务列表",
+  title: i18n.global.t("editor.common.task_list"),
   keywords: ["tasklist", "renwuliebiao"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor.chain().focus().deleteRange(range).toggleTaskList().run();

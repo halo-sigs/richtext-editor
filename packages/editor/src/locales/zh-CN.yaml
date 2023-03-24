@@ -1,0 +1,94 @@
+editor:
+  menus:
+    undo: 撤销
+    redo: 恢复
+    table:
+      title: 表格
+      add: 插入表格
+      add_column_before: 向前插入列
+      add_column_after: 向后插入列
+      toggle_header_column: 显示/隐藏列表头
+      delete_column: 删除当前列
+      add_row_before: 向上插入行
+      add_row_after: 向下插入行
+      toggle_header_row: 显示/隐藏行表头
+      delete_row: 删除当前行
+      merge_cells: 合并单元格
+      split_cell: 分割单元格
+      delete_table: 删除表格
+  extensions:
+    commands_menu:
+      iframe: 嵌入网页
+      video: 视频
+      audio: 音频
+      table: 表格
+      no_results: 没有搜索结果
+      placeholder: "输入 / 以选择输入类型"
+    link:
+      add_link: 添加链接
+      edit_link: 修改链接
+      placeholder: 链接地址
+      open_in_new_window: 在新窗口中打开
+      cancel_link: 取消链接
+    audio:
+      disable_autoplay: 关闭自动播放
+      enable_autoplay: 开启自动播放
+      disable_loop: 关闭循环播放
+      enable_loop: 开启循环播放
+    iframe:
+      disable_frameborder: 取消边框
+      enable_frameborder: 设置边框
+      phone_size: 手机尺寸
+      tablet_vertical_size: 平板电脑纵向尺寸
+      tablet_horizontal_size: 平板电脑横向尺寸
+      desktop_size: 桌面电脑尺寸
+    image:
+      small_size: 小尺寸
+      medium_size: 中尺寸
+      large_size: 大尺寸
+    video:
+      disable_controls: 隐藏控制面板
+      enable_controls: 显示控制面板
+      disable_autoplay: 关闭自动播放
+      enable_autoplay: 开启自动播放
+      disable_loop: 关闭循环播放
+      enable_loop: 开启循环播放
+      small_size: 小尺寸
+      medium_size: 中尺寸
+      large_size: 大尺寸
+  common:
+    align_left: 左对齐
+    align_center: 居中
+    align_right: 右对齐
+    align_justify: 两端对齐
+    bold: 粗体
+    italic: 斜体
+    underline: 下划线
+    strike: 删除线
+    quote: 引用
+    code: 行内代码
+    superscript: 上角标
+    subscript: 下角标
+    codeblock: 代码块
+    heading:
+      title: 文本类型
+      paragraph: 普通文本
+      header1: 一级标题
+      header2: 二级标题
+      header3: 三级标题
+      header4: 四级标题
+      header5: 五级标题
+      header6: 六级标题
+    bullet_list: 无序列表
+    ordered_list: 有序列表
+    task_list: 任务列表
+    highlight: 高亮
+    tooltip:
+      custom_width_input: 自定义宽度，按回车键生效
+      custom_height_input: 自定义高度，按回车键生效
+      open_link: 打开链接
+    placeholder:
+      link_input: 输入链接，按回车确定
+    button:
+      new_line: 换行
+      delete: 删除

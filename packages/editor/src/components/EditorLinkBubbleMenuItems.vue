@@ -5,6 +5,7 @@ import { VTooltip, Dropdown as VDropdown } from "floating-vue";
 import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiLinkVariantOff from "~icons/mdi/link-variant-off";
 import MdiShare from "~icons/mdi/share";
+import { i18n } from "@/locales";
 
 const props = defineProps({
   editor: {
@@ -47,7 +48,11 @@ function handleUnSetLink() {
 <template>
   <VDropdown class="inline-flex" :triggers="['click']" :distance="10">
     <button
-      v-tooltip="`${editor.isActive('link') ? '修改' : '添加'}链接`"
+      v-tooltip="
+        editor.isActive('link')
+          ? i18n.global.t('editor.extensions.link.edit_link')
+          : i18n.global.t('editor.extensions.link.add_link')
+      "
       class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
       :class="{ 'bg-gray-200 !text-black': editor.isActive('link') }"
     >
@@ -60,7 +65,7 @@ function handleUnSetLink() {
       >
         <input
           v-model.lazy="href"
-          placeholder="链接地址"
+          :placeholder="i18n.global.t('editor.extensions.link.placeholder')"
           class="bg-gray-50 rounded-md hover:bg-gray-100 block px-2 w-full py-1.5 text-sm text-gray-900 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
         />
         <label class="inline-flex items-center mt-2">
@@ -69,7 +74,9 @@ function handleUnSetLink() {
             type="checkbox"
             class="form-checkbox text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
           />
-          <span class="ml-2 text-sm text-gray-500">在新窗口打开</span>
+          <span class="ml-2 text-sm text-gray-500">
+            {{ i18n.global.t("editor.extensions.link.open_in_new_window") }}
+          </span>
         </label>
       </div>
     </template>
@@ -77,7 +84,7 @@ function handleUnSetLink() {
 
   <button
     v-if="editor.isActive('link')"
-    v-tooltip="`取消链接`"
+    v-tooltip="i18n.global.t('editor.extensions.link.cancel_link')"
     class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
     @click="handleUnSetLink"
   >
@@ -86,7 +93,7 @@ function handleUnSetLink() {
 
   <a
     v-if="editor.isActive('link')"
-    v-tooltip="`打开链接`"
+    v-tooltip="i18n.global.t('editor.common.tooltip.open_link')"
     class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
     :href="editor.getAttributes('link')?.href"
     target="_blank"

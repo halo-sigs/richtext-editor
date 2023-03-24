@@ -11,6 +11,7 @@ import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiImageSizeSelectActual from "~icons/mdi/image-size-select-actual";
 import MdiImageSizeSelectSmall from "~icons/mdi/image-size-select-small";
 import MdiImageSizeSelectLarge from "~icons/mdi/image-size-select-large";
+import { i18n } from "@/locales";
 
 const props = defineProps<{
   editor: Editor;
@@ -94,18 +95,18 @@ function handleOpenLink() {
       <template #actions>
         <BlockActionInput
           v-model.lazy.trim="width"
-          tooltip="自定义宽度，按回车键生效"
+          :tooltip="i18n.global.t('editor.common.tooltip.custom_width_input')"
         />
 
         <BlockActionInput
           v-model.lazy.trim="height"
-          tooltip="自定义高度，按回车键生效"
+          :tooltip="i18n.global.t('editor.common.tooltip.custom_height_input')"
         />
 
         <BlockActionSeparator />
 
         <BlockActionButton
-          tooltip="小尺寸"
+          :tooltip="i18n.global.t('editor.extensions.image.small_size')"
           :selected="node.attrs.width === '25%'"
           @click="handleSetSize('25%', 'auto')"
         >
@@ -115,7 +116,7 @@ function handleOpenLink() {
         </BlockActionButton>
 
         <BlockActionButton
-          tooltip="中尺寸"
+          :tooltip="i18n.global.t('editor.extensions.image.medium_size')"
           :selected="node.attrs.width === '50%'"
           @click="handleSetSize('50%', 'auto')"
         >
@@ -125,7 +126,7 @@ function handleOpenLink() {
         </BlockActionButton>
 
         <BlockActionButton
-          tooltip="全尺寸"
+          :tooltip="i18n.global.t('editor.extensions.image.large_size')"
           :selected="node.attrs.width === '100%'"
           @click="handleSetSize('100%', '100%')"
         >
@@ -136,7 +137,10 @@ function handleOpenLink() {
 
         <BlockActionSeparator />
 
-        <BlockActionButton tooltip="打开链接" @click="handleOpenLink">
+        <BlockActionButton
+          :tooltip="i18n.global.t('editor.common.tooltip.open_link')"
+          @click="handleOpenLink"
+        >
           <template #icon>
             <MdiLinkVariant />
           </template>

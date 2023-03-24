@@ -2,10 +2,11 @@
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import EditorHeader from "./EditorHeader.vue";
 import EditorBubbleMenu from "./EditorBubbleMenu.vue";
-import type { CSSProperties, PropType } from "vue";
+import { onMounted, watch, type CSSProperties, type PropType } from "vue";
 import type { MenuItem } from "@/types";
+import { i18n } from "@/locales";
 
-defineProps({
+const props = defineProps({
   editor: {
     type: Object as PropType<Editor>,
     required: true,
@@ -30,6 +31,15 @@ defineProps({
     required: false,
     default: () => ({}),
   },
+  locale: {
+    type: String as PropType<"zh-CN" | "en" | "zh" | "en-US">,
+    required: false,
+    default: "zh-CN",
+  },
+});
+
+onMounted(() => {
+  i18n.global.locale.value = props.locale;
 });
 </script>
 <template>

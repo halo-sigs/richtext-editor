@@ -236,6 +236,7 @@ const bubbleMenuItems = computed(() => {
   <RichTextEditor
     v-if="editor"
     :editor="editor"
+    locale="zh-CN"
     :toolbar-menu-items="toolbarMenuItems"
     :bubble-menu-items="bubbleMenuItems"
   />

@@ -13,6 +13,7 @@ import MdiTabletIpad from "~icons/mdi/tablet-ipad";
 import MdiDesktopMac from "~icons/mdi/desktop-mac";
 import MdiBorderAllVariant from "~icons/mdi/border-all-variant";
 import MdiBorderNoneVariant from "~icons/mdi/border-none-variant";
+import { i18n } from "@/locales";
 
 const props = defineProps<{
   editor: Editor;
@@ -100,7 +101,9 @@ function handleOpenLink() {
             <input
               v-model.lazy="src"
               class="block px-2 w-full py-1.5 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="输入链接，按回车确定"
+              :placeholder="
+                i18n.global.t('editor.common.placeholder.link_input')
+              "
               tabindex="-1"
               @focus="handleSetFocus"
             />
@@ -125,7 +128,11 @@ function handleOpenLink() {
       <template #actions>
         <BlockActionButton
           :selected="frameborder === '1'"
-          :tooltip="`${frameborder === '1' ? '取消边框' : '设置边框'}`"
+          :tooltip="`${
+            frameborder === '1'
+              ? i18n.global.t('editor.extensions.iframe.disable_frameborder')
+              : i18n.global.t('editor.extensions.iframe.enable_frameborder')
+          }`"
           @click="handleToggleFrameborder"
         >
           <template #icon>
@@ -138,18 +145,18 @@ function handleOpenLink() {
 
         <BlockActionInput
           v-model.lazy.trim="width"
-          tooltip="自定义宽度，按回车键生效"
+          :tooltip="i18n.global.t('editor.common.tooltip.custom_width_input')"
         />
 
         <BlockActionInput
           v-model.lazy.trim="height"
-          tooltip="自定义高度，按回车键生效"
+          :tooltip="i18n.global.t('editor.common.tooltip.custom_height_input')"
         />
 
         <BlockActionSeparator />
 
         <BlockActionButton
-          tooltip="手机尺寸"
+          :tooltip="i18n.global.t('editor.extensions.iframe.phone_size')"
           :selected="sizeMatch('390px', '844px')"
           @click="handleSetSize('390px', '844px')"
         >
@@ -159,7 +166,9 @@ function handleOpenLink() {
         </BlockActionButton>
 
         <BlockActionButton
-          tooltip="平板电脑纵向尺寸"
+          :tooltip="
+            i18n.global.t('editor.extensions.iframe.tablet_vertical_size')
+          "
           :selected="sizeMatch('834px', '1194px')"
           @click="handleSetSize('834px', '1194px')"
         >
@@ -169,7 +178,9 @@ function handleOpenLink() {
         </BlockActionButton>
 
         <BlockActionButton
-          tooltip="平板电脑横向尺寸"
+          :tooltip="
+            i18n.global.t('editor.extensions.iframe.tablet_horizontal_size')
+          "
           :selected="sizeMatch('1194px', '834px')"
           @click="handleSetSize('1194px', '834px')"
         >
@@ -179,7 +190,7 @@ function handleOpenLink() {
         </BlockActionButton>
 
         <BlockActionButton
-          tooltip="桌面电脑尺寸"
+          :tooltip="i18n.global.t('editor.extensions.iframe.desktop_size')"
           :selected="sizeMatch('100%', '834px')"
           @click="handleSetSize('100%', '834px')"
         >
@@ -190,7 +201,10 @@ function handleOpenLink() {
 
         <BlockActionSeparator />
 
-        <BlockActionButton tooltip="打开链接" @click="handleOpenLink">
+        <BlockActionButton
+          :tooltip="i18n.global.t('editor.common.tooltip.open_link')"
+          @click="handleOpenLink"
+        >
           <template #icon>
             <MdiLinkVariant />
           </template>

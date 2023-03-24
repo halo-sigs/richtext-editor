@@ -11,6 +11,7 @@ import MdiPlayCircle from "~icons/mdi/play-circle";
 import MdiPlayCircleOutline from "~icons/mdi/play-circle-outline";
 import MdiMotionPlayOutline from "~icons/mdi/motion-play-outline";
 import MdiMotionPlay from "~icons/mdi/motion-play";
+import { i18n } from "@/locales";
 
 const props = defineProps<{
   editor: Editor;
@@ -79,7 +80,9 @@ function handleOpenLink() {
             <input
               v-model.lazy="src"
               class="block px-2 w-full py-1.5 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="输入链接，按回车确定"
+              :placeholder="
+                i18n.global.t('editor.common.placeholder.link_input')
+              "
               tabindex="-1"
               @focus="handleSetFocus"
             />
@@ -97,7 +100,11 @@ function handleOpenLink() {
       <template #actions>
         <BlockActionButton
           :selected="autoplay"
-          :tooltip="`${autoplay ? '关闭自动播放' : '开启自动播放'}`"
+          :tooltip="`${
+            autoplay
+              ? i18n.global.t('editor.extensions.audio.disable_autoplay')
+              : i18n.global.t('editor.extensions.audio.enable_autoplay')
+          }`"
           @click="handleToggleAutoplay"
         >
           <template #icon>
@@ -108,7 +115,11 @@ function handleOpenLink() {
 
         <BlockActionButton
           :selected="loop"
-          :tooltip="`${loop ? '关闭循环播放' : '开启循环播放'}`"
+          :tooltip="`${
+            loop
+              ? i18n.global.t('editor.extensions.audio.disable_loop')
+              : i18n.global.t('editor.extensions.audio.enable_loop')
+          }`"
           @click="handleToggleLoop"
         >
           <template #icon>
@@ -119,7 +130,10 @@ function handleOpenLink() {
 
         <BlockActionSeparator />
 
-        <BlockActionButton tooltip="打开链接" @click="handleOpenLink">
+        <BlockActionButton
+          :tooltip="i18n.global.t('editor.common.tooltip.open_link')"
+          @click="handleOpenLink"
+        >
           <template #icon>
             <MdiLinkVariant />
           </template>
