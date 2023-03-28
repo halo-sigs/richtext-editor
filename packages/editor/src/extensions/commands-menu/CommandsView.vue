@@ -97,7 +97,7 @@ defineExpose({
         <span
           class="command-title group-hover:text-gray-900 group-hover:font-medium"
         >
-          {{ item.title }}
+          {{ i18n.global.t(item.title) }}
         </span>
       </div>
     </template>
