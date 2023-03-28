@@ -230,12 +230,34 @@ const bubbleMenuItems = computed(() => {
     AlignJustifyMenuItem(editor.value),
   ];
 });
+
+const locales = [
+  {
+    code: "zh-CN",
+    label: "中文",
+  },
+  {
+    code: "en-US",
+    label: "English",
+  },
+];
+
+const locale = useLocalStorage("locale", "zh-CN");
 </script>
 
 <template>
+  <div>
+    <select v-model="locale">
+      <option v-for="(item, index) in locales" :key="index" :value="item.code">
+        {{ item.label }}
+      </option>
+    </select>
+  </div>
+
   <RichTextEditor
     v-if="editor"
     :editor="editor"
+    :locale="locale"
     :toolbar-menu-items="toolbarMenuItems"
     :bubble-menu-items="bubbleMenuItems"
   />

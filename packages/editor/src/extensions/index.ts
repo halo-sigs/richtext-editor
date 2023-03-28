@@ -25,6 +25,7 @@ import ExtensionSubscript from "@tiptap/extension-subscript";
 import ExtensionSuperscript from "@tiptap/extension-superscript";
 import ExtensionPlaceholder from "@tiptap/extension-placeholder";
 import ExtensionHighlight from "@tiptap/extension-highlight";
+import { i18n } from "@/locales";
 
 // Custom extensions
 import {
@@ -74,7 +75,7 @@ const allExtensions = [
   ExtensionSubscript,
   ExtensionSuperscript,
   ExtensionPlaceholder.configure({
-    placeholder: "输入 / 以选择输入类型",
+    placeholder: i18n.global.t("editor.extensions.commands_menu.placeholder"),
   }),
   ExtensionCommands.configure({
     suggestion: {},

@@ -17,6 +17,7 @@ import MdiPlayCircle from "~icons/mdi/play-circle";
 import MdiPlayCircleOutline from "~icons/mdi/play-circle-outline";
 import MdiMotionPlayOutline from "~icons/mdi/motion-play-outline";
 import MdiMotionPlay from "~icons/mdi/motion-play";
+import { i18n } from "@/locales";
 
 const props = defineProps<{
   editor: Editor;
@@ -122,7 +123,9 @@ function handleOpenLink() {
             <input
               v-model.lazy="src"
               class="block px-2 w-full py-1.5 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="输入链接，按回车确定"
+              :placeholder="
+                i18n.global.t('editor.common.placeholder.link_input')
+              "
               tabindex="-1"
               @focus="handleSetFocus"
             />
@@ -145,7 +148,11 @@ function handleOpenLink() {
       <template #actions>
         <BlockActionButton
           :selected="controls"
-          :tooltip="`${controls ? '隐藏控制面板' : '显示控制面板'}`"
+          :tooltip="`${
+            controls
+              ? i18n.global.t('editor.extensions.video.disable_controls')
+              : i18n.global.t('editor.extensions.video.enable_controls')
+          }`"
           @click="handleToggleControls"
         >
           <template #icon>
@@ -156,7 +163,11 @@ function handleOpenLink() {
 
         <BlockActionButton
           :selected="autoplay"
-          :tooltip="`${autoplay ? '关闭自动播放' : '开启自动播放'}`"
+          :tooltip="`${
+            autoplay
+              ? i18n.global.t('editor.extensions.video.disable_autoplay')
+              : i18n.global.t('editor.extensions.video.enable_autoplay')
+          }`"
           @click="handleToggleAutoplay"
         >
           <template #icon>
@@ -167,7 +178,11 @@ function handleOpenLink() {
 
         <BlockActionButton
           :selected="loop"
-          :tooltip="`${loop ? '关闭循环播放' : '开启循环播放'}`"
+          :tooltip="`${
+            loop
+              ? i18n.global.t('editor.extensions.video.disable_loop')
+              : i18n.global.t('editor.extensions.video.enable_loop')
+          }`"
           @click="handleToggleLoop"
         >
           <template #icon>
@@ -180,18 +195,18 @@ function handleOpenLink() {
 
         <BlockActionInput
           v-model.lazy.trim="width"
-          tooltip="自定义宽度，按回车键生效"
+          :tooltip="i18n.global.t('editor.common.tooltip.custom_width_input')"
         />
 
         <BlockActionInput
           v-model.lazy.trim="height"
-          tooltip="自定义高度，按回车键生效"
+          :tooltip="i18n.global.t('editor.common.tooltip.custom_height_input')"
         />
 
         <BlockActionSeparator />
 
         <BlockActionButton
-          tooltip="小尺寸"
+          :tooltip="i18n.global.t('editor.extensions.video.small_size')"
           :selected="node.attrs.width === '25%'"
           @click="handleSetSize('25%', 'auto')"
         >
@@ -201,7 +216,7 @@ function handleOpenLink() {
         </BlockActionButton>
 
         <BlockActionButton
-          tooltip="中尺寸"
+          :tooltip="i18n.global.t('editor.extensions.video.medium_size')"
           :selected="node.attrs.width === '50%'"
           @click="handleSetSize('50%', 'auto')"
         >
@@ -211,7 +226,7 @@ function handleOpenLink() {
         </BlockActionButton>
 
         <BlockActionButton
-          tooltip="全尺寸"
+          :tooltip="i18n.global.t('editor.extensions.video.large_size')"
           :selected="node.attrs.width === '100%'"
           @click="handleSetSize('100%', 'auto')"
         >
@@ -222,7 +237,10 @@ function handleOpenLink() {
 
         <BlockActionSeparator />
 
-        <BlockActionButton tooltip="打开链接" @click="handleOpenLink">
+        <BlockActionButton
+          :tooltip="i18n.global.t('editor.common.tooltip.open_link')"
+          @click="handleOpenLink"
+        >
           <template #icon>
             <MdiLinkVariant />
           </template>

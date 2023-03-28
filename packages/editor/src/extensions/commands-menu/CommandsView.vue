@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { type PropType, ref, watch } from "vue";
 import type { Item } from "./suggestion";
+import { i18n } from "@/locales";
 
 const props = defineProps({
   items: {
@@ -96,12 +97,14 @@ defineExpose({
         <span
           class="command-title group-hover:text-gray-900 group-hover:font-medium"
         >
-          {{ item.title }}
+          {{ i18n.global.t(item.title) }}
         </span>
       </div>
     </template>
     <div v-else class="command-empty">
-      <span>没有搜索结果</span>
+      <span>
+        {{ i18n.global.t("core.extensions.commands_menu.no_results") }}
+      </span>
     </div>
   </div>
 </template>

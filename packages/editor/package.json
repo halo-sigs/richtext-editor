@@ -1,6 +1,6 @@
 {
   "name": "@halo-dev/richtext-editor",
-  "version": "0.0.0-alpha.18-0",
+  "version": "0.0.0-alpha.18",
   "description": "",
   "files": [
     "dist"
@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@iconify/json": "^2.2.22",
+    "@intlify/unplugin-vue-i18n": "^0.10.0",
     "@types/katex": "^0.16.0",
     "@vue/compiler-sfc": "^3.2.47",
     "autoprefixer": "^10.4.13",
@@ -88,6 +89,7 @@
     "highlight.js": "11.7.0",
     "katex": "^0.16.4",
     "lowlight": "^2.8.1",
-    "tippy.js": "^6.3.7"
+    "tippy.js": "^6.3.7",
+    "vue-i18n": "9"
   }
 }
