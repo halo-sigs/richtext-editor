@@ -32,7 +32,7 @@ export interface Item {
 
 export const CommentParagraph: Item = {
   icon: markRaw(MdiFormatParagraph),
-  title: "editor.common.paragraph",
+  title: "editor.common.heading.paragraph",
   keywords: ["paragraph", "text", "putongwenben"],
   command: ({ editor, range }: { editor: Editor; range: Range }) => {
     editor.chain().focus().deleteRange(range).setParagraph().run();
