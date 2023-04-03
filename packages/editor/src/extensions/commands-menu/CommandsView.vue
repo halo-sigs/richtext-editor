@@ -103,7 +103,7 @@ defineExpose({
     </template>
     <div v-else class="command-empty">
       <span>
-        {{ i18n.global.t("core.extensions.commands_menu.no_results") }}
+        {{ i18n.global.t("editor.extensions.commands_menu.no_results") }}
       </span>
     </div>
   </div>
