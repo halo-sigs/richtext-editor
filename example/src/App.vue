@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import "@halo-dev/richtext-editor/dist/style.css";
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref, watchEffect, markRaw } from "vue";
 import { unified } from "unified";
 import rehypeParse from "rehype-parse";
 import rehypeFormat from "rehype-format";
@@ -80,9 +80,30 @@ import {
   TaskListMenuItem,
   HighlightMenuItem,
   Separator,
+  Editor,
+  type Item,
 } from "@halo-dev/richtext-editor";
+import MdiImageOutline from "~icons/mdi/image-outline";
 
 const content = useLocalStorage("content", "");
+
+const CommandImage: Item = {
+  icon: markRaw(MdiImageOutline),
+  title: "editor.extensions.commands_menu.image",
+  keywords: ["image", "tupian"],
+  command: ({ editor, range }: { editor: Editor; range: Range }) => {
+    const url = window.prompt("请输入图片地址", "");
+    editor
+      .chain()
+      .focus()
+      .deleteRange(range)
+      .insertContent([
+        { type: "image", attrs: { src: url } },
+        { type: "paragraph", content: "" },
+      ])
+      .run();
+  },
+};
 
 const editor = useEditor({
   content: content.value,
@@ -147,6 +168,7 @@ const editor = useEditor({
             CommandOrderedList,
             CommandTaskList,
             CommandIframe,
+            CommandImage,
             CommandVideo,
             CommandAudio,
           ].filter((item) =>
