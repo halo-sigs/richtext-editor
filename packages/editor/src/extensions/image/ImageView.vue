@@ -12,6 +12,8 @@ import MdiImageSizeSelectActual from "~icons/mdi/image-size-select-actual";
 import MdiImageSizeSelectSmall from "~icons/mdi/image-size-select-small";
 import MdiImageSizeSelectLarge from "~icons/mdi/image-size-select-large";
 import { i18n } from "@/locales";
+import { useResizeObserver } from "@vueuse/core";
+import { ref } from "vue";
 
 const props = defineProps<{
   editor: Editor;
@@ -55,9 +57,28 @@ const height = computed({
   },
 });
 
+const resizeRef = ref<HTMLElement>();
+
+const reuseResizeObserver = () => {
+  let init = true;
+  return useResizeObserver(resizeRef, (entries) => {
+    if (init) {
+      init = false;
+      return;
+    }
+    const entry = entries[0];
+    const { width, height } = entry.contentRect;
+    props.updateAttributes({ width: width + "px", height: height + "px" });
+  });
+};
+
+let resizeObserver = reuseResizeObserver();
+
 function handleSetSize(width: string, height: string) {
+  resizeObserver.stop();
   props.updateAttributes({ width, height });
   props.editor.chain().focus().setNodeSelection(props.getPos()).run();
+  resizeObserver = reuseResizeObserver();
 }
 
 function handleOpenLink() {
@@ -75,7 +96,8 @@ function handleOpenLink() {
     >
       <template #content>
         <div
-          class="inline-block overflow-hidden transition-all text-center relative"
+          ref="resizeRef"
+          class="resize inline-block overflow-hidden text-center relative"
           :class="{
             'ring-2 rounded': selected,
           }"
