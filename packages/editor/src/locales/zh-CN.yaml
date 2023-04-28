@@ -19,6 +19,7 @@ editor:
   extensions:
     commands_menu:
       iframe: 嵌入网页
+      image: 图片
       video: 视频
       audio: 音频
       table: 表格

@@ -19,6 +19,7 @@ editor:
   extensions:
     commands_menu:
       iframe: Iframe
+      image: image
       video: Video
       audio: Audio
       table: Table
