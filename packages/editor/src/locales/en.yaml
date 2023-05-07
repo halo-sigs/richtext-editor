@@ -23,6 +23,8 @@ editor:
       video: Video
       audio: Audio
       table: Table
+      formula_block: Formula block
+      formula_inline: Formula inline
       no_results: No results
       placeholder: "Enter / to select input type"
     link:

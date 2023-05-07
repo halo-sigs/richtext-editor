@@ -38,6 +38,7 @@ import ExtensionVideo from "./video";
 import ExtensionAudio from "./audio";
 import ExtensionImage from "./image";
 import ExtensionTable from "./table";
+import { ExtensionKatex2Block, ExtensionKatex2Inline } from "./katex2";
 
 const allExtensions = [
   ExtensionBlockquote,
@@ -86,6 +87,8 @@ const allExtensions = [
   ExtensionIframe,
   ExtensionVideo,
   ExtensionAudio,
+  ExtensionKatex2Block,
+  ExtensionKatex2Inline,
 ];
 
 export {
@@ -125,4 +128,6 @@ export {
   ExtensionIframe,
   ExtensionVideo,
   ExtensionAudio,
+  ExtensionKatex2Block,
+  ExtensionKatex2Inline,
 };

@@ -39,6 +39,8 @@ import {
   ExtensionIframe,
   ExtensionVideo,
   ExtensionAudio,
+  ExtensionKatex2Block,
+  ExtensionKatex2Inline,
   CommandsSuggestion,
   CommandHeader1,
   CommandHeader2,
@@ -84,6 +86,10 @@ import {
   type Item,
 } from "@halo-dev/richtext-editor";
 import MdiImageOutline from "~icons/mdi/image-outline";
+import {
+  CommandKatex2Block,
+  CommandKatex2Inline,
+} from "./draft/ExtensionKatex2";
 
 const content = useLocalStorage("content", "");
 
@@ -151,6 +157,8 @@ const editor = useEditor({
     ExtensionHighlight,
     ExtensionVideo,
     ExtensionAudio,
+    ExtensionKatex2Block,
+    ExtensionKatex2Inline,
     ExtensionCommands.configure({
       suggestion: {
         ...CommandsSuggestion,
@@ -171,6 +179,8 @@ const editor = useEditor({
             CommandImage,
             CommandVideo,
             CommandAudio,
+            CommandKatex2Block,
+            CommandKatex2Inline,
           ].filter((item) =>
             [...item.keywords, item.title].some((keyword) =>
               keyword.includes(query)
@@ -284,3 +294,16 @@ const locale = useLocalStorage("locale", "zh-CN");
     :bubble-menu-items="bubbleMenuItems"
   />
 </template>
+<style lang="scss">
+.ProseMirror {
+  .katex-render {
+    cursor: pointer;
+    padding: 0 0.25rem;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #eee;
+    }
+  }
+}
+</style>
