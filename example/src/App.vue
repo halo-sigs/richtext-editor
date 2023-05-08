@@ -39,8 +39,6 @@ import {
   ExtensionIframe,
   ExtensionVideo,
   ExtensionAudio,
-  ExtensionKatex2Block,
-  ExtensionKatex2Inline,
   CommandsSuggestion,
   CommandHeader1,
   CommandHeader2,
@@ -87,6 +85,8 @@ import {
 } from "@halo-dev/richtext-editor";
 import MdiImageOutline from "~icons/mdi/image-outline";
 import {
+  ExtensionKatex2Block,
+  ExtensionKatex2Inline,
   CommandKatex2Block,
   CommandKatex2Inline,
 } from "./draft/ExtensionKatex2";
@@ -300,10 +300,35 @@ const locale = useLocalStorage("locale", "zh-CN");
     cursor: pointer;
     padding: 0 0.25rem;
     transition: background 0.2s;
+    text-align: center;
 
-    &:hover {
-      background: #eee;
+    .katex-render-wrapper {
+      position: relative;
+      display: inline-block;
+      .katex-render-content {
+        display: inline-block;
+      }
+      .katex-render-content:hover {
+        background: #eee !important;
+      }
+      .katex-render-content:empty::before {
+        content: "Formula is Empty";
+        color: #b8b7b7;
+        text-align: center;
+        display: block;
+      }
+      .katex-editor-content {
+        position: absolute;
+        top: 100%;
+        left: 0%;
+        transform: translateX(10%);
+        padding: 10px;
+        z-index: 999;
+      }
     }
+  }
+  .katex-render-selected {
+    background: #e3eaf7;
   }
 }
 </style>

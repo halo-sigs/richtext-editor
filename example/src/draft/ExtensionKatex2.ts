@@ -1,6 +1,8 @@
 import { markRaw } from "vue";
-import type { Item } from "@halo-dev/richtext-editor";
+import type { Editor, Item } from "@halo-dev/richtext-editor";
 import FluentMathFormula from "~icons/fluent/math-formula-16-regular";
+
+export { ExtensionKatex2Block, ExtensionKatex2Inline } from "./katex2/index";
 
 export const CommandKatex2Block: Item = {
   icon: markRaw(FluentMathFormula),

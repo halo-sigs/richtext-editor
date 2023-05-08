@@ -6,16 +6,15 @@ import {
 } from "@tiptap/vue-3";
 import KatexRenderComponent from "./KatexRender.vue";
 
-export const inlineInputRegex = /(?:\$)([^\$]+)(?:\$)/;
-export const blockInputRegex = /(?:\$\$)([^\$]+)(?:\$\$)/;
+export const inlineInputRegex = /(?:^|\s)((?:\$)((?:[^*]+))(?:\$))$/;
+export const blockInputRegex = /^\$\$[\s\n]$/;
 
 export const ExtensionKatex2Inline = Node.create({
   name: "vueKatex2Inline",
   group: "inline math",
-  // content: 'block*',
   inline: true,
-  atom: true,
   selectable: false,
+  atom: true,
   allowGapCursor: false,
   code: true,
 
@@ -23,11 +22,10 @@ export const ExtensionKatex2Inline = Node.create({
     return {
       content: {
         default: "",
-        renderHTML: (attributes) => {
-          return {
-            content: attributes.content,
-          };
-        },
+      },
+      editMode: {
+        default: false,
+        rendered: false,
       },
     };
   },
@@ -48,27 +46,27 @@ export const ExtensionKatex2Inline = Node.create({
     return VueNodeViewRenderer(KatexRenderComponent);
   },
 
-  // addInputRules() {
-  //   return [
-  //     nodeInputRule({
-  //       find: inlineInputRegex,
-  //       type: this.type,
-  //       getAttributes: (match) => {
-  //         return {
-  //           content: match[1],
-  //         };
-  //       },
-  //     }),
-  //   ];
-  // },
+  addInputRules() {
+    return [
+      nodeInputRule({
+        find: inlineInputRegex,
+        type: this.type,
+        getAttributes: (match) => {
+          return {
+            content: match[2],
+          };
+        },
+      }),
+    ];
+  },
 });
 
 export const ExtensionKatex2Block = Node.create({
   name: "vueKatex2Block",
   group: "block math",
-  content: "block*",
+  selectable: true,
+  defining: true,
   atom: true,
-  selectable: false,
   allowGapCursor: false,
   code: true,
 
@@ -76,11 +74,10 @@ export const ExtensionKatex2Block = Node.create({
     return {
       content: {
         default: "",
-        renderHTML: (attributes) => {
-          return {
-            content: attributes.content,
-          };
-        },
+      },
+      editMode: {
+        default: false,
+        rendered: false,
       },
     };
   },
@@ -94,24 +91,24 @@ export const ExtensionKatex2Block = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ["katex-block", mergeAttributes(HTMLAttributes), 0];
+    return ["katex-block", mergeAttributes(HTMLAttributes)];
   },
 
   addNodeView() {
     return VueNodeViewRenderer(KatexRenderComponent);
   },
-
-  // addInputRules() {
-  //   return [
-  //     nodeInputRule({
-  //       find: blockInputRegex,
-  //       type: this.type,
-  //       getAttributes: (match) => {
-  //         return {
-  //           content: match[1],
-  //         };
-  //       },
-  //     }),
-  //   ];
-  // },
+  addInputRules() {
+    return [
+      nodeInputRule({
+        find: blockInputRegex,
+        type: this.type,
+        getAttributes: (_match) => {
+          return {
+            content: "",
+            editMode: true,
+          };
+        },
+      }),
+    ];
+  },
 });
