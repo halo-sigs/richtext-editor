@@ -12,7 +12,7 @@ const renderedKatex = computed(() => {
   if (!props.node.attrs.content) {
     return "";
   }
-  return katex.renderToString(props.node.attrs.content, {
+  return katex.renderToString(props.node.attrs.content.toString(), {
     throwOnError: false,
     strict: false,
     displayMode: isBlock,
