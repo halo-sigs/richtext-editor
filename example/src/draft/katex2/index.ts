@@ -39,7 +39,11 @@ export const ExtensionKatex2Inline = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ["katex-inline", mergeAttributes(HTMLAttributes)];
+    return [
+      "katex-inline",
+      mergeAttributes(HTMLAttributes),
+      `$${HTMLAttributes.content}$`,
+    ];
   },
 
   addNodeView() {
@@ -91,7 +95,11 @@ export const ExtensionKatex2Block = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ["katex-block", mergeAttributes(HTMLAttributes)];
+    return [
+      "katex-block",
+      mergeAttributes(HTMLAttributes),
+      `$$${HTMLAttributes.content}$$`,
+    ];
   },
 
   addNodeView() {
