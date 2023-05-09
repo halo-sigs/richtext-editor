@@ -3,10 +3,12 @@ import {
   VueNodeViewRenderer,
   mergeAttributes,
   nodeInputRule,
+  nodePasteRule,
 } from "@tiptap/vue-3";
 import KatexRenderComponent from "./KatexRender.vue";
 
 export const inlineInputRegex = /(?:^|\s)((?:\$)((?:[^*]+))(?:\$))$/;
+export const inlinePasteRegex = /(?:^|\s)((?:\$)((?:[^*]+))(?:\$))/g;
 export const blockInputRegex = /^\$\$[\s\n]$/;
 
 export const ExtensionKatex2Inline = Node.create({
@@ -54,6 +56,19 @@ export const ExtensionKatex2Inline = Node.create({
     return [
       nodeInputRule({
         find: inlineInputRegex,
+        type: this.type,
+        getAttributes: (match) => {
+          return {
+            content: match[2],
+          };
+        },
+      }),
+    ];
+  },
+  addPasteRules() {
+    return [
+      nodePasteRule({
+        find: inlinePasteRegex,
         type: this.type,
         getAttributes: (match) => {
           return {
