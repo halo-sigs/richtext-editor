@@ -104,14 +104,14 @@ export const ExtensionKatex2Block = Node.create({
   parseHTML() {
     return [
       {
-        tag: 'p[data-block-katex="true"]',
+        tag: 'div[data-block-katex="true"]',
       },
     ];
   },
 
   renderHTML({ HTMLAttributes }) {
     return [
-      "p",
+      "div",
       mergeAttributes(HTMLAttributes, { "data-block-katex": "true" }),
       `$$${HTMLAttributes.content}$$`,
     ];
