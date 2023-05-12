@@ -52,7 +52,10 @@ function handleInsertNewLine() {
       :shown="dropdownVisible"
       :auto-hide="false"
       :triggers="[]"
+      :popper-triggers="['hover']"
+      :delay="{ hide: 300 }"
       :distance="8"
+      instant-move
       theme="editor-block-dropdown"
     >
       <div class="editor-block__content">
