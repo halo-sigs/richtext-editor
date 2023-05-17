@@ -35,7 +35,7 @@ export const ExtensionKatex2Inline = Node.create({
   parseHTML() {
     return [
       {
-        tag: 'span[data-inline-katex="true"]',
+        tag: "span[display-inline]",
       },
     ];
   },
@@ -43,7 +43,7 @@ export const ExtensionKatex2Inline = Node.create({
   renderHTML({ HTMLAttributes }) {
     return [
       "span",
-      mergeAttributes(HTMLAttributes, { "data-inline-katex": "true" }),
+      mergeAttributes(HTMLAttributes, { "display-inline": "" }),
       `$${HTMLAttributes.content}$`,
     ];
   },
@@ -104,7 +104,7 @@ export const ExtensionKatex2Block = Node.create({
   parseHTML() {
     return [
       {
-        tag: 'div[data-block-katex="true"]',
+        tag: "div[display-block]",
       },
     ];
   },
@@ -112,7 +112,7 @@ export const ExtensionKatex2Block = Node.create({
   renderHTML({ HTMLAttributes }) {
     return [
       "div",
-      mergeAttributes(HTMLAttributes, { "data-block-katex": "true" }),
+      mergeAttributes(HTMLAttributes, { "display-block": "" }),
       `$$${HTMLAttributes.content}$$`,
     ];
   },
