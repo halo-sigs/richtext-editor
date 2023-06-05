@@ -55,7 +55,7 @@ const selectedLanguage = computed({
             </option>
           </select>
         </div>
-        <pre><code><node-view-content /></code></pre>
+        <pre><node-view-content as="code" class="hljs" /></pre>
       </template>
     </block-card>
   </node-view-wrapper>
