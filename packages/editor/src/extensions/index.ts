@@ -26,10 +26,7 @@ import ExtensionPlaceholder from "@tiptap/extension-placeholder";
 import { i18n } from "@/locales";
 
 // Custom extensions
-import {
-  CommandsSuggestion,
-  ExtensionCommands,
-} from "../extensions/commands-menu";
+import { ExtensionCommands } from "../extensions/commands-menu";
 import { ExtensionCodeBlock, lowlight } from "@/extensions/code-block";
 import ExtensionIframe from "./iframe";
 import ExtensionVideo from "./video";
@@ -110,7 +107,6 @@ export {
   ExtensionPlaceholder,
   ExtensionHighlight,
   ExtensionCommands,
-  CommandsSuggestion,
   ExtensionCodeBlock,
   lowlight,
   ExtensionIframe,

@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor, Range } from "@tiptap/core";
 import TiptapTaskList from "@tiptap/extension-task-list";
 import type { TaskListOptions } from "@tiptap/extension-task-list";
 import ExtensionTaskItem from "@tiptap/extension-task-item";
@@ -21,6 +21,17 @@ const TaskList = TiptapTaskList.extend<ExtensionOptions & TaskListOptions>({
             icon: markRaw(MdiFormatListCheckbox),
             title: i18n.global.t("editor.common.task_list"),
             action: () => editor.chain().focus().toggleTaskList().run(),
+          },
+        };
+      },
+      getCommandMenuItems() {
+        return {
+          priority: 150,
+          icon: markRaw(MdiFormatListCheckbox),
+          title: "editor.common.task_list",
+          keywords: ["tasklist", "renwuliebiao"],
+          command: ({ editor, range }: { editor: Editor; range: Range }) => {
+            editor.chain().focus().deleteRange(range).toggleTaskList().run();
           },
         };
       },

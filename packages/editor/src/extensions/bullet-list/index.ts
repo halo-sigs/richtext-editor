@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor, Range } from "@tiptap/core";
 import TiptapBulletList from "@tiptap/extension-bullet-list";
 import type { BulletListOptions } from "@tiptap/extension-bullet-list";
 import ExtensionListItem from "@tiptap/extension-list-item";
@@ -23,6 +23,17 @@ const BulletList = TiptapBulletList.extend<
             icon: markRaw(MdiFormatListBulleted),
             title: i18n.global.t("editor.common.bullet_list"),
             action: () => editor.chain().focus().toggleBulletList().run(),
+          },
+        };
+      },
+      getCommandMenuItems() {
+        return {
+          priority: 130,
+          icon: markRaw(MdiFormatListBulleted),
+          title: "editor.common.bullet_list",
+          keywords: ["bulletlist", "wuxuliebiao"],
+          command: ({ editor, range }: { editor: Editor; range: Range }) => {
+            editor.chain().focus().deleteRange(range).toggleBulletList().run();
           },
         };
       },

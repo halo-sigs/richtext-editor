@@ -36,21 +36,6 @@ import {
   ExtensionIframe,
   ExtensionVideo,
   ExtensionAudio,
-  CommandsSuggestion,
-  CommandHeader1,
-  CommandHeader2,
-  CommandHeader3,
-  CommandHeader4,
-  CommandHeader5,
-  CommandHeader6,
-  CommandCodeBlock,
-  CommandIframe,
-  CommandVideo,
-  CommandAudio,
-  CommandTable,
-  CommandBulletList,
-  CommandOrderedList,
-  CommandTaskList,
   ExtensionCodeBlock,
   lowlight,
   RichTextEditor,
@@ -137,34 +122,7 @@ const editor = useEditor({
     ExtensionHighlight,
     ExtensionVideo,
     ExtensionAudio,
-    ExtensionCommands.configure({
-      suggestion: {
-        ...CommandsSuggestion,
-        items: ({ query }: { query: string }) => {
-          return [
-            CommandHeader1,
-            CommandHeader2,
-            CommandHeader3,
-            CommandHeader4,
-            CommandHeader5,
-            CommandHeader6,
-            CommandCodeBlock,
-            CommandTable,
-            CommandBulletList,
-            CommandOrderedList,
-            CommandTaskList,
-            CommandIframe,
-            CommandImage,
-            CommandVideo,
-            CommandAudio,
-          ].filter((item) =>
-            [...item.keywords, item.title].some((keyword) =>
-              keyword.includes(query)
-            )
-          );
-        },
-      },
-    }),
+    ExtensionCommands,
     ExtensionCodeBlock.configure({
       lowlight,
     }),

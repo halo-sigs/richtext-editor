@@ -3,7 +3,7 @@ import type { TableOptions } from "@tiptap/extension-table";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
-import type { Editor } from "@tiptap/vue-3";
+import type { Editor, Range } from "@tiptap/vue-3";
 import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
 import MdiTable from "~icons/mdi/table";
 import MdiTablePlus from "~icons/mdi/table-plus";
@@ -166,6 +166,22 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               },
             },
           ],
+        };
+      },
+      getCommandMenuItems() {
+        return {
+          priority: 120,
+          icon: markRaw(MdiTable),
+          title: "editor.extensions.commands_menu.table",
+          keywords: ["table", "biaoge"],
+          command: ({ editor, range }: { editor: Editor; range: Range }) => {
+            editor
+              .chain()
+              .focus()
+              .deleteRange(range)
+              .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+              .run();
+          },
         };
       },
     };

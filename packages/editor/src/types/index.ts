@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/vue-3";
+import type { Editor, Range } from "@tiptap/vue-3";
 import type { Component } from "vue";
 
 export interface MenuItem {
@@ -23,9 +23,19 @@ export interface ToolbarButton {
 }
 
 export interface ExtensionOptions {
-  getToolbarItems: ({
+  getToolbarItems?: ({
     editor,
   }: {
     editor: Editor;
   }) => ToolbarButton | ToolbarButton[];
+
+  getCommandMenuItems?: () => CommandMenuItem | CommandMenuItem[];
+}
+
+export interface CommandMenuItem {
+  priority: number;
+  icon: Component;
+  title: string;
+  keywords: string[];
+  command: ({ editor, range }: { editor: Editor; range: Range }) => void;
 }

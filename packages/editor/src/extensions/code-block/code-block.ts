@@ -1,4 +1,4 @@
-import { Editor, VueNodeViewRenderer } from "@tiptap/vue-3";
+import { Editor, VueNodeViewRenderer, type Range } from "@tiptap/vue-3";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import type { CodeBlockLowlightOptions } from "@tiptap/extension-code-block-lowlight";
 import CodeBlockViewRenderer from "./CodeBlockViewRenderer.vue";
@@ -26,6 +26,17 @@ export default CodeBlockLowlight.extend<
             icon: markRaw(MdiCodeBracesBox),
             title: i18n.global.t("editor.common.codeblock"),
             action: () => editor.chain().focus().toggleCodeBlock().run(),
+          },
+        };
+      },
+      getCommandMenuItems() {
+        return {
+          priority: 80,
+          icon: markRaw(MdiCodeBracesBox),
+          title: "editor.common.codeblock",
+          keywords: ["codeblock", "daimakuai"],
+          command: ({ editor, range }: { editor: Editor; range: Range }) => {
+            editor.chain().focus().deleteRange(range).setCodeBlock().run();
           },
         };
       },

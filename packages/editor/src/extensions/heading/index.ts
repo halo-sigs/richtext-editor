@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor, Range } from "@tiptap/core";
 import TiptapParagraph from "@tiptap/extension-paragraph";
 import TiptapHeading from "@tiptap/extension-heading";
 import type { HeadingOptions } from "@tiptap/extension-heading";
@@ -108,6 +108,103 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
             },
           ],
         };
+      },
+      getCommandMenuItems() {
+        return [
+          {
+            priority: 10,
+            icon: markRaw(MdiFormatParagraph),
+            title: "editor.common.heading.paragraph",
+            keywords: ["paragraph", "text", "putongwenben"],
+            command: ({ editor, range }: { editor: Editor; range: Range }) => {
+              editor.chain().focus().deleteRange(range).setParagraph().run();
+            },
+          },
+          {
+            priority: 20,
+            icon: markRaw(MdiFormatHeader1),
+            title: "editor.common.heading.header1",
+            keywords: ["h1", "header1", "1", "yijibiaoti"],
+            command: ({ editor, range }: { editor: Editor; range: Range }) => {
+              editor
+                .chain()
+                .focus()
+                .deleteRange(range)
+                .setNode("heading", { level: 1 })
+                .run();
+            },
+          },
+          {
+            priority: 30,
+            icon: markRaw(MdiFormatHeader2),
+            title: "editor.common.heading.header2",
+            keywords: ["h2", "header2", "2", "erjibiaoti"],
+            command: ({ editor, range }: { editor: Editor; range: Range }) => {
+              editor
+                .chain()
+                .focus()
+                .deleteRange(range)
+                .setNode("heading", { level: 2 })
+                .run();
+            },
+          },
+          {
+            priority: 40,
+            icon: markRaw(MdiFormatHeader3),
+            title: "editor.common.heading.header3",
+            keywords: ["h3", "header3", "3", "sanjibiaoti"],
+            command: ({ editor, range }: { editor: Editor; range: Range }) => {
+              editor
+                .chain()
+                .focus()
+                .deleteRange(range)
+                .setNode("heading", { level: 3 })
+                .run();
+            },
+          },
+          {
+            priority: 50,
+            icon: markRaw(MdiFormatHeader4),
+            title: "editor.common.heading.header4",
+            keywords: ["h4", "header4", "4", "sijibiaoti"],
+            command: ({ editor, range }: { editor: Editor; range: Range }) => {
+              editor
+                .chain()
+                .focus()
+                .deleteRange(range)
+                .setNode("heading", { level: 4 })
+                .run();
+            },
+          },
+          {
+            priority: 60,
+            icon: markRaw(MdiFormatHeader5),
+            title: "editor.common.heading.header5",
+            keywords: ["h5", "header5", "5", "wujibiaoti"],
+            command: ({ editor, range }: { editor: Editor; range: Range }) => {
+              editor
+                .chain()
+                .focus()
+                .deleteRange(range)
+                .setNode("heading", { level: 5 })
+                .run();
+            },
+          },
+          {
+            priority: 70,
+            icon: markRaw(MdiFormatHeader6),
+            title: "editor.common.heading.header6",
+            keywords: ["h6", "header6", "6", "liujibiaoti"],
+            command: ({ editor, range }: { editor: Editor; range: Range }) => {
+              editor
+                .chain()
+                .focus()
+                .deleteRange(range)
+                .setNode("heading", { level: 6 })
+                .run();
+            },
+          },
+        ];
       },
     };
   },
