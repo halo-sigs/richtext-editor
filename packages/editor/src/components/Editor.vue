@@ -11,16 +11,6 @@ const props = defineProps({
     type: Object as PropType<Editor>,
     required: true,
   },
-  additionalMenuItems: {
-    type: Array as PropType<MenuItem[]>,
-    required: false,
-    default: () => [],
-  },
-  toolbarMenuItems: {
-    type: Array as PropType<MenuItem[]>,
-    required: false,
-    default: () => [],
-  },
   bubbleMenuItems: {
     type: Array as PropType<MenuItem[]>,
     required: false,
@@ -51,7 +41,7 @@ watch(
 <template>
   <div v-if="editor" class="halo-rich-text-editor">
     <editor-bubble-menu :editor="editor" :menu-items="bubbleMenuItems" />
-    <editor-header :menu-items="toolbarMenuItems" />
+    <editor-header :editor="editor" />
     <div class="h-full flex flex-row w-full">
       <editor-content
         :editor="editor"

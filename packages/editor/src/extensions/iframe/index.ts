@@ -153,6 +153,7 @@ const Iframe = Node.create({
       }),
     ];
   },
+
   addPasteRules() {
     return [
       nodePasteRule({
@@ -181,6 +182,12 @@ const Iframe = Node.create({
 
   addNodeView() {
     return VueNodeViewRenderer(IframeView);
+  },
+
+  addOptions() {
+    return {
+      ...this.parent?.(),
+    };
   },
 });
 

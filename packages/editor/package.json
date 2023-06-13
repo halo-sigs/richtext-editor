@@ -11,7 +11,7 @@
   "jsdelivr": "./dist/rich-text-editor.iife.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "dev": "vite build --watch",
+    "dev": "vite build --watch --mode=development",
     "build": "vite build",
     "test:unit": "vitest --environment jsdom --run",
     "test:unit:watch": "vitest --environment jsdom --watch",

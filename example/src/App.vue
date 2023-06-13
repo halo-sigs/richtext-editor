@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import "@halo-dev/richtext-editor/dist/style.css";
-import { computed, ref, watchEffect, markRaw } from "vue";
+import { computed, watchEffect, markRaw } from "vue";
 import { unified } from "unified";
 import rehypeParse from "rehype-parse";
 import rehypeFormat from "rehype-format";
@@ -19,14 +19,11 @@ import {
   ExtensionHistory,
   ExtensionHorizontalRule,
   ExtensionItalic,
-  ExtensionListItem,
   ExtensionOrderedList,
-  ExtensionParagraph,
   ExtensionStrike,
   ExtensionText,
   ExtensionImage,
   ExtensionTaskList,
-  ExtensionTaskItem,
   ExtensionLink,
   ExtensionTextAlign,
   ExtensionUnderline,
@@ -58,8 +55,6 @@ import {
   lowlight,
   RichTextEditor,
   useEditor,
-  UndoMenuItem,
-  RedoMenuItem,
   BoldMenuItem,
   ItalicMenuItem,
   UnderlineMenuItem,
@@ -69,17 +64,11 @@ import {
   SuperScriptMenuItem,
   SubScriptMenuItem,
   CodeBlockMenuItem,
-  HeadingMenuItem,
   AlignLeftMenuItem,
   AlignCenterMenuItem,
   AlignRightMenuItem,
   AlignJustifyMenuItem,
-  TableMenuItem,
-  BulletListMenuItem,
-  OrderedListMenuItem,
-  TaskListMenuItem,
   HighlightMenuItem,
-  Separator,
   Editor,
   type Item,
 } from "@halo-dev/richtext-editor";
@@ -120,9 +109,7 @@ const editor = useEditor({
     ExtensionHistory,
     ExtensionHorizontalRule,
     ExtensionItalic,
-    ExtensionListItem,
     ExtensionOrderedList,
-    ExtensionParagraph,
     ExtensionStrike,
     ExtensionText,
     ExtensionImage.configure({
@@ -131,7 +118,6 @@ const editor = useEditor({
       },
     }),
     ExtensionTaskList,
-    ExtensionTaskItem,
     ExtensionLink.configure({
       autolink: false,
       openOnClick: false,
@@ -201,38 +187,6 @@ watchEffect(() => {
   console.log(String(formatContent.value));
 });
 
-const toolbarMenuItems = computed(() => {
-  if (!editor.value) return [];
-  return [
-    UndoMenuItem(editor.value),
-    RedoMenuItem(editor.value),
-    Separator(),
-    HeadingMenuItem(editor.value),
-    BoldMenuItem(editor.value),
-    ItalicMenuItem(editor.value),
-    UnderlineMenuItem(editor.value),
-    StrikeMenuItem(editor.value),
-    HighlightMenuItem(editor.value),
-    Separator(),
-    QuoteMenuItem(editor.value),
-    CodeMenuItem(editor.value),
-    SuperScriptMenuItem(editor.value),
-    SubScriptMenuItem(editor.value),
-    Separator(),
-    BulletListMenuItem(editor.value),
-    OrderedListMenuItem(editor.value),
-    TaskListMenuItem(editor.value),
-    Separator(),
-    CodeBlockMenuItem(editor.value),
-    TableMenuItem(editor.value),
-    Separator(),
-    AlignLeftMenuItem(editor.value),
-    AlignCenterMenuItem(editor.value),
-    AlignRightMenuItem(editor.value),
-    AlignJustifyMenuItem(editor.value),
-  ];
-});
-
 const bubbleMenuItems = computed(() => {
   if (!editor.value) return [];
   return [
@@ -280,7 +234,6 @@ const locale = useLocalStorage("locale", "zh-CN");
     v-if="editor"
     :editor="editor"
     :locale="locale"
-    :toolbar-menu-items="toolbarMenuItems"
     :bubble-menu-items="bubbleMenuItems"
   />
 </template>
