@@ -38,21 +38,21 @@ function getToolbarItemsFromExtensions() {
     class="editor-header flex items-center py-1 space-x-0.5 justify-center border-b drop-shadow-sm bg-white"
   >
     <div
-      v-for="(spec, i) in getToolbarItemsFromExtensions()"
-      :key="i"
+      v-for="(item, index) in getToolbarItemsFromExtensions()"
+      :key="index"
       class="inline-flex items-center justify-center"
     >
       <component
-        :is="spec.component"
-        v-if="!spec.children?.length"
-        v-bind="spec.props"
+        :is="item.component"
+        v-if="!item.children?.length"
+        v-bind="item.props"
       />
       <VMenu v-else class="inline-flex">
         <button
-          :class="{ 'bg-gray-200': spec.props.isActive }"
+          :class="{ 'bg-gray-200': item.props.isActive }"
           class="hover:bg-gray-100 p-1 rounded-sm"
         >
-          <component :is="spec.props.icon" />
+          <component :is="item.props.icon" />
         </button>
         <template #popper>
           <div
@@ -61,8 +61,8 @@ function getToolbarItemsFromExtensions() {
             <component
               v-bind="child.props"
               :is="child.component"
-              v-for="(child, index) in spec.children"
-              :key="index"
+              v-for="(child, childIndex) in item.children"
+              :key="childIndex"
             />
           </div>
         </template>

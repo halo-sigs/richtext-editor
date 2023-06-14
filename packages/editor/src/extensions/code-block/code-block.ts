@@ -7,6 +7,7 @@ import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
+import BubbleButton from "@/components/bubble/BubbleButton.vue";
 
 export default CodeBlockLowlight.extend<
   ExtensionOptions & CodeBlockLowlightOptions
@@ -21,6 +22,18 @@ export default CodeBlockLowlight.extend<
         return {
           priority: 160,
           component: ToolbarButton,
+          props: {
+            isActive: editor.isActive("codeBlock"),
+            icon: markRaw(MdiCodeBracesBox),
+            title: i18n.global.t("editor.common.codeblock"),
+            action: () => editor.chain().focus().toggleCodeBlock().run(),
+          },
+        };
+      },
+      getBubbleItems({ editor }: { editor: Editor }) {
+        return {
+          priority: 90,
+          component: BubbleButton,
           props: {
             isActive: editor.isActive("codeBlock"),
             icon: markRaw(MdiCodeBracesBox),

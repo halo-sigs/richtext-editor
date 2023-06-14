@@ -15,13 +15,13 @@ import ExtensionOrderedList from "./ordered-list";
 import ExtensionTaskList from "./task-list";
 import ExtensionTable from "./table";
 import ExtensionTextAlign from "./text-align";
+import ExtensionLink from "./link";
 import ExtensionDropcursor from "@tiptap/extension-dropcursor";
 import ExtensionGapcursor from "@tiptap/extension-gapcursor";
 import ExtensionHardBreak from "@tiptap/extension-hard-break";
 import ExtensionHorizontalRule from "@tiptap/extension-horizontal-rule";
 import ExtensionDocument from "@tiptap/extension-document";
 import ExtensionText from "@tiptap/extension-text";
-import ExtensionLink from "@tiptap/extension-link";
 import ExtensionPlaceholder from "@tiptap/extension-placeholder";
 import { i18n } from "@/locales";
 

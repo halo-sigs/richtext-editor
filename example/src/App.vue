@@ -40,20 +40,6 @@ import {
   lowlight,
   RichTextEditor,
   useEditor,
-  BoldMenuItem,
-  ItalicMenuItem,
-  UnderlineMenuItem,
-  StrikeMenuItem,
-  QuoteMenuItem,
-  CodeMenuItem,
-  SuperScriptMenuItem,
-  SubScriptMenuItem,
-  CodeBlockMenuItem,
-  AlignLeftMenuItem,
-  AlignCenterMenuItem,
-  AlignRightMenuItem,
-  AlignJustifyMenuItem,
-  HighlightMenuItem,
   Editor,
   type Item,
 } from "@halo-dev/richtext-editor";
@@ -145,26 +131,6 @@ watchEffect(() => {
   console.log(String(formatContent.value));
 });
 
-const bubbleMenuItems = computed(() => {
-  if (!editor.value) return [];
-  return [
-    BoldMenuItem(editor.value),
-    ItalicMenuItem(editor.value),
-    UnderlineMenuItem(editor.value),
-    StrikeMenuItem(editor.value),
-    HighlightMenuItem(editor.value),
-    QuoteMenuItem(editor.value),
-    CodeMenuItem(editor.value),
-    CodeBlockMenuItem(editor.value),
-    SuperScriptMenuItem(editor.value),
-    SubScriptMenuItem(editor.value),
-    AlignLeftMenuItem(editor.value),
-    AlignCenterMenuItem(editor.value),
-    AlignRightMenuItem(editor.value),
-    AlignJustifyMenuItem(editor.value),
-  ];
-});
-
 const locales = [
   {
     code: "zh-CN",
@@ -188,10 +154,5 @@ const locale = useLocalStorage("locale", "zh-CN");
     </select>
   </div>
 
-  <RichTextEditor
-    v-if="editor"
-    :editor="editor"
-    :locale="locale"
-    :bubble-menu-items="bubbleMenuItems"
-  />
+  <RichTextEditor v-if="editor" :editor="editor" :locale="locale" />
 </template>

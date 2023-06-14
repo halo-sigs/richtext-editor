@@ -6,6 +6,7 @@ import MdiFormatSubscript from "~icons/mdi/format-subscript";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
+import BubbleButton from "@/components/bubble/BubbleButton.vue";
 
 const Subscript = TiptapSubscript.extend<
   ExtensionOptions & SubscriptExtensionOptions
@@ -17,6 +18,18 @@ const Subscript = TiptapSubscript.extend<
         return {
           priority: 120,
           component: ToolbarButton,
+          props: {
+            isActive: editor.isActive("subscript"),
+            icon: markRaw(MdiFormatSubscript),
+            title: i18n.global.t("editor.common.subscript"),
+            action: () => editor.chain().focus().toggleSubscript().run(),
+          },
+        };
+      },
+      getBubbleItems({ editor }: { editor: Editor }) {
+        return {
+          priority: 110,
+          component: BubbleButton,
           props: {
             isActive: editor.isActive("subscript"),
             icon: markRaw(MdiFormatSubscript),

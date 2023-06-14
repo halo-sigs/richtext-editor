@@ -22,6 +22,18 @@ export interface ToolbarButton {
   children?: ToolbarButton[];
 }
 
+export interface BubbleButton {
+  priority: number;
+  component: Component;
+  props: {
+    isActive: boolean;
+    visible?: boolean;
+    icon: Component;
+    title?: string;
+    action?: () => void;
+  };
+}
+
 export interface ExtensionOptions {
   getToolbarItems?: ({
     editor,
@@ -30,6 +42,12 @@ export interface ExtensionOptions {
   }) => ToolbarButton | ToolbarButton[];
 
   getCommandMenuItems?: () => CommandMenuItem | CommandMenuItem[];
+
+  getBubbleItems?: ({
+    editor,
+  }: {
+    editor: Editor;
+  }) => BubbleButton | BubbleButton[];
 }
 
 export interface CommandMenuItem {
