@@ -17,6 +17,7 @@ const Highlight = TiptapHighlight.extend<ExtensionOptions & HighlightOptions>({
           priority: 80,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("highlight"),
             icon: markRaw(MdiFormatColorHighlight),
             title: i18n.global.t("editor.common.highlight"),
@@ -29,6 +30,7 @@ const Highlight = TiptapHighlight.extend<ExtensionOptions & HighlightOptions>({
           priority: 50,
           component: BubbleButton,
           props: {
+            editor,
             isActive: editor.isActive("highlight"),
             icon: markRaw(MdiFormatColorHighlight),
             title: i18n.global.t("editor.common.highlight"),

@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@tiptap/vue-3";
 import TiptapSubscript from "@tiptap/extension-subscript";
 import type { SubscriptExtensionOptions } from "@tiptap/extension-subscript";
 import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
@@ -19,6 +19,7 @@ const Subscript = TiptapSubscript.extend<
           priority: 120,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("subscript"),
             icon: markRaw(MdiFormatSubscript),
             title: i18n.global.t("editor.common.subscript"),
@@ -31,6 +32,7 @@ const Subscript = TiptapSubscript.extend<
           priority: 110,
           component: BubbleButton,
           props: {
+            editor,
             isActive: editor.isActive("subscript"),
             icon: markRaw(MdiFormatSubscript),
             title: i18n.global.t("editor.common.subscript"),

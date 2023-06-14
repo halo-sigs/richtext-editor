@@ -1,4 +1,4 @@
-import type { Editor, Range } from "@tiptap/core";
+import type { Editor, Range } from "@tiptap/vue-3";
 import TiptapTaskList from "@tiptap/extension-task-list";
 import type { TaskListOptions } from "@tiptap/extension-task-list";
 import ExtensionTaskItem from "@tiptap/extension-task-item";
@@ -17,6 +17,7 @@ const TaskList = TiptapTaskList.extend<ExtensionOptions & TaskListOptions>({
           priority: 150,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("taskList"),
             icon: markRaw(MdiFormatListCheckbox),
             title: i18n.global.t("editor.common.task_list"),

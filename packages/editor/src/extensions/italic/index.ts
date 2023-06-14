@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@tiptap/vue-3";
 import TiptapItalic from "@tiptap/extension-italic";
 import type { ItalicOptions } from "@tiptap/extension-italic";
 import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
@@ -17,6 +17,7 @@ const Italic = TiptapItalic.extend<ExtensionOptions & ItalicOptions>({
           priority: 50,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("italic"),
             icon: markRaw(MdiFormatItalic),
             title: i18n.global.t("editor.common.italic"),
@@ -29,6 +30,7 @@ const Italic = TiptapItalic.extend<ExtensionOptions & ItalicOptions>({
           priority: 20,
           component: BubbleButton,
           props: {
+            editor,
             isActive: editor.isActive("italic"),
             icon: markRaw(MdiFormatItalic),
             title: i18n.global.t("editor.common.italic"),

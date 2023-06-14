@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@tiptap/vue-3";
 import TiptapBlockquote from "@tiptap/extension-blockquote";
 import type { BlockquoteOptions } from "@tiptap/extension-blockquote";
 import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
@@ -19,6 +19,7 @@ const Blockquote = TiptapBlockquote.extend<
           priority: 90,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("blockquote"),
             icon: markRaw(MdiFormatQuoteOpen),
             title: i18n.global.t("editor.common.quote"),
@@ -33,6 +34,7 @@ const Blockquote = TiptapBlockquote.extend<
           priority: 60,
           component: BubbleButton,
           props: {
+            editor,
             isActive: editor.isActive("blockquote"),
             icon: markRaw(MdiFormatQuoteOpen),
             title: i18n.global.t("editor.common.quote"),

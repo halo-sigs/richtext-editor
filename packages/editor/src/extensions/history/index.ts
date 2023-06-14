@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@tiptap/vue-3";
 import TiptapHistory from "@tiptap/extension-history";
 import type { HistoryOptions } from "@tiptap/extension-history";
 import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
@@ -18,6 +18,7 @@ const History = TiptapHistory.extend<ExtensionOptions & HistoryOptions>({
             priority: 10,
             component: ToolbarButton,
             props: {
+              editor,
               isActive: false,
               icon: markRaw(MdiUndoVariant),
               title: i18n.global.t("editor.menus.undo"),
@@ -28,6 +29,7 @@ const History = TiptapHistory.extend<ExtensionOptions & HistoryOptions>({
             priority: 20,
             component: ToolbarButton,
             props: {
+              editor,
               isActive: false,
               icon: markRaw(MdiRedoVariant),
               title: i18n.global.t("editor.menus.redo"),

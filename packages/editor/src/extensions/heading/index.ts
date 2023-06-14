@@ -1,4 +1,4 @@
-import type { Editor, Range } from "@tiptap/core";
+import type { Editor, Range } from "@tiptap/vue-3";
 import TiptapParagraph from "@tiptap/extension-paragraph";
 import TiptapHeading from "@tiptap/extension-heading";
 import type { HeadingOptions } from "@tiptap/extension-heading";
@@ -25,6 +25,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
           priority: 30,
           component: ToolbarButton,
           props: {
+            editor,
             isActive:
               editor.isActive("paragraph") || editor.isActive("heading"),
             icon: markRaw(MdiFormatHeaderPound),
@@ -34,6 +35,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
               priority: 10,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: editor.isActive("paragraph"),
                 icon: markRaw(MdiFormatParagraph),
                 title: i18n.global.t("editor.common.heading.paragraph"),
@@ -44,6 +46,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
               priority: 20,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: editor.isActive("heading", { level: 1 }),
                 icon: markRaw(MdiFormatHeader1),
                 title: i18n.global.t("editor.common.heading.header1"),
@@ -55,6 +58,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
               priority: 30,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: editor.isActive("heading", { level: 2 }),
                 icon: markRaw(MdiFormatHeader2),
                 title: i18n.global.t("editor.common.heading.header2"),
@@ -66,6 +70,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
               priority: 40,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: editor.isActive("heading", { level: 3 }),
                 icon: markRaw(MdiFormatHeader3),
                 title: i18n.global.t("editor.common.heading.header3"),
@@ -77,6 +82,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
               priority: 50,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: editor.isActive("heading", { level: 4 }),
                 icon: markRaw(MdiFormatHeader4),
                 title: i18n.global.t("editor.common.heading.header4"),
@@ -88,6 +94,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
               priority: 60,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: editor.isActive("heading", { level: 5 }),
                 icon: markRaw(MdiFormatHeader5),
                 title: i18n.global.t("editor.common.heading.header5"),
@@ -99,6 +106,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
               priority: 70,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: editor.isActive("heading", { level: 6 }),
                 icon: markRaw(MdiFormatHeader6),
                 title: i18n.global.t("editor.common.heading.header6"),

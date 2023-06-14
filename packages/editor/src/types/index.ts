@@ -1,21 +1,13 @@
 import type { Editor, Range } from "@tiptap/vue-3";
 import type { Component } from "vue";
 
-export interface MenuItem {
-  type: "button" | "separator";
-  icon?: Component;
-  title?: string;
-  action?: () => void;
-  isActive?: () => boolean;
-  children?: MenuItem[];
-}
-
 export interface ToolbarButton {
   priority: number;
   component: Component;
   props: {
+    editor: Editor;
     isActive: boolean;
-    icon: Component;
+    icon?: Component;
     title?: string;
     action?: () => void;
   };
@@ -26,9 +18,10 @@ export interface BubbleButton {
   priority: number;
   component: Component;
   props: {
+    editor: Editor;
     isActive: boolean;
     visible?: boolean;
-    icon: Component;
+    icon?: Component;
     title?: string;
     action?: () => void;
   };

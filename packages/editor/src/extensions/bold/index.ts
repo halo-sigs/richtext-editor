@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@tiptap/vue-3";
 import TiptapBold from "@tiptap/extension-bold";
 import type { BoldOptions } from "@tiptap/extension-bold";
 import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
@@ -17,6 +17,7 @@ const Bold = TiptapBold.extend<ExtensionOptions & BoldOptions>({
           priority: 40,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("bold"),
             icon: markRaw(MdiFormatBold),
             title: i18n.global.t("editor.common.bold"),
@@ -29,6 +30,7 @@ const Bold = TiptapBold.extend<ExtensionOptions & BoldOptions>({
           priority: 10,
           component: BubbleButton,
           props: {
+            editor,
             isActive: editor.isActive("bold"),
             icon: markRaw(MdiFormatBold),
             title: i18n.global.t("editor.common.bold"),

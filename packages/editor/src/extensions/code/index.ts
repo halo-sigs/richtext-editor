@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@tiptap/vue-3";
 import TiptapCode from "@tiptap/extension-code";
 import type { CodeOptions } from "@tiptap/extension-code";
 import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
@@ -17,6 +17,7 @@ const Code = TiptapCode.extend<ExtensionOptions & CodeOptions>({
           priority: 100,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("code"),
             icon: markRaw(MdiCodeTags),
             title: i18n.global.t("editor.common.code"),
@@ -29,6 +30,7 @@ const Code = TiptapCode.extend<ExtensionOptions & CodeOptions>({
           priority: 80,
           component: BubbleButton,
           props: {
+            editor,
             isActive: editor.isActive("code"),
             icon: markRaw(MdiCodeTags),
             title: i18n.global.t("editor.common.code"),

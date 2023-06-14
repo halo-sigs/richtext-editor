@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@tiptap/vue-3";
 import TiptapSuperscript from "@tiptap/extension-superscript";
 import type { SuperscriptExtensionOptions } from "@tiptap/extension-superscript";
 import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
@@ -19,6 +19,7 @@ const Superscript = TiptapSuperscript.extend<
           priority: 110,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("superscript"),
             icon: markRaw(MdiFormatSuperscript),
             title: i18n.global.t("editor.common.superscript"),
@@ -31,6 +32,7 @@ const Superscript = TiptapSuperscript.extend<
           priority: 100,
           component: BubbleButton,
           props: {
+            editor,
             isActive: editor.isActive("superscript"),
             icon: markRaw(MdiFormatSuperscript),
             title: i18n.global.t("editor.common.superscript"),

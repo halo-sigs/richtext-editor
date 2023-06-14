@@ -1,4 +1,4 @@
-import type { Editor, Range } from "@tiptap/core";
+import type { Editor, Range } from "@tiptap/vue-3";
 import TiptapBulletList from "@tiptap/extension-bullet-list";
 import type { BulletListOptions } from "@tiptap/extension-bullet-list";
 import ExtensionListItem from "@tiptap/extension-list-item";
@@ -19,6 +19,7 @@ const BulletList = TiptapBulletList.extend<
           priority: 130,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("bulletList"),
             icon: markRaw(MdiFormatListBulleted),
             title: i18n.global.t("editor.common.bullet_list"),

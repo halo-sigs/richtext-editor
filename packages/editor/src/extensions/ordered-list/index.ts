@@ -1,4 +1,4 @@
-import type { Editor, Range } from "@tiptap/core";
+import type { Editor, Range } from "@tiptap/vue-3";
 import TiptapOrderedList from "@tiptap/extension-ordered-list";
 import type { OrderedListOptions } from "@tiptap/extension-ordered-list";
 import ExtensionListItem from "@tiptap/extension-list-item";
@@ -19,6 +19,7 @@ const OrderedList = TiptapOrderedList.extend<
           priority: 140,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("orderedList"),
             icon: markRaw(MdiFormatListNumbered),
             title: i18n.global.t("editor.common.ordered_list"),

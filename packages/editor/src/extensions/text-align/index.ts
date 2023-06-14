@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@tiptap/vue-3";
 import TiptapTextAlign from "@tiptap/extension-text-align";
 import type { TextAlignOptions } from "@tiptap/extension-text-align";
 import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
@@ -21,6 +21,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
             priority: 180,
             component: ToolbarButton,
             props: {
+              editor,
               isActive: editor.isActive({ textAlign: "left" }),
               icon: markRaw(MdiFormatAlignLeft),
               title: i18n.global.t("editor.common.align_left"),
@@ -31,6 +32,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
             priority: 190,
             component: ToolbarButton,
             props: {
+              editor,
               isActive: editor.isActive({ textAlign: "center" }),
               icon: markRaw(MdiFormatAlignCenter),
               title: i18n.global.t("editor.common.align_center"),
@@ -41,6 +43,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
             priority: 200,
             component: ToolbarButton,
             props: {
+              editor,
               isActive: editor.isActive({ textAlign: "right" }),
               icon: markRaw(MdiFormatAlignRight),
               title: i18n.global.t("editor.common.align_right"),
@@ -51,6 +54,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
             priority: 210,
             component: ToolbarButton,
             props: {
+              editor,
               isActive: editor.isActive({ textAlign: "justify" }),
               icon: markRaw(MdiFormatAlignJustify),
               title: i18n.global.t("editor.common.align_justify"),
@@ -66,6 +70,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
             priority: 120,
             component: BubbleButton,
             props: {
+              editor,
               isActive: editor.isActive({ textAlign: "left" }),
               icon: markRaw(MdiFormatAlignLeft),
               title: i18n.global.t("editor.common.align_left"),
@@ -76,6 +81,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
             priority: 130,
             component: BubbleButton,
             props: {
+              editor,
               isActive: editor.isActive({ textAlign: "center" }),
               icon: markRaw(MdiFormatAlignCenter),
               title: i18n.global.t("editor.common.align_center"),
@@ -86,6 +92,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
             priority: 140,
             component: BubbleButton,
             props: {
+              editor,
               isActive: editor.isActive({ textAlign: "right" }),
               icon: markRaw(MdiFormatAlignRight),
               title: i18n.global.t("editor.common.align_right"),
@@ -96,6 +103,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
             priority: 150,
             component: BubbleButton,
             props: {
+              editor,
               isActive: editor.isActive({ textAlign: "justify" }),
               icon: markRaw(MdiFormatAlignJustify),
               title: i18n.global.t("editor.common.align_justify"),

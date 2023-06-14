@@ -34,6 +34,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
           priority: 170,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("table"),
             icon: markRaw(MdiTable),
             title: i18n.global.t("editor.menus.table.title"),
@@ -43,6 +44,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               priority: 10,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: false,
                 icon: markRaw(MdiTablePlus),
                 title: i18n.global.t("editor.menus.table.add"),
@@ -58,6 +60,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               priority: 20,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: false,
                 icon: markRaw(MdiTableColumnPlusBefore),
                 title: i18n.global.t("editor.menus.table.add_column_before"),
@@ -68,6 +71,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               priority: 30,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: false,
                 icon: markRaw(MdiTableColumnPlusAfter),
                 title: i18n.global.t("editor.menus.table.add_column_after"),
@@ -78,6 +82,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               priority: 40,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: false,
                 type: "button",
                 icon: markRaw(MdiTableHeadersEye),
@@ -89,6 +94,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               priority: 50,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: false,
                 icon: markRaw(MdiTableColumnRemove),
                 title: i18n.global.t("editor.menus.table.delete_column"),
@@ -99,6 +105,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               priority: 60,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: false,
                 icon: markRaw(MdiTableRowPlusBefore),
                 title: i18n.global.t("editor.menus.table.add_row_before"),
@@ -109,6 +116,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               priority: 70,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: false,
                 icon: markRaw(MdiTableRowPlusAfter),
                 title: i18n.global.t("editor.menus.table.add_row_after"),
@@ -119,6 +127,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               priority: 80,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: false,
                 icon: markRaw(MdiTableHeadersEye),
                 title: i18n.global.t("editor.menus.table.toggle_header_row"),
@@ -129,6 +138,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               priority: 90,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: false,
                 icon: markRaw(MdiTableRowRemove),
                 title: i18n.global.t("editor.menus.table.delete_row"),
@@ -139,6 +149,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               priority: 100,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: false,
                 icon: markRaw(MdiTableMergeCells),
                 title: i18n.global.t("editor.menus.table.merge_cells"),
@@ -149,6 +160,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               priority: 110,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: false,
                 icon: markRaw(MdiTableSplitCell),
                 title: i18n.global.t("editor.menus.table.split_cell"),
@@ -159,6 +171,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               priority: 120,
               component: ToolbarButtonItem,
               props: {
+                editor,
                 isActive: false,
                 icon: markRaw(MdiTableRemove),
                 title: i18n.global.t("editor.menus.table.delete_table"),

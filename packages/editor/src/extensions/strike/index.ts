@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@tiptap/vue-3";
 import TiptapStrike from "@tiptap/extension-strike";
 import type { StrikeOptions } from "@tiptap/extension-strike";
 import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
@@ -17,6 +17,7 @@ const Strike = TiptapStrike.extend<ExtensionOptions & StrikeOptions>({
           priority: 70,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("strike"),
             icon: markRaw(MdiFormatStrikethrough),
             title: i18n.global.t("editor.common.strike"),
@@ -29,6 +30,7 @@ const Strike = TiptapStrike.extend<ExtensionOptions & StrikeOptions>({
           priority: 40,
           component: BubbleButton,
           props: {
+            editor,
             isActive: editor.isActive("strike"),
             icon: markRaw(MdiFormatStrikethrough),
             title: i18n.global.t("editor.common.strike"),

@@ -4,7 +4,6 @@ import "tippy.js/dist/svg-arrow.css";
 import type { PropType } from "vue";
 import { BubbleMenu, Editor, type AnyExtension } from "@tiptap/vue-3";
 import type { BubbleButton } from "@/types";
-import EditorLinkBubbleMenuItems from "./EditorLinkBubbleMenuItems.vue";
 
 const props = defineProps({
   editor: {
@@ -50,12 +49,6 @@ function getBubbleItemsFromExtensions() {
         :key="index"
         v-bind="item.props"
       />
-
-      <div class="px-1">
-        <div class="h-5 bg-gray-100" style="width: 1px"></div>
-      </div>
-
-      <EditorLinkBubbleMenuItems :editor="editor" />
     </div>
   </bubble-menu>
 </template>

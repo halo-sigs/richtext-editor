@@ -23,6 +23,7 @@ export default CodeBlockLowlight.extend<
           priority: 160,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("codeBlock"),
             icon: markRaw(MdiCodeBracesBox),
             title: i18n.global.t("editor.common.codeblock"),
@@ -35,6 +36,7 @@ export default CodeBlockLowlight.extend<
           priority: 90,
           component: BubbleButton,
           props: {
+            editor,
             isActive: editor.isActive("codeBlock"),
             icon: markRaw(MdiCodeBracesBox),
             title: i18n.global.t("editor.common.codeblock"),

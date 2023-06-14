@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@tiptap/vue-3";
 import TiptapParagraph from "@tiptap/extension-paragraph";
 import type { ParagraphOptions } from "@tiptap/extension-paragraph";
 import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
@@ -16,6 +16,7 @@ const Blockquote = TiptapParagraph.extend<ExtensionOptions & ParagraphOptions>({
           priority: 30,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("paragraph"),
             icon: markRaw(MdiFormatParagraph),
             tooltip: i18n.global.t("editor.common.heading.paragraph"),

@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@tiptap/vue-3";
 import TiptapUnderline from "@tiptap/extension-underline";
 import type { UnderlineOptions } from "@tiptap/extension-underline";
 import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
@@ -17,6 +17,7 @@ const Underline = TiptapUnderline.extend<ExtensionOptions & UnderlineOptions>({
           priority: 60,
           component: ToolbarButton,
           props: {
+            editor,
             isActive: editor.isActive("underline"),
             icon: markRaw(MdiFormatUnderline),
             title: i18n.global.t("editor.common.underline"),
@@ -29,6 +30,7 @@ const Underline = TiptapUnderline.extend<ExtensionOptions & UnderlineOptions>({
           priority: 30,
           component: BubbleButton,
           props: {
+            editor,
             isActive: editor.isActive("underline"),
             icon: markRaw(MdiFormatUnderline),
             title: i18n.global.t("editor.common.underline"),
