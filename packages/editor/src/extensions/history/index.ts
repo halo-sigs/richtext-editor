@@ -16,7 +16,7 @@ const History = TiptapHistory.extend<ExtensionOptions & HistoryOptions>({
         return [
           {
             priority: 10,
-            component: ToolbarItem,
+            component: markRaw(ToolbarItem),
             props: {
               editor,
               isActive: false,
@@ -27,7 +27,7 @@ const History = TiptapHistory.extend<ExtensionOptions & HistoryOptions>({
           },
           {
             priority: 20,
-            component: ToolbarItem,
+            component: markRaw(ToolbarItem),
             props: {
               editor,
               isActive: false,

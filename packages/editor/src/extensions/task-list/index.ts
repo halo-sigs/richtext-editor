@@ -15,7 +15,7 @@ const TaskList = TiptapTaskList.extend<ExtensionOptions & TaskListOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 150,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("taskList"),

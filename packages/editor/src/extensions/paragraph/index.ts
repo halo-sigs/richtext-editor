@@ -14,7 +14,7 @@ const Blockquote = TiptapParagraph.extend<ExtensionOptions & ParagraphOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 30,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("paragraph"),

@@ -15,7 +15,7 @@ const Strike = TiptapStrike.extend<ExtensionOptions & StrikeOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 70,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("strike"),
@@ -28,7 +28,7 @@ const Strike = TiptapStrike.extend<ExtensionOptions & StrikeOptions>({
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 40,
-          component: BubbleItem,
+          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("strike"),

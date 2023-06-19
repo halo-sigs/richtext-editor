@@ -17,7 +17,7 @@ const Superscript = TiptapSuperscript.extend<
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 110,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("superscript"),
@@ -30,7 +30,7 @@ const Superscript = TiptapSuperscript.extend<
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 100,
-          component: BubbleItem,
+          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("superscript"),

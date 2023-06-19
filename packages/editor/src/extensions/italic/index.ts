@@ -15,7 +15,7 @@ const Italic = TiptapItalic.extend<ExtensionOptions & ItalicOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 50,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("italic"),
@@ -28,7 +28,7 @@ const Italic = TiptapItalic.extend<ExtensionOptions & ItalicOptions>({
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 20,
-          component: BubbleItem,
+          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("italic"),

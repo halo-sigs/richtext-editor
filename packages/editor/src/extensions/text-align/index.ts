@@ -19,7 +19,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
         return [
           {
             priority: 180,
-            component: ToolbarItem,
+            component: markRaw(ToolbarItem),
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "left" }),
@@ -30,7 +30,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
           },
           {
             priority: 190,
-            component: ToolbarItem,
+            component: markRaw(ToolbarItem),
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "center" }),
@@ -41,7 +41,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
           },
           {
             priority: 200,
-            component: ToolbarItem,
+            component: markRaw(ToolbarItem),
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "right" }),
@@ -52,7 +52,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
           },
           {
             priority: 210,
-            component: ToolbarItem,
+            component: markRaw(ToolbarItem),
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "justify" }),
@@ -68,7 +68,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
         return [
           {
             priority: 120,
-            component: BubbleItem,
+            component: markRaw(BubbleItem),
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "left" }),
@@ -79,7 +79,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
           },
           {
             priority: 130,
-            component: BubbleItem,
+            component: markRaw(BubbleItem),
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "center" }),
@@ -90,7 +90,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
           },
           {
             priority: 140,
-            component: BubbleItem,
+            component: markRaw(BubbleItem),
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "right" }),
@@ -101,7 +101,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
           },
           {
             priority: 150,
-            component: BubbleItem,
+            component: markRaw(BubbleItem),
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "justify" }),

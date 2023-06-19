@@ -17,7 +17,7 @@ const Blockquote = TiptapBlockquote.extend<
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 90,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("blockquote"),
@@ -32,7 +32,7 @@ const Blockquote = TiptapBlockquote.extend<
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 60,
-          component: BubbleItem,
+          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("blockquote"),

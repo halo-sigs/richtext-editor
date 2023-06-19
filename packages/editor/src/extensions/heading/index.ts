@@ -23,7 +23,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 30,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive:
@@ -33,7 +33,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
           children: [
             {
               priority: 10,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: editor.isActive("paragraph"),
@@ -44,7 +44,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
             },
             {
               priority: 20,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: editor.isActive("heading", { level: 1 }),
@@ -56,7 +56,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
             },
             {
               priority: 30,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: editor.isActive("heading", { level: 2 }),
@@ -68,7 +68,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
             },
             {
               priority: 40,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: editor.isActive("heading", { level: 3 }),
@@ -80,7 +80,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
             },
             {
               priority: 50,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: editor.isActive("heading", { level: 4 }),
@@ -92,7 +92,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
             },
             {
               priority: 60,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: editor.isActive("heading", { level: 5 }),
@@ -104,7 +104,7 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
             },
             {
               priority: 70,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: editor.isActive("heading", { level: 6 }),

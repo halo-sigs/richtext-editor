@@ -15,7 +15,7 @@ const Code = TiptapCode.extend<ExtensionOptions & CodeOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 100,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("code"),
@@ -28,7 +28,7 @@ const Code = TiptapCode.extend<ExtensionOptions & CodeOptions>({
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 80,
-          component: BubbleItem,
+          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("code"),

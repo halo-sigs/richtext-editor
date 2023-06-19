@@ -17,7 +17,7 @@ const BulletList = TiptapBulletList.extend<
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 130,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("bulletList"),

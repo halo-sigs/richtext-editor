@@ -15,7 +15,7 @@ const Bold = TiptapBold.extend<ExtensionOptions & BoldOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 40,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("bold"),
@@ -28,7 +28,7 @@ const Bold = TiptapBold.extend<ExtensionOptions & BoldOptions>({
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 10,
-          component: BubbleItem,
+          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("bold"),

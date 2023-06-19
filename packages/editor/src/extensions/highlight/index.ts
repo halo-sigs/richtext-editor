@@ -15,7 +15,7 @@ const Highlight = TiptapHighlight.extend<ExtensionOptions & HighlightOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 80,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("highlight"),
@@ -28,7 +28,7 @@ const Highlight = TiptapHighlight.extend<ExtensionOptions & HighlightOptions>({
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 50,
-          component: BubbleItem,
+          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("highlight"),

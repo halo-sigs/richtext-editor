@@ -32,7 +32,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 170,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("table"),
@@ -42,7 +42,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
           children: [
             {
               priority: 10,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: false,
@@ -58,7 +58,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 20,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: false,
@@ -69,7 +69,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 30,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: false,
@@ -80,7 +80,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 40,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: false,
@@ -92,7 +92,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 50,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: false,
@@ -103,7 +103,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 60,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: false,
@@ -114,7 +114,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 70,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: false,
@@ -125,7 +125,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 80,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: false,
@@ -136,7 +136,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 90,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: false,
@@ -147,7 +147,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 100,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: false,
@@ -158,7 +158,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 110,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: false,
@@ -169,7 +169,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 120,
-              component: ToolbarSubItem,
+              component: markRaw(ToolbarSubItem),
               props: {
                 editor,
                 isActive: false,

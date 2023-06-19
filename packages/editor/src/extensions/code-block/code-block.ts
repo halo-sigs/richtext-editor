@@ -21,7 +21,7 @@ export default CodeBlockLowlight.extend<
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 160,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("codeBlock"),
@@ -34,7 +34,7 @@ export default CodeBlockLowlight.extend<
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 90,
-          component: BubbleItem,
+          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("codeBlock"),

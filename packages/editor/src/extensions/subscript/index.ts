@@ -17,7 +17,7 @@ const Subscript = TiptapSubscript.extend<
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 120,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("subscript"),
@@ -30,7 +30,7 @@ const Subscript = TiptapSubscript.extend<
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 110,
-          component: BubbleItem,
+          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("subscript"),

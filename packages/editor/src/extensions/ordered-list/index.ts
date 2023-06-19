@@ -17,7 +17,7 @@ const OrderedList = TiptapOrderedList.extend<
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 140,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("orderedList"),

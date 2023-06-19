@@ -15,7 +15,7 @@ const Underline = TiptapUnderline.extend<ExtensionOptions & UnderlineOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 60,
-          component: ToolbarItem,
+          component: markRaw(ToolbarItem),
           props: {
             editor,
             isActive: editor.isActive("underline"),
@@ -28,7 +28,7 @@ const Underline = TiptapUnderline.extend<ExtensionOptions & UnderlineOptions>({
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 30,
-          component: BubbleItem,
+          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("underline"),
