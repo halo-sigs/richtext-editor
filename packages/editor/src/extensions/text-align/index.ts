@@ -1,7 +1,7 @@
 import type { Editor } from "@tiptap/vue-3";
 import TiptapTextAlign from "@tiptap/extension-text-align";
 import type { TextAlignOptions } from "@tiptap/extension-text-align";
-import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
+import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiFormatAlignLeft from "~icons/mdi/format-align-left";
 import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
 import MdiFormatAlignRight from "~icons/mdi/format-align-right";
@@ -9,7 +9,7 @@ import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import BubbleButton from "@/components/bubble/BubbleButton.vue";
+import BubbleItem from "@/components/bubble/BubbleItem.vue";
 
 const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
   addOptions() {
@@ -19,7 +19,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
         return [
           {
             priority: 180,
-            component: ToolbarButton,
+            component: ToolbarItem,
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "left" }),
@@ -30,7 +30,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
           },
           {
             priority: 190,
-            component: ToolbarButton,
+            component: ToolbarItem,
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "center" }),
@@ -41,7 +41,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
           },
           {
             priority: 200,
-            component: ToolbarButton,
+            component: ToolbarItem,
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "right" }),
@@ -52,7 +52,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
           },
           {
             priority: 210,
-            component: ToolbarButton,
+            component: ToolbarItem,
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "justify" }),
@@ -68,7 +68,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
         return [
           {
             priority: 120,
-            component: BubbleButton,
+            component: BubbleItem,
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "left" }),
@@ -79,7 +79,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
           },
           {
             priority: 130,
-            component: BubbleButton,
+            component: BubbleItem,
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "center" }),
@@ -90,7 +90,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
           },
           {
             priority: 140,
-            component: BubbleButton,
+            component: BubbleItem,
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "right" }),
@@ -101,7 +101,7 @@ const TextAlign = TiptapTextAlign.extend<ExtensionOptions & TextAlignOptions>({
           },
           {
             priority: 150,
-            component: BubbleButton,
+            component: BubbleItem,
             props: {
               editor,
               isActive: editor.isActive({ textAlign: "justify" }),

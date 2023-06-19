@@ -2,7 +2,7 @@ import type { Editor, Range } from "@tiptap/vue-3";
 import TiptapTaskList from "@tiptap/extension-task-list";
 import type { TaskListOptions } from "@tiptap/extension-task-list";
 import ExtensionTaskItem from "@tiptap/extension-task-item";
-import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
+import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiFormatListCheckbox from "~icons/mdi/format-list-checkbox";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
@@ -15,7 +15,7 @@ const TaskList = TiptapTaskList.extend<ExtensionOptions & TaskListOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 150,
-          component: ToolbarButton,
+          component: ToolbarItem,
           props: {
             editor,
             isActive: editor.isActive("taskList"),

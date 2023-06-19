@@ -1,12 +1,12 @@
 import type { Editor } from "@tiptap/vue-3";
 import TiptapBlockquote from "@tiptap/extension-blockquote";
 import type { BlockquoteOptions } from "@tiptap/extension-blockquote";
-import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
+import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiFormatQuoteOpen from "~icons/mdi/format-quote-open";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import BubbleButton from "@/components/bubble/BubbleButton.vue";
+import BubbleItem from "@/components/bubble/BubbleItem.vue";
 
 const Blockquote = TiptapBlockquote.extend<
   ExtensionOptions & BlockquoteOptions
@@ -17,7 +17,7 @@ const Blockquote = TiptapBlockquote.extend<
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 90,
-          component: ToolbarButton,
+          component: ToolbarItem,
           props: {
             editor,
             isActive: editor.isActive("blockquote"),
@@ -32,7 +32,7 @@ const Blockquote = TiptapBlockquote.extend<
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 60,
-          component: BubbleButton,
+          component: BubbleItem,
           props: {
             editor,
             isActive: editor.isActive("blockquote"),

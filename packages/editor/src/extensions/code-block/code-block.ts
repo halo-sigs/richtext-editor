@@ -2,12 +2,12 @@ import { Editor, VueNodeViewRenderer, type Range } from "@tiptap/vue-3";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import type { CodeBlockLowlightOptions } from "@tiptap/extension-code-block-lowlight";
 import CodeBlockViewRenderer from "./CodeBlockViewRenderer.vue";
-import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
+import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import BubbleButton from "@/components/bubble/BubbleButton.vue";
+import BubbleItem from "@/components/bubble/BubbleItem.vue";
 
 export default CodeBlockLowlight.extend<
   ExtensionOptions & CodeBlockLowlightOptions
@@ -21,7 +21,7 @@ export default CodeBlockLowlight.extend<
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 160,
-          component: ToolbarButton,
+          component: ToolbarItem,
           props: {
             editor,
             isActive: editor.isActive("codeBlock"),
@@ -34,7 +34,7 @@ export default CodeBlockLowlight.extend<
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 90,
-          component: BubbleButton,
+          component: BubbleItem,
           props: {
             editor,
             isActive: editor.isActive("codeBlock"),

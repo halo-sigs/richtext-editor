@@ -2,7 +2,7 @@ import type { Editor, Range } from "@tiptap/vue-3";
 import TiptapOrderedList from "@tiptap/extension-ordered-list";
 import type { OrderedListOptions } from "@tiptap/extension-ordered-list";
 import ExtensionListItem from "@tiptap/extension-list-item";
-import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
+import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiFormatListNumbered from "~icons/mdi/format-list-numbered";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
@@ -17,7 +17,7 @@ const OrderedList = TiptapOrderedList.extend<
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 140,
-          component: ToolbarButton,
+          component: ToolbarItem,
           props: {
             editor,
             isActive: editor.isActive("orderedList"),

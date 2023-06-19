@@ -1,7 +1,7 @@
 import type { Editor } from "@tiptap/vue-3";
 import TiptapHistory from "@tiptap/extension-history";
 import type { HistoryOptions } from "@tiptap/extension-history";
-import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
+import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiUndoVariant from "~icons/mdi/undo-variant";
 import MdiRedoVariant from "~icons/mdi/redo-variant";
 import { markRaw } from "vue";
@@ -16,7 +16,7 @@ const History = TiptapHistory.extend<ExtensionOptions & HistoryOptions>({
         return [
           {
             priority: 10,
-            component: ToolbarButton,
+            component: ToolbarItem,
             props: {
               editor,
               isActive: false,
@@ -27,7 +27,7 @@ const History = TiptapHistory.extend<ExtensionOptions & HistoryOptions>({
           },
           {
             priority: 20,
-            component: ToolbarButton,
+            component: ToolbarItem,
             props: {
               editor,
               isActive: false,

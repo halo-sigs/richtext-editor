@@ -2,7 +2,7 @@ import type { Editor, Range } from "@tiptap/vue-3";
 import TiptapBulletList from "@tiptap/extension-bullet-list";
 import type { BulletListOptions } from "@tiptap/extension-bullet-list";
 import ExtensionListItem from "@tiptap/extension-list-item";
-import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
+import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiFormatListBulleted from "~icons/mdi/format-list-bulleted";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
@@ -17,7 +17,7 @@ const BulletList = TiptapBulletList.extend<
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 130,
-          component: ToolbarButton,
+          component: ToolbarItem,
           props: {
             editor,
             isActive: editor.isActive("bulletList"),

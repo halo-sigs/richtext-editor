@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Menu as VMenu } from "floating-vue";
 import { Editor, type AnyExtension } from "@tiptap/vue-3";
-import type { ToolbarButton } from "@/types";
+import type { ToolbarItem } from "@/types";
 
 const props = defineProps({
   editor: {
@@ -13,7 +13,7 @@ const props = defineProps({
 function getToolbarItemsFromExtensions() {
   const extensionManager = props.editor?.extensionManager;
   return extensionManager.extensions
-    .reduce((acc: ToolbarButton[], extension: AnyExtension) => {
+    .reduce((acc: ToolbarItem[], extension: AnyExtension) => {
       const { getToolbarItems } = extension.options;
 
       if (!getToolbarItems) {

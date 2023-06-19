@@ -1,12 +1,12 @@
 import type { Editor } from "@tiptap/vue-3";
 import TiptapUnderline from "@tiptap/extension-underline";
 import type { UnderlineOptions } from "@tiptap/extension-underline";
-import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
+import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiFormatUnderline from "~icons/mdi/format-underline";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import BubbleButton from "@/components/bubble/BubbleButton.vue";
+import BubbleItem from "@/components/bubble/BubbleItem.vue";
 
 const Underline = TiptapUnderline.extend<ExtensionOptions & UnderlineOptions>({
   addOptions() {
@@ -15,7 +15,7 @@ const Underline = TiptapUnderline.extend<ExtensionOptions & UnderlineOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 60,
-          component: ToolbarButton,
+          component: ToolbarItem,
           props: {
             editor,
             isActive: editor.isActive("underline"),
@@ -28,7 +28,7 @@ const Underline = TiptapUnderline.extend<ExtensionOptions & UnderlineOptions>({
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 30,
-          component: BubbleButton,
+          component: BubbleItem,
           props: {
             editor,
             isActive: editor.isActive("underline"),

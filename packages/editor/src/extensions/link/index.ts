@@ -6,7 +6,7 @@ import LinkBubbleButton from "./LinkBubbleButton.vue";
 import MdiLinkVariantOff from "~icons/mdi/link-variant-off";
 import MdiShare from "~icons/mdi/share";
 import { markRaw } from "vue";
-import BubbleButton from "@/components/bubble/BubbleButton.vue";
+import BubbleItem from "@/components/bubble/BubbleItem.vue";
 import { i18n } from "@/locales";
 
 const Link = TiptapLink.extend<ExtensionOptions & LinkOptions>({
@@ -25,7 +25,7 @@ const Link = TiptapLink.extend<ExtensionOptions & LinkOptions>({
           },
           {
             priority: 170,
-            component: markRaw(BubbleButton),
+            component: markRaw(BubbleItem),
             props: {
               editor,
               isActive: false,
@@ -37,7 +37,7 @@ const Link = TiptapLink.extend<ExtensionOptions & LinkOptions>({
           },
           {
             priority: 180,
-            component: markRaw(BubbleButton),
+            component: markRaw(BubbleItem),
             props: {
               editor,
               isActive: false,

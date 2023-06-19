@@ -1,12 +1,12 @@
 import type { Editor } from "@tiptap/vue-3";
 import TiptapItalic from "@tiptap/extension-italic";
 import type { ItalicOptions } from "@tiptap/extension-italic";
-import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
+import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiFormatItalic from "~icons/mdi/format-italic";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import BubbleButton from "@/components/bubble/BubbleButton.vue";
+import BubbleItem from "@/components/bubble/BubbleItem.vue";
 
 const Italic = TiptapItalic.extend<ExtensionOptions & ItalicOptions>({
   addOptions() {
@@ -15,7 +15,7 @@ const Italic = TiptapItalic.extend<ExtensionOptions & ItalicOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 50,
-          component: ToolbarButton,
+          component: ToolbarItem,
           props: {
             editor,
             isActive: editor.isActive("italic"),
@@ -28,7 +28,7 @@ const Italic = TiptapItalic.extend<ExtensionOptions & ItalicOptions>({
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 20,
-          component: BubbleButton,
+          component: BubbleItem,
           props: {
             editor,
             isActive: editor.isActive("italic"),

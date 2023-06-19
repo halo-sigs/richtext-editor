@@ -1,7 +1,7 @@
 import type { Editor, Range } from "@tiptap/vue-3";
 import type { Component } from "vue";
 
-export interface ToolbarButton {
+export interface ToolbarItem {
   priority: number;
   component: Component;
   props: {
@@ -11,10 +11,10 @@ export interface ToolbarButton {
     title?: string;
     action?: () => void;
   };
-  children?: ToolbarButton[];
+  children?: ToolbarItem[];
 }
 
-export interface BubbleButton {
+export interface BubbleItem {
   priority: number;
   component: Component;
   props: {
@@ -32,7 +32,7 @@ export interface ExtensionOptions {
     editor,
   }: {
     editor: Editor;
-  }) => ToolbarButton | ToolbarButton[];
+  }) => ToolbarItem | ToolbarItem[];
 
   getCommandMenuItems?: () => CommandMenuItem | CommandMenuItem[];
 
@@ -40,7 +40,7 @@ export interface ExtensionOptions {
     editor,
   }: {
     editor: Editor;
-  }) => BubbleButton | BubbleButton[];
+  }) => BubbleItem | BubbleItem[];
 }
 
 export interface CommandMenuItem {

@@ -3,7 +3,7 @@ import { roundArrow } from "tippy.js";
 import "tippy.js/dist/svg-arrow.css";
 import type { PropType } from "vue";
 import { BubbleMenu, Editor, type AnyExtension } from "@tiptap/vue-3";
-import type { BubbleButton } from "@/types";
+import type { BubbleItem } from "@/types";
 
 const props = defineProps({
   editor: {
@@ -15,7 +15,7 @@ const props = defineProps({
 function getBubbleItemsFromExtensions() {
   const extensionManager = props.editor?.extensionManager;
   return extensionManager.extensions
-    .reduce((acc: BubbleButton[], extension: AnyExtension) => {
+    .reduce((acc: BubbleItem[], extension: AnyExtension) => {
       const { getBubbleItems } = extension.options;
 
       if (!getBubbleItems) {

@@ -5,8 +5,8 @@ export { default as BlockActionSeparator } from "./block/BlockActionSeparator.vu
 export { default as BlockCard } from "./block/BlockCard.vue";
 
 // bubble
-export { default as BubbleButton } from "./bubble/BubbleButton.vue";
+export { default as BubbleItem } from "./bubble/BubbleItem.vue";
 
 // toolbar
-export { default as ToolbarButton } from "./toolbar/ToolbarButton.vue";
-export { default as ToolbarButtonItem } from "./toolbar/ToolbarButtonItem.vue";
+export { default as ToolbarItem } from "./toolbar/ToolbarItem.vue";
+export { default as ToolbarSubItem } from "./toolbar/ToolbarSubItem.vue";

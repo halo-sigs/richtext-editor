@@ -1,12 +1,12 @@
 import type { Editor } from "@tiptap/core";
 import TiptapHighlight from "@tiptap/extension-highlight";
 import type { HighlightOptions } from "@tiptap/extension-highlight";
-import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
+import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiFormatColorHighlight from "~icons/mdi/format-color-highlight";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import BubbleButton from "@/components/bubble/BubbleButton.vue";
+import BubbleItem from "@/components/bubble/BubbleItem.vue";
 
 const Highlight = TiptapHighlight.extend<ExtensionOptions & HighlightOptions>({
   addOptions() {
@@ -15,7 +15,7 @@ const Highlight = TiptapHighlight.extend<ExtensionOptions & HighlightOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 80,
-          component: ToolbarButton,
+          component: ToolbarItem,
           props: {
             editor,
             isActive: editor.isActive("highlight"),
@@ -28,7 +28,7 @@ const Highlight = TiptapHighlight.extend<ExtensionOptions & HighlightOptions>({
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 50,
-          component: BubbleButton,
+          component: BubbleItem,
           props: {
             editor,
             isActive: editor.isActive("highlight"),

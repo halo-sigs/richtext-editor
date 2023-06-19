@@ -1,12 +1,12 @@
 import type { Editor } from "@tiptap/vue-3";
 import TiptapSuperscript from "@tiptap/extension-superscript";
 import type { SuperscriptExtensionOptions } from "@tiptap/extension-superscript";
-import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
+import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiFormatSuperscript from "~icons/mdi/format-superscript";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import BubbleButton from "@/components/bubble/BubbleButton.vue";
+import BubbleItem from "@/components/bubble/BubbleItem.vue";
 
 const Superscript = TiptapSuperscript.extend<
   ExtensionOptions & SuperscriptExtensionOptions
@@ -17,7 +17,7 @@ const Superscript = TiptapSuperscript.extend<
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 110,
-          component: ToolbarButton,
+          component: ToolbarItem,
           props: {
             editor,
             isActive: editor.isActive("superscript"),
@@ -30,7 +30,7 @@ const Superscript = TiptapSuperscript.extend<
       getBubbleItems({ editor }: { editor: Editor }) {
         return {
           priority: 100,
-          component: BubbleButton,
+          component: BubbleItem,
           props: {
             editor,
             isActive: editor.isActive("superscript"),

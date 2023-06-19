@@ -4,7 +4,7 @@ import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
 import TableCell from "@tiptap/extension-table-cell";
 import type { Editor, Range } from "@tiptap/vue-3";
-import ToolbarButton from "@/components/toolbar/ToolbarButton.vue";
+import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiTable from "~icons/mdi/table";
 import MdiTablePlus from "~icons/mdi/table-plus";
 import MdiTableColumnPlusBefore from "~icons/mdi/table-column-plus-before";
@@ -20,7 +20,7 @@ import MdiTableSplitCell from "~icons/mdi/table-split-cell";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import ToolbarButtonItem from "@/components/toolbar/ToolbarButtonItem.vue";
+import ToolbarSubItem from "@/components/toolbar/ToolbarSubItem.vue";
 
 const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
   addExtensions() {
@@ -32,7 +32,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 170,
-          component: ToolbarButton,
+          component: ToolbarItem,
           props: {
             editor,
             isActive: editor.isActive("table"),
@@ -42,7 +42,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
           children: [
             {
               priority: 10,
-              component: ToolbarButtonItem,
+              component: ToolbarSubItem,
               props: {
                 editor,
                 isActive: false,
@@ -58,7 +58,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 20,
-              component: ToolbarButtonItem,
+              component: ToolbarSubItem,
               props: {
                 editor,
                 isActive: false,
@@ -69,7 +69,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 30,
-              component: ToolbarButtonItem,
+              component: ToolbarSubItem,
               props: {
                 editor,
                 isActive: false,
@@ -80,7 +80,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 40,
-              component: ToolbarButtonItem,
+              component: ToolbarSubItem,
               props: {
                 editor,
                 isActive: false,
@@ -92,7 +92,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 50,
-              component: ToolbarButtonItem,
+              component: ToolbarSubItem,
               props: {
                 editor,
                 isActive: false,
@@ -103,7 +103,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 60,
-              component: ToolbarButtonItem,
+              component: ToolbarSubItem,
               props: {
                 editor,
                 isActive: false,
@@ -114,7 +114,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 70,
-              component: ToolbarButtonItem,
+              component: ToolbarSubItem,
               props: {
                 editor,
                 isActive: false,
@@ -125,7 +125,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 80,
-              component: ToolbarButtonItem,
+              component: ToolbarSubItem,
               props: {
                 editor,
                 isActive: false,
@@ -136,7 +136,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 90,
-              component: ToolbarButtonItem,
+              component: ToolbarSubItem,
               props: {
                 editor,
                 isActive: false,
@@ -147,7 +147,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 100,
-              component: ToolbarButtonItem,
+              component: ToolbarSubItem,
               props: {
                 editor,
                 isActive: false,
@@ -158,7 +158,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 110,
-              component: ToolbarButtonItem,
+              component: ToolbarSubItem,
               props: {
                 editor,
                 isActive: false,
@@ -169,7 +169,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
             },
             {
               priority: 120,
-              component: ToolbarButtonItem,
+              component: ToolbarSubItem,
               props: {
                 editor,
                 isActive: false,
