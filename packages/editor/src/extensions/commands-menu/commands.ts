@@ -10,7 +10,9 @@ export default Extension.create({
   name: "commands-menu",
 
   addProseMirrorPlugins() {
-    const commandMenuItems = getToolbarItemsFromExtensions(this.editor);
+    const commandMenuItems = getToolbarItemsFromExtensions(
+      this.editor as Editor
+    );
 
     return [
       Suggestion({

@@ -128,10 +128,7 @@ const Iframe = Node.create<ExtensionOptions>({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return [
-      "iframe",
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-    ];
+    return ["iframe", mergeAttributes(HTMLAttributes)];
   },
 
   addCommands() {

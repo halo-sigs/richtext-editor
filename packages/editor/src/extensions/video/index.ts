@@ -106,10 +106,7 @@ const Video = Node.create<ExtensionOptions>({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return [
-      "video",
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-    ];
+    return ["video", mergeAttributes(HTMLAttributes)];
   },
 
   addCommands() {

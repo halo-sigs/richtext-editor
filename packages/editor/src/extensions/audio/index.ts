@@ -84,10 +84,7 @@ const Audio = Node.create<ExtensionOptions>({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return [
-      "audio",
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-    ];
+    return ["audio", mergeAttributes(HTMLAttributes)];
   },
 
   addCommands() {
