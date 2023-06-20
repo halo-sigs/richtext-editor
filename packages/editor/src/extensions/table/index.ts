@@ -62,6 +62,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               props: {
                 editor,
                 isActive: false,
+                disabled: !editor.isActive("table"),
                 icon: markRaw(MdiTableColumnPlusBefore),
                 title: i18n.global.t("editor.menus.table.add_column_before"),
                 action: () => editor.chain().focus().addColumnBefore().run(),
@@ -73,6 +74,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               props: {
                 editor,
                 isActive: false,
+                disabled: !editor.isActive("table"),
                 icon: markRaw(MdiTableColumnPlusAfter),
                 title: i18n.global.t("editor.menus.table.add_column_after"),
                 action: () => editor.chain().focus().addColumnAfter().run(),
@@ -84,7 +86,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               props: {
                 editor,
                 isActive: false,
-                type: "button",
+                disabled: !editor.isActive("table"),
                 icon: markRaw(MdiTableHeadersEye),
                 title: i18n.global.t("editor.menus.table.toggle_header_column"),
                 action: () => editor.chain().focus().toggleHeaderColumn().run(),
@@ -96,6 +98,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               props: {
                 editor,
                 isActive: false,
+                disabled: !editor.isActive("table"),
                 icon: markRaw(MdiTableColumnRemove),
                 title: i18n.global.t("editor.menus.table.delete_column"),
                 action: () => editor.chain().focus().deleteColumn().run(),
@@ -107,6 +110,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               props: {
                 editor,
                 isActive: false,
+                disabled: !editor.isActive("table"),
                 icon: markRaw(MdiTableRowPlusBefore),
                 title: i18n.global.t("editor.menus.table.add_row_before"),
                 action: () => editor.chain().focus().addRowBefore().run(),
@@ -118,6 +122,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               props: {
                 editor,
                 isActive: false,
+                disabled: !editor.isActive("table"),
                 icon: markRaw(MdiTableRowPlusAfter),
                 title: i18n.global.t("editor.menus.table.add_row_after"),
                 action: () => editor.chain().focus().addRowAfter().run(),
@@ -129,6 +134,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               props: {
                 editor,
                 isActive: false,
+                disabled: !editor.isActive("table"),
                 icon: markRaw(MdiTableHeadersEye),
                 title: i18n.global.t("editor.menus.table.toggle_header_row"),
                 action: () => editor.chain().focus().toggleHeaderRow().run(),
@@ -140,6 +146,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               props: {
                 editor,
                 isActive: false,
+                disabled: !editor.isActive("table"),
                 icon: markRaw(MdiTableRowRemove),
                 title: i18n.global.t("editor.menus.table.delete_row"),
                 action: () => editor.chain().focus().deleteRow().run(),
@@ -151,6 +158,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               props: {
                 editor,
                 isActive: false,
+                disabled: !editor.isActive("table"),
                 icon: markRaw(MdiTableMergeCells),
                 title: i18n.global.t("editor.menus.table.merge_cells"),
                 action: () => editor.chain().focus().mergeCells().run(),
@@ -162,6 +170,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               props: {
                 editor,
                 isActive: false,
+                disabled: !editor.isActive("table"),
                 icon: markRaw(MdiTableSplitCell),
                 title: i18n.global.t("editor.menus.table.split_cell"),
                 action: () => editor.chain().focus().splitCell().run(),
@@ -173,6 +182,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               props: {
                 editor,
                 isActive: false,
+                disabled: !editor.isActive("table"),
                 icon: markRaw(MdiTableRemove),
                 title: i18n.global.t("editor.menus.table.delete_table"),
                 action: () => editor.chain().focus().deleteTable().run(),

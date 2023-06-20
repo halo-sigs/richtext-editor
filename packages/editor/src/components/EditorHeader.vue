@@ -48,12 +48,7 @@ function getToolbarItemsFromExtensions() {
         v-bind="item.props"
       />
       <VMenu v-else class="inline-flex">
-        <button
-          :class="{ 'bg-gray-200': item.props.isActive }"
-          class="hover:bg-gray-100 p-1 rounded-sm"
-        >
-          <component :is="item.props.icon" />
-        </button>
+        <component :is="item.component" v-bind="item.props" />
         <template #popper>
           <div
             class="relative rounded-md bg-white overflow-hidden drop-shadow w-48 p-1 max-h-72 overflow-y-auto"

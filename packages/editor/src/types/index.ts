@@ -7,6 +7,7 @@ export interface ToolbarItem {
   props: {
     editor: Editor;
     isActive: boolean;
+    disabled?: boolean;
     icon?: Component;
     title?: string;
     action?: () => void;
