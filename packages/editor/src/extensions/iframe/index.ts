@@ -1,11 +1,16 @@
+import type { ExtensionOptions } from "@/types";
 import {
+  Editor,
   mergeAttributes,
   Node,
   nodeInputRule,
   nodePasteRule,
+  type Range,
 } from "@tiptap/core";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
+import { markRaw } from "vue";
 import IframeView from "./IframeView.vue";
+import MdiWeb from "~icons/mdi/web";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -15,7 +20,7 @@ declare module "@tiptap/core" {
   }
 }
 
-const Iframe = Node.create({
+const Iframe = Node.create<ExtensionOptions>({
   name: "iframe",
 
   inline() {
@@ -123,10 +128,7 @@ const Iframe = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return [
-      "iframe",
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-    ];
+    return ["iframe", mergeAttributes(HTMLAttributes)];
   },
 
   addCommands() {
@@ -153,6 +155,7 @@ const Iframe = Node.create({
       }),
     ];
   },
+
   addPasteRules() {
     return [
       nodePasteRule({
@@ -181,6 +184,31 @@ const Iframe = Node.create({
 
   addNodeView() {
     return VueNodeViewRenderer(IframeView);
+  },
+
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      getCommandMenuItems() {
+        return {
+          priority: 90,
+          icon: markRaw(MdiWeb),
+          title: "editor.extensions.commands_menu.iframe",
+          keywords: ["iframe", "qianruwangye"],
+          command: ({ editor, range }: { editor: Editor; range: Range }) => {
+            editor
+              .chain()
+              .focus()
+              .deleteRange(range)
+              .insertContent([
+                { type: "iframe", attrs: { src: "" } },
+                { type: "paragraph", content: "" },
+              ])
+              .run();
+          },
+        };
+      },
+    };
   },
 });
 

@@ -1,18 +1,27 @@
 <script lang="ts" setup>
 import type { Editor } from "@tiptap/vue-3";
-import { computed, type PropType } from "vue";
+import { computed, type Component } from "vue";
 import { VTooltip, Dropdown as VDropdown } from "floating-vue";
 import MdiLinkVariant from "~icons/mdi/link-variant";
-import MdiLinkVariantOff from "~icons/mdi/link-variant-off";
-import MdiShare from "~icons/mdi/share";
 import { i18n } from "@/locales";
 
-const props = defineProps({
-  editor: {
-    type: Object as PropType<Editor>,
-    required: true,
-  },
-});
+const props = withDefaults(
+  defineProps<{
+    editor: Editor;
+    isActive?: boolean;
+    visible?: boolean;
+    title?: string;
+    action?: () => void;
+    icon?: Component;
+  }>(),
+  {
+    isActive: false,
+    visible: true,
+    title: undefined,
+    action: undefined,
+    icon: undefined,
+  }
+);
 
 const href = computed({
   get() {
@@ -39,22 +48,18 @@ const target = computed({
     });
   },
 });
-
-function handleUnSetLink() {
-  props.editor.commands.unsetLink();
-}
 </script>
 
 <template>
   <VDropdown class="inline-flex" :triggers="['click']" :distance="10">
     <button
       v-tooltip="
-        editor.isActive('link')
+        isActive
           ? i18n.global.t('editor.extensions.link.edit_link')
           : i18n.global.t('editor.extensions.link.add_link')
       "
       class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
-      :class="{ 'bg-gray-200 !text-black': editor.isActive('link') }"
+      :class="{ 'bg-gray-200 !text-black': isActive }"
     >
       <MdiLinkVariant />
     </button>
@@ -81,23 +86,4 @@ function handleUnSetLink() {
       </div>
     </template>
   </VDropdown>
-
-  <button
-    v-if="editor.isActive('link')"
-    v-tooltip="i18n.global.t('editor.extensions.link.cancel_link')"
-    class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
-    @click="handleUnSetLink"
-  >
-    <MdiLinkVariantOff />
-  </button>
-
-  <a
-    v-if="editor.isActive('link')"
-    v-tooltip="i18n.global.t('editor.common.tooltip.open_link')"
-    class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
-    :href="editor.getAttributes('link')?.href"
-    target="_blank"
-  >
-    <MdiShare />
-  </a>
 </template>

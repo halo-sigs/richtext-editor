@@ -1,6 +1,15 @@
-import { mergeAttributes, Node, nodeInputRule } from "@tiptap/core";
+import type { ExtensionOptions } from "@/types";
+import {
+  Editor,
+  mergeAttributes,
+  Node,
+  nodeInputRule,
+  type Range,
+} from "@tiptap/core";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
+import { markRaw } from "vue";
 import AudioView from "./AudioView.vue";
+import MdiMusicCircleOutline from "~icons/mdi/music-circle-outline";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -10,7 +19,7 @@ declare module "@tiptap/core" {
   }
 }
 
-const Audio = Node.create({
+const Audio = Node.create<ExtensionOptions>({
   name: "audio",
 
   inline() {
@@ -75,10 +84,7 @@ const Audio = Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return [
-      "audio",
-      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
-    ];
+    return ["audio", mergeAttributes(HTMLAttributes)];
   },
 
   addCommands() {
@@ -108,6 +114,31 @@ const Audio = Node.create({
 
   addNodeView() {
     return VueNodeViewRenderer(AudioView);
+  },
+
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      getCommandMenuItems() {
+        return {
+          priority: 110,
+          icon: markRaw(MdiMusicCircleOutline),
+          title: "editor.extensions.commands_menu.audio",
+          keywords: ["audio", "yinpin"],
+          command: ({ editor, range }: { editor: Editor; range: Range }) => {
+            editor
+              .chain()
+              .focus()
+              .deleteRange(range)
+              .insertContent([
+                { type: "audio", attrs: { src: "" } },
+                { type: "paragraph", content: "" },
+              ])
+              .run();
+          },
+        };
+      },
+    };
   },
 });
 

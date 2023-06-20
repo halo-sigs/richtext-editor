@@ -1,3 +1,81 @@
+# 扩展说明
+
+如何对编辑器的功能进行扩展。
+
+主要介绍扩展工具栏、悬浮工具栏、以及 Slash Command（以下统称工具栏），对于 Tiptap 本身的扩展方式可以参考 <https://tiptap.dev/api/introduction>。
+
+在 <https://github.com/halo-sigs/richtext-editor/pull/16> 中，我们对编辑器的工具栏的定义方式进行了重构，现在如果需要添加额外的工具栏按钮或者功能，只需要在具体的 Tiptap Extension 中的 `addOptions` 函数中定义即可，如：
+
+```ts
+{
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      getToolbarItems({ editor }: { editor: Editor }) {
+        return []
+      },
+      getBubbleItems({ editor }: { editor: Editor }) {
+        return []
+      },
+      getCommandMenuItems() {
+        return [];
+      },
+    };
+  },
+}
+```
+
+其中对象的属性分别对应了工具栏的三个部分，分别是：
+
+- `getToolbarItems`：工具栏
+- `getBubbleItems`：悬浮工具栏
+- `getCommandMenuItems`：Slash Command
+
+对应的返回类型为：
+
+```ts
+// 工具栏
+export interface ToolbarItem {
+  priority: number;
+  component: Component;
+  props: {
+    editor: Editor;
+    isActive: boolean;
+    disabled?: boolean;
+    icon?: Component;
+    title?: string;
+    action?: () => void;
+  };
+  children?: ToolbarItem[];
+}
+
+// 悬浮工具栏
+export interface BubbleItem {
+  priority: number;
+  component: Component;
+  props: {
+    editor: Editor;
+    isActive: boolean;
+    visible?: boolean;
+    icon?: Component;
+    title?: string;
+    action?: () => void;
+  };
+}
+
+// Slash Command
+export interface CommandMenuItem {
+  priority: number;
+  icon: Component;
+  title: string;
+  keywords: string[];
+  command: ({ editor, range }: { editor: Editor; range: Range }) => void;
+}
+```
+
+一个添加视频类型节点的示例：
+
+```ts
 import type { ExtensionOptions } from "@/types";
 import {
   Editor,
@@ -141,12 +219,32 @@ const Video = Node.create<ExtensionOptions>({
   addOptions() {
     return {
       ...this.parent?.(),
+      getToolbarItems({ editor }: { editor: Editor }) {
+        return {
+          priority: 10,
+          component: markRaw(ToolbarItem),
+          props: {
+            editor,
+            isActive: editor.isActive("video"),
+            icon: markRaw(MdiVideo),
+            title: "添加视频",
+            action: () => editor
+              .chain()
+              .focus()
+              .deleteRange(range)
+              .insertContent([
+                { type: "video", attrs: { src: "" } },
+              ])
+              .run(),
+          },
+        };
+      },
       getCommandMenuItems() {
         return {
-          priority: 100,
+          priority: 10,
           icon: markRaw(MdiVideo),
-          title: "editor.extensions.commands_menu.video",
-          keywords: ["video", "shipin"],
+          title: "添加视频",
+          keywords: ["video"],
           command: ({ editor, range }: { editor: Editor; range: Range }) => {
             editor
               .chain()
@@ -154,7 +252,6 @@ const Video = Node.create<ExtensionOptions>({
               .deleteRange(range)
               .insertContent([
                 { type: "video", attrs: { src: "" } },
-                { type: "paragraph", content: "" },
               ])
               .run();
           },
@@ -165,3 +262,4 @@ const Video = Node.create<ExtensionOptions>({
 });
 
 export default Video;
+```

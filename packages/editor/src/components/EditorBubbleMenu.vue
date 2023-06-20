@@ -2,22 +2,38 @@
 import { roundArrow } from "tippy.js";
 import "tippy.js/dist/svg-arrow.css";
 import type { PropType } from "vue";
-import { BubbleMenu, Editor } from "@tiptap/vue-3";
-import type { MenuItem } from "@/types";
-import { VTooltip } from "floating-vue";
-import EditorLinkBubbleMenuItems from "./EditorLinkBubbleMenuItems.vue";
+import { BubbleMenu, Editor, type AnyExtension } from "@tiptap/vue-3";
+import type { BubbleItem } from "@/types";
 
-defineProps({
+const props = defineProps({
   editor: {
     type: Object as PropType<Editor>,
     required: true,
   },
-  menuItems: {
-    type: Array as PropType<MenuItem[]>,
-    required: false,
-    default: () => [],
-  },
 });
+
+function getBubbleItemsFromExtensions() {
+  const extensionManager = props.editor?.extensionManager;
+  return extensionManager.extensions
+    .reduce((acc: BubbleItem[], extension: AnyExtension) => {
+      const { getBubbleItems } = extension.options;
+
+      if (!getBubbleItems) {
+        return acc;
+      }
+
+      const items = getBubbleItems({
+        editor: props.editor,
+      });
+
+      if (Array.isArray(items)) {
+        return [...acc, ...items];
+      }
+
+      return [...acc, items];
+    }, [])
+    .sort((a, b) => a.priority - b.priority);
+}
 </script>
 <template>
   <bubble-menu
@@ -27,23 +43,12 @@ defineProps({
     <div
       class="bg-white flex items-center rounded p-1 border drop-shadow space-x-0.5"
     >
-      <button
-        v-for="(menuItem, index) in menuItems"
+      <component
+        :is="item.component"
+        v-for="(item, index) in getBubbleItemsFromExtensions()"
         :key="index"
-        v-tooltip="menuItem.title"
-        :class="{ 'bg-gray-200 !text-black': menuItem.isActive?.() }"
-        :title="menuItem.title"
-        class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
-        @click="menuItem.action?.()"
-      >
-        <component :is="menuItem.icon" />
-      </button>
-
-      <div class="px-1">
-        <div class="h-5 bg-gray-100" style="width: 1px"></div>
-      </div>
-
-      <EditorLinkBubbleMenuItems :editor="editor" />
+        v-bind="item.props"
+      />
     </div>
   </bubble-menu>
 </template>
