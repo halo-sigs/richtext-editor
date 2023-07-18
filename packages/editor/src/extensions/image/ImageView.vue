@@ -66,9 +66,16 @@ const height = computed({
 
 const resizeRef = ref<HTMLElement>();
 
+let mounted = false;
+
 const reuseResizeObserver = () => {
   let init = true;
   return useResizeObserver(resizeRef, (entries) => {
+    // Skip first call
+    if (!mounted) {
+      mounted = true;
+      return;
+    }
     if (init) {
       init = false;
       return;
