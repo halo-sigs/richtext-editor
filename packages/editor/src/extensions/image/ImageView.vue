@@ -2,7 +2,7 @@
 import type { Node as ProseMirrorNode } from "prosemirror-model";
 import type { Decoration } from "prosemirror-view";
 import { Editor, NodeViewWrapper, Node } from "@tiptap/vue-3";
-import { computed } from "vue";
+import { computed, onUnmounted } from "vue";
 import BlockCard from "@/components/block/BlockCard.vue";
 import BlockActionButton from "@/components/block/BlockActionButton.vue";
 import BlockActionSeparator from "@/components/block/BlockActionSeparator.vue";
@@ -70,23 +70,38 @@ let mounted = false;
 
 const reuseResizeObserver = () => {
   let init = true;
-  return useResizeObserver(resizeRef, (entries) => {
-    // Skip first call
-    if (!mounted) {
-      mounted = true;
-      return;
-    }
-    if (init) {
-      init = false;
-      return;
-    }
-    const entry = entries[0];
-    const { width, height } = entry.contentRect;
-    props.updateAttributes({ width: width + "px", height: height + "px" });
-  });
+  return useResizeObserver(
+    resizeRef,
+    (entries) => {
+      // Skip first call
+      if (!mounted) {
+        mounted = true;
+        return;
+      }
+      if (init) {
+        init = false;
+        return;
+      }
+      const entry = entries[0];
+      const { width, height } = entry.contentRect;
+      props.updateAttributes({ width: width + "px", height: height + "px" });
+    },
+    { box: "border-box" }
+  );
 };
 
 let resizeObserver = reuseResizeObserver();
+
+window.addEventListener("resize", resetResizeObserver);
+
+onUnmounted(() => {
+  window.removeEventListener("resize", resetResizeObserver);
+});
+
+function resetResizeObserver() {
+  resizeObserver.stop();
+  resizeObserver = reuseResizeObserver();
+}
 
 function handleSetSize(width: string, height: string) {
   resizeObserver.stop();
