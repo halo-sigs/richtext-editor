@@ -17,6 +17,7 @@ import MdiFormatAlignLeft from "~icons/mdi/format-align-left";
 import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
 import MdiFormatAlignRight from "~icons/mdi/format-align-right";
 import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
+import MdiBackupRestore from "~icons/mdi/backup-restore";
 import { i18n } from "@/locales";
 import { useResizeObserver } from "@vueuse/core";
 import { ref } from "vue";
@@ -87,8 +88,8 @@ const reuseResizeObserver = () => {
         return;
       }
       const entry = entries[0];
-      const { width, height } = entry.contentRect;
-      props.updateAttributes({ width: width + "px", height: height + "px" });
+      const { width: w, height: h } = entry.contentRect;
+      props.updateAttributes({ width: w + "px", height: h + "px" });
     },
     { box: "border-box" }
   );
@@ -107,7 +108,7 @@ function resetResizeObserver() {
   resizeObserver = reuseResizeObserver();
 }
 
-function handleSetSize(width: string, height: string) {
+function handleSetSize(width?: string, height?: string) {
   resizeObserver.stop();
   props.updateAttributes({ width, height });
   props.editor.chain().focus().setNodeSelection(props.getPos()).run();
@@ -210,6 +211,15 @@ onMounted(() => {
         >
           <template #icon>
             <MdiImageSizeSelectActual />
+          </template>
+        </BlockActionButton>
+
+        <BlockActionButton
+          :tooltip="i18n.global.t('editor.extensions.image.restore_size')"
+          @click="handleSetSize(undefined, undefined)"
+        >
+          <template #icon>
+            <MdiBackupRestore />
           </template>
         </BlockActionButton>
 

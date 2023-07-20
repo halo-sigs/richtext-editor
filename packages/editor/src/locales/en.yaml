@@ -47,6 +47,7 @@ editor:
       small_size: Small size
       medium_size: Medium size
       large_size: Large size
+      restore_size: Restore original size
       edit_link: Edit link
     video:
       disable_controls: Hide controls
