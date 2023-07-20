@@ -2,8 +2,11 @@
 import { roundArrow } from "tippy.js";
 import "tippy.js/dist/svg-arrow.css";
 import type { PropType } from "vue";
-import { BubbleMenu, Editor, type AnyExtension } from "@tiptap/vue-3";
+import type { Editor, AnyExtension } from "@tiptap/core";
+import { BubbleMenu, isTextSelection } from "@tiptap/vue-3";
 import type { BubbleItem } from "@/types";
+import type { EditorView } from "prosemirror-view";
+import type { EditorState } from "prosemirror-state";
 
 const props = defineProps({
   editor: {
@@ -34,11 +37,55 @@ function getBubbleItemsFromExtensions() {
     }, [])
     .sort((a, b) => a.priority - b.priority);
 }
+
+const getShouldShow = ({
+  editor,
+  view,
+  state,
+  from,
+  to,
+}: {
+  editor: Editor;
+  view: EditorView;
+  state: EditorState;
+  oldState?: EditorState;
+  from: number;
+  to: number;
+}) => {
+  if (
+    editor.isActive("image") ||
+    editor.isActive("video") ||
+    editor.isActive("audio") ||
+    editor.isActive("iframe")
+  ) {
+    return false;
+  }
+
+  const { doc, selection } = state;
+  const { empty } = selection;
+
+  const isEmptyTextBlock =
+    !doc.textBetween(from, to).length && isTextSelection(state.selection);
+
+  const hasEditorFocus = view.hasFocus();
+
+  if (
+    !hasEditorFocus ||
+    empty ||
+    isEmptyTextBlock ||
+    !props.editor.isEditable
+  ) {
+    return false;
+  }
+
+  return true;
+};
 </script>
 <template>
   <bubble-menu
     :editor="editor"
     :tippy-options="{ duration: 100, arrow: roundArrow, maxWidth: '100%' }"
+    :should-show="getShouldShow"
   >
     <div
       class="bg-white flex items-center rounded p-1 border drop-shadow space-x-0.5"

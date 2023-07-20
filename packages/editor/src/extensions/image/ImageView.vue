@@ -149,7 +149,7 @@ onMounted(() => {
         <div
           v-else
           ref="resizeRef"
-          class="resize inline-block overflow-hidden text-center relative"
+          class="resize inline-block overflow-hidden text-center relative rounded-md"
           :class="{
             'ring-2 rounded': selected,
           }"

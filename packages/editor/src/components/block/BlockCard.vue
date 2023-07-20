@@ -41,30 +41,32 @@ function handleInsertNewLine() {
       <slot name="content" />
     </div>
     <div
-      class="editor-block__actions invisible group-hover:visible"
+      class="invisible group-hover:visible pb-2 absolute -top-12 right-0"
       :class="{ '!visible': selected }"
     >
-      <slot name="actions" />
+      <div class="editor-block__actions">
+        <slot name="actions" />
 
-      <BlockActionButton
-        :tooltip="i18n.global.t('editor.common.button.new_line')"
-        @click="handleInsertNewLine"
-      >
-        <template #icon>
-          <MdiArrowULeftBottom />
-        </template>
-      </BlockActionButton>
+        <BlockActionButton
+          :tooltip="i18n.global.t('editor.common.button.new_line')"
+          @click="handleInsertNewLine"
+        >
+          <template #icon>
+            <MdiArrowULeftBottom />
+          </template>
+        </BlockActionButton>
 
-      <BlockActionSeparator />
+        <BlockActionSeparator />
 
-      <BlockActionButton
-        :tooltip="i18n.global.t('editor.common.button.delete')"
-        @click="deleteNode"
-      >
-        <template #icon>
-          <MdiDeleteForeverOutline />
-        </template>
-      </BlockActionButton>
+        <BlockActionButton
+          :tooltip="i18n.global.t('editor.common.button.delete')"
+          @click="deleteNode"
+        >
+          <template #icon>
+            <MdiDeleteForeverOutline />
+          </template>
+        </BlockActionButton>
+      </div>
     </div>
   </section>
 </template>
@@ -74,13 +76,12 @@ function handleInsertNewLine() {
   @apply relative;
 
   &__content {
-    @apply flex
-    transition-all
+    @apply transition-all
     rounded;
   }
 
   &__actions {
-    @apply p-1 flex flex-row rounded-lg border gap-0.5 items-center bg-gray-100 h-11 absolute -top-12 right-0 shadow-lg;
+    @apply p-1 flex flex-row rounded-lg border gap-0.5 items-center bg-gray-100 h-11 shadow-lg;
   }
 
   &:hover & {
