@@ -94,3 +94,4 @@ editor:
     button:
       new_line: New line
       delete: Delete
+      edit_link: Edit link

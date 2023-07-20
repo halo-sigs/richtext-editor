@@ -2,7 +2,7 @@
 import type { Node as ProseMirrorNode } from "prosemirror-model";
 import type { Decoration } from "prosemirror-view";
 import { Editor, NodeViewWrapper, Node } from "@tiptap/vue-3";
-import { computed, onUnmounted } from "vue";
+import { computed, onMounted, onUnmounted } from "vue";
 import BlockCard from "@/components/block/BlockCard.vue";
 import BlockActionButton from "@/components/block/BlockActionButton.vue";
 import BlockActionSeparator from "@/components/block/BlockActionSeparator.vue";
@@ -117,6 +117,14 @@ function handleSetFocus() {
 function handleOpenLink() {
   window.open(src.value, "_blank");
 }
+
+const inputRef = ref();
+
+onMounted(() => {
+  if (!src.value) {
+    inputRef.value.focus();
+  }
+});
 </script>
 
 <template>
@@ -128,8 +136,9 @@ function handleOpenLink() {
       :get-pos="getPos"
     >
       <template #content>
-        <div v-if="!src" class="py-1.5">
+        <div v-if="!src" class="p-1.5 w-full">
           <input
+            ref="inputRef"
             v-model.lazy="src"
             class="block px-2 w-full py-1.5 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
             :placeholder="i18n.global.t('editor.common.placeholder.link_input')"

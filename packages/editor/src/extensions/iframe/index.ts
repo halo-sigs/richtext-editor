@@ -200,10 +200,7 @@ const Iframe = Node.create<ExtensionOptions>({
               .chain()
               .focus()
               .deleteRange(range)
-              .insertContent([
-                { type: "iframe", attrs: { src: "" } },
-                { type: "paragraph", content: "" },
-              ])
+              .insertContent([{ type: "iframe", attrs: { src: "" } }])
               .run();
           },
         };

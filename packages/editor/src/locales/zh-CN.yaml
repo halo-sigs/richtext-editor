@@ -94,3 +94,4 @@ editor:
     button:
       new_line: 换行
       delete: 删除
+      edit_link: 修改链接
