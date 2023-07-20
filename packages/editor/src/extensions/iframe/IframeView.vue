@@ -15,6 +15,10 @@ import MdiTabletIpad from "~icons/mdi/tablet-ipad";
 import MdiDesktopMac from "~icons/mdi/desktop-mac";
 import MdiBorderAllVariant from "~icons/mdi/border-all-variant";
 import MdiBorderNoneVariant from "~icons/mdi/border-none-variant";
+import MdiFormatAlignLeft from "~icons/mdi/format-align-left";
+import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
+import MdiFormatAlignRight from "~icons/mdi/format-align-right";
+import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
 import { i18n } from "@/locales";
 
 const props = defineProps<{
@@ -207,6 +211,41 @@ onMounted(() => {
         >
           <template #icon>
             <MdiDesktopMac />
+          </template>
+        </BlockActionButton>
+
+        <BlockActionSeparator />
+
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'left' })"
+          @click="editor.chain().focus().setTextAlign('left').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignLeft />
+          </template>
+        </BlockActionButton>
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'center' })"
+          @click="editor.chain().focus().setTextAlign('center').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignCenter />
+          </template>
+        </BlockActionButton>
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'right' })"
+          @click="editor.chain().focus().setTextAlign('right').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignRight />
+          </template>
+        </BlockActionButton>
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'justify' })"
+          @click="editor.chain().focus().setTextAlign('justify').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignJustify />
           </template>
         </BlockActionButton>
 

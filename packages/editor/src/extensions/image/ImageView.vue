@@ -13,6 +13,10 @@ import MdiShare from "~icons/mdi/share";
 import MdiImageSizeSelectActual from "~icons/mdi/image-size-select-actual";
 import MdiImageSizeSelectSmall from "~icons/mdi/image-size-select-small";
 import MdiImageSizeSelectLarge from "~icons/mdi/image-size-select-large";
+import MdiFormatAlignLeft from "~icons/mdi/format-align-left";
+import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
+import MdiFormatAlignRight from "~icons/mdi/format-align-right";
+import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
 import { i18n } from "@/locales";
 import { useResizeObserver } from "@vueuse/core";
 import { ref } from "vue";
@@ -206,6 +210,41 @@ onMounted(() => {
         >
           <template #icon>
             <MdiImageSizeSelectActual />
+          </template>
+        </BlockActionButton>
+
+        <BlockActionSeparator />
+
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'left' })"
+          @click="editor.chain().focus().setTextAlign('left').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignLeft />
+          </template>
+        </BlockActionButton>
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'center' })"
+          @click="editor.chain().focus().setTextAlign('center').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignCenter />
+          </template>
+        </BlockActionButton>
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'right' })"
+          @click="editor.chain().focus().setTextAlign('right').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignRight />
+          </template>
+        </BlockActionButton>
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'justify' })"
+          @click="editor.chain().focus().setTextAlign('justify').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignJustify />
           </template>
         </BlockActionButton>
 
