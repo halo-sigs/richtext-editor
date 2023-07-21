@@ -38,6 +38,7 @@ import {
   ExtensionAudio,
   ExtensionCodeBlock,
   ExtensionColor,
+  ExtensionFontSize,
   lowlight,
   RichTextEditor,
   useEditor,
@@ -94,6 +95,7 @@ const editor = useEditor({
     }),
     ExtensionIframe,
     ExtensionColor,
+    ExtensionFontSize,
   ],
   onUpdate: () => {
     content.value = editor.value?.getHTML() + "";

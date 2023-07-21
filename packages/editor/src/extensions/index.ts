@@ -17,6 +17,7 @@ import ExtensionTable from "./table";
 import ExtensionTextAlign from "./text-align";
 import ExtensionLink from "./link";
 import ExtensionColor from "./color";
+import ExtensionFontSize from "./font-size";
 import ExtensionDropcursor from "@tiptap/extension-dropcursor";
 import ExtensionGapcursor from "@tiptap/extension-gapcursor";
 import ExtensionHardBreak from "@tiptap/extension-hard-break";
@@ -54,6 +55,7 @@ const allExtensions = [
   ExtensionTaskList,
   ExtensionHighlight,
   ExtensionColor,
+  ExtensionFontSize,
   ExtensionLink.configure({
     autolink: true,
     openOnClick: false,
@@ -115,4 +117,5 @@ export {
   ExtensionVideo,
   ExtensionAudio,
   ExtensionColor,
+  ExtensionFontSize,
 };
