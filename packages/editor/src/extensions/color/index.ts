@@ -21,7 +21,7 @@ const Color = TiptapColor.extend<ColorOptions & ExtensionOptions>({
             editor,
             isActive: false,
             icon: markRaw(MdiFormatColor),
-            title: i18n.global.t("core.common.color"),
+            title: i18n.global.t("editor.common.color"),
           },
         };
       },
@@ -33,7 +33,7 @@ const Color = TiptapColor.extend<ColorOptions & ExtensionOptions>({
             editor,
             isActive: false,
             icon: markRaw(MdiFormatColor),
-            title: i18n.global.t("core.common.color"),
+            title: i18n.global.t("editor.common.color"),
           },
         };
       },
