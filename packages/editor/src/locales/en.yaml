@@ -59,6 +59,11 @@ editor:
       small_size: Small size
       medium_size: Medium size
       large_size: Large size
+    highlight:
+      unset: Unset
+  components:
+    color_picker:
+      more_color: More
   common:
     align_left: Align left
     align_center: Align center
@@ -86,6 +91,7 @@ editor:
     ordered_list: Ordered list
     task_list: Task list
     highlight: Highlight
+    color: Color
     tooltip:
       custom_width_input: Custom width, press Enter to take effect
       custom_height_input: Customize height, press Enter to take effect
@@ -96,3 +102,4 @@ editor:
       new_line: New line
       delete: Delete
       edit_link: Edit link
+      restore_default: Restore default

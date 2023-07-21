@@ -8,6 +8,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "lib": ["esnext"],
     "types": ["unplugin-icons/types/vue"]
   }
 }

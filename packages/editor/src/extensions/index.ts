@@ -16,6 +16,7 @@ import ExtensionTaskList from "./task-list";
 import ExtensionTable from "./table";
 import ExtensionTextAlign from "./text-align";
 import ExtensionLink from "./link";
+import ExtensionColor from "./color";
 import ExtensionDropcursor from "@tiptap/extension-dropcursor";
 import ExtensionGapcursor from "@tiptap/extension-gapcursor";
 import ExtensionHardBreak from "@tiptap/extension-hard-break";
@@ -52,6 +53,7 @@ const allExtensions = [
   ExtensionImage,
   ExtensionTaskList,
   ExtensionHighlight,
+  ExtensionColor,
   ExtensionLink.configure({
     autolink: true,
     openOnClick: false,
@@ -112,4 +114,5 @@ export {
   ExtensionIframe,
   ExtensionVideo,
   ExtensionAudio,
+  ExtensionColor,
 };
