@@ -19,6 +19,7 @@ import MdiFormatAlignLeft from "~icons/mdi/format-align-left";
 import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
 import MdiFormatAlignRight from "~icons/mdi/format-align-right";
 import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
+import MdiWebSync from "~icons/mdi/web-sync";
 import { i18n } from "@/locales";
 
 const props = defineProps<{
@@ -87,6 +88,12 @@ function handleOpenLink() {
   window.open(src.value, "_blank");
 }
 
+const frameRef = ref();
+
+function handleRefresh() {
+  frameRef.value.src = src.value;
+}
+
 const inputRef = ref();
 
 onMounted(() => {
@@ -125,6 +132,7 @@ onMounted(() => {
           </div>
           <iframe
             v-else
+            ref="frameRef"
             class="rounded-md"
             :src="node!.attrs.src"
             :width="node.attrs.width"
@@ -250,6 +258,15 @@ onMounted(() => {
         </BlockActionButton>
 
         <BlockActionSeparator />
+
+        <BlockActionButton
+          :tooltip="i18n.global.t('editor.common.button.refresh')"
+          @click="handleRefresh"
+        >
+          <template #icon>
+            <MdiWebSync />
+          </template>
+        </BlockActionButton>
 
         <VDropdown class="inline-flex" :triggers="['click']" :distance="10">
           <BlockActionButton

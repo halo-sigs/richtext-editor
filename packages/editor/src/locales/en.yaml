@@ -102,4 +102,5 @@ editor:
       new_line: New line
       delete: Delete
       edit_link: Edit link
+      refresh: Refresh
       restore_default: Restore default
