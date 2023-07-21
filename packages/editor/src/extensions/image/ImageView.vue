@@ -2,7 +2,7 @@
 import type { Node as ProseMirrorNode } from "prosemirror-model";
 import type { Decoration } from "prosemirror-view";
 import { Editor, NodeViewWrapper, Node } from "@tiptap/vue-3";
-import { computed, onUnmounted } from "vue";
+import { computed, onMounted, onUnmounted } from "vue";
 import BlockCard from "@/components/block/BlockCard.vue";
 import BlockActionButton from "@/components/block/BlockActionButton.vue";
 import BlockActionSeparator from "@/components/block/BlockActionSeparator.vue";
@@ -13,6 +13,11 @@ import MdiShare from "~icons/mdi/share";
 import MdiImageSizeSelectActual from "~icons/mdi/image-size-select-actual";
 import MdiImageSizeSelectSmall from "~icons/mdi/image-size-select-small";
 import MdiImageSizeSelectLarge from "~icons/mdi/image-size-select-large";
+import MdiFormatAlignLeft from "~icons/mdi/format-align-left";
+import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
+import MdiFormatAlignRight from "~icons/mdi/format-align-right";
+import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
+import MdiBackupRestore from "~icons/mdi/backup-restore";
 import { i18n } from "@/locales";
 import { useResizeObserver } from "@vueuse/core";
 import { ref } from "vue";
@@ -83,8 +88,8 @@ const reuseResizeObserver = () => {
         return;
       }
       const entry = entries[0];
-      const { width, height } = entry.contentRect;
-      props.updateAttributes({ width: width + "px", height: height + "px" });
+      const { width: w, height: h } = entry.contentRect;
+      props.updateAttributes({ width: w + "px", height: h + "px" });
     },
     { box: "border-box" }
   );
@@ -103,7 +108,7 @@ function resetResizeObserver() {
   resizeObserver = reuseResizeObserver();
 }
 
-function handleSetSize(width: string, height: string) {
+function handleSetSize(width?: string, height?: string) {
   resizeObserver.stop();
   props.updateAttributes({ width, height });
   props.editor.chain().focus().setNodeSelection(props.getPos()).run();
@@ -117,6 +122,14 @@ function handleSetFocus() {
 function handleOpenLink() {
   window.open(src.value, "_blank");
 }
+
+const inputRef = ref();
+
+onMounted(() => {
+  if (!src.value) {
+    inputRef.value.focus();
+  }
+});
 </script>
 
 <template>
@@ -128,8 +141,9 @@ function handleOpenLink() {
       :get-pos="getPos"
     >
       <template #content>
-        <div v-if="!src" class="py-1.5">
+        <div v-if="!src" class="p-1.5 w-full">
           <input
+            ref="inputRef"
             v-model.lazy="src"
             class="block px-2 w-full py-1.5 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
             :placeholder="i18n.global.t('editor.common.placeholder.link_input')"
@@ -140,7 +154,7 @@ function handleOpenLink() {
         <div
           v-else
           ref="resizeRef"
-          class="resize inline-block overflow-hidden text-center relative"
+          class="resize inline-block overflow-hidden text-center relative rounded-md"
           :class="{
             'ring-2 rounded': selected,
           }"
@@ -197,6 +211,50 @@ function handleOpenLink() {
         >
           <template #icon>
             <MdiImageSizeSelectActual />
+          </template>
+        </BlockActionButton>
+
+        <BlockActionButton
+          :tooltip="i18n.global.t('editor.extensions.image.restore_size')"
+          @click="handleSetSize(undefined, undefined)"
+        >
+          <template #icon>
+            <MdiBackupRestore />
+          </template>
+        </BlockActionButton>
+
+        <BlockActionSeparator />
+
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'left' })"
+          @click="editor.chain().focus().setTextAlign('left').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignLeft />
+          </template>
+        </BlockActionButton>
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'center' })"
+          @click="editor.chain().focus().setTextAlign('center').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignCenter />
+          </template>
+        </BlockActionButton>
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'right' })"
+          @click="editor.chain().focus().setTextAlign('right').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignRight />
+          </template>
+        </BlockActionButton>
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'justify' })"
+          @click="editor.chain().focus().setTextAlign('justify').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignJustify />
           </template>
         </BlockActionButton>
 

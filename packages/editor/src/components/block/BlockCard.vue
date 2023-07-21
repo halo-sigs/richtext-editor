@@ -1,7 +1,5 @@
 <script lang="ts" setup>
 import type { Editor } from "@tiptap/vue-3";
-import { Dropdown as VDropdown } from "floating-vue";
-import { computed, ref } from "vue";
 import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
 import MdiArrowULeftBottom from "~icons/mdi/arrow-u-left-bottom";
 import BlockActionSeparator from "./BlockActionSeparator.vue";
@@ -20,12 +18,6 @@ const props = withDefaults(
   }
 );
 
-const hover = ref(false);
-
-const dropdownVisible = computed(() => {
-  return hover.value || props.selected;
-});
-
 function handleInsertNewLine() {
   props.editor.commands.insertContentAt(
     props.getPos() + 1,
@@ -42,51 +34,40 @@ function handleInsertNewLine() {
 
 <template>
   <section
-    class="editor-block"
+    class="editor-block group"
     :class="{ 'editor-block--selected': selected }"
-    @mouseenter="hover = true"
-    @mouseleave="hover = false"
   >
-    <VDropdown
-      placement="bottom-end"
-      :shown="dropdownVisible"
-      :auto-hide="false"
-      :triggers="[]"
-      :popper-triggers="['hover']"
-      :delay="{ hide: 300 }"
-      :distance="8"
-      instant-move
-      theme="editor-block-dropdown"
+    <div class="editor-block__content">
+      <slot name="content" />
+    </div>
+    <div
+      class="invisible group-hover:visible pb-2 absolute -top-12 right-0"
+      :class="{ '!visible': selected }"
     >
-      <div class="editor-block__content">
-        <slot name="content" />
+      <div class="editor-block__actions">
+        <slot name="actions" />
+
+        <BlockActionButton
+          :tooltip="i18n.global.t('editor.common.button.new_line')"
+          @click="handleInsertNewLine"
+        >
+          <template #icon>
+            <MdiArrowULeftBottom />
+          </template>
+        </BlockActionButton>
+
+        <BlockActionSeparator />
+
+        <BlockActionButton
+          :tooltip="i18n.global.t('editor.common.button.delete')"
+          @click="deleteNode"
+        >
+          <template #icon>
+            <MdiDeleteForeverOutline />
+          </template>
+        </BlockActionButton>
       </div>
-      <template #popper>
-        <div class="editor-block__actions">
-          <slot name="actions" />
-
-          <BlockActionButton
-            :tooltip="i18n.global.t('editor.common.button.new_line')"
-            @click="handleInsertNewLine"
-          >
-            <template #icon>
-              <MdiArrowULeftBottom />
-            </template>
-          </BlockActionButton>
-
-          <BlockActionSeparator />
-
-          <BlockActionButton
-            :tooltip="i18n.global.t('editor.common.button.delete')"
-            @click="deleteNode"
-          >
-            <template #icon>
-              <MdiDeleteForeverOutline />
-            </template>
-          </BlockActionButton>
-        </div>
-      </template>
-    </VDropdown>
+    </div>
   </section>
 </template>
 
@@ -96,12 +77,11 @@ function handleInsertNewLine() {
 
   &__content {
     @apply transition-all
-    rounded
-    p-2;
+    rounded;
   }
 
   &__actions {
-    @apply p-1 flex flex-row gap-0.5 items-center;
+    @apply p-1 flex flex-row rounded-lg border gap-0.5 items-center bg-gray-100 h-11 shadow-lg;
   }
 
   &:hover & {

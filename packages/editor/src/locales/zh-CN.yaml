@@ -47,6 +47,7 @@ editor:
       small_size: 小尺寸
       medium_size: 中尺寸
       large_size: 大尺寸
+      restore_size: 恢复原始尺寸
       edit_link: 修改链接
     video:
       disable_controls: 隐藏控制面板
@@ -94,3 +95,4 @@ editor:
     button:
       new_line: 换行
       delete: 删除
+      edit_link: 修改链接

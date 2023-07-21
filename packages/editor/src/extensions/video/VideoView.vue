@@ -2,15 +2,21 @@
 import type { Node as ProseMirrorNode } from "prosemirror-model";
 import type { Decoration } from "prosemirror-view";
 import { Editor, NodeViewWrapper, Node } from "@tiptap/vue-3";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
+import { Dropdown as VDropdown } from "floating-vue";
 import BlockCard from "@/components/block/BlockCard.vue";
 import BlockActionButton from "@/components/block/BlockActionButton.vue";
 import BlockActionInput from "@/components/block/BlockActionInput.vue";
 import BlockActionSeparator from "@/components/block/BlockActionSeparator.vue";
 import MdiLinkVariant from "~icons/mdi/link-variant";
+import MdiShare from "~icons/mdi/share";
 import MdiImageSizeSelectActual from "~icons/mdi/image-size-select-actual";
 import MdiImageSizeSelectSmall from "~icons/mdi/image-size-select-small";
 import MdiImageSizeSelectLarge from "~icons/mdi/image-size-select-large";
+import MdiFormatAlignLeft from "~icons/mdi/format-align-left";
+import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
+import MdiFormatAlignRight from "~icons/mdi/format-align-right";
+import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
 import MdiCogPlay from "~icons/mdi/cog-play";
 import MdiCogPlayOutline from "~icons/mdi/cog-play-outline";
 import MdiPlayCircle from "~icons/mdi/play-circle";
@@ -102,6 +108,14 @@ function handleToggleLoop() {
 function handleOpenLink() {
   window.open(src.value, "_blank");
 }
+
+const inputRef = ref();
+
+onMounted(() => {
+  if (!src.value) {
+    inputRef.value.focus();
+  }
+});
 </script>
 
 <template>
@@ -119,8 +133,9 @@ function handleOpenLink() {
             width: node.attrs.width,
           }"
         >
-          <div class="py-1.5">
+          <div v-if="!src" class="p-1.5">
             <input
+              ref="inputRef"
               v-model.lazy="src"
               class="block px-2 w-full py-1.5 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
               :placeholder="
@@ -131,7 +146,7 @@ function handleOpenLink() {
             />
           </div>
           <video
-            v-if="src"
+            v-else
             :controls="controls"
             :autoplay="autoplay"
             :loop="loop"
@@ -238,11 +253,70 @@ function handleOpenLink() {
         <BlockActionSeparator />
 
         <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'left' })"
+          @click="editor.chain().focus().setTextAlign('left').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignLeft />
+          </template>
+        </BlockActionButton>
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'center' })"
+          @click="editor.chain().focus().setTextAlign('center').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignCenter />
+          </template>
+        </BlockActionButton>
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'right' })"
+          @click="editor.chain().focus().setTextAlign('right').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignRight />
+          </template>
+        </BlockActionButton>
+        <BlockActionButton
+          :selected="editor.isActive({ textAlign: 'justify' })"
+          @click="editor.chain().focus().setTextAlign('justify').run()"
+        >
+          <template #icon>
+            <MdiFormatAlignJustify />
+          </template>
+        </BlockActionButton>
+
+        <BlockActionSeparator />
+
+        <VDropdown class="inline-flex" :triggers="['click']" :distance="10">
+          <BlockActionButton
+            :tooltip="i18n.global.t('editor.common.button.edit_link')"
+          >
+            <template #icon>
+              <MdiLinkVariant />
+            </template>
+          </BlockActionButton>
+
+          <template #popper>
+            <div
+              class="relative rounded-md bg-white overflow-hidden drop-shadow w-96 p-1 max-h-72 overflow-y-auto"
+            >
+              <input
+                v-model.lazy="src"
+                :placeholder="
+                  i18n.global.t('editor.common.placeholder.link_input')
+                "
+                class="bg-gray-50 rounded-md hover:bg-gray-100 block px-2 w-full py-1.5 text-sm text-gray-900 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+          </template>
+        </VDropdown>
+
+        <BlockActionButton
           :tooltip="i18n.global.t('editor.common.tooltip.open_link')"
           @click="handleOpenLink"
         >
           <template #icon>
-            <MdiLinkVariant />
+            <MdiShare />
           </template>
         </BlockActionButton>
       </template>
