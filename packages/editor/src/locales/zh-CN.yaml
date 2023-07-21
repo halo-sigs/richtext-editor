@@ -59,6 +59,11 @@ editor:
       small_size: 小尺寸
       medium_size: 中尺寸
       large_size: 大尺寸
+    highlight:
+      unset: 移除高亮颜色
+  components:
+    color_picker:
+      more_color: 更多颜色
   common:
     align_left: 左对齐
     align_center: 居中
@@ -86,6 +91,7 @@ editor:
     ordered_list: 有序列表
     task_list: 任务列表
     highlight: 高亮
+    color: 字体颜色
     tooltip:
       custom_width_input: 自定义宽度，按回车键生效
       custom_height_input: 自定义高度，按回车键生效
@@ -97,3 +103,4 @@ editor:
       delete: 删除
       edit_link: 修改链接
       refresh: 刷新
+      restore_default: 恢复为默认
