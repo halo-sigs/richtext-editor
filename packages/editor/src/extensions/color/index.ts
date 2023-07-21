@@ -7,6 +7,7 @@ import { markRaw } from "vue";
 import MdiFormatColor from "~icons/mdi/format-color";
 import ColorToolbarItem from "./ColorToolbarItem.vue";
 import ColorBubbleItem from "./ColorBubbleItem.vue";
+import { i18n } from "@/locales";
 
 const Color = TiptapColor.extend<ColorOptions & ExtensionOptions>({
   addOptions() {
@@ -20,7 +21,7 @@ const Color = TiptapColor.extend<ColorOptions & ExtensionOptions>({
             editor,
             isActive: false,
             icon: markRaw(MdiFormatColor),
-            title: "字体颜色",
+            title: i18n.global.t("core.common.color"),
           },
         };
       },
@@ -32,7 +33,7 @@ const Color = TiptapColor.extend<ColorOptions & ExtensionOptions>({
             editor,
             isActive: false,
             icon: markRaw(MdiFormatColor),
-            title: "字体颜色",
+            title: i18n.global.t("core.common.color"),
           },
         };
       },

@@ -5,6 +5,7 @@ import MdiPalette from "~icons/mdi/palette";
 import { Sketch } from "@ckpack/vue-color";
 import type { Payload } from "@ckpack/vue-color";
 import tailwindcssColors from "tailwindcss/colors";
+import { i18n } from "@/locales";
 
 interface Color {
   color: string;
@@ -99,7 +100,9 @@ function onColorChange(color: Payload) {
           >
             <div class="inline-flex items-center gap-2">
               <MdiPalette />
-              <span class="text-xs text-gray-600"> 更多颜色 </span>
+              <span class="text-xs text-gray-600">
+                {{ i18n.global.t("editor.components.color_picker.more_color") }}
+              </span>
             </div>
             <div>
               <MdiChevronRight />

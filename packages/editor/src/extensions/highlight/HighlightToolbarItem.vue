@@ -4,6 +4,7 @@ import type { Component } from "vue";
 import type { Editor } from "@tiptap/vue-3";
 import ColorPickerDropdown from "@/components/common/ColorPickerDropdown.vue";
 import MdiFormatColorMarkerCancel from "~icons/mdi/format-color-marker-cancel";
+import { i18n } from "@/locales";
 
 const props = withDefaults(
   defineProps<{
@@ -48,7 +49,9 @@ function handleUnsetColor() {
         >
           <div class="inline-flex items-center gap-2">
             <MdiFormatColorMarkerCancel />
-            <span class="text-xs text-gray-600"> 移除高亮颜色 </span>
+            <span class="text-xs text-gray-600">
+              {{ i18n.global.t("editor.extensions.highlight.unset") }}
+            </span>
           </div>
         </div>
       </div>
@@ -61,7 +64,9 @@ function handleUnsetColor() {
             class="h-5 w-5 rounded-sm cursor-pointer hover:ring-1 ring-offset-1 ring-gray-300"
             :style="{ 'background-color': '#fff8c5' }"
           ></div>
-          <span class="text-xs text-gray-600"> 恢复为默认 </span>
+          <span class="text-xs text-gray-600">
+            {{ i18n.global.t("editor.common.button.restore_default") }}
+          </span>
         </div>
       </div>
     </template>

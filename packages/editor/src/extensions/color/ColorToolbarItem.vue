@@ -3,6 +3,7 @@ import { ToolbarItem } from "@/components";
 import type { Component } from "vue";
 import type { Editor } from "@tiptap/vue-3";
 import ColorPickerDropdown from "@/components/common/ColorPickerDropdown.vue";
+import { i18n } from "@/locales";
 
 const props = withDefaults(
   defineProps<{
@@ -47,7 +48,9 @@ function handleUnsetColor() {
           <div
             class="h-5 w-5 rounded-sm cursor-pointer hover:ring-1 ring-offset-1 ring-gray-300 bg-black"
           ></div>
-          <span class="text-xs text-gray-600"> 恢复为默认 </span>
+          <span class="text-xs text-gray-600">
+            {{ i18n.global.t("editor.common.button.restore_default") }}
+          </span>
         </div>
       </div>
     </template>
