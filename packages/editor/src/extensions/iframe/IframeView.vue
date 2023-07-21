@@ -259,7 +259,10 @@ onMounted(() => {
 
         <BlockActionSeparator />
 
-        <BlockActionButton @click="handleRefresh">
+        <BlockActionButton
+          :tooltip="i18n.global.t('editor.common.button.refresh')"
+          @click="handleRefresh"
+        >
           <template #icon>
             <MdiWebSync />
           </template>
