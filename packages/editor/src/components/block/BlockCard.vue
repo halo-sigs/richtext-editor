@@ -73,7 +73,7 @@ function handleInsertNewLine() {
 
 <style lang="scss">
 .editor-block {
-  @apply relative;
+  @apply relative my-9;
 
   &__content {
     @apply transition-all

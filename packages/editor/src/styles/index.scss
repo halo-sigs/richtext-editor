@@ -13,6 +13,7 @@
 
     .ProseMirror {
       height: 100%;
+      overflow: auto;
 
       p.is-empty::before {
         content: attr(data-placeholder);
