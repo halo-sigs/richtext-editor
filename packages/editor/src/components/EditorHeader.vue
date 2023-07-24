@@ -59,7 +59,7 @@ function getToolboxItemsFromExtensions() {
 </script>
 <template>
   <div
-    class="editor-header flex items-center py-1 space-x-0.5 justify-start px-1 overflow-auto sm:justify-center border-b drop-shadow-sm bg-white"
+    class="editor-header flex items-center py-1 space-x-0.5 justify-start px-1 overflow-auto sm:!justify-center border-b drop-shadow-sm bg-white"
   >
     <div class="inline-flex items-center justify-center">
       <VMenu>
