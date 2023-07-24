@@ -4,6 +4,7 @@ import type { Editor } from "@tiptap/vue-3";
 import { markRaw } from "vue";
 import MdiFormatSize from "~icons/mdi/format-size";
 import TiptapTextStyle from "@tiptap/extension-text-style";
+import { i18n } from "@/locales";
 
 export type FontSizeOptions = {
   types: string[];
@@ -40,7 +41,7 @@ const FontSize = Extension.create<FontSizeOptions>({
               props: {
                 editor,
                 isActive: false,
-                title: "默认",
+                title: i18n.global.t("editor.common.text.default"),
                 action: () => editor.chain().focus().unsetFontSize().run(),
               },
             },

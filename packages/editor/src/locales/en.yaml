@@ -104,3 +104,5 @@ editor:
       edit_link: Edit link
       refresh: Refresh
       restore_default: Restore default
+    text:
+      default: Default
