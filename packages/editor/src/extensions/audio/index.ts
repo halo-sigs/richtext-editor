@@ -10,6 +10,8 @@ import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import { markRaw } from "vue";
 import AudioView from "./AudioView.vue";
 import MdiMusicCircleOutline from "~icons/mdi/music-circle-outline";
+import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
+import { i18n } from "@/locales";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -137,6 +139,26 @@ const Audio = Node.create<ExtensionOptions>({
               .run();
           },
         };
+      },
+      getToolboxItems({ editor }: { editor: Editor }) {
+        return [
+          {
+            priority: 20,
+            component: markRaw(ToolboxItem),
+            props: {
+              editor,
+              icon: markRaw(MdiMusicCircleOutline),
+              title: i18n.global.t("editor.extensions.commands_menu.audio"),
+              action: () => {
+                editor
+                  .chain()
+                  .focus()
+                  .insertContent([{ type: "audio", attrs: { src: "" } }])
+                  .run();
+              },
+            },
+          },
+        ];
       },
     };
   },

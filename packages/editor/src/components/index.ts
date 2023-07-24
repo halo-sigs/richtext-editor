@@ -10,3 +10,6 @@ export { default as BubbleItem } from "./bubble/BubbleItem.vue";
 // toolbar
 export { default as ToolbarItem } from "./toolbar/ToolbarItem.vue";
 export { default as ToolbarSubItem } from "./toolbar/ToolbarSubItem.vue";
+
+// toolbox
+export { default as ToolboxItem } from "./toolbox/ToolboxItem.vue";

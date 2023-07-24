@@ -78,6 +78,7 @@ editor:
     superscript: Super Script
     subscript: Sub Script
     codeblock: Code block
+    image: Image
     heading:
       title: Text type
       paragraph: Paragraph
