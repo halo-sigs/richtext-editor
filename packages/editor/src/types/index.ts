@@ -28,6 +28,18 @@ export interface BubbleItem {
   };
 }
 
+export interface ToolboxItem {
+  priority: number;
+  component: Component;
+  props: {
+    editor: Editor;
+    icon?: Component;
+    title?: string;
+    description?: string;
+    action?: () => void;
+  };
+}
+
 export interface ExtensionOptions {
   getToolbarItems?: ({
     editor,
@@ -42,6 +54,12 @@ export interface ExtensionOptions {
   }: {
     editor: Editor;
   }) => BubbleItem | BubbleItem[];
+
+  getToolboxItems?: ({
+    editor,
+  }: {
+    editor: Editor;
+  }) => ToolboxItem | ToolboxItem[];
 }
 
 export interface CommandMenuItem {

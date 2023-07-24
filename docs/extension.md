@@ -20,6 +20,9 @@
       getCommandMenuItems() {
         return [];
       },
+      getToolboxItems({ editor }: { editor: Editor }) {
+        return []
+      }
     };
   },
 }
@@ -30,6 +33,7 @@
 - `getToolbarItems`：工具栏
 - `getBubbleItems`：悬浮工具栏
 - `getCommandMenuItems`：Slash Command
+- `getToolboxItems`：工具箱（Toolbox）
 
 对应的返回类型为：
 
@@ -70,6 +74,19 @@ export interface CommandMenuItem {
   title: string;
   keywords: string[];
   command: ({ editor, range }: { editor: Editor; range: Range }) => void;
+}
+
+// 工具箱（Toolbox）
+export interface ToolboxItem {
+  priority: number;
+  component: Component;
+  props: {
+    editor: Editor;
+    icon?: Component;
+    title?: string;
+    description?: string;
+    action?: () => void;
+  };
 }
 ```
 

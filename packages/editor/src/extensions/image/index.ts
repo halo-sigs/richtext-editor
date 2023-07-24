@@ -1,8 +1,15 @@
 import TiptapImage from "@tiptap/extension-image";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import ImageView from "./ImageView.vue";
+import type { ImageOptions } from "@tiptap/extension-image";
+import type { ExtensionOptions } from "@/types";
+import type { Editor } from "@tiptap/vue-3";
+import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
+import MdiFileImageBox from "~icons/mdi/file-image-box";
+import { markRaw } from "vue";
+import { i18n } from "@/locales";
 
-const Image = TiptapImage.extend({
+const Image = TiptapImage.extend<ExtensionOptions & ImageOptions>({
   inline() {
     return true;
   },
@@ -62,6 +69,32 @@ const Image = TiptapImage.extend({
           : 'img[src]:not([src^="data:"])',
       },
     ];
+  },
+
+  addOptions() {
+    return {
+      ...this.parent?.(),
+      getToolboxItems({ editor }: { editor: Editor }) {
+        return [
+          {
+            priority: 10,
+            component: markRaw(ToolboxItem),
+            props: {
+              editor,
+              icon: markRaw(MdiFileImageBox),
+              title: i18n.global.t("editor.common.image"),
+              action: () => {
+                editor
+                  .chain()
+                  .focus()
+                  .insertContent([{ type: "image", attrs: { src: "" } }])
+                  .run();
+              },
+            },
+          },
+        ];
+      },
+    };
   },
 });
 

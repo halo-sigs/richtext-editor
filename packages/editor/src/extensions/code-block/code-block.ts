@@ -8,6 +8,7 @@ import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
 import BubbleItem from "@/components/bubble/BubbleItem.vue";
+import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
 
 export default CodeBlockLowlight.extend<
   ExtensionOptions & CodeBlockLowlightOptions
@@ -54,6 +55,22 @@ export default CodeBlockLowlight.extend<
             editor.chain().focus().deleteRange(range).setCodeBlock().run();
           },
         };
+      },
+      getToolboxItems({ editor }: { editor: Editor }) {
+        return [
+          {
+            priority: 50,
+            component: markRaw(ToolboxItem),
+            props: {
+              editor,
+              icon: markRaw(MdiCodeBracesBox),
+              title: i18n.global.t("editor.common.codeblock"),
+              action: () => {
+                editor.chain().focus().setCodeBlock().run();
+              },
+            },
+          },
+        ];
       },
     };
   },

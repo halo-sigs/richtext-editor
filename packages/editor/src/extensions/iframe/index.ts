@@ -11,6 +11,8 @@ import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import { markRaw } from "vue";
 import IframeView from "./IframeView.vue";
 import MdiWeb from "~icons/mdi/web";
+import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
+import { i18n } from "@/locales";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -204,6 +206,26 @@ const Iframe = Node.create<ExtensionOptions>({
               .run();
           },
         };
+      },
+      getToolboxItems({ editor }: { editor: Editor }) {
+        return [
+          {
+            priority: 40,
+            component: markRaw(ToolboxItem),
+            props: {
+              editor,
+              icon: markRaw(MdiWeb),
+              title: i18n.global.t("editor.extensions.commands_menu.iframe"),
+              action: () => {
+                editor
+                  .chain()
+                  .focus()
+                  .insertContent([{ type: "iframe", attrs: { src: "" } }])
+                  .run();
+              },
+            },
+          },
+        ];
       },
     };
   },
