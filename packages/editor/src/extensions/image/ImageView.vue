@@ -1,26 +1,26 @@
 <script lang="ts" setup>
+import BlockActionButton from "@/components/block/BlockActionButton.vue";
+import BlockActionInput from "@/components/block/BlockActionInput.vue";
+import BlockActionSeparator from "@/components/block/BlockActionSeparator.vue";
+import BlockCard from "@/components/block/BlockCard.vue";
+import { i18n } from "@/locales";
+import { Editor, Node, NodeViewWrapper } from "@tiptap/vue-3";
+import { useResizeObserver } from "@vueuse/core";
+import { Dropdown as VDropdown } from "floating-vue";
 import type { Node as ProseMirrorNode } from "prosemirror-model";
 import type { Decoration } from "prosemirror-view";
-import { Editor, NodeViewWrapper, Node } from "@tiptap/vue-3";
-import { computed, onMounted, onUnmounted } from "vue";
-import BlockCard from "@/components/block/BlockCard.vue";
-import BlockActionButton from "@/components/block/BlockActionButton.vue";
-import BlockActionSeparator from "@/components/block/BlockActionSeparator.vue";
-import BlockActionInput from "@/components/block/BlockActionInput.vue";
-import { Dropdown as VDropdown } from "floating-vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
+import MdiBackupRestore from "~icons/mdi/backup-restore";
+import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
+import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
+import MdiFormatAlignLeft from "~icons/mdi/format-align-left";
+import MdiFormatAlignRight from "~icons/mdi/format-align-right";
+import MdiImageSizeSelectActual from "~icons/mdi/image-size-select-actual";
+import MdiImageSizeSelectLarge from "~icons/mdi/image-size-select-large";
+import MdiImageSizeSelectSmall from "~icons/mdi/image-size-select-small";
+import MdLink from "~icons/mdi/link";
 import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiShare from "~icons/mdi/share";
-import MdiImageSizeSelectActual from "~icons/mdi/image-size-select-actual";
-import MdiImageSizeSelectSmall from "~icons/mdi/image-size-select-small";
-import MdiImageSizeSelectLarge from "~icons/mdi/image-size-select-large";
-import MdiFormatAlignLeft from "~icons/mdi/format-align-left";
-import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
-import MdiFormatAlignRight from "~icons/mdi/format-align-right";
-import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
-import MdiBackupRestore from "~icons/mdi/backup-restore";
-import { i18n } from "@/locales";
-import { useResizeObserver } from "@vueuse/core";
-import { ref } from "vue";
 
 const props = defineProps<{
   editor: Editor;
@@ -292,6 +292,30 @@ onMounted(() => {
             <MdiShare />
           </template>
         </BlockActionButton>
+
+        <VDropdown class="inline-flex" :triggers="['click']" :distance="10">
+          <BlockActionButton
+            :tooltip="i18n.global.t('editor.extensions.image.edit_alt')"
+          >
+            <template #icon>
+              <MdLink />
+            </template>
+          </BlockActionButton>
+
+          <template #popper>
+            <div
+              class="relative rounded-md bg-white overflow-hidden drop-shadow w-96 p-1 max-h-72 overflow-y-auto"
+            >
+              <input
+                v-model.lazy="alt"
+                :placeholder="
+                  i18n.global.t('editor.common.placeholder.alt_input')
+                "
+                class="bg-gray-50 rounded-md hover:bg-gray-100 block px-2 w-full py-1.5 text-sm text-gray-900 border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+          </template>
+        </VDropdown>
       </template>
     </block-card>
   </node-view-wrapper>
