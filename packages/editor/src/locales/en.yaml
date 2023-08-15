@@ -49,6 +49,7 @@ editor:
       large_size: Large size
       restore_size: Restore original size
       edit_link: Edit link
+      edit_alt: Edit alt
     video:
       disable_controls: Hide controls
       enable_controls: Show controls
@@ -99,6 +100,7 @@ editor:
       open_link: Open link
     placeholder:
       link_input: Enter the link and press enter to confirm.
+      alt_input: Enter the image alt and press enter to confirm.
     button:
       new_line: New line
       delete: Delete
