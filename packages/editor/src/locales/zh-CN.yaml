@@ -49,7 +49,7 @@ editor:
       large_size: 大尺寸
       restore_size: 恢复原始尺寸
       edit_link: 修改链接
-      edit_alt: 修改图片alt属性
+      edit_alt: 修改图片 alt 属性
     video:
       disable_controls: 隐藏控制面板
       enable_controls: 显示控制面板
