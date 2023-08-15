@@ -298,7 +298,7 @@ onMounted(() => {
             :tooltip="i18n.global.t('editor.extensions.image.edit_alt')"
           >
             <template #icon>
-              <MdLink />
+              <MdiTextBoxEditOutline />
             </template>
           </BlockActionButton>
 
