@@ -18,7 +18,7 @@ import MdiFormatAlignRight from "~icons/mdi/format-align-right";
 import MdiImageSizeSelectActual from "~icons/mdi/image-size-select-actual";
 import MdiImageSizeSelectLarge from "~icons/mdi/image-size-select-large";
 import MdiImageSizeSelectSmall from "~icons/mdi/image-size-select-small";
-import MdLink from "~icons/mdi/text-box-edit-outline";
+import MdiTextBoxEditOutline from "~icons/mdi/text-box-edit-outline";
 import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiShare from "~icons/mdi/share";
 
