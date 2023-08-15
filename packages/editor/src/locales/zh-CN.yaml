@@ -100,7 +100,7 @@ editor:
       open_link: 打开链接
     placeholder:
       link_input: 输入链接，按回车确定
-      alt_input: 输入图片alt属性值,然后回车确认
+      alt_input: 输入图片 alt 属性值，按回车确认
     button:
       new_line: 换行
       delete: 删除
