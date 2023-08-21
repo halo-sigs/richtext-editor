@@ -6,6 +6,7 @@
     "packages:dev": "pnpm --filter './packages/**' dev",
     "packages:build": "pnpm --filter './packages/**' build",
     "packages:release": "pnpm --filter './packages/**' release",
+    "preexample:dev": "pnpm run packages:build",
     "example:dev": "pnpm --filter './example/' run dev",
     "example:build": "pnpm --filter './example/' run build",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",

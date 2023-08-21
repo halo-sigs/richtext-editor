@@ -33,6 +33,8 @@ const props = defineProps<{
   deleteNode: () => void;
 }>();
 
+const imgScale = ref<number>(0);
+
 const src = computed({
   get: () => {
     return props.node?.attrs.src;
@@ -83,12 +85,13 @@ const reuseResizeObserver = () => {
         mounted = true;
         return;
       }
+      const entry = entries[0];
+      const { width: w, height: h } = entry.contentRect;
       if (init) {
+        imgScale.value = parseFloat((h / w).toFixed(2));
         init = false;
         return;
       }
-      const entry = entries[0];
-      const { width: w } = entry.contentRect;
       props.updateAttributes({
         width: w + "px",
         height: w * imgScale.value + "px",
@@ -127,22 +130,10 @@ function handleOpenLink() {
 }
 
 const inputRef = ref();
-const imgScale = ref<number>(0);
 onMounted(() => {
   if (!src.value) {
     inputRef.value.focus();
   }
-  imgScale.value = parseFloat(
-    (
-      parseInt(props.node.attrs.height) / parseInt(props.node.attrs.width)
-    ).toFixed(2)
-  );
-  console.log(
-    "h",
-    props.node.attrs.height,
-    "w",
-    parseInt(props.node.attrs.width)
-  );
 });
 </script>
 

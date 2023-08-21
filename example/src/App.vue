@@ -1,48 +1,48 @@
 <script lang="ts" setup>
-import "@halo-dev/richtext-editor/dist/style.css";
-import { computed, watchEffect, markRaw } from "vue";
-import { unified } from "unified";
-import rehypeParse from "rehype-parse";
-import rehypeFormat from "rehype-format";
-import rehypeStringify from "rehype-stringify";
-import { useLocalStorage } from "@vueuse/core";
 import {
+  ExtensionAudio,
   ExtensionBlockquote,
   ExtensionBold,
   ExtensionBulletList,
   ExtensionCode,
+  ExtensionCodeBlock,
+  ExtensionColor,
+  ExtensionCommands,
   ExtensionDocument,
   ExtensionDropcursor,
+  ExtensionFontSize,
   ExtensionGapcursor,
   ExtensionHardBreak,
   ExtensionHeading,
+  ExtensionHighlight,
   ExtensionHistory,
   ExtensionHorizontalRule,
-  ExtensionItalic,
-  ExtensionOrderedList,
-  ExtensionStrike,
-  ExtensionText,
+  ExtensionIframe,
   ExtensionImage,
-  ExtensionTaskList,
+  ExtensionItalic,
   ExtensionLink,
-  ExtensionTextAlign,
-  ExtensionUnderline,
-  ExtensionTable,
+  ExtensionOrderedList,
+  ExtensionPlaceholder,
+  ExtensionStrike,
   ExtensionSubscript,
   ExtensionSuperscript,
-  ExtensionPlaceholder,
-  ExtensionHighlight,
-  ExtensionCommands,
-  ExtensionIframe,
+  ExtensionTable,
+  ExtensionTaskList,
+  ExtensionText,
+  ExtensionTextAlign,
+  ExtensionUnderline,
   ExtensionVideo,
-  ExtensionAudio,
-  ExtensionCodeBlock,
-  ExtensionColor,
-  ExtensionFontSize,
-  lowlight,
   RichTextEditor,
+  lowlight,
   useEditor,
 } from "@halo-dev/richtext-editor";
+import "@halo-dev/richtext-editor/dist/style.css";
+import { useLocalStorage } from "@vueuse/core";
+import rehypeFormat from "rehype-format";
+import rehypeParse from "rehype-parse";
+import rehypeStringify from "rehype-stringify";
+import { unified } from "unified";
+import { computed, watchEffect } from "vue";
 
 const content = useLocalStorage("content", "");
 
@@ -111,7 +111,7 @@ const formatContent = computed(() => {
 });
 
 watchEffect(() => {
-  console.log(String(formatContent.value));
+  // console.log(String(formatContent.value));
 });
 
 const locales = [
