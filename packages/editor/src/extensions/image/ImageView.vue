@@ -143,8 +143,6 @@ onMounted(() => {
     "w",
     parseInt(props.node.attrs.width)
   );
-
-  console.log(imgScale.value);
 });
 </script>
 
