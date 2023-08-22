@@ -1,48 +1,48 @@
 <script lang="ts" setup>
+import "@halo-dev/richtext-editor/dist/style.css";
+import { computed, watchEffect, markRaw } from "vue";
+import { unified } from "unified";
+import rehypeParse from "rehype-parse";
+import rehypeFormat from "rehype-format";
+import rehypeStringify from "rehype-stringify";
+import { useLocalStorage } from "@vueuse/core";
 import {
-  ExtensionAudio,
   ExtensionBlockquote,
   ExtensionBold,
   ExtensionBulletList,
   ExtensionCode,
-  ExtensionCodeBlock,
-  ExtensionColor,
-  ExtensionCommands,
   ExtensionDocument,
   ExtensionDropcursor,
-  ExtensionFontSize,
   ExtensionGapcursor,
   ExtensionHardBreak,
   ExtensionHeading,
-  ExtensionHighlight,
   ExtensionHistory,
   ExtensionHorizontalRule,
-  ExtensionIframe,
-  ExtensionImage,
   ExtensionItalic,
-  ExtensionLink,
   ExtensionOrderedList,
-  ExtensionPlaceholder,
   ExtensionStrike,
-  ExtensionSubscript,
-  ExtensionSuperscript,
-  ExtensionTable,
-  ExtensionTaskList,
   ExtensionText,
+  ExtensionImage,
+  ExtensionTaskList,
+  ExtensionLink,
   ExtensionTextAlign,
   ExtensionUnderline,
+  ExtensionTable,
+  ExtensionSubscript,
+  ExtensionSuperscript,
+  ExtensionPlaceholder,
+  ExtensionHighlight,
+  ExtensionCommands,
+  ExtensionIframe,
   ExtensionVideo,
-  RichTextEditor,
+  ExtensionAudio,
+  ExtensionCodeBlock,
+  ExtensionColor,
+  ExtensionFontSize,
   lowlight,
+  RichTextEditor,
   useEditor,
 } from "@halo-dev/richtext-editor";
-import "@halo-dev/richtext-editor/dist/style.css";
-import { useLocalStorage } from "@vueuse/core";
-import rehypeFormat from "rehype-format";
-import rehypeParse from "rehype-parse";
-import rehypeStringify from "rehype-stringify";
-import { unified } from "unified";
-import { computed, watchEffect } from "vue";
 
 const content = useLocalStorage("content", "");
 
@@ -111,7 +111,7 @@ const formatContent = computed(() => {
 });
 
 watchEffect(() => {
-  // console.log(String(formatContent.value));
+  console.log(String(formatContent.value));
 });
 
 const locales = [
