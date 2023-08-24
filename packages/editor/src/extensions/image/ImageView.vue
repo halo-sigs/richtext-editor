@@ -18,9 +18,9 @@ import MdiFormatAlignRight from "~icons/mdi/format-align-right";
 import MdiImageSizeSelectActual from "~icons/mdi/image-size-select-actual";
 import MdiImageSizeSelectLarge from "~icons/mdi/image-size-select-large";
 import MdiImageSizeSelectSmall from "~icons/mdi/image-size-select-small";
-import MdiTextBoxEditOutline from "~icons/mdi/text-box-edit-outline";
 import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiShare from "~icons/mdi/share";
+import MdiTextBoxEditOutline from "~icons/mdi/text-box-edit-outline";
 
 const props = defineProps<{
   editor: Editor;
@@ -32,6 +32,8 @@ const props = defineProps<{
   updateAttributes: (attributes: Record<string, any>) => void;
   deleteNode: () => void;
 }>();
+
+const imgScale = ref<number>(0);
 
 const src = computed({
   get: () => {
@@ -83,13 +85,17 @@ const reuseResizeObserver = () => {
         mounted = true;
         return;
       }
+      const entry = entries[0];
+      const { width: w, height: h } = entry.contentRect;
       if (init) {
+        imgScale.value = parseFloat((h / w).toFixed(2));
         init = false;
         return;
       }
-      const entry = entries[0];
-      const { width: w, height: h } = entry.contentRect;
-      props.updateAttributes({ width: w + "px", height: h + "px" });
+      props.updateAttributes({
+        width: w + "px",
+        height: w * imgScale.value + "px",
+      });
     },
     { box: "border-box" }
   );
@@ -124,7 +130,6 @@ function handleOpenLink() {
 }
 
 const inputRef = ref();
-
 onMounted(() => {
   if (!src.value) {
     inputRef.value.focus();
@@ -154,7 +159,7 @@ onMounted(() => {
         <div
           v-else
           ref="resizeRef"
-          class="resize inline-block overflow-hidden text-center relative rounded-md"
+          class="resize-x inline-block overflow-hidden text-center relative rounded-md"
           :class="{
             'ring-2 rounded': selected,
           }"
