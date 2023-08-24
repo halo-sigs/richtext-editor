@@ -1,7 +1,3 @@
-// Sources:
-// https://github.com/ueberdosis/tiptap/issues/1036#issuecomment-981094752
-// https://github.com/django-tiptap/django_tiptap/blob/main/django_tiptap/templates/forms/tiptap_textarea.html#L453-L602
-
 import {
   type CommandProps,
   type Extensions,
