@@ -42,6 +42,7 @@ import {
   lowlight,
   RichTextEditor,
   useEditor,
+  ExtensionIndent,
 } from "@halo-dev/richtext-editor";
 
 const content = useLocalStorage("content", "");
@@ -96,6 +97,7 @@ const editor = useEditor({
     ExtensionIframe,
     ExtensionColor,
     ExtensionFontSize,
+    ExtensionIndent,
   ],
   onUpdate: () => {
     content.value = editor.value?.getHTML() + "";

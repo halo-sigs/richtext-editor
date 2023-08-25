@@ -34,6 +34,7 @@ import ExtensionIframe from "./iframe";
 import ExtensionVideo from "./video";
 import ExtensionAudio from "./audio";
 import ExtensionImage from "./image";
+import ExtensionIndent from "./indent";
 
 const allExtensions = [
   ExtensionBlockquote,
@@ -81,6 +82,7 @@ const allExtensions = [
   ExtensionIframe,
   ExtensionVideo,
   ExtensionAudio,
+  ExtensionIndent,
 ];
 
 export {
@@ -118,4 +120,5 @@ export {
   ExtensionAudio,
   ExtensionColor,
   ExtensionFontSize,
+  ExtensionIndent,
 };
