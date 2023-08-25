@@ -41,8 +41,9 @@ watch(
         :editor="editor"
         :style="contentStyles"
         class="editor-content markdown-body"
+        :class="{ 'sm:!w-[calc(100%-18rem)]': $slots.extra }"
       />
-      <div class="h-full">
+      <div v-if="$slots.extra" class="h-full hidden sm:!block w-72">
         <slot name="extra"></slot>
       </div>
     </div>
