@@ -1,6 +1,7 @@
-import type { Editor, Range } from "@tiptap/vue-3";
+import type { Editor, Range } from "@tiptap/core";
+import type { EditorState } from "prosemirror-state";
+import type { EditorView } from "prosemirror-view";
 import type { Component } from "vue";
-
 export interface ToolbarItem {
   priority: number;
   component: Component;
@@ -15,17 +16,22 @@ export interface ToolbarItem {
   children?: ToolbarItem[];
 }
 
-export interface BubbleItem {
-  priority: number;
-  component: Component;
-  props: {
+interface BubbleItemProps {
+  pluginKey?: string;
+  editor: Editor;
+  updateDelay: number;
+  shouldShow: (props: {
     editor: Editor;
-    isActive: boolean;
-    visible?: boolean;
-    icon?: Component;
-    title?: string;
-    action?: () => void;
-  };
+    view: EditorView;
+    state: EditorState;
+    oldState?: EditorState | undefined;
+    from: number;
+    to: number;
+  }) => boolean;
+}
+
+export interface NodeBubbleMenu extends BubbleItemProps {
+  component: Component;
 }
 
 export interface ToolboxItem {
@@ -49,11 +55,7 @@ export interface ExtensionOptions {
 
   getCommandMenuItems?: () => CommandMenuItem | CommandMenuItem[];
 
-  getBubbleItems?: ({
-    editor,
-  }: {
-    editor: Editor;
-  }) => BubbleItem | BubbleItem[];
+  getBubbleMenu?: ({ editor }: { editor: Editor }) => NodeBubbleMenu;
 
   getToolboxItems?: ({
     editor,

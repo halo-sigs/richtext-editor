@@ -1,10 +1,8 @@
 <script lang="ts" setup>
-import type { PropType } from "vue";
+import { markRaw, type PropType } from "vue";
 import type { Editor, AnyExtension } from "@tiptap/core";
-import { BubbleMenu, isTextSelection } from "@tiptap/vue-3";
-import type { BubbleItem } from "@/types";
-import type { EditorView } from "prosemirror-view";
-import type { EditorState } from "prosemirror-state";
+import { BubbleMenu } from "@tiptap/vue-3";
+import type { NodeBubbleMenu } from "@/types";
 
 const props = defineProps({
   editor: {
@@ -13,90 +11,50 @@ const props = defineProps({
   },
 });
 
-function getBubbleItemsFromExtensions() {
+const getBubbleMenuFromExtensions = () => {
   const extensionManager = props.editor?.extensionManager;
   return extensionManager.extensions
-    .reduce((acc: BubbleItem[], extension: AnyExtension) => {
-      const { getBubbleItems } = extension.options;
+    .map((extension: AnyExtension) => {
+      const { getBubbleMenu } = extension.options;
 
-      if (!getBubbleItems) {
-        return acc;
+      if (!getBubbleMenu) {
+        return null;
       }
 
-      const items = getBubbleItems({
+      const nodeBubbleMenu = getBubbleMenu({
         editor: props.editor,
-      });
+      }) as NodeBubbleMenu;
 
-      if (Array.isArray(items)) {
-        return [...acc, ...items];
-      }
+      return nodeBubbleMenu;
+    })
+    .filter(Boolean) as NodeBubbleMenu[];
+};
 
-      return [...acc, items];
-    }, [])
-    .sort((a, b) => a.priority - b.priority);
-}
-
-const getShouldShow = ({
-  editor,
-  view,
-  state,
-  from,
-  to,
-}: {
-  editor: Editor;
-  view: EditorView;
-  state: EditorState;
-  oldState?: EditorState;
-  from: number;
-  to: number;
-}) => {
-  if (
-    editor.isActive("image") ||
-    editor.isActive("video") ||
-    editor.isActive("audio") ||
-    editor.isActive("iframe")
-  ) {
-    return false;
-  }
-
-  const { doc, selection } = state;
-  const { empty } = selection;
-
-  const isEmptyTextBlock =
-    !doc.textBetween(from, to).length && isTextSelection(state.selection);
-
-  const hasEditorFocus = view.hasFocus();
-
-  if (
-    !hasEditorFocus ||
-    empty ||
-    isEmptyTextBlock ||
-    !props.editor.isEditable
-  ) {
-    return false;
-  }
-
-  return true;
+const defaultTextBubbleMenu = {
+  pluginKey: "textBubbleMenu",
+  shouldShow: ({ editor }) => {
+    const { selection } = editor.state;
+    return !selection.empty;
+  },
+  component: markRaw(TextBubbleMenu),
 };
 </script>
 <template>
   <bubble-menu
+    v-for="(bubbleMenu, index) in getBubbleMenuFromExtensions()"
+    :key="index"
+    :plugin-key="bubbleMenu?.pluginKey"
+    :should-show="bubbleMenu?.shouldShow"
     :editor="editor"
     :tippy-options="{
       maxWidth: '100%',
       moveTransition: 'transform 0.2s ease-out',
     }"
-    :should-show="getShouldShow"
   >
     <div
       class="bg-white flex items-center rounded p-1 border drop-shadow space-x-0.5"
     >
-      <component
-        :is="item.component"
-        v-for="(item, index) in getBubbleItemsFromExtensions()"
-        :key="index"
-        v-bind="item.props"
-      />
+      <component :is="bubbleMenu?.component" :editor="editor" />
     </div>
   </bubble-menu>
 </template>
