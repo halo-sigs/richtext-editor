@@ -18,6 +18,7 @@ editor:
       delete_table: Delete table
   extensions:
     commands_menu:
+      columns: Columns
       iframe: Iframe
       image: image
       video: Video

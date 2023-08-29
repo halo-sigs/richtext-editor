@@ -35,6 +35,7 @@ import ExtensionVideo from "./video";
 import ExtensionAudio from "./audio";
 import ExtensionImage from "./image";
 import ExtensionIndent from "./indent";
+import { ExtensionColumns, ExtensionColumn } from "./columns";
 
 const allExtensions = [
   ExtensionBlockquote,
@@ -83,6 +84,8 @@ const allExtensions = [
   ExtensionVideo,
   ExtensionAudio,
   ExtensionIndent,
+  ExtensionColumns,
+  ExtensionColumn,
 ];
 
 export {
@@ -121,4 +124,6 @@ export {
   ExtensionColor,
   ExtensionFontSize,
   ExtensionIndent,
+  ExtensionColumns,
+  ExtensionColumn,
 };
