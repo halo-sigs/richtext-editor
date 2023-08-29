@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { roundArrow } from "tippy.js";
-import "tippy.js/dist/svg-arrow.css";
 import type { PropType } from "vue";
 import type { Editor, AnyExtension } from "@tiptap/core";
 import { BubbleMenu, isTextSelection } from "@tiptap/vue-3";
@@ -84,7 +82,10 @@ const getShouldShow = ({
 <template>
   <bubble-menu
     :editor="editor"
-    :tippy-options="{ duration: 100, arrow: roundArrow, maxWidth: '100%' }"
+    :tippy-options="{
+      maxWidth: '100%',
+      moveTransition: 'transform 0.2s ease-out',
+    }"
     :should-show="getShouldShow"
   >
     <div
