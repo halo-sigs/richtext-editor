@@ -11,9 +11,10 @@ import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
-import BubbleItem from "@/components/bubble/BubbleItem.vue";
 import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
 import { TextSelection, type Transaction } from "prosemirror-state";
+import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
+import { deleteNode } from "@/utils";
 
 export interface CustomCodeBlockLowlightOptions
   extends CodeBlockLowlightOptions {
@@ -138,19 +139,6 @@ export default CodeBlockLowlight.extend<
           },
         };
       },
-      getBubbleItems({ editor }: { editor: Editor }) {
-        return {
-          priority: 90,
-          component: markRaw(BubbleItem),
-          props: {
-            editor,
-            isActive: editor.isActive("codeBlock"),
-            icon: markRaw(MdiCodeBracesBox),
-            title: i18n.global.t("editor.common.codeblock"),
-            action: () => editor.chain().focus().toggleCodeBlock().run(),
-          },
-        };
-      },
       getCommandMenuItems() {
         return {
           priority: 80,
@@ -177,6 +165,26 @@ export default CodeBlockLowlight.extend<
             },
           },
         ];
+      },
+      getBubbleMenu({ editor }: { editor: Editor }) {
+        return {
+          pluginKey: "codeBlockBubbleMenu",
+          shouldShow: () => {
+            // TODO 定位问题，应当相对于 code 整体而不是其中的某个文本节点
+            return editor.isActive(CodeBlockLowlight.name);
+          },
+          items: [
+            {
+              priority: 10,
+              props: {
+                icon: markRaw(MdiDeleteForeverOutline),
+                title: i18n.global.t("editor.common.button.delete"),
+                action: ({ editor }: { editor: Editor }) =>
+                  deleteNode(CodeBlockLowlight.name, editor),
+              },
+            },
+          ],
+        };
       },
     };
   },

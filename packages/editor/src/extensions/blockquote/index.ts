@@ -6,7 +6,6 @@ import MdiFormatQuoteOpen from "~icons/mdi/format-quote-open";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import BubbleItem from "@/components/bubble/BubbleItem.vue";
 
 const Blockquote = TiptapBlockquote.extend<
   ExtensionOptions & BlockquoteOptions
@@ -18,21 +17,6 @@ const Blockquote = TiptapBlockquote.extend<
         return {
           priority: 90,
           component: markRaw(ToolbarItem),
-          props: {
-            editor,
-            isActive: editor.isActive("blockquote"),
-            icon: markRaw(MdiFormatQuoteOpen),
-            title: i18n.global.t("editor.common.quote"),
-            action: () => {
-              editor.commands.toggleBlockquote();
-            },
-          },
-        };
-      },
-      getBubbleItems({ editor }: { editor: Editor }) {
-        return {
-          priority: 60,
-          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("blockquote"),

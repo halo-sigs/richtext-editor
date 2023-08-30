@@ -12,6 +12,13 @@ import VideoView from "./VideoView.vue";
 import MdiVideo from "~icons/mdi/video";
 import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
 import { i18n } from "@/locales";
+import MdiPlayCircle from "~icons/mdi/play-circle";
+import MdiPlayCircleOutline from "~icons/mdi/play-circle-outline";
+import MdiMotionPlayOutline from "~icons/mdi/motion-play-outline";
+import MdiMotionPlay from "~icons/mdi/motion-play";
+import MdiCogPlay from "~icons/mdi/cog-play";
+import MdiCogPlayOutline from "~icons/mdi/cog-play-outline";
+import { BlockActionSeparator } from "@/components";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -181,6 +188,102 @@ const Video = Node.create<ExtensionOptions>({
             },
           },
         ];
+      },
+      getBubbleMenu({ editor }: { editor: Editor }) {
+        return {
+          pluginKey: "videoBubbleMenu",
+          shouldShow: () => {
+            return editor.isActive(Video.name);
+          },
+          items: [
+            {
+              priority: 10,
+              props: {
+                isActive: () => {
+                  editor.getAttributes(Video.name).controls;
+                },
+                icon: markRaw(
+                  editor.getAttributes(Video.name).controls
+                    ? MdiCogPlay
+                    : MdiCogPlayOutline
+                ),
+                action: () => {
+                  return editor
+                    .chain()
+                    .updateAttributes(Video.name, {
+                      controls: editor.getAttributes(Video.name).controls
+                        ? null
+                        : true,
+                    })
+                    .setNodeSelection(editor.state.selection.from)
+                    .focus()
+                    .run();
+                },
+                title: editor.getAttributes(Video.name).controls
+                  ? i18n.global.t("editor.extensions.video.disable_controls")
+                  : i18n.global.t("editor.extensions.video.enable_controls"),
+              },
+            },
+            {
+              priority: 20,
+              props: {
+                isActive: () => {
+                  return editor.getAttributes(Video.name).autoplay;
+                },
+                icon: markRaw(
+                  editor.getAttributes(Video.name).autoplay
+                    ? MdiPlayCircle
+                    : MdiPlayCircleOutline
+                ),
+                action: () => {
+                  return editor
+                    .chain()
+                    .updateAttributes(Video.name, {
+                      autoplay: editor.getAttributes(Video.name).autoplay
+                        ? null
+                        : true,
+                    })
+                    .setNodeSelection(editor.state.selection.from)
+                    .focus()
+                    .run();
+                },
+                title: editor.getAttributes(Video.name).autoplay
+                  ? i18n.global.t("editor.extensions.video.disable_autoplay")
+                  : i18n.global.t("editor.extensions.video.enable_autoplay"),
+              },
+            },
+            {
+              priority: 30,
+              props: {
+                isActive: () => {
+                  return editor.getAttributes(Video.name).loop;
+                },
+                icon: markRaw(
+                  editor.getAttributes(Video.name).loop
+                    ? MdiMotionPlay
+                    : MdiMotionPlayOutline
+                ),
+                action: () => {
+                  return editor
+                    .chain()
+                    .updateAttributes(Video.name, {
+                      loop: editor.getAttributes(Video.name).loop ? null : true,
+                    })
+                    .setNodeSelection(editor.state.selection.from)
+                    .focus()
+                    .run();
+                },
+                title: editor.getAttributes(Video.name).loop
+                  ? i18n.global.t("editor.extensions.video.disable_loop")
+                  : i18n.global.t("editor.extensions.video.enable_loop"),
+              },
+            },
+            {
+              priority: 40,
+              component: markRaw(BlockActionSeparator),
+            },
+          ],
+        };
       },
     };
   },

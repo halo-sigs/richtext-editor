@@ -161,53 +161,6 @@ onMounted(() => {
         </div>
       </template>
       <template #actions>
-        <BlockActionButton
-          :selected="controls"
-          :tooltip="`${
-            controls
-              ? i18n.global.t('editor.extensions.video.disable_controls')
-              : i18n.global.t('editor.extensions.video.enable_controls')
-          }`"
-          @click="handleToggleControls"
-        >
-          <template #icon>
-            <MdiCogPlay v-if="controls" />
-            <MdiCogPlayOutline v-else />
-          </template>
-        </BlockActionButton>
-
-        <BlockActionButton
-          :selected="autoplay"
-          :tooltip="`${
-            autoplay
-              ? i18n.global.t('editor.extensions.video.disable_autoplay')
-              : i18n.global.t('editor.extensions.video.enable_autoplay')
-          }`"
-          @click="handleToggleAutoplay"
-        >
-          <template #icon>
-            <MdiPlayCircle v-if="autoplay" />
-            <MdiPlayCircleOutline v-else />
-          </template>
-        </BlockActionButton>
-
-        <BlockActionButton
-          :selected="loop"
-          :tooltip="`${
-            loop
-              ? i18n.global.t('editor.extensions.video.disable_loop')
-              : i18n.global.t('editor.extensions.video.enable_loop')
-          }`"
-          @click="handleToggleLoop"
-        >
-          <template #icon>
-            <MdiMotionPlay v-if="loop" />
-            <MdiMotionPlayOutline v-else />
-          </template>
-        </BlockActionButton>
-
-        <BlockActionSeparator />
-
         <BlockActionInput
           v-model.lazy.trim="width"
           :tooltip="i18n.global.t('editor.common.tooltip.custom_width_input')"

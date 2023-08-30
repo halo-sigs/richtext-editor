@@ -6,7 +6,6 @@ import MdiFormatSuperscript from "~icons/mdi/format-superscript";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import BubbleItem from "@/components/bubble/BubbleItem.vue";
 
 const Superscript = TiptapSuperscript.extend<
   ExtensionOptions & SuperscriptExtensionOptions
@@ -18,19 +17,6 @@ const Superscript = TiptapSuperscript.extend<
         return {
           priority: 110,
           component: markRaw(ToolbarItem),
-          props: {
-            editor,
-            isActive: editor.isActive("superscript"),
-            icon: markRaw(MdiFormatSuperscript),
-            title: i18n.global.t("editor.common.superscript"),
-            action: () => editor.chain().focus().toggleSuperscript().run(),
-          },
-        };
-      },
-      getBubbleItems({ editor }: { editor: Editor }) {
-        return {
-          priority: 100,
-          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("superscript"),

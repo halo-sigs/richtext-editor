@@ -16,10 +16,10 @@ export interface ToolbarItem {
   children?: ToolbarItem[];
 }
 
-interface BubbleItemProps {
+interface BubbleMenuProps {
   pluginKey?: string;
-  editor: Editor;
-  updateDelay: number;
+  editor?: Editor;
+  updateDelay?: number;
   shouldShow: (props: {
     editor: Editor;
     view: EditorView;
@@ -28,12 +28,26 @@ interface BubbleItemProps {
     from: number;
     to: number;
   }) => boolean;
+  tippyOptions?: Record<string, unknown>;
+  isDeleteItem?: boolean;
 }
 
-export interface NodeBubbleMenu extends BubbleItemProps {
-  component: Component;
+export interface NodeBubbleMenu extends BubbleMenuProps {
+  component?: Component;
+  items?: BubbleItem[];
 }
 
+export interface BubbleItem {
+  priority: number;
+  component?: Component;
+  props: {
+    isActive: ({ editor }: { editor: Editor }) => boolean;
+    visible?: ({ editor }: { editor: Editor }) => boolean;
+    icon?: Component;
+    title?: string;
+    action?: ({ editor }: { editor: Editor }) => any;
+  };
+}
 export interface ToolboxItem {
   priority: number;
   component: Component;

@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-import { markRaw, type PropType } from "vue";
+import type { PropType } from "vue";
 import type { Editor, AnyExtension } from "@tiptap/core";
 import { BubbleMenu } from "@tiptap/vue-3";
 import type { NodeBubbleMenu } from "@/types";
+import BubbleItem from "@/components/bubble/BubbleItem.vue";
+import { defaultTextBubbleMenu } from "@/components/bubble/TextBubbleMenu";
 
 const props = defineProps({
   editor: {
@@ -27,16 +29,8 @@ const getBubbleMenuFromExtensions = () => {
 
       return nodeBubbleMenu;
     })
+    .concat([defaultTextBubbleMenu])
     .filter(Boolean) as NodeBubbleMenu[];
-};
-
-const defaultTextBubbleMenu = {
-  pluginKey: "textBubbleMenu",
-  shouldShow: ({ editor }) => {
-    const { selection } = editor.state;
-    return !selection.empty;
-  },
-  component: markRaw(TextBubbleMenu),
 };
 </script>
 <template>
@@ -49,12 +43,31 @@ const defaultTextBubbleMenu = {
     :tippy-options="{
       maxWidth: '100%',
       moveTransition: 'transform 0.2s ease-out',
+      ...bubbleMenu.tippyOptions,
     }"
+    :update-delay="bubbleMenu.updateDelay || 150"
   >
     <div
       class="bg-white flex items-center rounded p-1 border drop-shadow space-x-0.5"
     >
-      <component :is="bubbleMenu?.component" :editor="editor" />
+      <template v-if="bubbleMenu.items">
+        <template
+          v-for="(item, itemIndex) in bubbleMenu.items"
+          :key="itemIndex"
+        >
+          <template v-if="item.component">
+            <component
+              :is="item.component"
+              v-bind="item.props"
+              :editor="editor"
+            />
+          </template>
+          <bubble-item v-else :editor="editor" v-bind="item.props" />
+        </template>
+      </template>
+      <template v-else-if="bubbleMenu.component">
+        <component :is="bubbleMenu?.component" :editor="editor" />
+      </template>
     </div>
   </bubble-menu>
 </template>

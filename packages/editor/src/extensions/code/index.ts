@@ -6,7 +6,6 @@ import MdiCodeTags from "~icons/mdi/code-tags";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import BubbleItem from "@/components/bubble/BubbleItem.vue";
 
 const Code = TiptapCode.extend<ExtensionOptions & CodeOptions>({
   addOptions() {
@@ -16,19 +15,6 @@ const Code = TiptapCode.extend<ExtensionOptions & CodeOptions>({
         return {
           priority: 100,
           component: markRaw(ToolbarItem),
-          props: {
-            editor,
-            isActive: editor.isActive("code"),
-            icon: markRaw(MdiCodeTags),
-            title: i18n.global.t("editor.common.code"),
-            action: () => editor.chain().focus().toggleCode().run(),
-          },
-        };
-      },
-      getBubbleItems({ editor }: { editor: Editor }) {
-        return {
-          priority: 80,
-          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("code"),
