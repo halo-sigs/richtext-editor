@@ -3,6 +3,7 @@ import {
   VueNodeViewRenderer,
   type Range,
   type CommandProps,
+  isActive,
 } from "@tiptap/vue-3";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import type { CodeBlockLowlightOptions } from "@tiptap/extension-code-block-lowlight";
@@ -12,7 +13,12 @@ import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
-import { TextSelection, type Transaction } from "prosemirror-state";
+import {
+  EditorState,
+  NodeSelection,
+  TextSelection,
+  type Transaction,
+} from "prosemirror-state";
 import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
 import { deleteNode } from "@/utils";
 
@@ -169,9 +175,23 @@ export default CodeBlockLowlight.extend<
       getBubbleMenu({ editor }: { editor: Editor }) {
         return {
           pluginKey: "codeBlockBubbleMenu",
-          shouldShow: () => {
-            // TODO 定位问题，应当相对于 code 整体而不是其中的某个文本节点
-            return editor.isActive(CodeBlockLowlight.name);
+          shouldShow: ({ state }: { state: EditorState }) => {
+            return isActive(state, CodeBlockLowlight.name);
+          },
+          getRenderContainer: (node: HTMLElement) => {
+            let container = node;
+            // 文本节点
+            if (container.nodeName === "#text") {
+              container = node.parentElement as HTMLElement;
+            }
+            while (
+              container &&
+              container.classList &&
+              !container.classList.contains("hljs")
+            ) {
+              container = container.parentElement as HTMLElement;
+            }
+            return container;
           },
           items: [
             {

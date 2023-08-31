@@ -2,6 +2,7 @@ import type { Editor, Range } from "@tiptap/core";
 import type { EditorState } from "prosemirror-state";
 import type { EditorView } from "prosemirror-view";
 import type { Component } from "vue";
+import default from '../../vite.config';
 export interface ToolbarItem {
   priority: number;
   component: Component;
@@ -19,17 +20,18 @@ export interface ToolbarItem {
 interface BubbleMenuProps {
   pluginKey?: string;
   editor?: Editor;
-  updateDelay?: number;
   shouldShow: (props: {
     editor: Editor;
-    view: EditorView;
-    state: EditorState;
-    oldState?: EditorState | undefined;
-    from: number;
-    to: number;
+    node?: HTMLElement;
+    view?: EditorView;
+    state?: EditorState;
+    oldState?: EditorState;
+    from?: number;
+    to?: number;
   }) => boolean;
   tippyOptions?: Record<string, unknown>;
-  isDeleteItem?: boolean;
+  getRenderContainer?: (node: HTMLElement) => HTMLElement;
+  defaultAnimation?: boolean;
 }
 
 export interface NodeBubbleMenu extends BubbleMenuProps {
@@ -44,6 +46,7 @@ export interface BubbleItem {
     isActive: ({ editor }: { editor: Editor }) => boolean;
     visible?: ({ editor }: { editor: Editor }) => boolean;
     icon?: Component;
+    iconStyle?: string;
     title?: string;
     action?: ({ editor }: { editor: Editor }) => any;
   };

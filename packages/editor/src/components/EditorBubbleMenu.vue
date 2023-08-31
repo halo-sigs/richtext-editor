@@ -1,10 +1,13 @@
 <script lang="ts" setup>
 import type { PropType } from "vue";
 import type { Editor, AnyExtension } from "@tiptap/core";
-import { BubbleMenu } from "@tiptap/vue-3";
+import BubbleMenu from "@/components/bubble/BubbleMenu.vue";
 import type { NodeBubbleMenu } from "@/types";
 import BubbleItem from "@/components/bubble/BubbleItem.vue";
 import { defaultTextBubbleMenu } from "@/components/bubble/TextBubbleMenu";
+import type { EditorView } from "prosemirror-view";
+import type { EditorState } from "prosemirror-state";
+import type { BubbleMenuPluginProps } from "./bubble/BubbleMenuPlugin";
 
 const props = defineProps({
   editor: {
@@ -27,10 +30,34 @@ const getBubbleMenuFromExtensions = () => {
         editor: props.editor,
       }) as NodeBubbleMenu;
 
+      if (nodeBubbleMenu.items) {
+        nodeBubbleMenu.items = nodeBubbleMenu.items.sort(
+          (a, b) => a.priority - b.priority
+        );
+      }
+
       return nodeBubbleMenu;
     })
     .concat([defaultTextBubbleMenu])
     .filter(Boolean) as NodeBubbleMenu[];
+};
+
+const shouldShow = (
+  props: {
+    editor: Editor;
+    node?: HTMLElement;
+    view?: EditorView;
+    state?: EditorState;
+    oldState?: EditorState;
+    from?: number;
+    to?: number;
+  },
+  bubbleMenu: NodeBubbleMenu
+) => {
+  if (!props.editor.isEditable) {
+    return false;
+  }
+  return bubbleMenu.shouldShow?.(props);
 };
 </script>
 <template>
@@ -38,14 +65,15 @@ const getBubbleMenuFromExtensions = () => {
     v-for="(bubbleMenu, index) in getBubbleMenuFromExtensions()"
     :key="index"
     :plugin-key="bubbleMenu?.pluginKey"
-    :should-show="bubbleMenu?.shouldShow"
+    :should-show="(prop) => shouldShow(prop, bubbleMenu)"
     :editor="editor"
     :tippy-options="{
       maxWidth: '100%',
       moveTransition: 'transform 0.2s ease-out',
       ...bubbleMenu.tippyOptions,
     }"
-    :update-delay="bubbleMenu.updateDelay || 150"
+    :get-render-container="bubbleMenu.getRenderContainer"
+    :default-animation="bubbleMenu.defaultAnimation"
   >
     <div
       class="bg-white flex items-center rounded p-1 border drop-shadow space-x-0.5"

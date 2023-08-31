@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { VTooltip, Dropdown as VDropdown } from "floating-vue";
 import type { Editor } from "@tiptap/core";
-import { ref, type Component, computed, watch } from "vue";
+import { ref, type Component } from "vue";
 
 const props = withDefaults(
   defineProps<{
@@ -9,6 +9,7 @@ const props = withDefaults(
     isActive: ({ editor }: { editor: Editor }) => boolean;
     visible?: ({ editor }: { editor: Editor }) => boolean;
     icon?: Component;
+    iconStyle?: string;
     title?: string;
     action?: ({ editor }: { editor: Editor }) => Component | void;
   }>(),
@@ -18,6 +19,7 @@ const props = withDefaults(
     title: undefined,
     action: undefined,
     icon: undefined,
+    iconStyle: undefined,
   }
 );
 
@@ -59,7 +61,7 @@ const handleBubbleItemClick = (editor: Editor) => {
       class="text-gray-600 text-lg hover:bg-gray-100 p-2 rounded-sm"
       @click="handleBubbleItemClick(editor)"
     >
-      <component :is="icon" class="w-5 h-5" />
+      <component :is="icon" :style="iconStyle" class="w-5 h-5" />
     </button>
     <template #popper>
       <div

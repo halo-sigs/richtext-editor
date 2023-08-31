@@ -1,6 +1,7 @@
-import type { BubbleItem, ExtensionOptions } from "@/types";
+import type { ExtensionOptions } from "@/types";
 import {
   Editor,
+  isActive,
   mergeAttributes,
   Node,
   nodeInputRule,
@@ -17,11 +18,12 @@ import MdiPlayCircleOutline from "~icons/mdi/play-circle-outline";
 import MdiMotionPlayOutline from "~icons/mdi/motion-play-outline";
 import MdiMotionPlay from "~icons/mdi/motion-play";
 import { BlockActionSeparator } from "@/components";
-import BubbleItemEditorLink from "./BubbleItemEditorLink.vue";
+import BubbleItemAudioLink from "./BubbleItemAudioLink.vue";
 import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiShare from "~icons/mdi/share";
 import { deleteNode } from "@/utils";
 import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
+import { NodeSelection, type EditorState } from "prosemirror-state";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -173,8 +175,8 @@ const Audio = Node.create<ExtensionOptions>({
       getBubbleMenu({ editor }) {
         return {
           pluginKey: "audioBubbleMenu",
-          shouldShow: () => {
-            return editor.isActive(Audio.name);
+          shouldShow: ({ state }: { state: EditorState }) => {
+            return isActive(state, Audio.name);
           },
           items: [
             {
@@ -241,7 +243,7 @@ const Audio = Node.create<ExtensionOptions>({
                 icon: markRaw(MdiLinkVariant),
                 title: i18n.global.t("editor.common.button.edit_link"),
                 action: () => {
-                  return markRaw(BubbleItemEditorLink);
+                  return markRaw(BubbleItemAudioLink);
                 },
               },
             },

@@ -26,9 +26,6 @@ const OTHER_BUBBLE_MENU_TYPES = ["audio", "video", "image", "iframe"];
 
 export const defaultTextBubbleMenu: NodeBubbleMenu = {
   pluginKey: "textBubbleMenu",
-  tippyOptions: {
-    placement: "top",
-  },
   shouldShow: ({ editor, view, state, from, to }) => {
     const { empty } = editor.state.selection;
     if (empty) {
@@ -49,10 +46,6 @@ export const defaultTextBubbleMenu: NodeBubbleMenu = {
 
     const hasEditorFocus = view.hasFocus();
     if (!hasEditorFocus) {
-      return false;
-    }
-
-    if (!editor.isEditable) {
       return false;
     }
 
