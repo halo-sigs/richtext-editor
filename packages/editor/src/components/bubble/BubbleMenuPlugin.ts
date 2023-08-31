@@ -14,6 +14,7 @@ export interface BubbleMenuPluginProps {
   editor: Editor;
   element: HTMLElement;
   tippyOptions?: Partial<Props>;
+  updateDelay?: number;
   shouldShow?:
     | ((props: {
         editor: Editor;
@@ -45,6 +46,10 @@ export class BubbleMenuView {
   public preventHide = false;
 
   public tippy: Instance | undefined;
+
+  private updateDebounceTimer: number | undefined;
+
+  public updateDelay: number;
 
   public tippyOptions?: Partial<Props>;
 
@@ -79,6 +84,7 @@ export class BubbleMenuView {
     element,
     view,
     tippyOptions = {},
+    updateDelay = 250,
     shouldShow,
     getRenderContainer,
     defaultAnimation = true,
@@ -86,6 +92,7 @@ export class BubbleMenuView {
     this.editor = editor;
     this.element = element;
     this.view = view;
+    this.updateDelay = updateDelay;
     this.getRenderContainer = getRenderContainer;
     this.defaultAnimation = defaultAnimation;
 
@@ -185,7 +192,26 @@ export class BubbleMenuView {
     }
   }
 
-  update(view: EditorView, oldState?: EditorState) {
+  update = (view: EditorView, oldState?: EditorState) => {
+    const { state, composing } = view;
+    const { doc, selection } = state;
+    const isSame =
+      oldState && oldState.doc.eq(doc) && oldState.selection.eq(selection);
+
+    if (composing || isSame) {
+      return;
+    }
+
+    if (this.updateDebounceTimer) {
+      clearTimeout(this.updateDebounceTimer);
+    }
+
+    this.updateDebounceTimer = window.setTimeout(() => {
+      this.updateHandler(view, oldState);
+    }, this.updateDelay);
+  };
+
+  updateHandler(view: EditorView, oldState?: EditorState) {
     const { state, composing } = view;
     const { doc, selection } = state;
     const isSame =
