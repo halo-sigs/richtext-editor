@@ -7,7 +7,6 @@ import BubbleItem from "@/components/bubble/BubbleItem.vue";
 import { defaultTextBubbleMenu } from "@/components/bubble/TextBubbleMenu";
 import type { EditorView } from "prosemirror-view";
 import type { EditorState } from "prosemirror-state";
-import type { BubbleMenuPluginProps } from "./bubble/BubbleMenuPlugin";
 
 const props = defineProps({
   editor: {
@@ -69,7 +68,6 @@ const shouldShow = (
     :editor="editor"
     :tippy-options="{
       maxWidth: '100%',
-      moveTransition: 'transform 0.2s ease-out',
       ...bubbleMenu.tippyOptions,
     }"
     :get-render-container="bubbleMenu.getRenderContainer"

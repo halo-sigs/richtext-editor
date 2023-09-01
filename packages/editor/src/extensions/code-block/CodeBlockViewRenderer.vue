@@ -30,7 +30,7 @@ const selectedLanguage = computed({
 });
 </script>
 <template>
-  <node-view-wrapper>
+  <node-view-wrapper as="div" class="code-node">
     <div class="py-1.5">
       <select
         v-model="selectedLanguage"

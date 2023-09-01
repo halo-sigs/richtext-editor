@@ -47,10 +47,6 @@ export class BubbleMenuView {
 
   public tippy: Instance | undefined;
 
-  private updateDebounceTimer: number | undefined;
-
-  public updateDelay: number;
-
   public tippyOptions?: Partial<Props>;
 
   public getRenderContainer?: BubbleMenuPluginProps["getRenderContainer"];
@@ -63,16 +59,16 @@ export class BubbleMenuView {
     from,
     to,
   }) => {
-    const { doc, selection } = state;
+    const { doc, selection } = state as EditorState;
     const { empty } = selection;
 
     // Sometime check for `empty` is not enough.
     // Doubleclick an empty paragraph returns a node size of 2.
     // So we check also for an empty text size.
     const isEmptyTextBlock =
-      !doc.textBetween(from, to).length && isTextSelection(state.selection);
+      !doc.textBetween(from || 0, to || 0).length && isTextSelection(selection);
 
-    if (!view.hasFocus() || empty || isEmptyTextBlock) {
+    if (!(view as EditorView).hasFocus() || empty || isEmptyTextBlock) {
       return false;
     }
 
@@ -84,7 +80,6 @@ export class BubbleMenuView {
     element,
     view,
     tippyOptions = {},
-    updateDelay = 250,
     shouldShow,
     getRenderContainer,
     defaultAnimation = true,
@@ -92,7 +87,6 @@ export class BubbleMenuView {
     this.editor = editor;
     this.element = element;
     this.view = view;
-    this.updateDelay = updateDelay;
     this.getRenderContainer = getRenderContainer;
     this.defaultAnimation = defaultAnimation;
 
@@ -169,7 +163,6 @@ export class BubbleMenuView {
       ...Object.assign(
         {
           zIndex: 999,
-          duration: 200,
           ...(this.defaultAnimation
             ? {
                 animation: "shift-toward-subtle",
@@ -192,26 +185,7 @@ export class BubbleMenuView {
     }
   }
 
-  update = (view: EditorView, oldState?: EditorState) => {
-    const { state, composing } = view;
-    const { doc, selection } = state;
-    const isSame =
-      oldState && oldState.doc.eq(doc) && oldState.selection.eq(selection);
-
-    if (composing || isSame) {
-      return;
-    }
-
-    if (this.updateDebounceTimer) {
-      clearTimeout(this.updateDebounceTimer);
-    }
-
-    this.updateDebounceTimer = window.setTimeout(() => {
-      this.updateHandler(view, oldState);
-    }, this.updateDelay);
-  };
-
-  updateHandler(view: EditorView, oldState?: EditorState) {
+  update(view: EditorView, oldState?: EditorState) {
     const { state, composing } = view;
     const { doc, selection } = state;
     const isSame =
@@ -228,7 +202,9 @@ export class BubbleMenuView {
     const cursorAt = selection.$anchor.pos;
     const from = Math.min(...ranges.map((range) => range.$from.pos));
     const to = Math.max(...ranges.map((range) => range.$to.pos));
-    const placement = isNodeSelection(selection)
+    const placement = this.tippyOptions?.placement
+      ? this.tippyOptions?.placement
+      : isNodeSelection(selection)
       ? "top"
       : Math.abs(cursorAt - to) <= Math.abs(cursorAt - from)
       ? "bottom-start"
@@ -236,8 +212,6 @@ export class BubbleMenuView {
     const domAtPos = view.domAtPos(from).node as HTMLElement;
     const nodeDOM = view.nodeDOM(from) as HTMLElement;
     const node = nodeDOM || domAtPos;
-
-    console.log(selection);
 
     const shouldShow =
       this.editor.isEditable &&
@@ -262,7 +236,8 @@ export class BubbleMenuView {
         instance.popperInstance &&
         instance.popperInstance.state
     );
-    const offsetX = this.tippyOptions?.offset?.[0] ?? 0;
+    const offset = this.tippyOptions?.offset as [number, number];
+    const offsetX = offset?.[0] ?? 0;
     const offsetY = otherBubbleMenus.length
       ? otherBubbleMenus.reduce((prev, instance, currentIndex, array) => {
           const prevY = array[currentIndex - 1]
@@ -281,8 +256,7 @@ export class BubbleMenuView {
 
           return prev;
         }, 0)
-      : this.tippyOptions?.offset?.[1] ?? 10;
-
+      : offset?.[1] ?? 10;
     this.tippy?.setProps({
       offset: [offsetX, offsetY],
       placement,
@@ -319,7 +293,7 @@ export class BubbleMenuView {
       (instance) => instance?.id === this.tippy?.id
     );
     if (idx < 0) {
-      ACTIVE_BUBBLE_MENUS.push(this.tippy);
+      ACTIVE_BUBBLE_MENUS.push(this.tippy as Instance);
     }
   };
 

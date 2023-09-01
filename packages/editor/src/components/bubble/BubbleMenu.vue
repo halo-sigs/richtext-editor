@@ -37,7 +37,7 @@ const props = defineProps({
 
   defaultAnimation: {
     type: Boolean as PropType<BubbleMenuPluginProps["defaultAnimation"]>,
-    default: false,
+    default: true,
   },
 });
 

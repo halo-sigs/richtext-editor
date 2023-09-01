@@ -20,37 +20,43 @@ import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
 import MdiFormatAlignRight from "~icons/mdi/format-align-right";
 import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
 import MdiFormatUnderline from "~icons/mdi/format-underline";
-import { isTextSelection } from "@tiptap/core";
+import { isActive, isTextSelection } from "@tiptap/core";
+import type { EditorState } from "prosemirror-state";
+import type { EditorView } from "prosemirror-view";
 
 const OTHER_BUBBLE_MENU_TYPES = ["audio", "video", "image", "iframe"];
 
 export const defaultTextBubbleMenu: NodeBubbleMenu = {
   pluginKey: "textBubbleMenu",
-  shouldShow: ({ editor, view, state, from, to }) => {
-    const { empty } = editor.state.selection;
+  shouldShow: ({ view, state, from, to }) => {
+    const { doc, selection } = state as EditorState;
+    const { empty } = selection;
     if (empty) {
       return false;
     }
 
-    if (OTHER_BUBBLE_MENU_TYPES.some((type) => editor.isActive(type))) {
+    if (
+      OTHER_BUBBLE_MENU_TYPES.some((type) =>
+        isActive(state as EditorState, type)
+      )
+    ) {
       return false;
     }
 
-    const { doc } = editor.state;
-
     const isEmptyTextBlock =
-      !doc.textBetween(from, to).length && isTextSelection(state.selection);
+      !doc.textBetween(from || 0, to || 0).length && isTextSelection(selection);
     if (isEmptyTextBlock) {
       return false;
     }
 
-    const hasEditorFocus = view.hasFocus();
+    const hasEditorFocus = (view as EditorView).hasFocus();
     if (!hasEditorFocus) {
       return false;
     }
 
     return true;
   },
+  defaultAnimation: false,
   items: [
     {
       priority: 20,

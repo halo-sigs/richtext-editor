@@ -187,7 +187,7 @@ export default CodeBlockLowlight.extend<
             while (
               container &&
               container.classList &&
-              !container.classList.contains("hljs")
+              !container.classList.contains("code-node")
             ) {
               container = container.parentElement as HTMLElement;
             }
