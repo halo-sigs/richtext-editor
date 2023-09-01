@@ -2,7 +2,6 @@ import type { Editor, Range } from "@tiptap/core";
 import type { EditorState } from "prosemirror-state";
 import type { EditorView } from "prosemirror-view";
 import type { Component } from "vue";
-import default from '../../vite.config';
 export interface ToolbarItem {
   priority: number;
   component: Component;
