@@ -23,6 +23,7 @@ import MdiFormatUnderline from "~icons/mdi/format-underline";
 import { isActive, isTextSelection } from "@tiptap/core";
 import type { EditorState } from "prosemirror-state";
 import type { EditorView } from "prosemirror-view";
+import MdiFormatBold from "~icons/mdi/format-bold";
 
 const OTHER_BUBBLE_MENU_TYPES = ["audio", "video", "image", "iframe"];
 
@@ -58,6 +59,15 @@ export const defaultTextBubbleMenu: NodeBubbleMenu = {
   },
   defaultAnimation: false,
   items: [
+    {
+      priority: 10,
+      props: {
+        isActive: ({ editor }) => editor.isActive("bold"),
+        icon: markRaw(MdiFormatBold),
+        title: i18n.global.t("editor.common.bold"),
+        action: ({ editor }) => editor.chain().focus().toggleBold().run(),
+      },
+    },
     {
       priority: 20,
       props: {
