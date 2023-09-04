@@ -2,7 +2,7 @@ import TiptapTable from "@tiptap/extension-table";
 import type { TableOptions } from "@tiptap/extension-table";
 import TableHeader from "@tiptap/extension-table-header";
 import TableRow from "@tiptap/extension-table-row";
-import TableCell from "@tiptap/extension-table-cell";
+import TableCell from "./table-cell";
 import type { Editor, Range } from "@tiptap/vue-3";
 import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiTable from "~icons/mdi/table";
