@@ -27,7 +27,13 @@ import type { EditorView } from "prosemirror-view";
 import MdiFormatBold from "~icons/mdi/format-bold";
 import { i18n } from "@/locales";
 
-const OTHER_BUBBLE_MENU_TYPES = ["audio", "video", "image", "iframe"];
+const OTHER_BUBBLE_MENU_TYPES = [
+  "audio",
+  "video",
+  "image",
+  "iframe",
+  "codeBlock",
+];
 
 const Text = TiptapText.extend<ExtensionOptions>({
   addOptions() {
