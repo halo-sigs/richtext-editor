@@ -11,6 +11,10 @@ import {
 import { addRowAfter } from "@tiptap/pm/tables";
 import { createApp } from "vue";
 import { Dropdown as VDropdown } from "floating-vue";
+import GripCellTable from "./GripCellTable.vue";
+import { h } from "vue";
+import { createVNode } from "vue";
+import { render } from "vue";
 
 export interface TableCellOptions {
   HTMLAttributes: Record<string, any>;
@@ -89,19 +93,12 @@ const TableCell = Node.create<TableCellOptions>({
                 if (index === 0) {
                   decorations.push(
                     Decoration.widget(pos + 1, () => {
-                      let className = "grip-table";
-                      const selected = isTableSelected(selection);
-                      if (selected) {
-                        className += " selected";
-                      }
-                      const grip = document.createElement("a");
-                      grip.className = className;
-                      grip.addEventListener("mousedown", (event) => {
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-                        editor.view.dispatch(selectTable(editor.state.tr));
+                      const instance = createVNode(GripCellTable, {
+                        editor,
+                        state,
                       });
-                      return grip;
+                      render(instance, document.createElement("div"));
+                      return instance.el as HTMLElement;
                     })
                   );
                 }
