@@ -4,7 +4,6 @@ import type { Editor, AnyExtension } from "@tiptap/core";
 import BubbleMenu from "@/components/bubble/BubbleMenu.vue";
 import type { NodeBubbleMenu } from "@/types";
 import BubbleItem from "@/components/bubble/BubbleItem.vue";
-import { defaultTextBubbleMenu } from "@/components/bubble/TextBubbleMenu";
 import type { EditorView } from "prosemirror-view";
 import type { EditorState } from "prosemirror-state";
 
@@ -37,7 +36,6 @@ const getBubbleMenuFromExtensions = () => {
 
       return nodeBubbleMenu;
     })
-    .concat([defaultTextBubbleMenu])
     .filter(Boolean) as NodeBubbleMenu[];
 };
 
@@ -74,7 +72,7 @@ const shouldShow = (
     :default-animation="bubbleMenu.defaultAnimation"
   >
     <div
-      class="bg-white flex items-center rounded p-1 border drop-shadow space-x-0.5"
+      class="bubble-menu bg-white flex items-center rounded p-1 border drop-shadow space-x-0.5"
     >
       <template v-if="bubbleMenu.items">
         <template
@@ -97,3 +95,9 @@ const shouldShow = (
     </div>
   </bubble-menu>
 </template>
+<style scoped>
+.bubble-menu {
+  max-width: calc(100vw - 30px);
+  overflow-x: auto;
+}
+</style>

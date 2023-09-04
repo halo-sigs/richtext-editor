@@ -248,8 +248,8 @@ export class BubbleMenuView {
             instance?.popperInstance?.state?.modifiersData?.popperOffsets?.y ??
             0;
           const currentHeight =
-            instance?.popperInstance?.state?.rects?.popper?.height ?? 40;
-
+            instance?.popperInstance?.state?.rects?.popper?.height ?? 10;
+          console.log(instance);
           if (Math.abs(prevY - currentY) <= currentHeight) {
             prev += currentHeight;
           }
@@ -257,6 +257,7 @@ export class BubbleMenuView {
           return prev;
         }, 0)
       : offset?.[1] ?? 10;
+    console.log(offsetX, offsetY);
     this.tippy?.setProps({
       offset: [offsetX, offsetY],
       placement,
