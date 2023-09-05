@@ -1,10 +1,11 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import { Plugin, PluginKey } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
-import { getCellsInRow } from "./util";
+import { cellsEqueal, getCellsInRow } from "./util";
 import GripCellTable from "./GripCellTable.vue";
 import { createVNode } from "vue";
 import { render } from "vue";
+import type { VNode } from "vue";
 
 export interface TableCellOptions {
   HTMLAttributes: Record<string, any>;
@@ -57,8 +58,20 @@ const TableHeader = Node.create<TableCellOptions>({
     ];
   },
 
+  addStorage() {
+    const cellDoms = new Map<string, VNode>();
+    return {
+      cellDoms: cellDoms,
+    };
+  },
+
+  onDestroy() {
+    this.storage.cellDoms.clear();
+  },
+
   addProseMirrorPlugins() {
     const editor = this.editor;
+    const storage = this.storage;
     return [
       new Plugin({
         key: new PluginKey("table-header-control"),
@@ -71,13 +84,25 @@ const TableHeader = Node.create<TableCellOptions>({
               cells.forEach(({ pos }, index) => {
                 decorations.push(
                   Decoration.widget(pos + 1, () => {
-                    const instance = createVNode(GripCellTable, {
+                    const key = "column" + pos + 1;
+                    const isLast = index === cells.length - 1;
+                    let instance = storage.cellDoms.get(key) as VNode;
+                    if (
+                      instance &&
+                      instance.props?.index == index &&
+                      instance.props.isLast == isLast
+                    ) {
+                      return instance.el as HTMLElement;
+                    }
+                    instance = createVNode(GripCellTable, {
                       editor,
                       type: "column",
                       index: index,
-                      isLast: index === cells.length - 1,
+                      isLast: isLast,
                     });
-                    render(instance, document.createElement("div"));
+                    const divDom = document.createElement("div");
+                    render(instance, divDom);
+                    storage.cellDoms.set(key, instance);
                     return instance.el as HTMLElement;
                   })
                 );

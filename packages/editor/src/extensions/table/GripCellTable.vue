@@ -8,7 +8,7 @@ import {
   selectRow,
   selectTable,
 } from "./util";
-import { computed, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import { addColumnAfter, addRowAfter } from "@tiptap/pm/tables";
 import MdiPlus from "~icons/mdi/plus";
 import { Tooltip } from "floating-vue";
@@ -49,6 +49,7 @@ const handleMouseDown = (event: Event) => {
   if (selection) {
     props.editor.view.dispatch(selection);
   }
+  console.log(event.target, grip.value);
   if (event.target != grip.value) {
     if (props.type === "row") {
       addRowAfter(props.editor.state, props.editor.view.dispatch);
@@ -57,6 +58,13 @@ const handleMouseDown = (event: Event) => {
     }
   }
 };
+onMounted(() => {
+  console.log("创建 GripCellTable", props.type);
+});
+
+onUnmounted(() => {
+  console.log("卸载 GripCellTable", props.type);
+});
 </script>
 <template>
   <a

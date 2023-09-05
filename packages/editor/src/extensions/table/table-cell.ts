@@ -1,10 +1,11 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import { Plugin, PluginKey } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
-import { getCellsInColumn } from "./util";
+import { cellsEqueal, getCellsInColumn } from "./util";
 import GripCellTable from "./GripCellTable.vue";
 import { createVNode } from "vue";
 import { render } from "vue";
+import type { VNode } from "vue";
 
 export interface TableCellOptions {
   HTMLAttributes: Record<string, any>;
@@ -67,8 +68,20 @@ const TableCell = Node.create<TableCellOptions>({
     ];
   },
 
+  addStorage() {
+    const cellDoms = new Map<string, VNode>();
+    return {
+      cellDoms: cellDoms,
+    };
+  },
+
+  onDestroy() {
+    this.storage.cellDoms.clear();
+  },
+
   addProseMirrorPlugins() {
     const editor = this.editor;
+    const storage = this.storage;
     return [
       new Plugin({
         key: new PluginKey("table-cell-control"),
@@ -82,13 +95,24 @@ const TableCell = Node.create<TableCellOptions>({
                 if (index === 0) {
                   decorations.push(
                     Decoration.widget(pos + 1, () => {
-                      const instance = createVNode(GripCellTable, {
+                      const key = "table" + pos + 1;
+                      const isLast = index === cells.length - 1;
+                      let instance = storage.cellDoms.get(key) as VNode;
+                      if (
+                        instance &&
+                        instance.props?.index == index &&
+                        instance.props.isLast == isLast
+                      ) {
+                        return instance.el as HTMLElement;
+                      }
+                      instance = createVNode(GripCellTable, {
                         editor,
                         type: "table",
                         index: index,
-                        isLast: index === cells.length - 1,
+                        isLast: isLast,
                       });
                       render(instance, document.createElement("div"));
+                      storage.cellDoms.set(key, instance);
                       return instance.el as HTMLElement;
                     })
                   );
@@ -96,13 +120,24 @@ const TableCell = Node.create<TableCellOptions>({
 
                 decorations.push(
                   Decoration.widget(pos + 1, () => {
-                    const instance = createVNode(GripCellTable, {
+                    const key = "row" + pos + 1;
+                    let instance = storage.cellDoms.get(key) as VNode;
+                    const isLast = index === cells.length - 1;
+                    if (
+                      instance &&
+                      instance.props?.index == index &&
+                      instance.props.isLast == isLast
+                    ) {
+                      return instance.el as HTMLElement;
+                    }
+                    instance = createVNode(GripCellTable, {
                       editor,
                       type: "row",
                       index: index,
-                      isLast: index === cells.length - 1,
+                      isLast: isLast,
                     });
                     render(instance, document.createElement("div"));
+                    storage.cellDoms.set(key, instance);
                     return instance.el as HTMLElement;
                   })
                 );

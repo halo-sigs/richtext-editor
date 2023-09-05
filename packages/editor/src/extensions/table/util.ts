@@ -128,6 +128,23 @@ export const getCellsInRow =
     }
   };
 
+export const cellsEqueal = (
+  newCells: { pos: number; start: number; node: Node | null | undefined }[],
+  oldCells: { pos: number; start: number; node: Node | null | undefined }[]
+) => {
+  if (newCells.length !== oldCells.length) {
+    return false;
+  }
+
+  for (let i = 0; i < newCells.length; i++) {
+    if (newCells[i].pos !== oldCells[i].pos) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
 export const findTable = (selection: Selection) => {
   return findParentNode((node) => node.type.spec.tableRole === "table")(
     selection
