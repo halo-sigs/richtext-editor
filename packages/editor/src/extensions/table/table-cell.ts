@@ -1,18 +1,8 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import { Plugin, PluginKey } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
-import {
-  getCellsInColumn,
-  isRowSelected,
-  isTableSelected,
-  selectRow,
-  selectTable,
-} from "./util";
-import { addRowAfter } from "@tiptap/pm/tables";
-import { createApp } from "vue";
-import { Dropdown as VDropdown } from "floating-vue";
+import { getCellsInColumn } from "./util";
 import GripCellTable from "./GripCellTable.vue";
-import { h } from "vue";
 import { createVNode } from "vue";
 import { render } from "vue";
 
@@ -87,7 +77,6 @@ const TableCell = Node.create<TableCellOptions>({
             const { doc, selection } = state;
             const decorations: Decoration[] = [];
             const cells = getCellsInColumn(0)(selection);
-            console.log("cells", cells);
             if (cells) {
               cells.forEach(({ pos }, index) => {
                 if (index === 0) {
@@ -95,51 +84,26 @@ const TableCell = Node.create<TableCellOptions>({
                     Decoration.widget(pos + 1, () => {
                       const instance = createVNode(GripCellTable, {
                         editor,
-                        state,
+                        type: "table",
+                        index: index,
+                        isLast: index === cells.length - 1,
                       });
                       render(instance, document.createElement("div"));
                       return instance.el as HTMLElement;
                     })
                   );
                 }
+
                 decorations.push(
                   Decoration.widget(pos + 1, () => {
-                    const rowSelected = isRowSelected(index)(selection);
-                    let className = "grip-row";
-                    if (rowSelected) {
-                      className += " selected";
-                    }
-                    if (index === 0) {
-                      className += " first";
-                    }
-                    if (index === cells.length - 1) {
-                      className += " last";
-                    }
-                    const grip = document.createElement("a");
-                    // if (grip) {
-                    //   createApp({
-                    //     render(h) {
-                    //       return h(VDropdown);
-                    //     },
-                    //   }).mount(grip);
-                    // }
-
-                    grip.className = className;
-                    grip.addEventListener(
-                      "mousedown",
-                      (event) => {
-                        event.preventDefault();
-                        event.stopImmediatePropagation();
-
-                        editor.view.dispatch(selectRow(index)(editor.state.tr));
-
-                        if (event.target !== grip) {
-                          addRowAfter(editor.state, editor.view.dispatch);
-                        }
-                      },
-                      true
-                    );
-                    return grip;
+                    const instance = createVNode(GripCellTable, {
+                      editor,
+                      type: "row",
+                      index: index,
+                      isLast: index === cells.length - 1,
+                    });
+                    render(instance, document.createElement("div"));
+                    return instance.el as HTMLElement;
                   })
                 );
               });

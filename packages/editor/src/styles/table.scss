@@ -1,0 +1,101 @@
+.halo-rich-text-editor {
+  $tableBorderColor: #d8d8d8;
+  $tableHeaderBgColor: #f6f8fa;
+  $tableSelectedBorderColor: rgb(0 101 255);
+  $tableSelectedCellBgColor: transparent;
+  $tableResizeHandleBgColor: #adf;
+
+  .ProseMirror {
+    .tableWrapper {
+      position: relative;
+      margin: 0.5em 0px;
+
+      &.has-focus {
+        .scrollWrapper {
+          margin-top: -20px;
+        }
+      }
+    }
+
+    .scrollWrapper {
+      overflow-y: hidden;
+      overflow-x: auto;
+      border-left: 1px solid transparent;
+      border-right: 1px solid transparent;
+      -webkit-transition: border 250ms ease-in-out 0s;
+      transition: border 250ms ease-in-out 0s;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 4px;
+      overflow: initial;
+      padding-left: 26px;
+      padding-top: 26px;
+
+      box-sizing: border-box;
+
+      * {
+        box-sizing: border-box;
+      }
+
+      tr {
+        position: relative;
+        border-bottom: 1px solid $tableBorderColor;
+      }
+
+      th {
+        background: $tableHeaderBgColor;
+      }
+
+      td,
+      th {
+        position: relative;
+        vertical-align: top;
+        border: 1px solid $tableBorderColor;
+        position: relative;
+        padding: 4px 8px;
+        text-align: left;
+        min-width: 100px;
+      }
+
+      .selectedCell {
+        position: relative;
+        border: 1px solid $tableSelectedBorderColor;
+        background-color: $tableSelectedCellBgColor;
+
+        &::after {
+          box-sizing: content-box;
+          height: 100%;
+          width: 100%;
+          border: 1px solid $tableSelectedBorderColor;
+          content: "";
+          position: absolute;
+          left: -1px;
+          top: -1px;
+          bottom: 0px;
+          z-index: 12;
+          display: inline-block;
+          pointer-events: none;
+        }
+      }
+    }
+
+    .column-resize-handle {
+      position: absolute;
+      top: 0;
+      right: -2px;
+      bottom: -2px;
+      width: 4px;
+      pointer-events: none;
+      background-color: $tableResizeHandleBgColor;
+      z-index: 1;
+    }
+
+    .resize-cursor {
+      cursor: ew-resize;
+      cursor: col-resize;
+    }
+  }
+}
