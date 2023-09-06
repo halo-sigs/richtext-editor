@@ -1,11 +1,13 @@
 import { mergeAttributes, Node } from "@tiptap/core";
 import { Plugin, PluginKey } from "prosemirror-state";
 import { Decoration, DecorationSet } from "prosemirror-view";
-import { cellsEqueal, getCellsInRow } from "./util";
-import GripCellTable from "./GripCellTable.vue";
-import { createVNode } from "vue";
+import { getCellsInRow, isColumnSelected, selectColumn } from "./util";
 import { render } from "vue";
-import type { VNode } from "vue";
+import { addColumnAfter } from "@tiptap/pm/tables";
+import { Tooltip } from "floating-vue";
+import { h } from "vue";
+import MdiPlus from "~icons/mdi/plus";
+import { i18n } from "@/locales";
 
 export interface TableCellOptions {
   HTMLAttributes: Record<string, any>;
@@ -59,17 +61,14 @@ const TableHeader = Node.create<TableCellOptions>({
   },
 
   addStorage() {
-    const cellDoms = new Map<string, VNode>();
+    const gripMap = new Map<string, HTMLElement>();
     return {
-      cellDoms: cellDoms,
+      gripMap,
     };
   },
 
   onDestroy() {
-    this.storage.cellDoms.forEach((node: VNode) => {
-      render(null, node.el as HTMLElement);
-    });
-    this.storage.cellDoms.clear();
+    this.storage.gripMap.clear();
   },
 
   addProseMirrorPlugins() {
@@ -88,22 +87,50 @@ const TableHeader = Node.create<TableCellOptions>({
                 decorations.push(
                   Decoration.widget(pos + 1, () => {
                     const key = "column" + index;
-                    const isLast = index === cells.length - 1;
-                    const props = {
-                      editor,
-                      type: "column",
-                      index: index,
-                      isLast: isLast,
-                    };
-                    let instance = storage.cellDoms.get(key) as VNode;
-                    if (instance) {
-                      instance.props = props;
-                    } else {
-                      instance = createVNode(GripCellTable, props);
-                      render(instance, document.createElement("div"));
-                      storage.cellDoms.set(key, instance);
+                    const colSelected = isColumnSelected(index)(selection);
+                    let className = "grip-column";
+                    if (colSelected) {
+                      className += " selected";
                     }
-                    return instance.el as HTMLElement;
+                    if (index === 0) {
+                      className += " first";
+                    } else if (index === cells.length - 1) {
+                      className += " last";
+                    }
+
+                    let grip = storage.gripMap.get(key) as HTMLElement;
+                    if (!grip) {
+                      grip = document.createElement("a");
+                      const instance = h(
+                        Tooltip,
+                        {
+                          triggers: ["hover"],
+                        },
+                        {
+                          default: () => h(MdiPlus, { class: "plus-icon" }),
+                          popper: () =>
+                            i18n.global.t(
+                              "editor.menus.table.add_column_after"
+                            ),
+                        }
+                      );
+                      render(instance, grip);
+                      grip.addEventListener("mousedown", (event) => {
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+
+                        editor.view.dispatch(
+                          selectColumn(index)(editor.state.tr)
+                        );
+
+                        if (event.target !== grip) {
+                          addColumnAfter(editor.state, editor.view.dispatch);
+                        }
+                      });
+                    }
+                    grip.className = className;
+                    storage.gripMap.set(key, grip);
+                    return grip;
                   })
                 );
               });

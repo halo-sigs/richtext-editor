@@ -1,7 +1,6 @@
 import { findParentNode } from "@tiptap/core";
 import { CellSelection, TableMap } from "@tiptap/pm/tables";
 import type { Selection, Transaction } from "prosemirror-state";
-import { start } from "repl";
 
 export const selectTable = (tr: Transaction) => {
   const table = findTable(tr.selection);
