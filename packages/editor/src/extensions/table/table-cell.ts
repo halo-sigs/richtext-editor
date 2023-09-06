@@ -76,6 +76,9 @@ const TableCell = Node.create<TableCellOptions>({
   },
 
   onDestroy() {
+    this.storage.cellDoms.forEach((node: VNode) => {
+      render(null, node.el as HTMLElement);
+    });
     this.storage.cellDoms.clear();
   },
 
@@ -95,24 +98,22 @@ const TableCell = Node.create<TableCellOptions>({
                 if (index === 0) {
                   decorations.push(
                     Decoration.widget(pos + 1, () => {
-                      const key = "table" + pos + 1;
+                      const key = "table" + index;
                       const isLast = index === cells.length - 1;
-                      let instance = storage.cellDoms.get(key) as VNode;
-                      if (
-                        instance &&
-                        instance.props?.index == index &&
-                        instance.props.isLast == isLast
-                      ) {
-                        return instance.el as HTMLElement;
-                      }
-                      instance = createVNode(GripCellTable, {
+                      const props = {
                         editor,
                         type: "table",
-                        index: index,
+                        pos: index,
                         isLast: isLast,
-                      });
-                      render(instance, document.createElement("div"));
-                      storage.cellDoms.set(key, instance);
+                      };
+                      let instance = storage.cellDoms.get(key) as VNode;
+                      if (instance) {
+                        instance.props = props;
+                      } else {
+                        instance = createVNode(GripCellTable, props);
+                        storage.cellDoms.set(key, instance);
+                        render(instance, document.createElement("div"));
+                      }
                       return instance.el as HTMLElement;
                     })
                   );
@@ -120,24 +121,22 @@ const TableCell = Node.create<TableCellOptions>({
 
                 decorations.push(
                   Decoration.widget(pos + 1, () => {
-                    const key = "row" + pos + 1;
+                    const key = "row" + index;
                     let instance = storage.cellDoms.get(key) as VNode;
                     const isLast = index === cells.length - 1;
-                    if (
-                      instance &&
-                      instance.props?.index == index &&
-                      instance.props.isLast == isLast
-                    ) {
-                      return instance.el as HTMLElement;
-                    }
-                    instance = createVNode(GripCellTable, {
+                    const props = {
                       editor,
                       type: "row",
                       index: index,
                       isLast: isLast,
-                    });
-                    render(instance, document.createElement("div"));
-                    storage.cellDoms.set(key, instance);
+                    };
+                    if (instance) {
+                      instance.props = props;
+                    } else {
+                      instance = createVNode(GripCellTable, props);
+                      storage.cellDoms.set(key, instance);
+                      render(instance, document.createElement("div"));
+                    }
                     return instance.el as HTMLElement;
                   })
                 );

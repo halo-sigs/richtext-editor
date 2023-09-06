@@ -66,6 +66,9 @@ const TableHeader = Node.create<TableCellOptions>({
   },
 
   onDestroy() {
+    this.storage.cellDoms.forEach((node: VNode) => {
+      render(null, node.el as HTMLElement);
+    });
     this.storage.cellDoms.clear();
   },
 
@@ -84,25 +87,22 @@ const TableHeader = Node.create<TableCellOptions>({
               cells.forEach(({ pos }, index) => {
                 decorations.push(
                   Decoration.widget(pos + 1, () => {
-                    const key = "column" + pos + 1;
+                    const key = "column" + index;
                     const isLast = index === cells.length - 1;
-                    let instance = storage.cellDoms.get(key) as VNode;
-                    if (
-                      instance &&
-                      instance.props?.index == index &&
-                      instance.props.isLast == isLast
-                    ) {
-                      return instance.el as HTMLElement;
-                    }
-                    instance = createVNode(GripCellTable, {
+                    const props = {
                       editor,
                       type: "column",
                       index: index,
                       isLast: isLast,
-                    });
-                    const divDom = document.createElement("div");
-                    render(instance, divDom);
-                    storage.cellDoms.set(key, instance);
+                    };
+                    let instance = storage.cellDoms.get(key) as VNode;
+                    if (instance) {
+                      instance.props = props;
+                    } else {
+                      instance = createVNode(GripCellTable, props);
+                      render(instance, document.createElement("div"));
+                      storage.cellDoms.set(key, instance);
+                    }
                     return instance.el as HTMLElement;
                   })
                 );

@@ -1,6 +1,7 @@
 import { findParentNode } from "@tiptap/core";
 import { CellSelection, TableMap } from "@tiptap/pm/tables";
 import type { Selection, Transaction } from "prosemirror-state";
+import { start } from "repl";
 
 export const selectTable = (tr: Transaction) => {
   const table = findTable(tr.selection);
@@ -21,34 +22,43 @@ const select =
   (type: "row" | "column") => (index: number) => (tr: Transaction) => {
     const table = findTable(tr.selection);
     const isRowSelection = type === "row";
+
     if (table) {
       const map = TableMap.get(table.node);
-
       if (index >= 0 && index < (isRowSelection ? map.height : map.width)) {
-        const left = isRowSelection ? 0 : index;
-        const top = isRowSelection ? index : 0;
-        const right = isRowSelection ? map.width : index + 1;
-        const bottom = isRowSelection ? index + 1 : map.height;
+        const cells = isRowSelection
+          ? map.cellsInRect({
+              left: 0,
+              right: 1,
+              top: 0,
+              bottom: map.height,
+            })
+          : map.cellsInRect({
+              left: 0,
+              right: map.width,
+              top: 0,
+              bottom: 1,
+            });
 
-        const cellsInFirstRow = map.cellsInRect({
-          left,
-          top,
-          right: isRowSelection ? right : left + 1,
-          bottom: isRowSelection ? top + 1 : bottom,
-        });
+        const startCellRect = map.findCell(cells[index]);
+        const rect = {
+          left: isRowSelection ? map.width - 1 : startCellRect.left,
+          right: isRowSelection ? map.width : startCellRect.right,
+          top: isRowSelection ? startCellRect.top : map.height - 1,
+          bottom: isRowSelection ? startCellRect.bottom : map.height,
+        };
+        let endCellRect = map.cellsInRect(rect);
+        while (endCellRect.length === 0) {
+          if (isRowSelection) {
+            rect.left -= 1;
+          } else {
+            rect.top -= 1;
+          }
+          endCellRect = map.cellsInRect(rect);
+        }
 
-        const cellsInLastRow =
-          bottom - top === 1
-            ? cellsInFirstRow
-            : map.cellsInRect({
-                left: isRowSelection ? left : right - 1,
-                top: isRowSelection ? bottom - 1 : top,
-                right,
-                bottom,
-              });
-
-        const head = table.start + cellsInFirstRow[0];
-        const anchor = table.start + cellsInLastRow[cellsInLastRow.length - 1];
+        const head = table.start + cells[index];
+        const anchor = table.start + endCellRect[endCellRect.length - 1];
         const $head = tr.doc.resolve(head);
         const $anchor = tr.doc.resolve(anchor);
 
@@ -128,23 +138,6 @@ export const getCellsInRow =
     }
   };
 
-export const cellsEqueal = (
-  newCells: { pos: number; start: number; node: Node | null | undefined }[],
-  oldCells: { pos: number; start: number; node: Node | null | undefined }[]
-) => {
-  if (newCells.length !== oldCells.length) {
-    return false;
-  }
-
-  for (let i = 0; i < newCells.length; i++) {
-    if (newCells[i].pos !== oldCells[i].pos) {
-      return false;
-    }
-  }
-
-  return true;
-};
-
 export const findTable = (selection: Selection) => {
   return findParentNode((node) => node.type.spec.tableRole === "table")(
     selection
@@ -178,12 +171,23 @@ export const isCellSelection = (selection: any) => {
 export const isColumnSelected = (columnIndex: number) => (selection: any) => {
   if (isCellSelection(selection)) {
     const map = TableMap.get(selection.$anchorCell.node(-1));
-    return isRectSelected({
-      left: columnIndex,
-      right: columnIndex + 1,
+    const cells = map.cellsInRect({
+      left: 0,
+      right: map.width,
+      top: 0,
+      bottom: 1,
+    });
+    if (columnIndex >= cells.length) {
+      return false;
+    }
+    const startCellRect = map.findCell(cells[columnIndex]);
+    const isSelect = isRectSelected({
+      left: startCellRect.left,
+      right: startCellRect.right,
       top: 0,
       bottom: map.height,
     })(selection);
+    return isSelect;
   }
 
   return false;
@@ -192,11 +196,21 @@ export const isColumnSelected = (columnIndex: number) => (selection: any) => {
 export const isRowSelected = (rowIndex: number) => (selection: any) => {
   if (isCellSelection(selection)) {
     const map = TableMap.get(selection.$anchorCell.node(-1));
+    const cells = map.cellsInRect({
+      left: 0,
+      right: 1,
+      top: 0,
+      bottom: map.height,
+    });
+    if (rowIndex >= cells.length) {
+      return false;
+    }
+    const startCellRect = map.findCell(cells[rowIndex]);
     return isRectSelected({
       left: 0,
       right: map.width,
-      top: rowIndex,
-      bottom: rowIndex + 1,
+      top: startCellRect.top,
+      bottom: startCellRect.bottom,
     })(selection);
   }
 

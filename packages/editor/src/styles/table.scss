@@ -49,15 +49,24 @@
         background: $tableHeaderBgColor;
       }
 
+      td {
+        background: #fff;
+      }
+
       td,
       th {
         position: relative;
         vertical-align: top;
         border: 1px solid $tableBorderColor;
         position: relative;
-        padding: 4px 8px;
+        padding: 12px 8px;
         text-align: left;
         min-width: 100px;
+
+        > * {
+          margin-top: 0;
+          margin-bottom: 0;
+        }
       }
 
       .selectedCell {

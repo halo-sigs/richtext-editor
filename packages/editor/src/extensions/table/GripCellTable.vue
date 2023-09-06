@@ -8,7 +8,7 @@ import {
   selectRow,
   selectTable,
 } from "./util";
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed, onUpdated, ref } from "vue";
 import { addColumnAfter, addRowAfter } from "@tiptap/pm/tables";
 import MdiPlus from "~icons/mdi/plus";
 import { Tooltip } from "floating-vue";
@@ -49,7 +49,7 @@ const handleMouseDown = (event: Event) => {
   if (selection) {
     props.editor.view.dispatch(selection);
   }
-  console.log(event.target, grip.value);
+
   if (event.target != grip.value) {
     if (props.type === "row") {
       addRowAfter(props.editor.state, props.editor.view.dispatch);
@@ -58,12 +58,9 @@ const handleMouseDown = (event: Event) => {
     }
   }
 };
-onMounted(() => {
-  console.log("创建 GripCellTable", props.type);
-});
 
-onUnmounted(() => {
-  console.log("卸载 GripCellTable", props.type);
+onUpdated(() => {
+  console.log("update grip cell table");
 });
 </script>
 <template>
@@ -79,18 +76,20 @@ onUnmounted(() => {
     }"
     @mousedown="handleMouseDown"
   >
-    <Tooltip
-      v-if="type !== 'table'"
-      :triggers="['hover']"
-      :shown="false"
-      :auto-hide="true"
-    >
-      <MdiPlus class="plus-icon" />
+    <KeepAlive>
+      <Tooltip
+        v-if="type !== 'table'"
+        :triggers="['hover']"
+        :shown="false"
+        :auto-hide="true"
+      >
+        <MdiPlus class="plus-icon" />
 
-      <template #popper>
-        {{ type === "column" ? "向后增加一列" : "向后增加一行" }}
-      </template>
-    </Tooltip>
+        <template #popper>
+          {{ type === "column" ? "向后增加一列" : "向后增加一行" }}
+        </template>
+      </Tooltip>
+    </KeepAlive>
   </a>
 </template>
 <style lang="scss">
