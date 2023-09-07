@@ -191,11 +191,10 @@ const Columns = Node.create({
               editor,
               icon: markRaw(MdiCollage),
               title: i18n.global.t("editor.extensions.commands_menu.columns"),
-              action: ({ range }: { range: Range }) => {
+              action: () => {
                 editor
                   .chain()
                   .focus()
-                  .deleteRange(range)
                   .insertColumns({
                     cols: 2,
                   })
