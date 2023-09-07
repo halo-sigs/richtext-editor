@@ -23,7 +23,6 @@ import ExtensionGapcursor from "@tiptap/extension-gapcursor";
 import ExtensionHardBreak from "@tiptap/extension-hard-break";
 import ExtensionHorizontalRule from "@tiptap/extension-horizontal-rule";
 import ExtensionDocument from "@tiptap/extension-document";
-import ExtensionText from "@tiptap/extension-text";
 import ExtensionPlaceholder from "@tiptap/extension-placeholder";
 import { i18n } from "@/locales";
 
@@ -35,6 +34,7 @@ import ExtensionVideo from "./video";
 import ExtensionAudio from "./audio";
 import ExtensionImage from "./image";
 import ExtensionIndent from "./indent";
+import ExtensionText from "./text";
 
 const allExtensions = [
   ExtensionBlockquote,

@@ -6,7 +6,6 @@ import type { Editor } from "@tiptap/vue-3";
 import { markRaw } from "vue";
 import MdiFormatColor from "~icons/mdi/format-color";
 import ColorToolbarItem from "./ColorToolbarItem.vue";
-import ColorBubbleItem from "./ColorBubbleItem.vue";
 import { i18n } from "@/locales";
 
 const Color = TiptapColor.extend<ColorOptions & ExtensionOptions>({
@@ -17,18 +16,6 @@ const Color = TiptapColor.extend<ColorOptions & ExtensionOptions>({
         return {
           priority: 81,
           component: markRaw(ColorToolbarItem),
-          props: {
-            editor,
-            isActive: false,
-            icon: markRaw(MdiFormatColor),
-            title: i18n.global.t("editor.common.color"),
-          },
-        };
-      },
-      getBubbleItems({ editor }: { editor: Editor }) {
-        return {
-          priority: 51,
-          component: markRaw(ColorBubbleItem),
           props: {
             editor,
             isActive: false,

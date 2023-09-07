@@ -1,29 +1,19 @@
 <script lang="ts" setup>
 import { BubbleItem } from "@/components";
-import type { Component } from "vue";
-import type { Editor } from "@tiptap/vue-3";
 import ColorPickerDropdown from "@/components/common/ColorPickerDropdown.vue";
 import MdiFormatColorMarkerCancel from "~icons/mdi/format-color-marker-cancel";
 import { i18n } from "@/locales";
+import type { Editor } from "@tiptap/vue-3";
+import type { Component } from "vue";
 
-const props = withDefaults(
-  defineProps<{
-    editor?: Editor;
-    isActive?: boolean;
-    visible?: boolean;
-    title?: string;
-    action?: () => void;
-    icon?: Component;
-  }>(),
-  {
-    editor: undefined,
-    isActive: false,
-    visible: true,
-    title: undefined,
-    action: undefined,
-    icon: undefined,
-  }
-);
+const props = defineProps<{
+  editor: Editor;
+  isActive: ({ editor }: { editor: Editor }) => boolean;
+  visible?: ({ editor }: { editor: Editor }) => boolean;
+  icon?: Component;
+  title?: string;
+  action?: ({ editor }: { editor: Editor }) => void;
+}>();
 
 function handleSetColor(color?: string) {
   if (!color) {

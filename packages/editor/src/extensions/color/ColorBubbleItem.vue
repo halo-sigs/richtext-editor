@@ -1,28 +1,18 @@
 <script lang="ts" setup>
 import { BubbleItem } from "@/components";
-import type { Component } from "vue";
-import type { Editor } from "@tiptap/vue-3";
 import ColorPickerDropdown from "@/components/common/ColorPickerDropdown.vue";
 import { i18n } from "@/locales";
+import type { Editor } from "@tiptap/vue-3";
+import type { Component } from "vue";
 
-const props = withDefaults(
-  defineProps<{
-    editor?: Editor;
-    isActive?: boolean;
-    visible?: boolean;
-    title?: string;
-    action?: () => void;
-    icon?: Component;
-  }>(),
-  {
-    editor: undefined,
-    isActive: false,
-    visible: true,
-    title: undefined,
-    action: undefined,
-    icon: undefined,
-  }
-);
+const props = defineProps<{
+  editor: Editor;
+  isActive: ({ editor }: { editor: Editor }) => boolean;
+  visible?: ({ editor }: { editor: Editor }) => boolean;
+  icon?: Component;
+  title?: string;
+  action?: ({ editor }: { editor: Editor }) => void;
+}>();
 
 function handleSetColor(color?: string) {
   if (!color) {
@@ -38,7 +28,7 @@ function handleUnsetColor() {
 
 <template>
   <ColorPickerDropdown @update:model-value="handleSetColor">
-    <BubbleItem v-bind="props" />
+    <BubbleItem v-bind="props" :editor="editor" />
     <template #prefix>
       <div class="p-1">
         <div

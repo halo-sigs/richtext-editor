@@ -1,6 +1,7 @@
-import type { Editor, Range } from "@tiptap/vue-3";
+import type { Editor, Range } from "@tiptap/core";
+import type { EditorState } from "prosemirror-state";
+import type { EditorView } from "prosemirror-view";
 import type { Component } from "vue";
-
 export interface ToolbarItem {
   priority: number;
   component: Component;
@@ -15,19 +16,40 @@ export interface ToolbarItem {
   children?: ToolbarItem[];
 }
 
-export interface BubbleItem {
-  priority: number;
-  component: Component;
-  props: {
+interface BubbleMenuProps {
+  pluginKey?: string;
+  editor?: Editor;
+  shouldShow: (props: {
     editor: Editor;
-    isActive: boolean;
-    visible?: boolean;
-    icon?: Component;
-    title?: string;
-    action?: () => void;
-  };
+    node?: HTMLElement;
+    view?: EditorView;
+    state?: EditorState;
+    oldState?: EditorState;
+    from?: number;
+    to?: number;
+  }) => boolean;
+  tippyOptions?: Record<string, unknown>;
+  getRenderContainer?: (node: HTMLElement) => HTMLElement;
+  defaultAnimation?: boolean;
 }
 
+export interface NodeBubbleMenu extends BubbleMenuProps {
+  component?: Component;
+  items?: BubbleItem[];
+}
+
+export interface BubbleItem {
+  priority: number;
+  component?: Component;
+  props: {
+    isActive: ({ editor }: { editor: Editor }) => boolean;
+    visible?: ({ editor }: { editor: Editor }) => boolean;
+    icon?: Component;
+    iconStyle?: string;
+    title?: string;
+    action?: ({ editor }: { editor: Editor }) => any;
+  };
+}
 export interface ToolboxItem {
   priority: number;
   component: Component;
@@ -49,11 +71,7 @@ export interface ExtensionOptions {
 
   getCommandMenuItems?: () => CommandMenuItem | CommandMenuItem[];
 
-  getBubbleItems?: ({
-    editor,
-  }: {
-    editor: Editor;
-  }) => BubbleItem | BubbleItem[];
+  getBubbleMenu?: ({ editor }: { editor: Editor }) => NodeBubbleMenu;
 
   getToolboxItems?: ({
     editor,
