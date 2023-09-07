@@ -187,9 +187,6 @@ importers:
       '@tiptap/extension-table':
         specifier: ^2.0.4
         version: 2.0.4(@tiptap/core@2.0.4)(@tiptap/pm@2.1.7)
-      '@tiptap/extension-table-header':
-        specifier: ^2.0.4
-        version: 2.0.4(@tiptap/core@2.0.4)
       '@tiptap/extension-table-row':
         specifier: ^2.0.4
         version: 2.0.4(@tiptap/core@2.0.4)
@@ -1656,14 +1653,6 @@ packages:
 
   /@tiptap/extension-superscript@2.0.4(@tiptap/core@2.0.4):
     resolution: {integrity: sha512-XmNulS19eUs7KYM5H+n6blbGSOmG8Vbi+0YdPVBi71oHfn+gm6a5CfjZt1JxpMe4fNa6gtCnotTHHQdBzo7VGA==}
-    peerDependencies:
-      '@tiptap/core': ^2.0.0
-    dependencies:
-      '@tiptap/core': 2.0.4(@tiptap/pm@2.1.7)
-    dev: false
-
-  /@tiptap/extension-table-header@2.0.4(@tiptap/core@2.0.4):
-    resolution: {integrity: sha512-UkDrviIy+W65bWGHU8DSsLH4WrvphQ8BzzDlw9LnjV63QQHeftp/P6wXRg9kebOuJD/KTm63L0vTWwdptRuzyA==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
     dependencies:
