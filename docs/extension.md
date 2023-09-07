@@ -14,7 +14,7 @@
       getToolbarItems({ editor }: { editor: Editor }) {
         return []
       },
-      getBubbleItems({ editor }: { editor: Editor }) {
+      getBubbleMenu({ editor }: { editor: Editor }) {
         return []
       },
       getCommandMenuItems() {
@@ -31,7 +31,7 @@
 其中对象的属性分别对应了工具栏的三个部分，分别是：
 
 - `getToolbarItems`：工具栏
-- `getBubbleItems`：悬浮工具栏
+- `getBubbleMenu`：悬浮工具栏
 - `getCommandMenuItems`：Slash Command
 - `getToolboxItems`：工具箱（Toolbox）
 
@@ -53,17 +53,36 @@ export interface ToolbarItem {
   children?: ToolbarItem[];
 }
 
-// 悬浮工具栏
+// 悬浮菜单
+export interface NodeBubbleMenu {
+  pluginKey?: string;
+  editor?: Editor;
+  shouldShow: (props: {
+    editor: Editor;
+    node?: HTMLElement;
+    view?: EditorView;
+    state?: EditorState;
+    oldState?: EditorState;
+    from?: number;
+    to?: number;
+  }) => boolean;
+  tippyOptions?: Record<string, unknown>;
+  getRenderContainer?: (node: HTMLElement) => HTMLElement;
+  defaultAnimation?: boolean;
+  component?: Component;
+  items?: BubbleItem[];
+}
+
 export interface BubbleItem {
   priority: number;
-  component: Component;
+  component?: Component;
   props: {
-    editor: Editor;
-    isActive: boolean;
-    visible?: boolean;
+    isActive: ({ editor }: { editor: Editor }) => boolean;
+    visible?: ({ editor }: { editor: Editor }) => boolean;
     icon?: Component;
+    iconStyle?: string;
     title?: string;
-    action?: () => void;
+    action?: ({ editor }: { editor: Editor }) => any;
   };
 }
 
@@ -245,14 +264,13 @@ const Video = Node.create<ExtensionOptions>({
             isActive: editor.isActive("video"),
             icon: markRaw(MdiVideo),
             title: "添加视频",
-            action: () => editor
-              .chain()
-              .focus()
-              .deleteRange(range)
-              .insertContent([
-                { type: "video", attrs: { src: "" } },
-              ])
-              .run(),
+            action: () =>
+              editor
+                .chain()
+                .focus()
+                .deleteRange(range)
+                .insertContent([{ type: "video", attrs: { src: "" } }])
+                .run(),
           },
         };
       },
@@ -267,11 +285,47 @@ const Video = Node.create<ExtensionOptions>({
               .chain()
               .focus()
               .deleteRange(range)
-              .insertContent([
-                { type: "video", attrs: { src: "" } },
-              ])
+              .insertContent([{ type: "video", attrs: { src: "" } }])
               .run();
           },
+        };
+      },
+      getBubbleMenu({ editor }: { editor: Editor }) {
+        return {
+          pluginKey: "videoBubbleMenu",
+          shouldShow: ({ state }: { state: EditorState }) => {
+            return isActive(state, Video.name);
+          },
+          items: [
+            {
+              priority: 10,
+              props: {
+                isActive: () => {
+                  editor.getAttributes(Video.name).controls;
+                },
+                icon: markRaw(
+                  editor.getAttributes(Video.name).controls
+                    ? MdiCogPlay
+                    : MdiCogPlayOutline
+                ),
+                action: () => {
+                  return editor
+                    .chain()
+                    .updateAttributes(Video.name, {
+                      controls: editor.getAttributes(Video.name).controls
+                        ? null
+                        : true,
+                    })
+                    .setNodeSelection(editor.state.selection.from)
+                    .focus()
+                    .run();
+                },
+                title: editor.getAttributes(Video.name).controls
+                  ? "隐藏控制面板"
+                  : "显示控制面板",
+              },
+            },
+          ],
         };
       },
     };

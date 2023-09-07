@@ -6,7 +6,6 @@ import MdiFormatUnderline from "~icons/mdi/format-underline";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import BubbleItem from "@/components/bubble/BubbleItem.vue";
 
 const Underline = TiptapUnderline.extend<ExtensionOptions & UnderlineOptions>({
   addOptions() {
@@ -16,19 +15,6 @@ const Underline = TiptapUnderline.extend<ExtensionOptions & UnderlineOptions>({
         return {
           priority: 60,
           component: markRaw(ToolbarItem),
-          props: {
-            editor,
-            isActive: editor.isActive("underline"),
-            icon: markRaw(MdiFormatUnderline),
-            title: i18n.global.t("editor.common.underline"),
-            action: () => editor.chain().focus().toggleUnderline().run(),
-          },
-        };
-      },
-      getBubbleItems({ editor }: { editor: Editor }) {
-        return {
-          priority: 30,
-          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("underline"),

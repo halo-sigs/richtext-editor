@@ -1,27 +1,18 @@
 <script lang="ts" setup>
-import type { Editor } from "@tiptap/vue-3";
 import { computed, type Component } from "vue";
 import { VTooltip, Dropdown as VDropdown } from "floating-vue";
 import MdiLinkVariant from "~icons/mdi/link-variant";
 import { i18n } from "@/locales";
+import type { Editor } from "@tiptap/vue-3";
 
-const props = withDefaults(
-  defineProps<{
-    editor: Editor;
-    isActive?: boolean;
-    visible?: boolean;
-    title?: string;
-    action?: () => void;
-    icon?: Component;
-  }>(),
-  {
-    isActive: false,
-    visible: true,
-    title: undefined,
-    action: undefined,
-    icon: undefined,
-  }
-);
+const props = defineProps<{
+  editor: Editor;
+  isActive: ({ editor }: { editor: Editor }) => boolean;
+  visible?: ({ editor }: { editor: Editor }) => boolean;
+  icon?: Component;
+  title?: string;
+  action?: ({ editor }: { editor: Editor }) => void;
+}>();
 
 const href = computed({
   get() {
@@ -54,12 +45,12 @@ const target = computed({
   <VDropdown class="inline-flex" :triggers="['click']" :distance="10">
     <button
       v-tooltip="
-        isActive
+        isActive({ editor })
           ? i18n.global.t('editor.extensions.link.edit_link')
           : i18n.global.t('editor.extensions.link.add_link')
       "
       class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
-      :class="{ 'bg-gray-200 !text-black': isActive }"
+      :class="{ 'bg-gray-200 !text-black': isActive({ editor }) }"
     >
       <MdiLinkVariant />
     </button>

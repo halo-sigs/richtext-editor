@@ -4,7 +4,6 @@ import type { Decoration } from "prosemirror-view";
 import { NodeViewContent, NodeViewWrapper, Editor, Node } from "@tiptap/vue-3";
 import lowlight from "./lowlight";
 import { computed } from "vue";
-import BlockCard from "@/components/block/BlockCard.vue";
 
 const props = defineProps<{
   editor: Editor;
@@ -31,32 +30,23 @@ const selectedLanguage = computed({
 });
 </script>
 <template>
-  <node-view-wrapper>
-    <block-card
-      :editor="editor"
-      :delete-node="deleteNode"
-      :get-pos="getPos"
-      :selected="selected"
-    >
-      <template #content>
-        <div class="py-1.5">
-          <select
-            v-model="selectedLanguage"
-            contenteditable="false"
-            class="block px-2 py-1.5 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option :value="null">auto</option>
-            <option
-              v-for="(language, index) in languages"
-              :key="index"
-              :value="language"
-            >
-              {{ language }}
-            </option>
-          </select>
-        </div>
-        <pre><node-view-content as="code" class="hljs" /></pre>
-      </template>
-    </block-card>
+  <node-view-wrapper as="div" class="code-node">
+    <div class="py-1.5">
+      <select
+        v-model="selectedLanguage"
+        contenteditable="false"
+        class="block px-2 py-1.5 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+      >
+        <option :value="null">auto</option>
+        <option
+          v-for="(language, index) in languages"
+          :key="index"
+          :value="language"
+        >
+          {{ language }}
+        </option>
+      </select>
+    </div>
+    <pre><node-view-content as="code" class="hljs" /></pre>
   </node-view-wrapper>
 </template>

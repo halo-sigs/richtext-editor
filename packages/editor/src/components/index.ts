@@ -6,6 +6,7 @@ export { default as BlockCard } from "./block/BlockCard.vue";
 
 // bubble
 export { default as BubbleItem } from "./bubble/BubbleItem.vue";
+export { default as NodeBubbleMenu } from "./bubble/BubbleMenu.vue";
 
 // toolbar
 export { default as ToolbarItem } from "./toolbar/ToolbarItem.vue";
