@@ -6,7 +6,6 @@ import MdiFormatStrikethrough from "~icons/mdi/format-strikethrough";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import BubbleItem from "@/components/bubble/BubbleItem.vue";
 
 const Strike = TiptapStrike.extend<ExtensionOptions & StrikeOptions>({
   addOptions() {
@@ -16,19 +15,6 @@ const Strike = TiptapStrike.extend<ExtensionOptions & StrikeOptions>({
         return {
           priority: 70,
           component: markRaw(ToolbarItem),
-          props: {
-            editor,
-            isActive: editor.isActive("strike"),
-            icon: markRaw(MdiFormatStrikethrough),
-            title: i18n.global.t("editor.common.strike"),
-            action: () => editor.chain().focus().toggleStrike().run(),
-          },
-        };
-      },
-      getBubbleItems({ editor }: { editor: Editor }) {
-        return {
-          priority: 40,
-          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("strike"),

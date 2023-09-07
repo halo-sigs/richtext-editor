@@ -1,34 +1,86 @@
 <script lang="ts" setup>
-import type { Component } from "vue";
-import { VTooltip } from "floating-vue";
+import { VTooltip, Dropdown as VDropdown } from "floating-vue";
+import type { Editor } from "@tiptap/core";
+import { ref, type Component } from "vue";
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
-    isActive?: boolean;
-    visible?: boolean;
-    title?: string;
-    action?: () => void;
+    editor: Editor;
+    isActive: ({ editor }: { editor: Editor }) => boolean;
+    visible?: ({ editor }: { editor: Editor }) => boolean;
     icon?: Component;
+    iconStyle?: string;
+    title?: string;
+    action?: ({ editor }: { editor: Editor }) => Component | void;
   }>(),
   {
-    isActive: false,
-    visible: true,
+    isActive: () => false,
+    visible: () => true,
     title: undefined,
     action: undefined,
     icon: undefined,
+    iconStyle: undefined,
   }
 );
+
+const componentRef = ref<Component | void>();
+const handleBubbleItemClick = (editor: Editor) => {
+  if (!props.action) {
+    return;
+  }
+  const callback = props.action?.({ editor });
+  if (typeof callback === "object") {
+    if (componentRef.value) {
+      componentRef.value = undefined;
+    } else {
+      componentRef.value = callback;
+    }
+  }
+};
 </script>
 
 <template>
-  <button
-    v-if="visible"
-    v-tooltip="title"
-    :class="{ 'bg-gray-200 !text-black': isActive }"
-    :title="title"
-    class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
-    @click="action?.()"
+  <VDropdown
+    class="inline-flex"
+    :triggers="[]"
+    :auto-hide="true"
+    :shown="componentRef"
+    :distance="10"
   >
-    <component :is="icon" />
-  </button>
+    <button
+      v-if="visible({ editor })"
+      v-tooltip="{
+        content: title,
+        distance: 8,
+        delay: {
+          show: 0,
+        },
+      }"
+      :class="{ 'bg-gray-200 !text-black': isActive({ editor }) }"
+      :title="title"
+      class="text-gray-600 text-lg hover:bg-gray-100 p-2 rounded-sm"
+      @click="handleBubbleItemClick(editor)"
+    >
+      <component :is="icon" :style="iconStyle" class="w-5 h-5" />
+    </button>
+    <template #popper>
+      <div
+        class="relative rounded-md bg-white overflow-hidden drop-shadow w-96 p-1 max-h-72 overflow-y-auto"
+      >
+        <KeepAlive>
+          <component :is="componentRef" v-bind="props"></component>
+        </KeepAlive>
+      </div>
+    </template>
+  </VDropdown>
 </template>
+<style>
+.v-popper__popper.v-popper__popper--show-from .v-popper__wrapper {
+  transform: scale(0.9);
+}
+
+.v-popper__popper.v-popper__popper--show-to .v-popper__wrapper {
+  transform: none;
+  transition: transform 0.1s;
+}
+</style>

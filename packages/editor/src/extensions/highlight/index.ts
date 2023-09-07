@@ -24,18 +24,6 @@ const Highlight = TiptapHighlight.extend<ExtensionOptions & HighlightOptions>({
           },
         };
       },
-      getBubbleItems({ editor }: { editor: Editor }) {
-        return {
-          priority: 50,
-          component: markRaw(HighlightBubbleItem),
-          props: {
-            editor,
-            isActive: editor.isActive("highlight"),
-            icon: markRaw(MdiFormatColorHighlight),
-            title: i18n.global.t("editor.common.highlight"),
-          },
-        };
-      },
     };
   },
 }).configure({ multicolor: true });

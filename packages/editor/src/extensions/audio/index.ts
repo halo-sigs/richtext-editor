@@ -1,6 +1,7 @@
 import type { ExtensionOptions } from "@/types";
 import {
   Editor,
+  isActive,
   mergeAttributes,
   Node,
   nodeInputRule,
@@ -12,6 +13,17 @@ import AudioView from "./AudioView.vue";
 import MdiMusicCircleOutline from "~icons/mdi/music-circle-outline";
 import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
 import { i18n } from "@/locales";
+import MdiPlayCircle from "~icons/mdi/play-circle";
+import MdiPlayCircleOutline from "~icons/mdi/play-circle-outline";
+import MdiMotionPlayOutline from "~icons/mdi/motion-play-outline";
+import MdiMotionPlay from "~icons/mdi/motion-play";
+import { BlockActionSeparator } from "@/components";
+import BubbleItemAudioLink from "./BubbleItemAudioLink.vue";
+import MdiLinkVariant from "~icons/mdi/link-variant";
+import MdiShare from "~icons/mdi/share";
+import { deleteNode } from "@/utils";
+import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
+import { NodeSelection, type EditorState } from "prosemirror-state";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -159,6 +171,105 @@ const Audio = Node.create<ExtensionOptions>({
             },
           },
         ];
+      },
+      getBubbleMenu({ editor }) {
+        return {
+          pluginKey: "audioBubbleMenu",
+          shouldShow: ({ state }: { state: EditorState }) => {
+            return isActive(state, Audio.name);
+          },
+          items: [
+            {
+              priority: 10,
+              props: {
+                isActive: () => {
+                  return editor.getAttributes(Audio.name).autoplay;
+                },
+                icon: markRaw(
+                  editor.getAttributes(Audio.name).autoplay
+                    ? MdiPlayCircle
+                    : MdiPlayCircleOutline
+                ),
+                action: () => {
+                  return editor
+                    .chain()
+                    .updateAttributes(Audio.name, {
+                      autoplay: editor.getAttributes(Audio.name).autoplay
+                        ? null
+                        : true,
+                    })
+                    .setNodeSelection(editor.state.selection.from)
+                    .focus()
+                    .run();
+                },
+                title: editor.getAttributes(Audio.name).autoplay
+                  ? i18n.global.t("editor.extensions.audio.disable_autoplay")
+                  : i18n.global.t("editor.extensions.audio.enable_autoplay"),
+              },
+            },
+            {
+              priority: 20,
+              props: {
+                isActive: () => {
+                  return editor.getAttributes(Audio.name).loop;
+                },
+                icon: markRaw(
+                  editor.getAttributes(Audio.name).loop
+                    ? MdiMotionPlay
+                    : MdiMotionPlayOutline
+                ),
+                action: () => {
+                  return editor
+                    .chain()
+                    .updateAttributes(Audio.name, {
+                      loop: editor.getAttributes(Audio.name).loop ? null : true,
+                    })
+                    .setNodeSelection(editor.state.selection.from)
+                    .focus()
+                    .run();
+                },
+                title: editor.getAttributes(Audio.name).loop
+                  ? i18n.global.t("editor.extensions.audio.disable_loop")
+                  : i18n.global.t("editor.extensions.audio.enable_loop"),
+              },
+            },
+            {
+              priority: 30,
+              component: markRaw(BlockActionSeparator),
+            },
+            {
+              priority: 40,
+              props: {
+                icon: markRaw(MdiLinkVariant),
+                title: i18n.global.t("editor.common.button.edit_link"),
+                action: () => {
+                  return markRaw(BubbleItemAudioLink);
+                },
+              },
+            },
+            {
+              priority: 50,
+              props: {
+                icon: markRaw(MdiShare),
+                title: i18n.global.t("editor.common.tooltip.open_link"),
+                action: () =>
+                  window.open(editor.getAttributes(Audio.name).src, "_blank"),
+              },
+            },
+            {
+              priority: 60,
+              component: markRaw(BlockActionSeparator),
+            },
+            {
+              priority: 70,
+              props: {
+                icon: markRaw(MdiDeleteForeverOutline),
+                title: i18n.global.t("editor.common.button.delete"),
+                action: ({ editor }) => deleteNode(Audio.name, editor),
+              },
+            },
+          ],
+        };
       },
     };
   },

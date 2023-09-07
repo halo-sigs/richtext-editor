@@ -6,7 +6,6 @@ import MdiFormatBold from "~icons/mdi/format-bold";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import BubbleItem from "@/components/bubble/BubbleItem.vue";
 
 const Bold = TiptapBold.extend<ExtensionOptions & BoldOptions>({
   addOptions() {
@@ -16,19 +15,6 @@ const Bold = TiptapBold.extend<ExtensionOptions & BoldOptions>({
         return {
           priority: 40,
           component: markRaw(ToolbarItem),
-          props: {
-            editor,
-            isActive: editor.isActive("bold"),
-            icon: markRaw(MdiFormatBold),
-            title: i18n.global.t("editor.common.bold"),
-            action: () => editor.chain().focus().toggleBold().run(),
-          },
-        };
-      },
-      getBubbleItems({ editor }: { editor: Editor }) {
-        return {
-          priority: 10,
-          component: markRaw(BubbleItem),
           props: {
             editor,
             isActive: editor.isActive("bold"),

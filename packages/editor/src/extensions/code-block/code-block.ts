@@ -3,6 +3,7 @@ import {
   VueNodeViewRenderer,
   type Range,
   type CommandProps,
+  isActive,
 } from "@tiptap/vue-3";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import type { CodeBlockLowlightOptions } from "@tiptap/extension-code-block-lowlight";
@@ -11,9 +12,15 @@ import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
-import BubbleItem from "@/components/bubble/BubbleItem.vue";
 import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
-import { TextSelection, type Transaction } from "prosemirror-state";
+import {
+  EditorState,
+  NodeSelection,
+  TextSelection,
+  type Transaction,
+} from "prosemirror-state";
+import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
+import { deleteNode } from "@/utils";
 
 export interface CustomCodeBlockLowlightOptions
   extends CodeBlockLowlightOptions {
@@ -138,19 +145,6 @@ export default CodeBlockLowlight.extend<
           },
         };
       },
-      getBubbleItems({ editor }: { editor: Editor }) {
-        return {
-          priority: 90,
-          component: markRaw(BubbleItem),
-          props: {
-            editor,
-            isActive: editor.isActive("codeBlock"),
-            icon: markRaw(MdiCodeBracesBox),
-            title: i18n.global.t("editor.common.codeblock"),
-            action: () => editor.chain().focus().toggleCodeBlock().run(),
-          },
-        };
-      },
       getCommandMenuItems() {
         return {
           priority: 80,
@@ -177,6 +171,40 @@ export default CodeBlockLowlight.extend<
             },
           },
         ];
+      },
+      getBubbleMenu({ editor }: { editor: Editor }) {
+        return {
+          pluginKey: "codeBlockBubbleMenu",
+          shouldShow: ({ state }: { state: EditorState }) => {
+            return isActive(state, CodeBlockLowlight.name);
+          },
+          getRenderContainer: (node: HTMLElement) => {
+            let container = node;
+            // 文本节点
+            if (container.nodeName === "#text") {
+              container = node.parentElement as HTMLElement;
+            }
+            while (
+              container &&
+              container.classList &&
+              !container.classList.contains("code-node")
+            ) {
+              container = container.parentElement as HTMLElement;
+            }
+            return container;
+          },
+          items: [
+            {
+              priority: 10,
+              props: {
+                icon: markRaw(MdiDeleteForeverOutline),
+                title: i18n.global.t("editor.common.button.delete"),
+                action: ({ editor }: { editor: Editor }) =>
+                  deleteNode(CodeBlockLowlight.name, editor),
+              },
+            },
+          ],
+        };
       },
     };
   },
