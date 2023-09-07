@@ -311,14 +311,6 @@ const Columns = Node.create({
     };
   },
 
-  parseHTML() {
-    return [
-      {
-        tag: "div[class=grid]",
-      },
-    ];
-  },
-
   renderHTML({ HTMLAttributes }) {
     return [
       "div",
