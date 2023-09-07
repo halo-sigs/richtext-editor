@@ -205,7 +205,7 @@ const isListActive = (editor: Editor) => {
 };
 
 const isFilterActive = (editor: Editor) => {
-  return editor.isActive("table");
+  return editor.isActive("table") || editor.isActive("columns");
 };
 
 export const getIndent: () => KeyboardShortcutCommand =

@@ -15,7 +15,6 @@ import { i18n } from "@/locales";
 import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
 import {
   EditorState,
-  NodeSelection,
   TextSelection,
   type Transaction,
 } from "prosemirror-state";

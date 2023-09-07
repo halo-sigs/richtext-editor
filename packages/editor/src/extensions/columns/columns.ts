@@ -1,12 +1,23 @@
-import { Editor, findParentNode, mergeAttributes, Node } from "@tiptap/core";
+import {
+  Editor,
+  findParentNode,
+  isActive,
+  mergeAttributes,
+  Node,
+} from "@tiptap/core";
 import { Node as PMNode } from "@tiptap/pm/model";
 import type { NodeType, Schema } from "prosemirror-model";
 import { EditorState, TextSelection } from "prosemirror-state";
 import { markRaw } from "vue";
-import MdiVideo from "~icons/mdi/video";
-import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import Column from "./column";
-import ColumnsView from "./ColumnsView.vue";
+import RiInsertColumnLeft from "~icons/ri/insert-column-left";
+import RiInsertColumnRight from "~icons/ri/insert-column-right";
+import RiDeleteColumn from "~icons/ri/delete-column";
+import { BlockActionSeparator, ToolboxItem } from "@/components";
+import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
+import { i18n } from "@/locales";
+import { deleteNode } from "@/utils";
+import MdiCollage from "~icons/mdi/collage";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -171,12 +182,35 @@ const Columns = Node.create({
       HTMLAttributes: {
         class: "columns",
       },
+      getToolboxItems({ editor }: { editor: Editor }) {
+        return [
+          {
+            priority: 50,
+            component: markRaw(ToolboxItem),
+            props: {
+              editor,
+              icon: markRaw(MdiCollage),
+              title: i18n.global.t("editor.extensions.commands_menu.columns"),
+              action: ({ range }: { range: Range }) => {
+                editor
+                  .chain()
+                  .focus()
+                  .deleteRange(range)
+                  .insertColumns({
+                    cols: 2,
+                  })
+                  .run();
+              },
+            },
+          },
+        ];
+      },
       getCommandMenuItems() {
         return {
-          priority: 1,
-          icon: markRaw(MdiVideo),
+          priority: 70,
+          icon: markRaw(MdiCollage),
           title: "editor.extensions.commands_menu.columns",
-          keywords: ["zhuanlan", "buju", "columns"],
+          keywords: ["fenlan", "columns"],
           command: ({ editor, range }: { editor: Editor; range: Range }) => {
             editor
               .chain()
@@ -189,11 +223,79 @@ const Columns = Node.create({
           },
         };
       },
+      getBubbleMenu({ editor }: { editor: Editor }) {
+        return {
+          pluginKey: "columnsBubbleMenu",
+          shouldShow: ({ state }: { state: EditorState }) => {
+            return isActive(state, Columns.name);
+          },
+          getRenderContainer: (node: HTMLElement) => {
+            let container = node;
+            // 文本节点
+            if (container.nodeName === "#text") {
+              container = node.parentElement as HTMLElement;
+            }
+            while (
+              container &&
+              container.classList &&
+              !container.classList.contains("column")
+            ) {
+              container = container.parentElement as HTMLElement;
+            }
+            return container;
+          },
+          items: [
+            {
+              priority: 10,
+              props: {
+                icon: markRaw(RiInsertColumnLeft),
+                title: i18n.global.t(
+                  "editor.extensions.columns.add_column_before"
+                ),
+                action: ({ editor }: { editor: Editor }) => {
+                  editor.chain().focus().addColBefore().run();
+                },
+              },
+            },
+            {
+              priority: 20,
+              props: {
+                icon: markRaw(RiInsertColumnRight),
+                title: i18n.global.t(
+                  "editor.extensions.columns.add_column_after"
+                ),
+                action: ({ editor }: { editor: Editor }) => {
+                  editor.chain().focus().addColAfter().run();
+                },
+              },
+            },
+            {
+              priority: 30,
+              props: {
+                icon: markRaw(RiDeleteColumn),
+                title: i18n.global.t("editor.extensions.columns.delete_column"),
+                action: ({ editor }: { editor: Editor }) => {
+                  editor.chain().focus().deleteCol().run();
+                },
+              },
+            },
+            {
+              priority: 40,
+              component: markRaw(BlockActionSeparator),
+            },
+            {
+              priority: 50,
+              props: {
+                icon: markRaw(MdiDeleteForeverOutline),
+                title: i18n.global.t("editor.common.button.delete"),
+                action: ({ editor }: { editor: Editor }) =>
+                  deleteNode(Columns.name, editor),
+              },
+            },
+          ],
+        };
+      },
     };
-  },
-
-  addNodeView() {
-    return VueNodeViewRenderer(ColumnsView);
   },
 
   addAttributes() {

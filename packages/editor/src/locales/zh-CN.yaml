@@ -18,7 +18,7 @@ editor:
       delete_table: 删除表格
   extensions:
     commands_menu:
-      columns: 专栏
+      columns: 分栏卡片
       iframe: 嵌入网页
       image: 图片
       video: 视频
@@ -64,8 +64,8 @@ editor:
     highlight:
       unset: 移除高亮颜色
     columns:
-      add_column_before: 向前插入一列
-      add_column_after: 向后插入一列
+      add_column_before: 向前插入列
+      add_column_after: 向后插入列
       delete_column: 删除当前列
   components:
     color_picker:
