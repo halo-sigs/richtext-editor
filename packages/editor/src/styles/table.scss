@@ -97,39 +97,39 @@
       top: -12px;
       left: -1px;
       width: 100%;
-    
+
       > div {
         position: absolute;
         top: -18px;
         left: 100%;
         transform: translateX(-8px);
-    
+
         display: inline-block;
         width: 16px;
         height: 16px;
-    
+
         font-size: 0;
         cursor: pointer;
-    
+
         .plus-icon {
           font-size: inherit;
         }
       }
-    
+
       &::before {
         content: "";
         position: absolute;
         left: 100%;
         bottom: 4px;
         transform: translateX(-1px);
-    
+
         width: 4px;
         height: 4px;
         background-color: #d8d8d8;
         border-radius: 50%;
         display: block;
       }
-    
+
       &::after {
         box-sizing: content-box;
         content: "";
@@ -143,58 +143,58 @@
         border: 1px solid #d8d8d8;
         display: block;
       }
-    
+
       &:hover {
         color: rgb(0 101 255);
-    
+
         > div {
           font-size: 14px;
         }
-    
+
         &::before {
           display: none;
         }
-    
+
         &::after {
           background: #2584ff;
           border-color: #2584ff;
         }
       }
-    
+
       &.last::after {
         border-top-right-radius: 3px;
       }
-    
+
       &.selected::after {
         background: #2584ff;
         border-color: #2584ff;
       }
     }
-    
+
     .grip-row {
       position: absolute;
       left: -12px;
       top: -1px;
       height: 100%;
-    
+
       > div {
         transform: translateY(8px);
         position: absolute;
         left: -16px;
         bottom: 4px;
-    
+
         display: inline-block;
         width: 16px;
         height: 16px;
-    
+
         font-size: 0;
         cursor: pointer;
-    
+
         .plus-icon {
           font-size: inherit;
         }
       }
-    
+
       &::before {
         content: "";
         position: absolute;
@@ -206,7 +206,7 @@
         border-radius: 50%;
         display: block;
       }
-    
+
       &::after {
         box-sizing: content-box;
         content: "";
@@ -220,34 +220,34 @@
         border: 1px solid #d8d8d8;
         display: block;
       }
-    
+
       &:hover {
         color: rgb(0 101 255);
-    
+
         > div {
           font-size: 14px;
         }
-    
+
         &::before {
           display: none;
         }
-    
+
         &::after {
           background: #2584ff;
           border-color: rgb(0 101 255);
         }
       }
-    
+
       &.last::after {
         border-bottom-left-radius: 3px;
       }
-    
+
       &.selected::after {
         background: #2584ff;
         border-color: rgb(0 101 255);
       }
     }
-    
+
     .grip-table {
       &::after {
         box-sizing: content-box;
@@ -263,12 +263,12 @@
         border: 1px solid #d8d8d8;
         border-top-left-radius: 3px;
       }
-    
+
       &:hover::after {
         background: #2584ff;
         border-color: rgb(0 101 255);
       }
-    
+
       &.selected::after {
         background: #2584ff;
         border-color: rgb(0 101 255);
@@ -286,7 +286,7 @@
       z-index: 1;
     }
 
-    .resize-cursor {
+    &.resize-cursor {
       cursor: ew-resize;
       cursor: col-resize;
     }
