@@ -29,8 +29,6 @@ export default Extension.create({
           props: CommandMenuItem;
         }) => {
           props.command({ editor, range });
-
-          editor?.view?.focus();
         },
         items: ({ query }: { query: string }) => {
           return commandMenuItems.filter((item) =>
