@@ -1,10 +1,11 @@
 import { VueRenderer, type AnyExtension, type Range } from "@tiptap/vue-3";
-import { Editor, Extension } from "@tiptap/vue-3";
+import { Extension } from "@tiptap/vue-3";
 import Suggestion from "@tiptap/suggestion";
 import type { CommandMenuItem } from "@/types";
 import type { Instance } from "tippy.js";
 import CommandsView from "./CommandsView.vue";
 import tippy from "tippy.js";
+import type { Editor } from "@tiptap/core";
 
 export default Extension.create({
   name: "commands-menu",
@@ -25,9 +26,11 @@ export default Extension.create({
         }: {
           editor: Editor;
           range: Range;
-          props: Record<string, any>;
+          props: CommandMenuItem;
         }) => {
           props.command({ editor, range });
+
+          editor?.view?.focus();
         },
         items: ({ query }: { query: string }) => {
           return commandMenuItems.filter((item) =>
