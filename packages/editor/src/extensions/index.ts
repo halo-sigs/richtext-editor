@@ -35,6 +35,7 @@ import ExtensionAudio from "./audio";
 import ExtensionImage from "./image";
 import ExtensionIndent from "./indent";
 import ExtensionText from "./text";
+import ExtensionTrailingNode from "./trailing-node";
 
 const allExtensions = [
   ExtensionBlockquote,
@@ -83,6 +84,7 @@ const allExtensions = [
   ExtensionVideo,
   ExtensionAudio,
   ExtensionIndent,
+  ExtensionTrailingNode,
 ];
 
 export {
@@ -121,4 +123,5 @@ export {
   ExtensionColor,
   ExtensionFontSize,
   ExtensionIndent,
+  ExtensionTrailingNode,
 };
