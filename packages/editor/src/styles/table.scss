@@ -63,6 +63,7 @@
         padding: 12px 8px;
         text-align: left;
         min-width: 100px;
+        z-index: 1;
 
         > * {
           margin-top: 0;
@@ -73,7 +74,6 @@
       .selectedCell {
         position: relative;
         border: 1px solid $tableSelectedBorderColor;
-        background-color: $tableSelectedCellBgColor;
 
         &::after {
           box-sizing: content-box;

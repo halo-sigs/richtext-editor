@@ -18,6 +18,7 @@ import MdiTableRemove from "~icons/mdi/table-remove";
 import MdiTableHeadersEye from "~icons/mdi/table-headers-eye";
 import MdiTableMergeCells from "~icons/mdi/table-merge-cells";
 import MdiTableSplitCell from "~icons/mdi/table-split-cell";
+import FluentTableColumnTopBottom24Regular from "~icons/fluent/table-column-top-bottom-24-regular";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
@@ -276,6 +277,14 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
                 icon: markRaw(MdiTableHeadersEye),
                 title: i18n.global.t("editor.menus.table.toggle_header_row"),
                 action: () => editor.chain().focus().toggleHeaderRow().run(),
+              },
+            },
+            {
+              priority: 101,
+              props: {
+                icon: markRaw(FluentTableColumnTopBottom24Regular),
+                title: i18n.global.t("editor.menus.table.toggle_header_cell"),
+                action: () => editor.chain().focus().toggleHeaderCell().run(),
               },
             },
             {

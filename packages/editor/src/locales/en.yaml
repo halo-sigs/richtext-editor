@@ -7,11 +7,12 @@ editor:
       add: Add table
       add_column_before: Add column before
       add_column_after: Add column after
-      toggle_header_column: Show/Hide column header
       delete_column: Delete column
       add_row_before: Add row before
       add_row_after: Add row after
-      toggle_header_row: Show/Hide row header
+      toggle_header_column: Set/Unset First Column Header
+      toggle_header_row: Set/Unset First Row Header
+      toggle_header_cell: Set/Unset Current Cell as Header 
       delete_row: Delete row
       merge_cells: Merge cells
       split_cell: Split cell
