@@ -5,7 +5,6 @@ import TableCell from "./table-cell";
 import TableRow from "./table-row";
 import TableHeader from "./table-header";
 import { isActive, type Editor, type Range } from "@tiptap/vue-3";
-import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
 import MdiTable from "~icons/mdi/table";
 import MdiTablePlus from "~icons/mdi/table-plus";
 import MdiTableColumnPlusBefore from "~icons/mdi/table-column-plus-before";
@@ -23,7 +22,7 @@ import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
 import type { EditorState } from "prosemirror-state";
-import { BlockActionSeparator } from "@/components";
+import { BlockActionSeparator, ToolboxItem } from "@/components";
 
 function updateColumns(
   node: ProseMirrorNode,
@@ -149,13 +148,12 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
       View: TableView,
       lastColumnResizable: true,
       allowTableNodeSelection: false,
-      getToolbarItems({ editor }: { editor: Editor }) {
+      getToolboxItems({ editor }: { editor: Editor }) {
         return {
-          priority: 170,
-          component: markRaw(ToolbarItem),
+          priority: 9,
+          component: markRaw(ToolboxItem),
           props: {
             editor,
-            isActive: false,
             icon: markRaw(MdiTablePlus),
             title: i18n.global.t("editor.menus.table.add"),
             action: () =>
