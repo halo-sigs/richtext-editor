@@ -58,9 +58,13 @@ const Text = TiptapText.extend<ExtensionOptions>({
             }
 
             const isEmptyTextBlock =
-              !doc.textBetween(from || 0, to || 0).length &&
-              isTextSelection(selection);
+              doc.textBetween(from || 0, to || 0).length === 0;
+
             if (isEmptyTextBlock) {
+              return false;
+            }
+
+            if (!isTextSelection(selection)) {
               return false;
             }
 

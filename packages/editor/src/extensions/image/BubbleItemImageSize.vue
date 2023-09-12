@@ -24,6 +24,9 @@ const props = defineProps<{
 }>();
 
 const nodeDom = computed(() => {
+  if (!props.editor.isActive(Image.name)) {
+    return;
+  }
   const nodeDomParent = props.editor.view.nodeDOM(
     props.editor.state.selection.from
   ) as HTMLElement;
