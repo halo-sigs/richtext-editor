@@ -4,6 +4,7 @@ import {
   type Range,
   type CommandProps,
   isActive,
+  findParentNode,
 } from "@tiptap/vue-3";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import type { CodeBlockLowlightOptions } from "@tiptap/extension-code-block-lowlight";
@@ -122,6 +123,24 @@ export default CodeBlockLowlight.extend<
           return this.editor.chain().focus().codeOutdent().run();
         }
         return;
+      },
+      "Mod-a": () => {
+        if (this.editor.isActive("codeBlock")) {
+          const { tr, selection } = this.editor.state;
+          const codeBlack = findParentNode(
+            (node) => node.type.name === CodeBlockLowlight.name
+          )(selection);
+          if (!codeBlack) return;
+          const head = codeBlack.start;
+          const anchor = codeBlack.start + codeBlack.node.nodeSize - 1;
+          const $head = tr.doc.resolve(head);
+          const $anchor = tr.doc.resolve(anchor);
+          this.editor.view.dispatch(
+            tr.setSelection(new TextSelection($head, $anchor))
+          );
+          return true;
+        }
+        return false;
       },
     };
   },
