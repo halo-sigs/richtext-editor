@@ -35,6 +35,7 @@ import ExtensionAudio from "./audio";
 import ExtensionImage from "./image";
 import ExtensionIndent from "./indent";
 import ExtensionText from "./text";
+import ExtensionDraggable from "./draggable";
 
 const allExtensions = [
   ExtensionBlockquote,
@@ -121,4 +122,5 @@ export {
   ExtensionColor,
   ExtensionFontSize,
   ExtensionIndent,
+  ExtensionDraggable,
 };
