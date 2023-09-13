@@ -26,10 +26,40 @@ const hideDragHandleDOM = () => {
   draggableHandleDom?.classList?.add("hide");
 };
 
+/**
+ * 渲染 Drag DOM
+ * @param view
+ * @param referenceRectDOM
+ */
 const renderDragHandleDOM = (
   view: EditorView,
   referenceRectDOM: HTMLElement
-) => {};
+) => {
+  const root = view.dom.parentElement;
+
+  if (!root) {
+    return;
+  }
+
+  if (!draggableHandleDom) {
+    return;
+  }
+
+  const targetNodeRect = referenceRectDOM.getBoundingClientRect();
+  const rootRect = root.getBoundingClientRect();
+  const handleRect = draggableHandleDom.getBoundingClientRect();
+
+  const left = targetNodeRect.left - rootRect.left - handleRect.width - 5;
+  const top =
+    targetNodeRect.top - rootRect.top + handleRect.height / 2 + root.scrollTop;
+
+  const offsetLeft = 0;
+
+  draggableHandleDom.style.left = `${left + offsetLeft}px`;
+  draggableHandleDom.style.top = `${top - 2}px`;
+
+  showDragHandleDOM();
+};
 
 const handleMouseEnterEvent = () => {};
 
