@@ -82,7 +82,6 @@ const reuseResizeObserver = () => {
       if (!node) {
         return;
       }
-      console.log(w + "px", w * imgScale.value + "px");
       props.editor
         .chain()
         .updateAttributes(Image.name, {
