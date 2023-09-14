@@ -1,4 +1,5 @@
 import type { Editor, Range } from "@tiptap/core";
+import type { Node, ResolvedPos } from "prosemirror-model";
 import type { EditorState } from "prosemirror-state";
 import type { EditorView } from "prosemirror-view";
 import type { Component } from "vue";
@@ -79,7 +80,7 @@ export interface ExtensionOptions {
     editor: Editor;
   }) => ToolboxItem | ToolboxItem[];
 
-  getDraggable?: ({ editor }: { editor: Editor }) => DraggableItem;
+  getDraggable?: ({ editor }: { editor: Editor }) => DraggableItem | boolean;
 }
 
 export interface CommandMenuItem {
@@ -90,7 +91,24 @@ export interface CommandMenuItem {
   command: ({ editor, range }: { editor: Editor; range: Range }) => void;
 }
 
+export interface DragSelectionNode {
+  $pos?: ResolvedPos;
+  node?: Node;
+  el: HTMLElement;
+  nodeOffset?: number;
+  dragDomOffset?: {
+    x: number;
+    y: number;
+  };
+}
+
 export interface DraggableItem {
-  getRenderContainer?: (dom: Element) => Element;
+  getRenderContainer?: ({
+    dom,
+    view,
+  }: {
+    dom: HTMLElement;
+    view: EditorView;
+  }) => DragSelectionNode;
   // TODO: 增加其他功能，例如目标位置是否可方式等
 }

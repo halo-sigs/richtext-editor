@@ -1,22 +1,22 @@
-import { Editor, Extension } from "@tiptap/core";
+import { Editor, Extension, findParentNodeClosestToPos } from "@tiptap/core";
 import type { Node, ResolvedPos } from "prosemirror-model";
 import { NodeSelection, Plugin, PluginKey } from "prosemirror-state";
 import type { EditorView } from "@tiptap/pm/view";
 import { __serializeForClipboard as serializeForClipboard } from "@tiptap/pm/view";
 import type { DraggableItem, ExtensionOptions } from "@/types";
-import { render } from "vue";
 
 // https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API
 // https://github.com/ueberdosis/tiptap/blob/7832b96afbfc58574785043259230801e179310f/demos/src/Experiments/GlobalDragHandle/Vue/DragHandle.js
-
 export interface ActiveNode {
   $pos: ResolvedPos;
   node: Node;
   el: HTMLElement;
   offset: number;
+  domOffsetLeft: number;
+  domOffsetTop: number;
 }
 
-let draggableItem: DraggableItem | undefined = undefined;
+let draggableItem: DraggableItem | boolean | undefined = undefined;
 let draggableHandleDom: HTMLElement | null = null;
 let currEditorView: EditorView;
 let activeNode: ActiveNode | null = null;
@@ -50,10 +50,9 @@ const hideDragHandleDOM = () => {
  */
 const renderDragHandleDOM = (
   view: EditorView,
-  referenceRectDOM: HTMLElement | undefined
+  activeNode: ActiveNode | undefined
 ) => {
   const root = view.dom.parentElement;
-
   if (!root) {
     return;
   }
@@ -62,6 +61,7 @@ const renderDragHandleDOM = (
     return;
   }
 
+  const referenceRectDOM = activeNode?.el;
   if (!referenceRectDOM) {
     return;
   }
@@ -70,9 +70,18 @@ const renderDragHandleDOM = (
   const rootRect = root.getBoundingClientRect();
   const handleRect = draggableHandleDom.getBoundingClientRect();
 
-  const left = targetNodeRect.left - rootRect.left - handleRect.width - 5;
+  const left =
+    targetNodeRect.left -
+    rootRect.left -
+    handleRect.width -
+    5 +
+    activeNode.domOffsetLeft;
   const top =
-    targetNodeRect.top - rootRect.top + handleRect.height / 2 + root.scrollTop;
+    targetNodeRect.top -
+    rootRect.top +
+    handleRect.height / 2 +
+    root.scrollTop +
+    activeNode.domOffsetTop;
 
   const offsetLeft = 0;
 
@@ -164,7 +173,10 @@ const getDOMByPos = (
   return el;
 };
 
-const getPosByDOM = (view: EditorView, dom: Element): ResolvedPos | null => {
+const getPosByDOM = (
+  view: EditorView,
+  dom: HTMLElement
+): ResolvedPos | null => {
   const domPos = view.posAtDOM(dom, 0);
   if (domPos < 0) {
     return null;
@@ -173,8 +185,8 @@ const getPosByDOM = (view: EditorView, dom: Element): ResolvedPos | null => {
   return $pos;
 };
 
-const selectAncestorNodeByDom = (
-  dom: Element,
+export const selectAncestorNodeByDom = (
+  dom: HTMLElement,
   view: EditorView
 ): ActiveNode | null => {
   const root = view.dom.parentElement;
@@ -187,7 +199,7 @@ const selectAncestorNodeByDom = (
   }
   const node = $pos.node();
   const el = getDOMByPos(view, root, $pos);
-  return { node, $pos, el, offset: 1 };
+  return { node, $pos, el, offset: 1, domOffsetLeft: 0, domOffsetTop: 0 };
 };
 
 const getExtensionDraggableItem = (editor: Editor, node: Node) => {
@@ -212,17 +224,40 @@ const getExtensionDraggableItem = (editor: Editor, node: Node) => {
  * @returns
  **/
 const getRenderContainer = (
+  view: EditorView,
   draggableItem: DraggableItem | undefined,
-  dom: Element
-): Element | null => {
-  if (!draggableItem) {
-    return dom;
-  }
-  const renderContainer = draggableItem?.getRenderContainer?.(dom);
-  if (renderContainer instanceof Element) {
-    return renderContainer;
-  }
-  return dom;
+  dom: HTMLElement
+): ActiveNode | null => {
+  const renderContainer = draggableItem?.getRenderContainer?.({ dom, view });
+  const node = selectAncestorNodeByDom(renderContainer?.el || dom, view);
+  return {
+    el: renderContainer?.el || dom,
+    node: renderContainer?.node || (node?.node as Node),
+    $pos: renderContainer?.$pos || (node?.$pos as ResolvedPos),
+    offset: renderContainer?.nodeOffset || (node?.offset as number),
+    domOffsetLeft: renderContainer?.dragDomOffset?.x || 0,
+    domOffsetTop: renderContainer?.dragDomOffset?.y || 0,
+  };
+};
+
+const findParentNode = (view: EditorView, dom: HTMLElement) => {
+  let activeDom: HTMLElement = dom;
+  do {
+    if (activeDom.hasAttribute("data-node-view-wrapper")) {
+      break;
+    }
+    const parentDom = activeDom.parentElement;
+    if (!parentDom) {
+      break;
+    }
+    if (parentDom.classList.contains("ProseMirror")) {
+      break;
+    }
+    activeDom = parentDom;
+  } while (activeDom);
+
+  const $pos = getPosByDOM(view, activeDom as HTMLElement);
+  return $pos?.node();
 };
 
 const Draggable = Extension.create({
@@ -305,21 +340,15 @@ const Draggable = Extension.create({
                 return false;
               }
 
-              let dom: Element | null = dragNode as Element;
+              let dom: HTMLElement | null = dragNode as HTMLElement;
               while (dom && dom.nodeType === 3) {
                 dom = dom.parentElement;
               }
-              if (!(dom instanceof Element)) {
+              if (!(dom instanceof HTMLElement)) {
                 hideDragHandleDOM();
                 return false;
               }
-
-              let parentDom: Element | null = dom;
-              while (parentDom && parentDom.parentElement !== view.dom) {
-                parentDom = parentDom.parentElement;
-              }
-              const $pos = getPosByDOM(view, parentDom as Element);
-              const parentNode = $pos?.node();
+              const parentNode = findParentNode(view, dom);
               if (!parentNode) {
                 return false;
               }
@@ -328,18 +357,20 @@ const Draggable = Extension.create({
                 this.editor,
                 parentNode
               );
-              // TODO: 未实现 getDraggable() 时，跳过当前扩展。开发阶段暂时全部放开
-              // if (!draggableItem) {
-              //   return false;
-              // }
-              dom = getRenderContainer(draggableItem, dom);
-              if (!dom) {
+              console.log(draggableItem);
+              // 未实现 getDraggable() 或返回 false 时，跳过当前扩展
+              if (!draggableItem) {
+                return false;
+              }
+              if (typeof draggableItem === "boolean") {
+                activeNode = selectAncestorNodeByDom(dom, view);
+              } else {
+                activeNode = getRenderContainer(view, draggableItem, dom);
+              }
+              if (!activeNode) {
                 return;
               }
-              // 从 dom 上获取 node
-              const nodeResult = selectAncestorNodeByDom(dom, view);
-              activeNode = nodeResult;
-              renderDragHandleDOM(view, nodeResult?.el);
+              renderDragHandleDOM(view, activeNode);
               return false;
             },
             mouseleave: () => {

@@ -271,6 +271,9 @@ const Audio = Node.create<ExtensionOptions>({
           ],
         };
       },
+      getDraggable() {
+        return true;
+      },
     };
   },
 });
