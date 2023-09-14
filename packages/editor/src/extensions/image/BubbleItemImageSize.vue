@@ -78,6 +78,10 @@ const reuseResizeObserver = () => {
         init = false;
         return;
       }
+      const node = props.editor.view.nodeDOM(props.editor.state.selection.from);
+      if (!node) {
+        return;
+      }
       props.editor
         .chain()
         .updateAttributes(Image.name, {
