@@ -3,7 +3,8 @@ import type { Node, ResolvedPos } from "prosemirror-model";
 import { NodeSelection, Plugin, PluginKey } from "prosemirror-state";
 import type { EditorView } from "@tiptap/pm/view";
 import { __serializeForClipboard as serializeForClipboard } from "@tiptap/pm/view";
-import type { ExtensionOptions } from "@/types";
+import type { DraggableItem, ExtensionOptions } from "@/types";
+import { render } from "vue";
 
 // https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API
 // https://github.com/ueberdosis/tiptap/blob/7832b96afbfc58574785043259230801e179310f/demos/src/Experiments/GlobalDragHandle/Vue/DragHandle.js
@@ -15,6 +16,7 @@ export interface ActiveNode {
   offset: number;
 }
 
+let draggableItem: DraggableItem | undefined = undefined;
 let draggableHandleDom: HTMLElement | null = null;
 let currEditorView: EditorView;
 let activeNode: ActiveNode | null = null;
@@ -188,6 +190,19 @@ const selectAncestorNodeByDom = (
   return { node, $pos, el, offset: 1 };
 };
 
+const getExtensionDraggableItem = (editor: Editor, node: Node) => {
+  const extension = editor.extensionManager.extensions.find((extension) => {
+    return extension.name === node.type.name;
+  });
+  if (!extension) {
+    return;
+  }
+  const draggableItem = (extension.options as ExtensionOptions).getDraggable?.({
+    editor,
+  });
+  return draggableItem;
+};
+
 /**
  * 根据扩展，获取不同的渲染位置
  *
@@ -197,23 +212,16 @@ const selectAncestorNodeByDom = (
  * @returns
  **/
 const getRenderContainer = (
-  editor: Editor,
-  parentNode: Node,
+  draggableItem: DraggableItem | undefined,
   dom: Element
 ): Element | null => {
-  const extension = editor.extensionManager.extensions.find((extension) => {
-    return extension.name === parentNode.type.name;
-  });
-  if (!extension) {
-    return null;
+  if (!draggableItem) {
+    return dom;
   }
-  const renderContainer = (
-    extension.options as ExtensionOptions
-  ).getDraggableRenderContainer?.({ editor, dom });
+  const renderContainer = draggableItem?.getRenderContainer?.(dom);
   if (renderContainer instanceof Element) {
     return renderContainer;
   }
-  // TODO: 对于未实现 getDraggableRenderContainer() 的扩展，返回 null，不做处理
   return dom;
 };
 
@@ -312,10 +320,19 @@ const Draggable = Extension.create({
               }
               const $pos = getPosByDOM(view, parentDom as Element);
               const parentNode = $pos?.node();
-              // 委派给父 node 去处理
-              if (parentNode) {
-                dom = getRenderContainer(this.editor, parentNode, dom);
+              if (!parentNode) {
+                return false;
               }
+              // 委派给父 node 去处理
+              draggableItem = getExtensionDraggableItem(
+                this.editor,
+                parentNode
+              );
+              // TODO: 未实现 getDraggable() 时，跳过当前扩展。开发阶段暂时全部放开
+              // if (!draggableItem) {
+              //   return false;
+              // }
+              dom = getRenderContainer(draggableItem, dom);
               if (!dom) {
                 return;
               }

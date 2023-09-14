@@ -79,13 +79,7 @@ export interface ExtensionOptions {
     editor: Editor;
   }) => ToolboxItem | ToolboxItem[];
 
-  getDraggableRenderContainer?: ({
-    editor,
-    dom,
-  }: {
-    editor: Editor;
-    dom: Element;
-  }) => Element;
+  getDraggable?: ({ editor }: { editor: Editor }) => DraggableItem;
 }
 
 export interface CommandMenuItem {
@@ -94,4 +88,9 @@ export interface CommandMenuItem {
   title: string;
   keywords: string[];
   command: ({ editor, range }: { editor: Editor; range: Range }) => void;
+}
+
+export interface DraggableItem {
+  getRenderContainer?: (dom: Element) => Element;
+  // TODO: 增加其他功能，例如目标位置是否可方式等
 }
