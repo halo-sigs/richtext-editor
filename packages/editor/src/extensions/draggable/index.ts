@@ -205,17 +205,15 @@ const getRenderContainer = (
     return extension.name === parentNode.type.name;
   });
   if (!extension) {
-    return dom;
+    return null;
   }
   const renderContainer = (
     extension.options as ExtensionOptions
   ).getDraggableRenderContainer?.({ editor, dom });
-  if (renderContainer === false) {
-    return null;
-  }
   if (renderContainer instanceof Element) {
     return renderContainer;
   }
+  // TODO: 对于未实现 getDraggableRenderContainer() 的扩展，返回 null，不做处理
   return dom;
 };
 

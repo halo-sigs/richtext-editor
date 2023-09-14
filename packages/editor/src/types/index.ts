@@ -85,7 +85,7 @@ export interface ExtensionOptions {
   }: {
     editor: Editor;
     dom: Element;
-  }) => Element | boolean;
+  }) => Element;
 }
 
 export interface CommandMenuItem {
