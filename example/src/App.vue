@@ -56,7 +56,11 @@ const editor = useEditor({
     ExtensionBulletList,
     ExtensionCode,
     ExtensionDocument,
-    ExtensionDropcursor,
+    ExtensionDropcursor.configure({
+      width: 2,
+      class: "dropcursor",
+      color: "skyblue",
+    }),
     ExtensionGapcursor,
     ExtensionHardBreak,
     ExtensionHeading,

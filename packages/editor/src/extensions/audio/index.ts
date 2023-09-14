@@ -23,7 +23,7 @@ import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiShare from "~icons/mdi/share";
 import { deleteNode } from "@/utils";
 import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
-import { NodeSelection, type EditorState } from "prosemirror-state";
+import type { EditorState } from "prosemirror-state";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {

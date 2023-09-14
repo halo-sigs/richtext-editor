@@ -78,6 +78,14 @@ export interface ExtensionOptions {
   }: {
     editor: Editor;
   }) => ToolboxItem | ToolboxItem[];
+
+  getDraggableRenderContainer?: ({
+    editor,
+    dom,
+  }: {
+    editor: Editor;
+    dom: Element;
+  }) => Element | boolean;
 }
 
 export interface CommandMenuItem {

@@ -1,11 +1,26 @@
-import { Extension } from "@tiptap/core";
-import type { ResolvedPos } from "prosemirror-model";
-import { Plugin, PluginKey } from "prosemirror-state";
-import type { EditorView } from "prosemirror-view";
+import { Editor, Extension } from "@tiptap/core";
+import type { Node, ResolvedPos } from "prosemirror-model";
+import { NodeSelection, Plugin, PluginKey } from "prosemirror-state";
+import type { EditorView } from "@tiptap/pm/view";
+import { __serializeForClipboard as serializeForClipboard } from "@tiptap/pm/view";
+import type { ExtensionOptions } from "@/types";
+
+// https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API
+// https://github.com/ueberdosis/tiptap/blob/7832b96afbfc58574785043259230801e179310f/demos/src/Experiments/GlobalDragHandle/Vue/DragHandle.js
+
+export interface ActiveNode {
+  $pos: ResolvedPos;
+  node: Node;
+  el: HTMLElement;
+  offset: number;
+}
 
 let draggableHandleDom: HTMLElement | null = null;
-let currEditorView: EditorView | null = null;
-let activeNode: any = null;
+let currEditorView: EditorView;
+let activeNode: ActiveNode | null = null;
+let activeSelection: NodeSelection | null = null;
+let mouseleaveTimer: any;
+let dragging: any = false;
 
 const createDragHandleDom = () => {
   const dom = document.createElement("div");
@@ -33,7 +48,7 @@ const hideDragHandleDOM = () => {
  */
 const renderDragHandleDOM = (
   view: EditorView,
-  referenceRectDOM: HTMLElement
+  referenceRectDOM: HTMLElement | undefined
 ) => {
   const root = view.dom.parentElement;
 
@@ -42,6 +57,10 @@ const renderDragHandleDOM = (
   }
 
   if (!draggableHandleDom) {
+    return;
+  }
+
+  if (!referenceRectDOM) {
     return;
   }
 
@@ -61,15 +80,70 @@ const renderDragHandleDOM = (
   showDragHandleDOM();
 };
 
-const handleMouseEnterEvent = () => {};
+const handleMouseEnterEvent = () => {
+  if (!activeNode) {
+    return;
+  }
+  clearTimeout(mouseleaveTimer);
+  showDragHandleDOM();
+};
 
-const handleMouseLeaveEvent = () => {};
+const handleMouseLeaveEvent = () => {
+  if (!activeNode) {
+    return;
+  }
+  hideDragHandleDOM();
+};
 
-const handleMouseDownEvent = () => {};
+const handleMouseDownEvent = () => {
+  if (!activeNode) {
+    return null;
+  }
+  if (NodeSelection.isSelectable(activeNode.node)) {
+    const nodeSelection = NodeSelection.create(
+      currEditorView.state.doc,
+      activeNode.$pos.pos - activeNode.offset
+    );
+    currEditorView.dispatch(
+      currEditorView.state.tr.setSelection(nodeSelection)
+    );
+    currEditorView.focus();
+    activeSelection = nodeSelection;
+    return nodeSelection;
+  }
 
-const handleMouseUpEvent = () => {};
+  return null;
+};
 
-const handleDragStartEvent = () => {};
+const handleMouseUpEvent = () => {
+  if (!dragging) return;
+
+  dragging = false;
+  activeSelection = null;
+  activeNode = null;
+};
+
+/**
+ * 定义拖拽数据
+ */
+const handleDragStartEvent = (event: DragEvent) => {
+  dragging = true;
+  if (event.dataTransfer && activeNode && activeSelection) {
+    const slice = activeSelection.content();
+    event.dataTransfer.effectAllowed = "move";
+
+    const { dom, text } = serializeForClipboard(currEditorView, slice);
+    event.dataTransfer.clearData();
+    event.dataTransfer.setData("text/html", dom.innerHTML);
+    event.dataTransfer.setData("text/plain", text);
+    event.dataTransfer.setDragImage(activeNode?.el as any, 0, 0);
+
+    currEditorView.dragging = {
+      slice,
+      move: true,
+    };
+  }
+};
 
 const getDOMByPos = (
   view: EditorView,
@@ -88,6 +162,63 @@ const getDOMByPos = (
   return el;
 };
 
+const getPosByDOM = (view: EditorView, dom: Element): ResolvedPos | null => {
+  const domPos = view.posAtDOM(dom, 0);
+  if (domPos < 0) {
+    return null;
+  }
+  const $pos = view.state.doc.resolve(domPos);
+  return $pos;
+};
+
+const selectAncestorNodeByDom = (
+  dom: Element,
+  view: EditorView
+): ActiveNode | null => {
+  const root = view.dom.parentElement;
+  if (!root) {
+    return null;
+  }
+  const $pos = getPosByDOM(view, dom);
+  if (!$pos) {
+    return null;
+  }
+  const node = $pos.node();
+  const el = getDOMByPos(view, root, $pos);
+  return { node, $pos, el, offset: 1 };
+};
+
+/**
+ * 根据扩展，获取不同的渲染位置
+ *
+ * @param editor
+ * @param parentNode
+ * @param dom
+ * @returns
+ **/
+const getRenderContainer = (
+  editor: Editor,
+  parentNode: Node,
+  dom: Element
+): Element | null => {
+  const extension = editor.extensionManager.extensions.find((extension) => {
+    return extension.name === parentNode.type.name;
+  });
+  if (!extension) {
+    return dom;
+  }
+  const renderContainer = (
+    extension.options as ExtensionOptions
+  ).getDraggableRenderContainer?.({ editor, dom });
+  if (renderContainer === false) {
+    return null;
+  }
+  if (renderContainer instanceof Element) {
+    return renderContainer;
+  }
+  return dom;
+};
+
 const Draggable = Extension.create({
   name: "draggable",
   addProseMirrorPlugins() {
@@ -96,6 +227,7 @@ const Draggable = Extension.create({
         key: new PluginKey("node-draggable"),
         view: (view) => {
           draggableHandleDom = createDragHandleDom();
+          // 绑定拖拽按钮自身的事件
           draggableHandleDom.addEventListener(
             "mouseenter",
             handleMouseEnterEvent
@@ -124,6 +256,7 @@ const Draggable = Extension.create({
               if (!draggableHandleDom) {
                 return;
               }
+              clearTimeout(mouseleaveTimer);
               draggableHandleDom.removeEventListener(
                 "mouseenter",
                 handleMouseEnterEvent
@@ -151,22 +284,22 @@ const Draggable = Extension.create({
         props: {
           handleDOMEvents: {
             mousemove: (view, event) => {
-              const root = view.dom.parentElement;
-              if (!root) return false;
               // 在 dom 上移动，获取当前生效的 node
               const coords = { left: event.clientX, top: event.clientY };
               const pos = view.posAtCoords(coords);
               if (!pos || !pos.pos) return false;
 
-              let dom =
+              const dragNode =
                 view.nodeDOM(pos.pos) ||
                 view.domAtPos(pos.pos)?.node ||
                 event.target;
-              if (!dom) {
+
+              if (!dragNode) {
                 hideDragHandleDOM();
                 return false;
               }
 
+              let dom: Element | null = dragNode as Element;
               while (dom && dom.nodeType === 3) {
                 dom = dom.parentElement;
               }
@@ -174,26 +307,42 @@ const Draggable = Extension.create({
                 hideDragHandleDOM();
                 return false;
               }
-              // 从 dom 上获取 node
-              const domPos = view.posAtDOM(dom, 0);
-              if (domPos <= 0) {
-                return false;
+
+              let parentDom: Element | null = dom;
+              while (parentDom && parentDom.parentElement !== view.dom) {
+                parentDom = parentDom.parentElement;
               }
-              const $pos = view.state.doc.resolve(domPos);
-              const node = $pos.node();
-              console.log(node);
-              console.log(this.editor.options);
-              // TODO：对某些情况特殊处理，例如 table 的 th，ol 中的 li 等。需要手动指定渲染的内容。如果返回 false，则不渲染
-
-              activeNode = node;
-
-              const el = getDOMByPos(view, root, $pos);
-              renderDragHandleDOM(view, el);
+              const $pos = getPosByDOM(view, parentDom as Element);
+              const parentNode = $pos?.node();
+              // 委派给父 node 去处理
+              if (parentNode) {
+                dom = getRenderContainer(this.editor, parentNode, dom);
+              }
+              if (!dom) {
+                return;
+              }
+              // 从 dom 上获取 node
+              const nodeResult = selectAncestorNodeByDom(dom, view);
+              activeNode = nodeResult;
+              renderDragHandleDOM(view, nodeResult?.el);
+              return false;
+            },
+            mouseleave: () => {
+              clearTimeout(mouseleaveTimer);
+              mouseleaveTimer = setTimeout(() => {
+                hideDragHandleDOM();
+              }, 400);
               return false;
             },
           },
+          handleKeyDown(view, event) {
+            if (!draggableHandleDom) return false;
+            hideDragHandleDOM();
+            return false;
+          },
           handleDrop: (view, event, slice, moved) => {
-            return;
+            // TODO: 拖拽完成后的处理
+            return false;
           },
         },
       }),
