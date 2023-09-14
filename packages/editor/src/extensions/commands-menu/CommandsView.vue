@@ -2,6 +2,7 @@
 import { type PropType, ref, watch } from "vue";
 import type { CommandMenuItem } from "@/types";
 import { i18n } from "@/locales";
+import scrollIntoView from "scroll-into-view-if-needed";
 
 const props = defineProps({
   items: {
@@ -46,12 +47,10 @@ function onKeyDown({ event }: { event: KeyboardEvent }) {
 function handleKeyUp() {
   selectedIndex.value =
     (selectedIndex.value + props.items.length - 1) % props.items.length;
-  scrollToSelected();
 }
 
 function handleKeyDown() {
   selectedIndex.value = (selectedIndex.value + 1) % props.items.length;
-  scrollToSelected();
 }
 
 function handleKeyEnter() {
@@ -66,17 +65,18 @@ function handleSelectItem(index: number) {
   }
 }
 
-function scrollToSelected() {
-  const selected = document.getElementById(
-    `command-item-${selectedIndex.value}`
-  );
+watch(
+  () => selectedIndex.value,
+  () => {
+    const selected = document.getElementById(
+      `command-item-${selectedIndex.value}`
+    );
 
-  if (selected) {
-    selected.scrollIntoView({
-      behavior: "smooth",
-    });
+    if (selected) {
+      scrollIntoView(selected, { behavior: "smooth", scrollMode: "if-needed" });
+    }
   }
-}
+);
 
 defineExpose({
   onKeyDown,
