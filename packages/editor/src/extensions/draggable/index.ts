@@ -1,9 +1,16 @@
-import { Editor, Extension, findParentNodeClosestToPos } from "@tiptap/core";
-import type { Node, ResolvedPos } from "prosemirror-model";
+import { Editor, Extension } from "@tiptap/core";
+import type {
+  Fragment,
+  Node,
+  NodeType,
+  ResolvedPos,
+  Slice,
+} from "prosemirror-model";
 import { NodeSelection, Plugin, PluginKey } from "prosemirror-state";
 import type { EditorView } from "@tiptap/pm/view";
 import { __serializeForClipboard as serializeForClipboard } from "@tiptap/pm/view";
 import type { DraggableItem, ExtensionOptions } from "@/types";
+import Paragraph from "@/extensions/paragraph";
 
 // https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API
 // https://github.com/ueberdosis/tiptap/blob/7832b96afbfc58574785043259230801e179310f/demos/src/Experiments/GlobalDragHandle/Vue/DragHandle.js
@@ -44,7 +51,8 @@ const hideDragHandleDOM = () => {
 };
 
 /**
- * 渲染 Drag DOM
+ * Correct the position of draggableHandleDom to match the current position of activeNode.
+ *
  * @param view
  * @param referenceRectDOM
  */
@@ -82,10 +90,7 @@ const renderDragHandleDOM = (
     handleRect.height / 2 +
     root.scrollTop +
     activeNode.domOffsetTop;
-
-  const offsetLeft = 0;
-
-  draggableHandleDom.style.left = `${left + offsetLeft}px`;
+  draggableHandleDom.style.left = `${left}px`;
   draggableHandleDom.style.top = `${top - 2}px`;
 
   showDragHandleDOM();
@@ -134,9 +139,6 @@ const handleMouseUpEvent = () => {
   activeNode = null;
 };
 
-/**
- * 定义拖拽数据
- */
 const handleDragStartEvent = (event: DragEvent) => {
   dragging = true;
   if (event.dataTransfer && activeNode && activeSelection) {
@@ -216,7 +218,7 @@ const getExtensionDraggableItem = (editor: Editor, node: Node) => {
 };
 
 /**
- * 根据扩展，获取不同的渲染位置
+ * According to the extension, obtain different rendering positions.
  *
  * @param editor
  * @param parentNode
@@ -257,7 +259,68 @@ const findParentNode = (view: EditorView, dom: HTMLElement) => {
   } while (activeDom);
 
   const $pos = getPosByDOM(view, activeDom as HTMLElement);
-  return $pos?.node();
+  const node = $pos?.node();
+  if (activeDom.hasAttribute("data-node-view-wrapper")) {
+    if (node?.type.name === Paragraph.name) {
+      return node?.firstChild;
+    }
+  }
+  return node;
+};
+
+/**
+ * Get the insertion point of the target position relative to doc
+ *
+ * @param doc
+ * @param pos
+ * @param slice
+ * @returns
+ */
+const dropPoint = (doc: Node, pos: number, slice: Slice) => {
+  const $pos = doc.resolve(pos);
+  if (!slice.content.size) {
+    return pos;
+  }
+  let content: Fragment | undefined = slice.content;
+  for (let i = 0; i < slice.openStart; i++) {
+    content = content?.firstChild?.content;
+  }
+  for (
+    let pass = 1;
+    pass <= (slice.openStart == 0 && slice.size ? 2 : 1);
+    pass++
+  ) {
+    for (let dep = $pos.depth; dep >= 0; dep--) {
+      const bias =
+        dep == $pos.depth
+          ? 0
+          : $pos.pos <= ($pos.start(dep + 1) + $pos.end(dep + 1)) / 2
+          ? -1
+          : 1;
+      const insertPos = $pos.index(dep) + (bias > 0 ? 1 : 0);
+      const parent = $pos.node(dep);
+      let fits = false;
+      if (pass == 1) {
+        fits = parent.canReplace(insertPos, insertPos, content);
+      } else {
+        const wrapping = parent
+          .contentMatchAt(insertPos)
+          .findWrapping(content?.firstChild?.type as NodeType);
+        fits =
+          (wrapping &&
+            parent.canReplaceWith(insertPos, insertPos, wrapping[0])) ||
+          false;
+      }
+      if (fits) {
+        return bias == 0
+          ? $pos.pos
+          : bias < 0
+          ? $pos.before(dep + 1)
+          : $pos.after(dep + 1);
+      }
+    }
+  }
+  return null;
 };
 
 const Draggable = Extension.create({
@@ -268,7 +331,6 @@ const Draggable = Extension.create({
         key: new PluginKey("node-draggable"),
         view: (view) => {
           draggableHandleDom = createDragHandleDom();
-          // 绑定拖拽按钮自身的事件
           draggableHandleDom.addEventListener(
             "mouseenter",
             handleMouseEnterEvent
@@ -325,7 +387,6 @@ const Draggable = Extension.create({
         props: {
           handleDOMEvents: {
             mousemove: (view, event) => {
-              // 在 dom 上移动，获取当前生效的 node
               const coords = { left: event.clientX, top: event.clientY };
               const pos = view.posAtCoords(coords);
               if (!pos || !pos.pos) return false;
@@ -352,13 +413,11 @@ const Draggable = Extension.create({
               if (!parentNode) {
                 return false;
               }
-              // 委派给父 node 去处理
               draggableItem = getExtensionDraggableItem(
                 this.editor,
                 parentNode
               );
-              console.log(draggableItem);
-              // 未实现 getDraggable() 或返回 false 时，跳过当前扩展
+              // skip the current extension if getDraggable() is not implemented or returns false.
               if (!draggableItem) {
                 return false;
               }
@@ -381,14 +440,53 @@ const Draggable = Extension.create({
               return false;
             },
           },
-          handleKeyDown(view, event) {
+          handleKeyDown() {
             if (!draggableHandleDom) return false;
+            draggableItem = undefined;
             hideDragHandleDOM();
             return false;
           },
-          handleDrop: (view, event, slice, moved) => {
-            // TODO: 拖拽完成后的处理
-            return false;
+          handleDrop: (view, event, slice) => {
+            if (!draggableHandleDom) {
+              return false;
+            }
+            if (!activeSelection) {
+              return false;
+            }
+            const eventPos = view.posAtCoords({
+              left: event.clientX,
+              top: event.clientY,
+            });
+            if (!eventPos) {
+              return true;
+            }
+
+            const $mouse = view.state.doc.resolve(eventPos.pos);
+            const insertPos = dropPoint(view.state.doc, $mouse.pos, slice);
+            if (!insertPos) {
+              return false;
+            }
+
+            let isDisableDrop = false;
+            if (dragging) {
+              if (typeof draggableItem !== "boolean") {
+                const handleDrop = draggableItem?.handleDrop?.({
+                  view,
+                  event,
+                  slice,
+                  insertPos,
+                  node: activeNode?.node as Node,
+                });
+                if (typeof handleDrop === "boolean") {
+                  isDisableDrop = handleDrop;
+                }
+              }
+            }
+            dragging = false;
+            draggableItem = undefined;
+            activeSelection = null;
+            activeNode = null;
+            return isDisableDrop;
           },
         },
       }),

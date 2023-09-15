@@ -420,6 +420,23 @@ const Video = Node.create<ExtensionOptions>({
           ],
         };
       },
+      getDraggable() {
+        return {
+          getRenderContainer({ dom, view }) {
+            let node;
+            if (dom.parentElement) {
+              const pos = view.posAtDOM(dom.parentElement, 0);
+              const $pos = view.state.doc.resolve(pos);
+              node = $pos.node();
+            }
+
+            return {
+              node: node,
+              el: dom.firstElementChild as HTMLElement,
+            };
+          },
+        };
+      },
     };
   },
 });

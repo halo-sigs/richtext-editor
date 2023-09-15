@@ -272,7 +272,13 @@ const Audio = Node.create<ExtensionOptions>({
         };
       },
       getDraggable() {
-        return true;
+        return {
+          getRenderContainer({ dom }) {
+            return {
+              el: dom.parentElement,
+            };
+          },
+        };
       },
     };
   },

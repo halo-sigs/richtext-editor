@@ -1,26 +1,27 @@
-import type { Editor } from "@tiptap/vue-3";
 import TiptapParagraph from "@tiptap/extension-paragraph";
 import type { ParagraphOptions } from "@tiptap/extension-paragraph";
-import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
-import MdiFormatParagraph from "~icons/mdi/format-paragraph";
-import { markRaw } from "vue";
-import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
 
-const Blockquote = TiptapParagraph.extend<ExtensionOptions & ParagraphOptions>({
+const Paragraph = TiptapParagraph.extend<ExtensionOptions & ParagraphOptions>({
   addOptions() {
     return {
       ...this.parent?.(),
-      getToolbarItems({ editor }: { editor: Editor }) {
+      getDraggable() {
         return {
-          priority: 30,
-          component: markRaw(ToolbarItem),
-          props: {
-            editor,
-            isActive: editor.isActive("paragraph"),
-            icon: markRaw(MdiFormatParagraph),
-            tooltip: i18n.global.t("editor.common.heading.paragraph"),
-            action: () => editor.chain().focus().setParagraph().run(),
+          getRenderContainer({ dom }) {
+            let container = dom;
+            while (
+              container.parentElement &&
+              !container.parentElement.classList.contains("ProseMirror")
+            ) {
+              container = container.parentElement as HTMLElement;
+            }
+            return {
+              el: container,
+              dragDomOffset: {
+                y: -1,
+              },
+            };
           },
         };
       },
@@ -28,4 +29,4 @@ const Blockquote = TiptapParagraph.extend<ExtensionOptions & ParagraphOptions>({
   },
 });
 
-export default Blockquote;
+export default Paragraph;

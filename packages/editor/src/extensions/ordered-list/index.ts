@@ -38,6 +38,23 @@ const OrderedList = TiptapOrderedList.extend<
           },
         };
       },
+      getDraggable() {
+        return {
+          getRenderContainer({ dom }) {
+            let container = dom;
+            while (container && !(container.tagName === "LI")) {
+              container = container.parentElement as HTMLElement;
+            }
+            return {
+              el: container,
+              dragDomOffset: {
+                x: -16,
+                y: -1,
+              },
+            };
+          },
+        };
+      },
     };
   },
   addExtensions() {

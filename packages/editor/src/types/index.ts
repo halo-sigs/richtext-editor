@@ -1,6 +1,6 @@
 import type { Editor, Range } from "@tiptap/core";
-import type { Node, ResolvedPos } from "prosemirror-model";
-import type { EditorState } from "prosemirror-state";
+import type { Node, ResolvedPos, Slice } from "prosemirror-model";
+import type { EditorState, Selection } from "prosemirror-state";
 import type { EditorView } from "prosemirror-view";
 import type { Component } from "vue";
 export interface ToolbarItem {
@@ -110,5 +110,18 @@ export interface DraggableItem {
     dom: HTMLElement;
     view: EditorView;
   }) => DragSelectionNode;
+  handleDrop?: ({
+    view,
+    event,
+    slice,
+    insertPos,
+    node,
+  }: {
+    view: EditorView;
+    event: DragEvent;
+    slice: Slice;
+    insertPos: number;
+    node: Node;
+  }) => boolean | void;
   // TODO: 增加其他功能，例如目标位置是否可方式等
 }

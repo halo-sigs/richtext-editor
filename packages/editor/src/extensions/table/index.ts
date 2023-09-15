@@ -1,5 +1,11 @@
 import TiptapTable, { type TableOptions } from "@tiptap/extension-table";
-import type { Node as ProseMirrorNode } from "prosemirror-model";
+import type {
+  Fragment,
+  Node,
+  NodeType,
+  Node as ProseMirrorNode,
+  Slice,
+} from "prosemirror-model";
 import type { NodeView } from "prosemirror-view";
 import TableCell from "./table-cell";
 import TableRow from "./table-row";
@@ -23,6 +29,7 @@ import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
 import type { EditorState } from "prosemirror-state";
 import { BlockActionSeparator, ToolboxItem } from "@/components";
+import { deleteNode } from "@/utils";
 
 function updateColumns(
   node: ProseMirrorNode,
@@ -318,6 +325,55 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               },
             },
           ],
+        };
+      },
+      getDraggable() {
+        return {
+          getRenderContainer({ dom }) {
+            let container = dom;
+            while (container && !container.classList.contains("tableWrapper")) {
+              container = container.parentElement as HTMLElement;
+            }
+            return {
+              el: container,
+              dragDomOffset: {
+                x: 20,
+                y: 20,
+              },
+            };
+          },
+          handleDrop({ view, event, slice, insertPos }) {
+            const { state } = view;
+            const $pos = state.selection.$anchor;
+            for (let d = $pos.depth; d > 0; d--) {
+              const node = $pos.node(d);
+              if (node.type.spec["tableRole"] == "table") {
+                const eventPos = view.posAtCoords({
+                  left: event.clientX,
+                  top: event.clientY,
+                });
+                if (!eventPos) {
+                  return;
+                }
+                if (!slice) {
+                  return;
+                }
+
+                let tr = state.tr;
+                tr = tr.delete($pos.before(d), $pos.after(d));
+                const pos = tr.mapping.map(insertPos);
+                tr = tr.replaceRange(pos, pos, slice).scrollIntoView();
+
+                if (tr) {
+                  view.dispatch(tr);
+                  event.preventDefault();
+                  return true;
+                }
+
+                return false;
+              }
+            }
+          },
         };
       },
     };
