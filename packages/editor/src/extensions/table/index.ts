@@ -1,11 +1,5 @@
 import TiptapTable, { type TableOptions } from "@tiptap/extension-table";
-import type {
-  Fragment,
-  Node,
-  NodeType,
-  Node as ProseMirrorNode,
-  Slice,
-} from "prosemirror-model";
+import type { Node as ProseMirrorNode } from "prosemirror-model";
 import type { NodeView } from "prosemirror-view";
 import TableCell from "./table-cell";
 import TableRow from "./table-row";
@@ -29,7 +23,6 @@ import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
 import type { EditorState } from "prosemirror-state";
 import { BlockActionSeparator, ToolboxItem } from "@/components";
-import { deleteNode } from "@/utils";
 
 function updateColumns(
   node: ProseMirrorNode,
