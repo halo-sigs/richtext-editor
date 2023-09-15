@@ -1,10 +1,12 @@
 # 扩展说明
 
-如何对编辑器的功能进行扩展。
+本文档介绍如何对编辑器的功能进行扩展，包括但不限于扩展工具栏、悬浮工具栏、Slash Command、拖拽功能等。
 
-主要介绍扩展工具栏、悬浮工具栏、以及 Slash Command（以下统称工具栏），对于 Tiptap 本身的扩展方式可以参考 <https://tiptap.dev/api/introduction>。
+> 对于 Tiptap 本身的扩展方式可以参考 <https://tiptap.dev/api/introduction>
 
-在 <https://github.com/halo-sigs/richtext-editor/pull/16> 中，我们对编辑器的工具栏的定义方式进行了重构，现在如果需要添加额外的工具栏按钮或者功能，只需要在具体的 Tiptap Extension 中的 `addOptions` 函数中定义即可，如：
+## 1. 顶部工具栏扩展
+
+顶部工具栏主要用于编辑器顶部功能区域内容的扩展。在 <https://github.com/halo-sigs/richtext-editor/pull/16> 中，我们实现了对顶部工具栏的扩展，如果需要添加额外的功能，只需要在具体的 Tiptap Extension 中的 `addOptions` 中定义 `getToolbarItems` 函数即可，如：
 
 ```ts
 {
@@ -14,28 +16,29 @@
       getToolbarItems({ editor }: { editor: Editor }) {
         return []
       },
-      getBubbleMenu({ editor }: { editor: Editor }) {
-        return []
-      },
-      getCommandMenuItems() {
-        return [];
-      },
-      getToolboxItems({ editor }: { editor: Editor }) {
-        return []
-      }
     };
   },
 }
 ```
 
-其中对象的属性分别对应了工具栏的三个部分，分别是：
+其中 `getToolbarItems` 即为对顶部工具栏的扩展。其返回类型为：
 
-- `getToolbarItems`：工具栏
-- `getBubbleMenu`：悬浮工具栏
-- `getCommandMenuItems`：Slash Command
-- `getToolboxItems`：工具箱（Toolbox）
-
-对应的返回类型为：
+```ts
+// 工具栏
+export interface ToolbarItem {
+  priority: number;
+  component: Component;
+  props: {
+    editor: Editor;
+    isActive: boolean;
+    disabled?: boolean;
+    icon?: Component;
+    title?: string;
+    action?: () => void;
+  };
+  children?: ToolbarItem[];
+}
+```
 
 ```ts
 // 工具栏
