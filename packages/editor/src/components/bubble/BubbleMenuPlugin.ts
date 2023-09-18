@@ -202,7 +202,7 @@ export class BubbleMenuView {
     const cursorAt = selection.$anchor.pos;
     const from = Math.min(...ranges.map((range) => range.$from.pos));
     const to = Math.max(...ranges.map((range) => range.$to.pos));
-    // 防止菜单被遮挡
+    // prevent the menu from being obscured
     const tippyParentNode = this.tippy?.popper.parentNode;
     const siblings =
       tippyParentNode?.querySelectorAll("[data-tippy-root]") ?? [];
