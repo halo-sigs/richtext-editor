@@ -48,7 +48,7 @@ export interface BubbleItem {
     icon?: Component;
     iconStyle?: string;
     title?: string;
-    action?: ({ editor }: { editor: Editor }) => any;
+    action?: ({ editor }: { editor: Editor }) => Component | void;
   };
 }
 export interface ToolboxItem {
@@ -123,5 +123,4 @@ export interface DraggableItem {
     insertPos: number;
     node: Node;
   }) => boolean | void;
-  // TODO: 增加其他功能，例如目标位置是否可方式等
 }
