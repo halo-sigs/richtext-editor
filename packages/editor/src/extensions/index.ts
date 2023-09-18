@@ -36,6 +36,7 @@ import ExtensionImage from "./image";
 import ExtensionIndent from "./indent";
 import ExtensionText from "./text";
 import ExtensionDraggable from "./draggable";
+import ExtensionNodeSelected from "./node-selected";
 import ExtensionTrailingNode from "./trailing-node";
 
 const allExtensions = [
@@ -89,6 +90,7 @@ const allExtensions = [
   ExtensionVideo,
   ExtensionAudio,
   ExtensionIndent,
+  ExtensionNodeSelected,
   ExtensionTrailingNode,
 ];
 
@@ -129,5 +131,6 @@ export {
   ExtensionFontSize,
   ExtensionIndent,
   ExtensionDraggable,
+  ExtensionNodeSelected,
   ExtensionTrailingNode,
 };
