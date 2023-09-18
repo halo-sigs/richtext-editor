@@ -36,6 +36,7 @@ import ExtensionImage from "./image";
 import ExtensionIndent from "./indent";
 import { ExtensionColumns, ExtensionColumn } from "./columns";
 import ExtensionText from "./text";
+import ExtensionNodeSelected from "./node-selected";
 import ExtensionTrailingNode from "./trailing-node";
 
 const allExtensions = [
@@ -87,6 +88,7 @@ const allExtensions = [
   ExtensionIndent,
   ExtensionColumns,
   ExtensionColumn,
+  ExtensionNodeSelected,
   ExtensionTrailingNode,
 ];
 
@@ -128,5 +130,6 @@ export {
   ExtensionIndent,
   ExtensionColumns,
   ExtensionColumn,
+  ExtensionNodeSelected,
   ExtensionTrailingNode,
 };
