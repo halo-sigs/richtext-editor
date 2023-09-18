@@ -36,6 +36,7 @@ import ExtensionImage from "./image";
 import ExtensionIndent from "./indent";
 import { ExtensionColumns, ExtensionColumn } from "./columns";
 import ExtensionText from "./text";
+import ExtensionTrailingNode from "./trailing-node";
 
 const allExtensions = [
   ExtensionBlockquote,
@@ -86,6 +87,7 @@ const allExtensions = [
   ExtensionIndent,
   ExtensionColumns,
   ExtensionColumn,
+  ExtensionTrailingNode,
 ];
 
 export {
@@ -126,4 +128,5 @@ export {
   ExtensionIndent,
   ExtensionColumns,
   ExtensionColumn,
+  ExtensionTrailingNode,
 };

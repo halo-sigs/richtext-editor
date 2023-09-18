@@ -45,6 +45,7 @@ import {
   ExtensionIndent,
   ExtensionColumns,
   ExtensionColumn,
+  ExtensionTrailingNode,
 } from "@halo-dev/richtext-editor";
 
 const content = useLocalStorage("content", "");
@@ -102,6 +103,7 @@ const editor = useEditor({
     ExtensionIndent,
     ExtensionColumns,
     ExtensionColumn,
+    ExtensionTrailingNode,
   ],
   onUpdate: () => {
     content.value = editor.value?.getHTML() + "";

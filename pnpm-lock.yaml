@@ -238,6 +238,9 @@ importers:
       prosemirror-view:
         specifier: ^1.31.6
         version: 1.31.6
+      scroll-into-view-if-needed:
+        specifier: ^3.0.10
+        version: 3.0.10
       tippy.js:
         specifier: ^6.3.7
         version: 6.3.7
@@ -2908,6 +2911,10 @@ packages:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
     engines: {node: '>= 6'}
     dev: true
+
+  /compute-scroll-into-view@3.0.3:
+    resolution: {integrity: sha512-nadqwNxghAGTamwIqQSG433W6OADZx2vCo3UXHNrzTRHK/htu+7+L0zhjEoaeaQVNAi3YgqWDv8+tzf0hRfR+A==}
+    dev: false
 
   /concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
@@ -6417,6 +6424,12 @@ packages:
     dependencies:
       xmlchars: 2.2.0
     dev: true
+
+  /scroll-into-view-if-needed@3.0.10:
+    resolution: {integrity: sha512-t44QCeDKAPf1mtQH3fYpWz8IM/DyvHLjs8wUvvwMYxk5moOqCzrMSxK6HQVD0QVmVjXFavoFIPRVrMuJPKAvtg==}
+    dependencies:
+      compute-scroll-into-view: 3.0.3
+    dev: false
 
   /semver-diff@4.0.0:
     resolution: {integrity: sha512-0Ju4+6A8iOnpL/Thra7dZsSlOHYAHIeMxfhWQRI1/VLcT3WDBZKKtQt/QkBOsiIN9ZpuvHE6cGZ0x4glCMmfiA==}

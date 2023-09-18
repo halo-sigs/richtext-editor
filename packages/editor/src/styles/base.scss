@@ -15,6 +15,11 @@
       height: 100%;
       overflow: auto;
 
+      p {
+        margin-top: 0.75em;
+        margin-bottom: 0;
+      }
+
       p.is-empty::before {
         content: attr(data-placeholder);
         float: left;
