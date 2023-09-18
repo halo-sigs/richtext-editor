@@ -4,6 +4,8 @@ import { Editor, Node, NodeViewWrapper } from "@tiptap/vue-3";
 import type { Node as ProseMirrorNode } from "prosemirror-model";
 import type { Decoration } from "prosemirror-view";
 import { computed, onMounted, ref } from "vue";
+import { useResizeObserver } from "@vueuse/core";
+
 const props = defineProps<{
   editor: Editor;
   node: ProseMirrorNode;
@@ -40,9 +42,24 @@ function handleSetFocus() {
 }
 
 const inputRef = ref();
+const resizeRef = ref();
+const init = ref(true);
+
 onMounted(() => {
   if (!src.value) {
     inputRef.value.focus();
+  } else {
+    useResizeObserver(resizeRef.value, (entries) => {
+      const entry = entries[0];
+      const { height } = entry.contentRect;
+      if (height == 0) {
+        return;
+      }
+      if (!props.selected && !init.value) {
+        handleSetFocus();
+      }
+      init.value = false;
+    });
   }
 });
 </script>

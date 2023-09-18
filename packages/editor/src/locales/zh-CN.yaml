@@ -7,11 +7,12 @@ editor:
       add: 插入表格
       add_column_before: 向前插入列
       add_column_after: 向后插入列
-      toggle_header_column: 显示/隐藏列表头
       delete_column: 删除当前列
       add_row_before: 向上插入行
       add_row_after: 向下插入行
-      toggle_header_row: 显示/隐藏行表头
+      toggle_header_column: 设置/取消首列表头
+      toggle_header_row: 设置/取消首行表头
+      toggle_header_cell: 设置/取消当前单元格为表头
       delete_row: 删除当前行
       merge_cells: 合并单元格
       split_cell: 分割单元格

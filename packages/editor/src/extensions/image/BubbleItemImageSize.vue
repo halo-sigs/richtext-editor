@@ -24,6 +24,9 @@ const props = defineProps<{
 }>();
 
 const nodeDom = computed(() => {
+  if (!props.editor.isActive(Image.name)) {
+    return;
+  }
   const nodeDomParent = props.editor.view.nodeDOM(
     props.editor.state.selection.from
   ) as HTMLElement;
@@ -73,6 +76,10 @@ const reuseResizeObserver = () => {
       if (init) {
         imgScale.value = parseFloat((h / w).toFixed(2));
         init = false;
+        return;
+      }
+      const node = props.editor.view.nodeDOM(props.editor.state.selection.from);
+      if (!node) {
         return;
       }
       props.editor
