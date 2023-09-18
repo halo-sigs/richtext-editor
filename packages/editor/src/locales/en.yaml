@@ -19,6 +19,7 @@ editor:
       delete_table: Delete table
   extensions:
     commands_menu:
+      columns: Column Card
       iframe: Iframe
       image: image
       video: Video
@@ -63,6 +64,10 @@ editor:
       large_size: Large size
     highlight:
       unset: Unset
+    columns:
+      add_column_before: Add column before
+      add_column_after: Add column after
+      delete_column: Delete column
   components:
     color_picker:
       more_color: More

@@ -202,12 +202,20 @@ export class BubbleMenuView {
     const cursorAt = selection.$anchor.pos;
     const from = Math.min(...ranges.map((range) => range.$from.pos));
     const to = Math.max(...ranges.map((range) => range.$to.pos));
+    // prevent the menu from being obscured
+    const tippyParentNode = this.tippy?.popper.parentNode;
+    const siblings =
+      tippyParentNode?.querySelectorAll("[data-tippy-root]") ?? [];
     const placement = this.tippyOptions?.placement
       ? this.tippyOptions?.placement
       : isNodeSelection(selection)
-      ? "top"
+      ? siblings.length > 1
+        ? "bottom"
+        : "top"
       : Math.abs(cursorAt - to) <= Math.abs(cursorAt - from)
-      ? "bottom-start"
+      ? siblings.length > 1
+        ? "top-start"
+        : "bottom-start"
       : "top-start";
     const domAtPos = view.domAtPos(from).node as HTMLElement;
     const nodeDOM = view.nodeDOM(from) as HTMLElement;
