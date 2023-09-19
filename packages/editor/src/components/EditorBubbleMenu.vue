@@ -4,8 +4,8 @@ import type { Editor, AnyExtension } from "@tiptap/core";
 import BubbleMenu from "@/components/bubble/BubbleMenu.vue";
 import type { NodeBubbleMenu } from "@/types";
 import BubbleItem from "@/components/bubble/BubbleItem.vue";
-import type { EditorView } from "prosemirror-view";
-import type { EditorState } from "prosemirror-state";
+import type { EditorView } from "@tiptap/pm/view";
+import type { EditorState } from "@tiptap/pm/state";
 
 const props = defineProps({
   editor: {
@@ -30,7 +30,7 @@ const getBubbleMenuFromExtensions = () => {
 
       if (nodeBubbleMenu.items) {
         nodeBubbleMenu.items = nodeBubbleMenu.items.sort(
-          (a, b) => a.priority - b.priority
+          (a, b) => a.priority - b.priority,
         );
       }
 
@@ -42,14 +42,14 @@ const getBubbleMenuFromExtensions = () => {
 const shouldShow = (
   props: {
     editor: Editor;
+    state: EditorState;
     node?: HTMLElement;
     view?: EditorView;
-    state?: EditorState;
     oldState?: EditorState;
     from?: number;
     to?: number;
   },
-  bubbleMenu: NodeBubbleMenu
+  bubbleMenu: NodeBubbleMenu,
 ) => {
   if (!props.editor.isEditable) {
     return false;

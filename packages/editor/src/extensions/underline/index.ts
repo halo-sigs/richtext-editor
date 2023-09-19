@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/vue-3";
+import type { Editor } from "@tiptap/core";
 import TiptapUnderline from "@tiptap/extension-underline";
 import type { UnderlineOptions } from "@tiptap/extension-underline";
 import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";

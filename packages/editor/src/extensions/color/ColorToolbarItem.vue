@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ToolbarItem } from "@/components";
 import type { Component } from "vue";
-import type { Editor } from "@tiptap/vue-3";
+import type { Editor } from "@tiptap/core";
 import ColorPickerDropdown from "@/components/common/ColorPickerDropdown.vue";
 import { i18n } from "@/locales";
 
@@ -21,7 +21,7 @@ const props = withDefaults(
     title: undefined,
     action: undefined,
     icon: undefined,
-  }
+  },
 );
 
 function handleSetColor(color?: string) {

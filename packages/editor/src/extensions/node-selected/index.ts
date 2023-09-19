@@ -1,7 +1,7 @@
 import { Extension } from "@tiptap/core";
 
-import { Plugin, PluginKey } from "prosemirror-state";
-import { Decoration, DecorationSet } from "prosemirror-view";
+import { Plugin, PluginKey } from "@tiptap/pm/state";
+import { Decoration, DecorationSet } from "@tiptap/pm/view";
 
 export interface NodeSelectedOptions {
   className: string;
@@ -45,7 +45,7 @@ const NodeSelected = Extension.create<NodeSelectedOptions>({
               decorations.push(
                 Decoration.node(pos, pos + node.nodeSize, {
                   class: this.options.className,
-                })
+                }),
               );
             });
 

@@ -1,5 +1,4 @@
 import type { ExtensionOptions } from "@/types";
-import type { Editor } from "@tiptap/core";
 import { Text as TiptapText } from "@tiptap/extension-text";
 import { markRaw } from "vue";
 import ColorBubbleItem from "@/extensions/color/ColorBubbleItem.vue";
@@ -22,8 +21,8 @@ import MdiFormatAlignRight from "~icons/mdi/format-align-right";
 import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
 import MdiFormatUnderline from "~icons/mdi/format-underline";
 import { isActive, isTextSelection } from "@tiptap/core";
-import type { EditorState } from "prosemirror-state";
-import type { EditorView } from "prosemirror-view";
+import type { EditorState } from "@tiptap/pm/state";
+import type { EditorView } from "@tiptap/pm/view";
 import MdiFormatBold from "~icons/mdi/format-bold";
 import { i18n } from "@/locales";
 
@@ -39,7 +38,7 @@ const Text = TiptapText.extend<ExtensionOptions>({
   addOptions() {
     return {
       ...this.parent?.(),
-      getBubbleMenu({ editor }: { editor: Editor }) {
+      getBubbleMenu() {
         return {
           pluginKey: "textBubbleMenu",
           shouldShow: ({ view, state, from, to }) => {
@@ -51,7 +50,7 @@ const Text = TiptapText.extend<ExtensionOptions>({
 
             if (
               OTHER_BUBBLE_MENU_TYPES.some((type) =>
-                isActive(state as EditorState, type)
+                isActive(state as EditorState, type),
               )
             ) {
               return false;

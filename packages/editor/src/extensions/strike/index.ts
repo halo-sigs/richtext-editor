@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/vue-3";
+import type { Editor } from "@tiptap/core";
 import TiptapStrike from "@tiptap/extension-strike";
 import type { StrikeOptions } from "@tiptap/extension-strike";
 import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";

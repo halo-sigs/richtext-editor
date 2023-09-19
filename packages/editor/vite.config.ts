@@ -3,7 +3,7 @@ import { fileURLToPath, URL } from "url";
 import { defineConfig } from "vite";
 import Vue from "@vitejs/plugin-vue";
 import Icons from "unplugin-icons/vite";
-import Dts from "vite-plugin-dts";
+import dts from "vite-plugin-dts";
 import path from "path";
 import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 
@@ -17,9 +17,9 @@ export default ({ mode }: { mode: string }) => {
         compiler: "vue3",
       }),
       isProduction &&
-        Dts({
+        dts({
           entryRoot: "./src",
-          outputDir: "./dist",
+          outDir: "./dist",
           insertTypesEntry: true,
         }),
       VueI18nPlugin({

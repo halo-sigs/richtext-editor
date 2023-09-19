@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/vue-3";
+import type { Editor } from "@tiptap/core";
 import TiptapBold from "@tiptap/extension-bold";
 import type { BoldOptions } from "@tiptap/extension-bold";
 import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";

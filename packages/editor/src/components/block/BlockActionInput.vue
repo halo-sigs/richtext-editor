@@ -9,7 +9,7 @@ const props = withDefaults(
   }>(),
   {
     tooltip: undefined,
-  }
+  },
 );
 
 const emit = defineEmits<{

@@ -11,13 +11,13 @@
   },
   "dependencies": {
     "@halo-dev/richtext-editor": "workspace:*",
-    "@iconify-json/mdi": "^1.1.50",
+    "@iconify-json/mdi": "^1.1.54",
     "rehype-format": "^4.0.1",
-    "rehype-parse": "^8.0.4",
-    "rehype-stringify": "^9.0.3",
-    "unified": "^10.1.2"
+    "rehype-parse": "^8.0.5",
+    "rehype-stringify": "^9.0.4",
+    "unified": "^11.0.3"
   },
   "devDependencies": {
-    "unplugin-icons": "^0.15.3"
+    "unplugin-icons": "^0.17.0"
   }
 }

@@ -1,4 +1,4 @@
-import type { ExtensionOptions } from "@/types";
+import type { ExtensionOptions, NodeBubbleMenu } from "@/types";
 import {
   Editor,
   isActive,
@@ -33,7 +33,7 @@ import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiShare from "~icons/mdi/share";
 import { deleteNode } from "@/utils";
 import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
-import type { EditorState } from "prosemirror-state";
+import type { EditorState } from "@tiptap/pm/state";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -215,7 +215,7 @@ const Video = Node.create<ExtensionOptions>({
           },
         ];
       },
-      getBubbleMenu({ editor }: { editor: Editor }) {
+      getBubbleMenu({ editor }: { editor: Editor }): NodeBubbleMenu {
         return {
           pluginKey: "videoBubbleMenu",
           shouldShow: ({ state }: { state: EditorState }) => {
@@ -225,13 +225,11 @@ const Video = Node.create<ExtensionOptions>({
             {
               priority: 10,
               props: {
-                isActive: () => {
-                  editor.getAttributes(Video.name).controls;
-                },
+                isActive: () => editor.getAttributes(Video.name).controls,
                 icon: markRaw(
                   editor.getAttributes(Video.name).controls
                     ? MdiCogPlay
-                    : MdiCogPlayOutline
+                    : MdiCogPlayOutline,
                 ),
                 action: () => {
                   return editor
@@ -259,7 +257,7 @@ const Video = Node.create<ExtensionOptions>({
                 icon: markRaw(
                   editor.getAttributes(Video.name).autoplay
                     ? MdiPlayCircle
-                    : MdiPlayCircleOutline
+                    : MdiPlayCircleOutline,
                 ),
                 action: () => {
                   return editor
@@ -287,7 +285,7 @@ const Video = Node.create<ExtensionOptions>({
                 icon: markRaw(
                   editor.getAttributes(Video.name).loop
                     ? MdiMotionPlay
-                    : MdiMotionPlayOutline
+                    : MdiMotionPlayOutline,
                 ),
                 action: () => {
                   return editor
@@ -435,7 +433,7 @@ const handleSetSize = (editor: Editor, width: string, height: string) => {
 
 const handleSetTextAlign = (
   editor: Editor,
-  align: "left" | "center" | "right" | "justify"
+  align: "left" | "center" | "right" | "justify",
 ) => {
   editor.chain().focus().setTextAlign(align).run();
 };

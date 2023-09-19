@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/vue-3";
+import type { Editor } from "@tiptap/core";
 import TiptapCode from "@tiptap/extension-code";
 import type { CodeOptions } from "@tiptap/extension-code";
 import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";

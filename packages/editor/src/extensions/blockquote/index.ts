@@ -1,7 +1,7 @@
-import type { Editor } from "@tiptap/vue-3";
+import type { Editor } from "@tiptap/core";
 import TiptapBlockquote from "@tiptap/extension-blockquote";
 import type { BlockquoteOptions } from "@tiptap/extension-blockquote";
-import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
+import ToolbarItemVue from "@/components/toolbar/ToolbarItem.vue";
 import MdiFormatQuoteOpen from "~icons/mdi/format-quote-open";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
@@ -16,7 +16,7 @@ const Blockquote = TiptapBlockquote.extend<
       getToolbarItems({ editor }: { editor: Editor }) {
         return {
           priority: 90,
-          component: markRaw(ToolbarItem),
+          component: markRaw(ToolbarItemVue),
           props: {
             editor,
             isActive: editor.isActive("blockquote"),

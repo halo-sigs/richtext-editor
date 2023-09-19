@@ -4,9 +4,8 @@ import {
   isTextSelection,
   posToDOMRect,
 } from "@tiptap/core";
-
-import { EditorState, Plugin, PluginKey } from "prosemirror-state";
-import type { EditorView } from "prosemirror-view";
+import { EditorState, Plugin, PluginKey } from "@tiptap/pm/state";
+import type { EditorView } from "@tiptap/pm/view";
 import tippy, { type Instance, type Props, sticky } from "tippy.js";
 
 export interface BubbleMenuPluginProps {
@@ -18,9 +17,9 @@ export interface BubbleMenuPluginProps {
   shouldShow?:
     | ((props: {
         editor: Editor;
+        state: EditorState;
         node?: HTMLElement;
         view?: EditorView;
-        state?: EditorState;
         oldState?: EditorState;
         from?: number;
         to?: number;
@@ -137,6 +136,7 @@ export class BubbleMenuView {
       this.editor.isEditable &&
       this.shouldShow?.({
         editor: this.editor,
+        state: this.editor.state,
       });
 
     if (shouldShow) return;
@@ -170,7 +170,7 @@ export class BubbleMenuView {
               }
             : {}),
         },
-        this.tippyOptions
+        this.tippyOptions,
       ),
     });
 
@@ -180,7 +180,7 @@ export class BubbleMenuView {
         "blur",
         (event) => {
           this.blurHandler({ event });
-        }
+        },
       );
     }
   }
@@ -242,7 +242,7 @@ export class BubbleMenuView {
       (instance) =>
         instance.id !== this.tippy?.id &&
         instance.popperInstance &&
-        instance.popperInstance.state
+        instance.popperInstance.state,
     );
     const offset = this.tippyOptions?.offset as [number, number];
     const offsetX = offset?.[0] ?? 0;
@@ -297,7 +297,7 @@ export class BubbleMenuView {
 
   addActiveBubbleMenu = () => {
     const idx = ACTIVE_BUBBLE_MENUS.findIndex(
-      (instance) => instance?.id === this.tippy?.id
+      (instance) => instance?.id === this.tippy?.id,
     );
     if (idx < 0) {
       ACTIVE_BUBBLE_MENUS.push(this.tippy as Instance);
@@ -306,7 +306,7 @@ export class BubbleMenuView {
 
   removeActiveBubbleMenu = () => {
     const idx = ACTIVE_BUBBLE_MENUS.findIndex(
-      (instance) => instance?.id === this.tippy?.id
+      (instance) => instance?.id === this.tippy?.id,
     );
     if (idx > -1) {
       ACTIVE_BUBBLE_MENUS.splice(idx, 1);

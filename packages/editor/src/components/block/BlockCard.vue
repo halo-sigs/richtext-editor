@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Editor } from "@tiptap/vue-3";
+import type { Editor } from "@tiptap/core";
 import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
 import MdiArrowULeftBottom from "~icons/mdi/arrow-u-left-bottom";
 import BlockActionSeparator from "./BlockActionSeparator.vue";
@@ -15,7 +15,7 @@ const props = withDefaults(
   }>(),
   {
     selected: false,
-  }
+  },
 );
 
 function handleInsertNewLine() {
@@ -24,7 +24,7 @@ function handleInsertNewLine() {
     [{ type: "paragraph", content: "" }],
     {
       updateSelection: true,
-    }
+    },
   );
   props.editor.commands.focus(props.getPos() + 2, {
     scrollIntoView: true,
@@ -38,14 +38,14 @@ function handleInsertNewLine() {
     :class="{ 'editor-block--selected': selected }"
   >
     <div class="editor-block__content">
-      <slot name="content" />
+      <slot name="content"></slot>
     </div>
     <div
       class="invisible group-hover:visible pb-2 absolute -top-12 right-0"
       :class="{ '!visible': selected }"
     >
       <div class="editor-block__actions">
-        <slot name="actions" />
+        <slot name="actions"></slot>
 
         <BlockActionButton
           :tooltip="i18n.global.t('editor.common.button.new_line')"

@@ -18,7 +18,7 @@ withDefaults(
   }>(),
   {
     modelValue: undefined,
-  }
+  },
 );
 
 const emit = defineEmits<{
@@ -29,7 +29,7 @@ function getColors(): Color[] {
   const result: Color[] = [];
 
   const colors: { [key: string]: { [key: string]: string } } = Object.keys(
-    tailwindcssColors
+    tailwindcssColors,
   ).reduce((acc, key) => {
     if (
       [

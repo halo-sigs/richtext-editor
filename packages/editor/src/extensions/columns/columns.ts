@@ -4,10 +4,11 @@ import {
   isActive,
   mergeAttributes,
   Node,
+  type Range,
 } from "@tiptap/core";
 import { Node as PMNode } from "@tiptap/pm/model";
-import type { NodeType, Schema } from "prosemirror-model";
-import { EditorState, TextSelection } from "prosemirror-state";
+import type { NodeType, Schema } from "@tiptap/pm/model";
+import { EditorState, TextSelection } from "@tiptap/pm/state";
 import { markRaw } from "vue";
 import Column from "./column";
 import RiInsertColumnLeft from "~icons/ri/insert-column-left";
@@ -45,7 +46,7 @@ const createColumns = (schema: Schema, colsCount: number) => {
 };
 
 const getColumnsNodeTypes = (
-  schema: Schema
+  schema: Schema,
 ): {
   columns: NodeType;
   column: NodeType;
@@ -68,13 +69,13 @@ type ColOperateType = "addBefore" | "addAfter" | "delete";
 const addOrDeleteCol = (
   dispatch: any,
   state: EditorState,
-  type: ColOperateType
+  type: ColOperateType,
 ) => {
   const maybeColumns = findParentNode(
-    (node) => node.type.name === Columns.name
+    (node) => node.type.name === Columns.name,
   )(state.selection);
   const maybeColumn = findParentNode((node) => node.type.name === Column.name)(
-    state.selection
+    state.selection,
   );
   if (dispatch && maybeColumns && maybeColumn) {
     const cols = maybeColumns.node;
@@ -121,7 +122,7 @@ const addOrDeleteCol = (
     tr.replaceWith(
       maybeColumns.pos,
       maybeColumns.pos + maybeColumns.node.nodeSize,
-      nextCols
+      nextCols,
     ).setSelection(TextSelection.near(tr.doc.resolve(nextSelectPos)));
 
     dispatch(tr);
@@ -132,10 +133,10 @@ const addOrDeleteCol = (
 type GotoColType = "before" | "after";
 const gotoCol = (state: EditorState, dispatch: any, type: GotoColType) => {
   const maybeColumns = findParentNode(
-    (node) => node.type.name === Columns.name
+    (node) => node.type.name === Columns.name,
   )(state.selection);
   const maybeColumn = findParentNode((node) => node.type.name === Column.name)(
-    state.selection
+    state.selection,
   );
 
   if (dispatch && maybeColumns && maybeColumn) {
@@ -222,7 +223,7 @@ const Columns = Node.create({
           },
         };
       },
-      getBubbleMenu({ editor }: { editor: Editor }) {
+      getBubbleMenu() {
         return {
           pluginKey: "columnsBubbleMenu",
           shouldShow: ({ state }: { state: EditorState }) => {
@@ -249,7 +250,7 @@ const Columns = Node.create({
               props: {
                 icon: markRaw(RiInsertColumnLeft),
                 title: i18n.global.t(
-                  "editor.extensions.columns.add_column_before"
+                  "editor.extensions.columns.add_column_before",
                 ),
                 action: ({ editor }: { editor: Editor }) => {
                   editor.chain().focus().addColBefore().run();
@@ -261,7 +262,7 @@ const Columns = Node.create({
               props: {
                 icon: markRaw(RiInsertColumnRight),
                 title: i18n.global.t(
-                  "editor.extensions.columns.add_column_after"
+                  "editor.extensions.columns.add_column_after",
                 ),
                 action: ({ editor }: { editor: Editor }) => {
                   editor.chain().focus().addColAfter().run();

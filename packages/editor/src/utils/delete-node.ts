@@ -13,7 +13,7 @@ export const deleteNode = (nodeType: string, editor: Editor) => {
         if (editor.dispatchTransaction)
           // @ts-ignore
           editor.dispatchTransaction(
-            state.tr.delete($pos.before(d), $pos.after(d)).scrollIntoView()
+            state.tr.delete($pos.before(d), $pos.after(d)).scrollIntoView(),
           );
         done = true;
       }

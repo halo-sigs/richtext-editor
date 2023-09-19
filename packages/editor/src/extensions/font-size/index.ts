@@ -1,6 +1,5 @@
 import { ToolbarItem, ToolbarSubItem } from "@/components";
-import { Extension } from "@tiptap/core";
-import type { Editor } from "@tiptap/vue-3";
+import { Extension, type Editor } from "@tiptap/core";
 import { markRaw } from "vue";
 import MdiFormatSize from "~icons/mdi/format-size";
 import TiptapTextStyle from "@tiptap/extension-text-style";
@@ -58,7 +57,7 @@ const FontSize = Extension.create<FontSizeOptions>({
                       editor.chain().focus().setFontSize(size).run(),
                   },
                 };
-              }
+              },
             ),
           ],
         };
