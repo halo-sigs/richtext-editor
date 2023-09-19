@@ -30,7 +30,7 @@ function updateColumns(
   table: HTMLElement,
   cellMinWidth: number,
   overrideCol?: number,
-  overrideValue?: any,
+  overrideValue?: any
 ) {
   let totalWidth = 0;
   let fixedWidth = true;
@@ -124,7 +124,7 @@ class TableView implements NodeView {
   }
 
   ignoreMutation(
-    mutation: MutationRecord | { type: "selection"; target: Element },
+    mutation: MutationRecord | { type: "selection"; target: Element }
   ) {
     return (
       mutation.type === "attributes" &&

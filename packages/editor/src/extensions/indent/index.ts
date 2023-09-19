@@ -72,7 +72,7 @@ const Indent = Extension.create<IndentOptions, never>({
             tr,
             this.options,
             editor.extensionManager.extensions,
-            "indent",
+            "indent"
           );
           if (tr.docChanged && dispatch) {
             dispatch(tr);
@@ -89,7 +89,7 @@ const Indent = Extension.create<IndentOptions, never>({
             tr,
             this.options,
             editor.extensionManager.extensions,
-            "outdent",
+            "outdent"
           );
           if (tr.docChanged && dispatch) {
             dispatch(tr);
@@ -136,7 +136,7 @@ function setNodeIndentMarkup(
   pos: number,
   delta: number,
   min: number,
-  max: number,
+  max: number
 ): Transaction {
   if (!tr.doc) return tr;
   const node = tr.doc.nodeAt(pos);
@@ -155,7 +155,7 @@ const updateIndentLevel = (
   tr: Transaction,
   options: IndentOptions,
   extensions: Extensions,
-  type: IndentType,
+  type: IndentType
 ): Transaction => {
   const { doc, selection } = tr;
   if (!doc || !selection) return tr;
@@ -173,7 +173,7 @@ const updateIndentLevel = (
           pos,
           options.indentRange * (type === "indent" ? 1 : -1),
           options.minIndentLevel,
-          options.maxIndentLevel,
+          options.maxIndentLevel
         );
       }
       return false;
@@ -223,7 +223,7 @@ export const getIndent: () => KeyboardShortcutCommand =
     return editor.chain().focus().indent().run();
   };
 export const getOutdent: (
-  outdentOnlyAtHead: boolean,
+  outdentOnlyAtHead: boolean
 ) => KeyboardShortcutCommand =
   (outdentOnlyAtHead) =>
   ({ editor }) => {

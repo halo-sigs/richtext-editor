@@ -49,7 +49,7 @@ const Text = TiptapText.extend<ExtensionOptions>({
 
             if (
               OTHER_BUBBLE_MENU_TYPES.some((type) =>
-                isActive(state as EditorState, type),
+                isActive(state as EditorState, type)
               )
             ) {
               return false;

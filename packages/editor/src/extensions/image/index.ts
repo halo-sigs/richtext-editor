@@ -205,7 +205,7 @@ const Image = TiptapImage.extend<ExtensionOptions & ImageOptions>({
 
 const handleSetTextAlign = (
   editor: Editor,
-  align: "left" | "center" | "right" | "justify",
+  align: "left" | "center" | "right" | "justify"
 ) => {
   editor.chain().focus().setTextAlign(align).run();
 };

@@ -229,7 +229,7 @@ const Video = Node.create<ExtensionOptions>({
                 icon: markRaw(
                   editor.getAttributes(Video.name).controls
                     ? MdiCogPlay
-                    : MdiCogPlayOutline,
+                    : MdiCogPlayOutline
                 ),
                 action: () => {
                   return editor
@@ -257,7 +257,7 @@ const Video = Node.create<ExtensionOptions>({
                 icon: markRaw(
                   editor.getAttributes(Video.name).autoplay
                     ? MdiPlayCircle
-                    : MdiPlayCircleOutline,
+                    : MdiPlayCircleOutline
                 ),
                 action: () => {
                   return editor
@@ -285,7 +285,7 @@ const Video = Node.create<ExtensionOptions>({
                 icon: markRaw(
                   editor.getAttributes(Video.name).loop
                     ? MdiMotionPlay
-                    : MdiMotionPlayOutline,
+                    : MdiMotionPlayOutline
                 ),
                 action: () => {
                   return editor
@@ -433,7 +433,7 @@ const handleSetSize = (editor: Editor, width: string, height: string) => {
 
 const handleSetTextAlign = (
   editor: Editor,
-  align: "left" | "center" | "right" | "justify",
+  align: "left" | "center" | "right" | "justify"
 ) => {
   editor.chain().focus().setTextAlign(align).run();
 };

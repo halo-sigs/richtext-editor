@@ -45,7 +45,7 @@ const NodeSelected = Extension.create<NodeSelectedOptions>({
               decorations.push(
                 Decoration.node(pos, pos + node.nodeSize, {
                   class: this.options.className,
-                }),
+                })
               );
             });
 
