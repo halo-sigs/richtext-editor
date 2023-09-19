@@ -186,7 +186,7 @@ const Audio = Node.create<ExtensionOptions>({
                 icon: markRaw(
                   editor.getAttributes(Audio.name).autoplay
                     ? MdiPlayCircle
-                    : MdiPlayCircleOutline,
+                    : MdiPlayCircleOutline
                 ),
                 action: () => {
                   return editor
@@ -214,7 +214,7 @@ const Audio = Node.create<ExtensionOptions>({
                 icon: markRaw(
                   editor.getAttributes(Audio.name).loop
                     ? MdiMotionPlay
-                    : MdiMotionPlayOutline,
+                    : MdiMotionPlayOutline
                 ),
                 action: () => {
                   return editor

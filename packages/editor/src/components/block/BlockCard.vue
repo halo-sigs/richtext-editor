@@ -15,7 +15,7 @@ const props = withDefaults(
   }>(),
   {
     selected: false,
-  },
+  }
 );
 
 function handleInsertNewLine() {
@@ -24,7 +24,7 @@ function handleInsertNewLine() {
     [{ type: "paragraph", content: "" }],
     {
       updateSelection: true,
-    },
+    }
   );
   props.editor.commands.focus(props.getPos() + 2, {
     scrollIntoView: true,

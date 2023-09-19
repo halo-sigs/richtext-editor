@@ -22,7 +22,7 @@ const props = withDefaults(
     title: undefined,
     action: undefined,
     icon: undefined,
-  },
+  }
 );
 
 function handleSetColor(color?: string) {

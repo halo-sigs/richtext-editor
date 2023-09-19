@@ -9,7 +9,7 @@ withDefaults(
   {
     tooltip: undefined,
     selected: false,
-  },
+  }
 );
 </script>
 

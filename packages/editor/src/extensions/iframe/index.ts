@@ -260,7 +260,7 @@ const Iframe = Node.create<ExtensionOptions>({
                 icon: markRaw(
                   editor.getAttributes(Iframe.name).frameborder === "1"
                     ? MdiBorderAllVariant
-                    : MdiBorderNoneVariant,
+                    : MdiBorderNoneVariant
                 ),
                 action: () => {
                   editor
@@ -278,10 +278,10 @@ const Iframe = Node.create<ExtensionOptions>({
                 title:
                   editor.getAttributes(Iframe.name).frameborder === "1"
                     ? i18n.global.t(
-                        "editor.extensions.iframe.disable_frameborder",
+                        "editor.extensions.iframe.disable_frameborder"
                       )
                     : i18n.global.t(
-                        "editor.extensions.iframe.enable_frameborder",
+                        "editor.extensions.iframe.enable_frameborder"
                       ),
               },
             },
@@ -313,7 +313,7 @@ const Iframe = Node.create<ExtensionOptions>({
                   handleSetSize(editor, "834px", "1194px");
                 },
                 title: i18n.global.t(
-                  "editor.extensions.iframe.tablet_vertical_size",
+                  "editor.extensions.iframe.tablet_vertical_size"
                 ),
               },
             },
@@ -327,7 +327,7 @@ const Iframe = Node.create<ExtensionOptions>({
                   handleSetSize(editor, "1194px", "834px");
                 },
                 title: i18n.global.t(
-                  "editor.extensions.iframe.tablet_horizontal_size",
+                  "editor.extensions.iframe.tablet_horizontal_size"
                 ),
               },
             },
@@ -447,7 +447,7 @@ const handleSetSize = (editor: Editor, width: string, height: string) => {
 
 const handleSetTextAlign = (
   editor: Editor,
-  align: "left" | "center" | "right" | "justify",
+  align: "left" | "center" | "right" | "justify"
 ) => {
   editor.chain().focus().setTextAlign(align).run();
 };

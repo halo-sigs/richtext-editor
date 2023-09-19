@@ -16,7 +16,7 @@ const props = withDefaults(
     description: undefined,
     action: undefined,
     icon: undefined,
-  },
+  }
 );
 
 const action = () => {

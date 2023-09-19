@@ -16,7 +16,7 @@ export default Extension.create({
 
   addProseMirrorPlugins() {
     const commandMenuItems = getToolbarItemsFromExtensions(
-      this.editor as Editor,
+      this.editor as Editor
     );
 
     return [
@@ -37,8 +37,8 @@ export default Extension.create({
         items: ({ query }: { query: string }) => {
           return commandMenuItems.filter((item) =>
             [...item.keywords, item.title].some((keyword) =>
-              keyword.includes(query),
-            ),
+              keyword.includes(query)
+            )
           );
         },
         render: () => {

@@ -124,7 +124,7 @@ export default CodeBlockLowlight.extend<
         if (this.editor.isActive("codeBlock")) {
           const { tr, selection } = this.editor.state;
           const codeBlack = findParentNode(
-            (node) => node.type.name === CodeBlockLowlight.name,
+            (node) => node.type.name === CodeBlockLowlight.name
           )(selection);
           if (!codeBlack) {
             return false;
@@ -134,7 +134,7 @@ export default CodeBlockLowlight.extend<
           const $head = tr.doc.resolve(head);
           const $anchor = tr.doc.resolve(anchor);
           this.editor.view.dispatch(
-            tr.setSelection(new TextSelection($head, $anchor)),
+            tr.setSelection(new TextSelection($head, $anchor))
           );
           return true;
         }

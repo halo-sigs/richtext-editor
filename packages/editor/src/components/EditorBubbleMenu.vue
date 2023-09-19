@@ -30,7 +30,7 @@ const getBubbleMenuFromExtensions = () => {
 
       if (nodeBubbleMenu.items) {
         nodeBubbleMenu.items = nodeBubbleMenu.items.sort(
-          (a, b) => a.priority - b.priority,
+          (a, b) => a.priority - b.priority
         );
       }
 
@@ -49,7 +49,7 @@ const shouldShow = (
     from?: number;
     to?: number;
   },
-  bubbleMenu: NodeBubbleMenu,
+  bubbleMenu: NodeBubbleMenu
 ) => {
   if (!props.editor.isEditable) {
     return false;
