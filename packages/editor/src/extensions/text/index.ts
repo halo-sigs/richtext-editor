@@ -22,7 +22,6 @@ import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
 import MdiFormatUnderline from "~icons/mdi/format-underline";
 import { isActive, isTextSelection } from "@tiptap/core";
 import type { EditorState } from "@tiptap/pm/state";
-import type { EditorView } from "@tiptap/pm/view";
 import MdiFormatBold from "~icons/mdi/format-bold";
 import { i18n } from "@/locales";
 
@@ -41,7 +40,7 @@ const Text = TiptapText.extend<ExtensionOptions>({
       getBubbleMenu() {
         return {
           pluginKey: "textBubbleMenu",
-          shouldShow: ({ view, state, from, to }) => {
+          shouldShow: ({ state, from, to }) => {
             const { doc, selection } = state as EditorState;
             const { empty } = selection;
             if (empty) {
@@ -64,11 +63,6 @@ const Text = TiptapText.extend<ExtensionOptions>({
             }
 
             if (!isTextSelection(selection)) {
-              return false;
-            }
-
-            const hasEditorFocus = (view as EditorView).hasFocus();
-            if (!hasEditorFocus) {
               return false;
             }
 

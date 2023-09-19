@@ -20,7 +20,7 @@ const props = withDefaults(
     action: undefined,
     icon: undefined,
     iconStyle: undefined,
-  },
+  }
 );
 
 const componentRef = ref<Component | void>();
