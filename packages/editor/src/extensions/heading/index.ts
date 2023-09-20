@@ -217,11 +217,9 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
       getDraggable() {
         return {
           getRenderContainer({ dom }: { dom: HTMLElement }) {
+            const tagNames = ["H1", "H2", "H3", "H4", "H5", "H6"];
             let container = dom;
-            while (
-              container.parentElement &&
-              !container.parentElement.classList.contains("ProseMirror")
-            ) {
+            while (container && !tagNames.includes(container.tagName)) {
               container = container.parentElement as HTMLElement;
             }
             let y;

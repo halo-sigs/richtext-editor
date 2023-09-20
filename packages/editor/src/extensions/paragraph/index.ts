@@ -10,10 +10,7 @@ const Paragraph = TiptapParagraph.extend<ExtensionOptions & ParagraphOptions>({
         return {
           getRenderContainer({ dom }) {
             let container = dom;
-            while (
-              container.parentElement &&
-              !container.parentElement.classList.contains("ProseMirror")
-            ) {
+            while (container && container.tagName !== "P") {
               container = container.parentElement as HTMLElement;
             }
             return {
@@ -23,6 +20,7 @@ const Paragraph = TiptapParagraph.extend<ExtensionOptions & ParagraphOptions>({
               },
             };
           },
+          allowPropagationDownward: true,
         };
       },
     };

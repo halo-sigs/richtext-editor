@@ -10,7 +10,6 @@ import { NodeSelection, Plugin, PluginKey } from "prosemirror-state";
 import type { EditorView } from "@tiptap/pm/view";
 import { __serializeForClipboard as serializeForClipboard } from "@tiptap/pm/view";
 import type { DraggableItem, ExtensionOptions } from "@/types";
-import Paragraph from "@/extensions/paragraph";
 
 // https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API
 // https://github.com/ueberdosis/tiptap/blob/7832b96afbfc58574785043259230801e179310f/demos/src/Experiments/GlobalDragHandle/Vue/DragHandle.js
@@ -242,30 +241,75 @@ const getRenderContainer = (
   };
 };
 
-const findParentNode = (view: EditorView, dom: HTMLElement) => {
-  let activeDom: HTMLElement = dom;
-  do {
-    if (activeDom.hasAttribute("data-node-view-wrapper")) {
-      break;
-    }
-    const parentDom = activeDom.parentElement;
-    if (!parentDom) {
-      break;
-    }
-    if (parentDom.classList.contains("ProseMirror")) {
-      break;
-    }
-    activeDom = parentDom;
-  } while (activeDom);
+const findParentNodeByDepth = (
+  view: EditorView,
+  dom: HTMLElement,
+  depth = 1
+): Node | undefined => {
+  const $pos = getPosByDOM(view, dom);
+  if (!$pos) {
+    return;
+  }
+  if (depth > $pos.depth) {
+    // 解决 audio 等不是块元素的问题，目前仅寻找其直接第一个子节点
 
-  const $pos = getPosByDOM(view, activeDom as HTMLElement);
-  const node = $pos?.node();
-  if (activeDom.hasAttribute("data-node-view-wrapper")) {
-    if (node?.type.name === Paragraph.name) {
-      return node?.firstChild;
+    if (depth - $pos.depth == 1) {
+      const parentNode = $pos.node();
+      if (parentNode.firstChild) {
+        return parentNode.firstChild;
+      }
     }
+    return;
+  }
+  const node = $pos.node(depth);
+  if (!node) {
+    return;
   }
   return node;
+};
+
+const getDraggableItem = ({
+  editor,
+  view,
+  dom,
+  depth = 1,
+}: {
+  editor: Editor;
+  view: EditorView;
+  dom: HTMLElement;
+  depth?: number;
+}) => {
+  const parentNode = findParentNodeByDepth(view, dom, depth);
+  if (!parentNode) {
+    return;
+  }
+  const draggableItem = getExtensionDraggableItem(editor, parentNode);
+  if (draggableItem) {
+    if (typeof draggableItem === "boolean") {
+      return draggableItem;
+    }
+    if (draggableItem.allowPropagationDownward) {
+      const draggable = getDraggableItem({
+        editor,
+        view,
+        dom,
+        depth: ++depth,
+      });
+
+      if (draggable) {
+        return draggable;
+      }
+    }
+
+    return draggableItem;
+  }
+
+  return getDraggableItem({
+    editor,
+    view,
+    dom,
+    depth: ++depth,
+  });
 };
 
 /**
@@ -322,7 +366,6 @@ const dropPoint = (doc: Node, pos: number, slice: Slice) => {
   }
   return null;
 };
-
 const Draggable = Extension.create({
   name: "draggable",
   addProseMirrorPlugins() {
@@ -386,7 +429,7 @@ const Draggable = Extension.create({
         },
         props: {
           handleDOMEvents: {
-            mousemove: (view, event) => {
+            mousemove: (view: EditorView, event) => {
               const coords = { left: event.clientX, top: event.clientY };
               const pos = view.posAtCoords(coords);
               if (!pos || !pos.pos) return false;
@@ -409,14 +452,12 @@ const Draggable = Extension.create({
                 hideDragHandleDOM();
                 return false;
               }
-              const parentNode = findParentNode(view, dom);
-              if (!parentNode) {
-                return false;
-              }
-              draggableItem = getExtensionDraggableItem(
-                this.editor,
-                parentNode
-              );
+              const editor = this.editor;
+              draggableItem = getDraggableItem({
+                editor,
+                view,
+                dom,
+              });
               // skip the current extension if getDraggable() is not implemented or returns false.
               if (!draggableItem) {
                 return false;

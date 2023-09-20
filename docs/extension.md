@@ -344,7 +344,7 @@ addOptions() {
 
 拖拽功能的扩展，可用于支持当前块元素的拖拽功能。
 
-在 <https://github.com/halo-sigs/richtext-editor/pull/48> 中，我们实现了对所有元素的拖拽功能，如果需要让当前扩展支持拖拽，只需要在具体的 Tiptap Extension 中的 `addOptions` 中定义 `getDraggable` 函数，并让其返回 true 即可，如：
+在 <https://github.com/halo-sigs/richtext-editor/pull/48> 中，我们实现了对所有元素的拖拽功能，如果需要让当前扩展支持拖拽，只需要在具体的 Tiptap Extension 中的 `addOptions` 中定义 `getDraggable` 函数，并让其返回 true 即可。如：
 
 ```ts
 {
@@ -386,6 +386,7 @@ export interface DraggableItem {
     insertPos: number;
     node: Node;
   }) => boolean | void;
+  allowPropagationDownward?: boolean;   // 是否允许拖拽事件向内部传播，
 }
 
 export interface DragSelectionNode {
@@ -400,29 +401,42 @@ export interface DragSelectionNode {
 }
 ```
 
+> 拖拽会从父 Node 节点开始触发，直到找到一个实现 `getDraggable` 的扩展，如果没有找到，则不会触发拖拽事件。父 Node 可以通过 `allowPropagationDownward` 来控制是否允许拖拽事件向内部传播。如果 `allowPropagationDownward` 设置为 true，则会继续向内部寻找实现 `getDraggable` 的扩展，如果没有找到，则触发父 Node 的 `getDraggable` 实现，否则继续进行传播。
+
 如下为 [`Iframe`](../packages/editor/src/extensions/iframe/index.ts) 扩展中对于 `getDraggable` 拖拽功能的扩展示例：
 
 ```ts
-  addOptions() {
-    return {
-      ...this.parent?.(),
-      getDraggable() {
-        return {
-          getRenderContainer({ dom, view }) {
-            let node;
-            if (dom.parentElement) {
-              const pos = view.posAtDOM(dom.parentElement, 0);
-              const $pos = view.state.doc.resolve(pos);
-              node = $pos.node();
-            }
+addOptions() {
+  return {
+    ...this.parent?.(),
+    getDraggable() {
+      return {
+        getRenderContainer({ dom, view }) {
+          let container = dom;
+          while (
+            container.parentElement &&
+            container.parentElement.tagName !== "P"
+          ) {
+            container = container.parentElement;
+          }
+          if (container) {
+            container = container.firstElementChild
+              ?.firstElementChild as HTMLElement;
+          }
+          let node;
+          if (container.firstElementChild) {
+            const pos = view.posAtDOM(container.firstElementChild, 0);
+            const $pos = view.state.doc.resolve(pos);
+            node = $pos.node();
+          }
 
-            return {
-              node: node,
-              el: dom.firstElementChild as HTMLElement,
-            };
-          },
-        };
-      },
-    }
+          return {
+            node: node,
+            el: container as HTMLElement,
+          };
+        },
+      };
+    },
   }
+}
 ```
