@@ -49,7 +49,7 @@ const target = computed({
           ? i18n.global.t('editor.extensions.link.edit_link')
           : i18n.global.t('editor.extensions.link.add_link')
       "
-      class="text-gray-600 text-lg hover:bg-gray-100 p-0.5 rounded-sm"
+      class="text-gray-600 text-lg hover:bg-gray-100 p-2 rounded-md"
       :class="{ 'bg-gray-200 !text-black': isActive({ editor }) }"
     >
       <MdiLinkVariant />
