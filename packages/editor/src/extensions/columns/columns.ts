@@ -303,6 +303,9 @@ const Columns = Node.create<ExtensionOptions>({
             }
             return {
               el: container,
+              dragDomOffset: {
+                y: -5,
+              },
             };
           },
           allowPropagationDownward: true,

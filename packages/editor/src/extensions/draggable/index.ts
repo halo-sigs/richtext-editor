@@ -8,7 +8,11 @@ import type {
 } from "prosemirror-model";
 import { NodeSelection, Plugin, PluginKey } from "prosemirror-state";
 import type { EditorView } from "@tiptap/pm/view";
-import { __serializeForClipboard as serializeForClipboard } from "@tiptap/pm/view";
+import {
+  Decoration,
+  DecorationSet,
+  __serializeForClipboard as serializeForClipboard,
+} from "@tiptap/pm/view";
 import type { DraggableItem, ExtensionOptions } from "@/types";
 
 // https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API
@@ -28,7 +32,8 @@ let currEditorView: EditorView;
 let activeNode: ActiveNode | null = null;
 let activeSelection: NodeSelection | null = null;
 let mouseleaveTimer: any;
-let dragging: any = false;
+let dragging = false;
+let hoverOrClickDragItem = false;
 
 const createDragHandleDom = () => {
   const dom = document.createElement("div");
@@ -99,6 +104,8 @@ const handleMouseEnterEvent = () => {
   if (!activeNode) {
     return;
   }
+  hoverOrClickDragItem = true;
+  currEditorView.dispatch(currEditorView.state.tr);
   clearTimeout(mouseleaveTimer);
   showDragHandleDOM();
 };
@@ -107,6 +114,8 @@ const handleMouseLeaveEvent = () => {
   if (!activeNode) {
     return;
   }
+  hoverOrClickDragItem = false;
+  currEditorView.dispatch(currEditorView.state.tr);
   hideDragHandleDOM();
 };
 
@@ -114,6 +123,8 @@ const handleMouseDownEvent = () => {
   if (!activeNode) {
     return null;
   }
+  hoverOrClickDragItem = false;
+  currEditorView.dispatch(currEditorView.state.tr);
   if (NodeSelection.isSelectable(activeNode.node)) {
     const nodeSelection = NodeSelection.create(
       currEditorView.state.doc,
@@ -126,7 +137,6 @@ const handleMouseDownEvent = () => {
     activeSelection = nodeSelection;
     return nodeSelection;
   }
-
   return null;
 };
 
@@ -140,6 +150,7 @@ const handleMouseUpEvent = () => {
 
 const handleDragStartEvent = (event: DragEvent) => {
   dragging = true;
+  hoverOrClickDragItem = false;
   if (event.dataTransfer && activeNode && activeSelection) {
     const slice = activeSelection.content();
     event.dataTransfer.effectAllowed = "move";
@@ -252,10 +263,9 @@ const findParentNodeByDepth = (
   }
   if (depth > $pos.depth) {
     // 解决 audio 等不是块元素的问题，目前仅寻找其直接第一个子节点
-
     if (depth - $pos.depth == 1) {
       const parentNode = $pos.node();
-      if (parentNode.firstChild) {
+      if (parentNode.firstChild && !parentNode.firstChild.type.isBlock) {
         return parentNode.firstChild;
       }
     }
@@ -434,16 +444,19 @@ const Draggable = Extension.create({
               const pos = view.posAtCoords(coords);
               if (!pos || !pos.pos) return false;
 
-              const dragNode =
-                view.nodeDOM(pos.pos) ||
-                view.domAtPos(pos.pos)?.node ||
-                event.target;
+              let dragNode = view.domAtPos(pos.pos)?.node as HTMLElement;
+              if (!dragNode || dragNode?.classList?.contains("ProseMirror")) {
+                dragNode = view.nodeDOM(pos.pos) as HTMLElement;
+              }
+
+              if (!dragNode) {
+                dragNode = event.target as HTMLElement;
+              }
 
               if (!dragNode) {
                 hideDragHandleDOM();
                 return false;
               }
-
               let dom: HTMLElement | null = dragNode as HTMLElement;
               while (dom && dom.nodeType === 3) {
                 dom = dom.parentElement;
@@ -528,6 +541,17 @@ const Draggable = Extension.create({
             activeSelection = null;
             activeNode = null;
             return isDisableDrop;
+          },
+          decorations: (state) => {
+            if (!hoverOrClickDragItem || !activeNode) {
+              return DecorationSet.empty;
+            }
+            const { $pos } = activeNode;
+            return DecorationSet.create(state.doc, [
+              Decoration.node($pos.before(), $pos.after(), {
+                class: "has-draggable-handle",
+              }),
+            ]);
           },
         },
       }),

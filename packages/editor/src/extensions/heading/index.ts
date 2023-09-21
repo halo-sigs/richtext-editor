@@ -222,8 +222,11 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
             while (container && !tagNames.includes(container.tagName)) {
               container = container.parentElement as HTMLElement;
             }
+            if (!container) {
+              return null;
+            }
             let y;
-            switch (container.tagName) {
+            switch (container?.tagName) {
               case "H1":
                 y = 10;
                 break;

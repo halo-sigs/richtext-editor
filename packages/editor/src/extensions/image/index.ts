@@ -203,10 +203,7 @@ const Image = TiptapImage.extend<ExtensionOptions & ImageOptions>({
         return {
           getRenderContainer({ dom, view }) {
             let container = dom;
-            while (
-              container.parentElement &&
-              container.parentElement.tagName !== "P"
-            ) {
+            while (container && container.tagName !== "P") {
               container = container.parentElement;
             }
             if (container) {
