@@ -58,7 +58,7 @@ const handleBubbleItemClick = (editor: Editor) => {
       }"
       :class="{ 'bg-gray-200 !text-black': isActive({ editor }) }"
       :title="title"
-      class="text-gray-600 text-lg hover:bg-gray-100 p-2 rounded-sm"
+      class="text-gray-600 text-lg hover:bg-gray-100 p-2 rounded-md"
       @click="handleBubbleItemClick(editor)"
     >
       <component :is="icon" :style="iconStyle" class="w-5 h-5" />
