@@ -43,7 +43,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <node-view-wrapper as="div">
+  <node-view-wrapper as="div" class="inline-block" :class="{ 'w-full': !src }">
     <div
       class="inline-block overflow-hidden transition-all text-center relative h-full"
       :style="{

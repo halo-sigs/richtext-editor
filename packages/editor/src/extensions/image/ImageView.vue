@@ -66,7 +66,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <node-view-wrapper as="div">
+  <node-view-wrapper as="div" class="inline-block" :class="{ 'w-full': !src }">
     <div v-if="!src" class="p-1.5 w-full">
       <input
         ref="inputRef"
