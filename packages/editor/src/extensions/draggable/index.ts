@@ -299,10 +299,19 @@ const getDraggableItem = ({
     if (typeof draggableItem === "boolean") {
       return draggableItem;
     }
-    // 校验当前鼠标位置是否在当前节点内，如果不在，则返回 draggableItem。
+    const container = getRenderContainer(view, draggableItem, dom);
     const coords = { left: event.clientX, top: event.clientY };
     const pos = view.posAtCoords(coords);
     if (pos.inside == -1) {
+      return draggableItem;
+    }
+
+    if (
+      !(
+        pos.inside >= container.$pos.start() &&
+        pos.inside <= container.$pos.end()
+      )
+    ) {
       return draggableItem;
     }
 
@@ -387,29 +396,13 @@ const dropPoint = (doc: Node, pos: number, slice: Slice) => {
   return null;
 };
 
-const isCursorPositionedInside = (
-  view: EditorView,
-  event: any,
-  dom: HTMLElement
-) => {
-  const eventCoords = { left: event.clientX, top: event.clientY };
-  const $pos = getPosByDOM(view, dom);
-  const coords = view.coordsAtPos($pos.pos);
-  console.log(dom, eventCoords, coords);
-  if (eventCoords.top < coords.top || eventCoords.top <= coords.bottom) {
-    return true;
-  }
-  return false;
-};
-
 const Draggable = Extension.create({
   name: "draggable",
   addProseMirrorPlugins() {
     return [
       new Plugin({
         key: new PluginKey("node-draggable"),
-        // @ts-ignore
-        view: (view: EditorView) => {
+        view: (view) => {
           draggableHandleDom = createDragHandleDom();
           draggableHandleDom.addEventListener(
             "mouseenter",
@@ -432,7 +425,7 @@ const Draggable = Extension.create({
           viewDomParentNode.appendChild(draggableHandleDom);
           viewDomParentNode.style.position = "relative";
           return {
-            update: (view: EditorView) => {
+            update: (view) => {
               currEditorView = view;
             },
             destroy: () => {
@@ -526,8 +519,7 @@ const Draggable = Extension.create({
             hideDragHandleDOM();
             return false;
           },
-          // @ts-ignore
-          handleDrop: (view: EditorView, event, slice) => {
+          handleDrop: (view, event, slice) => {
             if (!draggableHandleDom) {
               return false;
             }
