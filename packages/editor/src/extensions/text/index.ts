@@ -75,6 +75,9 @@ const Text = TiptapText.extend<ExtensionOptions>({
 
             return true;
           },
+          tippyOptions: {
+            fixed: false,
+          },
           defaultAnimation: false,
           items: [
             {

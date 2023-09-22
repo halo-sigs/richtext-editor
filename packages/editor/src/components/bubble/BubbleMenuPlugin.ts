@@ -9,11 +9,14 @@ import { EditorState, Plugin, PluginKey } from "prosemirror-state";
 import type { EditorView } from "prosemirror-view";
 import tippy, { type Instance, type Props, sticky } from "tippy.js";
 
+export interface TippyOptionProps extends Props {
+  fixed?: boolean;
+}
 export interface BubbleMenuPluginProps {
   pluginKey: PluginKey | string;
   editor: Editor;
   element: HTMLElement;
-  tippyOptions?: Partial<Props>;
+  tippyOptions?: Partial<TippyOptionProps>;
   updateDelay?: number;
   shouldShow?:
     | ((props: {
@@ -45,9 +48,9 @@ export class BubbleMenuView {
 
   public preventHide = false;
 
-  public tippy: Instance | undefined;
+  public tippy: Instance<TippyOptionProps> | undefined;
 
-  public tippyOptions?: Partial<Props>;
+  public tippyOptions?: Partial<TippyOptionProps>;
 
   public getRenderContainer?: BubbleMenuPluginProps["getRenderContainer"];
 
@@ -98,8 +101,6 @@ export class BubbleMenuView {
       capture: true,
     });
     this.view.dom.addEventListener("dragstart", this.dragstartHandler);
-    // this.editor.on("focus", this.focusHandler);
-    // this.editor.on('blur', this.blurHandler);
     this.tippyOptions = tippyOptions || {};
     // Detaches menu content from its current parent
     this.element.remove();
@@ -113,11 +114,6 @@ export class BubbleMenuView {
   dragstartHandler = () => {
     this.hide();
   };
-
-  // focusHandler = () => {
-  //   // we use `setTimeout` to make sure `selection` is already updated
-  //   setTimeout(() => this.update(this.editor.view));
-  // };
 
   blurHandler = ({ event }: { event: FocusEvent }) => {
     if (this.preventHide) {
@@ -169,6 +165,7 @@ export class BubbleMenuView {
                 moveTransition: "transform 0.2s ease-in-out",
               }
             : {}),
+          fixed: true,
         },
         this.tippyOptions
       ),
@@ -203,24 +200,21 @@ export class BubbleMenuView {
     const from = Math.min(...ranges.map((range) => range.$from.pos));
     const to = Math.max(...ranges.map((range) => range.$to.pos));
     // prevent the menu from being obscured
-    const tippyParentNode = this.tippy?.popper.parentNode;
-    const siblings =
-      tippyParentNode?.querySelectorAll("[data-tippy-root]") ?? [];
     const placement = this.tippyOptions?.placement
       ? this.tippyOptions?.placement
       : isNodeSelection(selection)
-      ? siblings.length > 1
+      ? ACTIVE_BUBBLE_MENUS.length > 1
         ? "bottom"
         : "top"
+      : this.tippy.props.fixed
+      ? "bottom-start"
       : Math.abs(cursorAt - to) <= Math.abs(cursorAt - from)
-      ? siblings.length > 1
-        ? "top-start"
-        : "bottom-start"
+      ? "bottom-start"
       : "top-start";
+
     const domAtPos = view.domAtPos(from).node as HTMLElement;
     const nodeDOM = view.nodeDOM(from) as HTMLElement;
     const node = nodeDOM || domAtPos;
-
     const shouldShow =
       this.editor.isEditable &&
       this.shouldShow?.({
@@ -237,35 +231,9 @@ export class BubbleMenuView {
       this.hide();
       return;
     }
-
-    const otherBubbleMenus = ACTIVE_BUBBLE_MENUS.filter(
-      (instance) =>
-        instance.id !== this.tippy?.id &&
-        instance.popperInstance &&
-        instance.popperInstance.state
-    );
     const offset = this.tippyOptions?.offset as [number, number];
-    const offsetX = offset?.[0] ?? 0;
-    const offsetY = otherBubbleMenus.length
-      ? otherBubbleMenus.reduce((prev, instance, currentIndex, array) => {
-          const prevY = array[currentIndex - 1]
-            ? array[currentIndex - 1]?.popperInstance?.state?.modifiersData
-                ?.popperOffsets?.y ?? 0
-            : 0;
-          const currentY =
-            instance?.popperInstance?.state?.modifiersData?.popperOffsets?.y ??
-            0;
-          const currentHeight =
-            instance?.popperInstance?.state?.rects?.popper?.height ?? 10;
-          if (Math.abs(prevY - currentY) <= currentHeight) {
-            prev += currentHeight;
-          }
-
-          return prev;
-        }, 0)
-      : offset?.[1] ?? 10;
     this.tippy?.setProps({
-      offset: [offsetX, offsetY],
+      offset: [offset?.[0], offset?.[1] ?? 10],
       placement,
       getReferenceClientRect: () => {
         let toMountNode = null;
