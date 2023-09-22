@@ -1,9 +1,4 @@
-import {
-  Editor,
-  Extension,
-  findParentNode,
-  getHTMLFromFragment,
-} from "@tiptap/core";
+import { Editor, Extension } from "@tiptap/core";
 import {
   Fragment,
   Node,
@@ -198,8 +193,7 @@ const getPosByDOM = (
   if (domPos < 0) {
     return null;
   }
-  const $pos = view.state.doc.resolve(domPos);
-  return $pos;
+  return view.state.doc.resolve(domPos);
 };
 
 export const selectAncestorNodeByDom = (
@@ -287,11 +281,13 @@ const getDraggableItem = ({
   editor,
   view,
   dom,
+  event,
   depth = 1,
 }: {
   editor: Editor;
   view: EditorView;
   dom: HTMLElement;
+  event?: any;
   depth?: number;
 }) => {
   const parentNode = findParentNodeByDepth(view, dom, depth);
@@ -303,11 +299,19 @@ const getDraggableItem = ({
     if (typeof draggableItem === "boolean") {
       return draggableItem;
     }
+    // 校验当前鼠标位置是否在当前节点内，如果不在，则返回 draggableItem。
+    const coords = { left: event.clientX, top: event.clientY };
+    const pos = view.posAtCoords(coords);
+    if (pos.inside == -1) {
+      return draggableItem;
+    }
+
     if (draggableItem.allowPropagationDownward) {
       const draggable = getDraggableItem({
         editor,
         view,
         dom,
+        event,
         depth: ++depth,
       });
 
@@ -323,6 +327,7 @@ const getDraggableItem = ({
     editor,
     view,
     dom,
+    event,
     depth: ++depth,
   });
 };
@@ -381,13 +386,30 @@ const dropPoint = (doc: Node, pos: number, slice: Slice) => {
   }
   return null;
 };
+
+const isCursorPositionedInside = (
+  view: EditorView,
+  event: any,
+  dom: HTMLElement
+) => {
+  const eventCoords = { left: event.clientX, top: event.clientY };
+  const $pos = getPosByDOM(view, dom);
+  const coords = view.coordsAtPos($pos.pos);
+  console.log(dom, eventCoords, coords);
+  if (eventCoords.top < coords.top || eventCoords.top <= coords.bottom) {
+    return true;
+  }
+  return false;
+};
+
 const Draggable = Extension.create({
   name: "draggable",
   addProseMirrorPlugins() {
     return [
       new Plugin({
         key: new PluginKey("node-draggable"),
-        view: (view) => {
+        // @ts-ignore
+        view: (view: EditorView) => {
           draggableHandleDom = createDragHandleDom();
           draggableHandleDom.addEventListener(
             "mouseenter",
@@ -410,7 +432,7 @@ const Draggable = Extension.create({
           viewDomParentNode.appendChild(draggableHandleDom);
           viewDomParentNode.style.position = "relative";
           return {
-            update: (view) => {
+            update: (view: EditorView) => {
               currEditorView = view;
             },
             destroy: () => {
@@ -444,34 +466,23 @@ const Draggable = Extension.create({
         },
         props: {
           handleDOMEvents: {
+            // @ts-ignore
             mousemove: (view: EditorView, event) => {
               const coords = { left: event.clientX, top: event.clientY };
               const pos = view.posAtCoords(coords);
               if (!pos || !pos.pos) return false;
 
               const nodeDom =
-                view.nodeDOM(pos.pos) || view.domAtPos(pos.pos)?.node;
-              const $pos = getPosByDOM(view, nodeDom as HTMLElement);
-              const nodeCoords = view.coordsAtPos($pos.pos);
+                view.nodeDOM(pos.pos) ||
+                view.domAtPos(pos.pos)?.node ||
+                event.target;
 
-              let dragNode = nodeDom;
-              if (
-                coords.top < nodeCoords.top ||
-                coords.top > nodeCoords.bottom
-              ) {
-                const pos = view.posAtDOM(dragNode, 0);
-                const $pos = view.state.doc.resolve(pos);
-                const parentNodeDom = view.domAtPos($pos.before())?.node;
-                if (parentNodeDom) {
-                  dragNode = parentNodeDom as HTMLElement;
-                }
-              }
-
-              if (!dragNode) {
+              if (!nodeDom) {
                 hideDragHandleDOM();
                 return false;
               }
-              let dom: HTMLElement | null = dragNode as HTMLElement;
+
+              let dom: HTMLElement | null = nodeDom as HTMLElement;
               while (dom && dom.nodeType === 3) {
                 dom = dom.parentElement;
               }
@@ -484,6 +495,7 @@ const Draggable = Extension.create({
                 editor,
                 view,
                 dom,
+                event,
               });
               // skip the current extension if getDraggable() is not implemented or returns false.
               if (!draggableItem) {
@@ -514,7 +526,8 @@ const Draggable = Extension.create({
             hideDragHandleDOM();
             return false;
           },
-          handleDrop: (view, event, slice) => {
+          // @ts-ignore
+          handleDrop: (view: EditorView, event, slice) => {
             if (!draggableHandleDom) {
               return false;
             }
