@@ -1,5 +1,10 @@
-import { Editor, Extension } from "@tiptap/core";
-import type {
+import {
+  Editor,
+  Extension,
+  findParentNode,
+  getHTMLFromFragment,
+} from "@tiptap/core";
+import {
   Fragment,
   Node,
   NodeType,
@@ -444,13 +449,22 @@ const Draggable = Extension.create({
               const pos = view.posAtCoords(coords);
               if (!pos || !pos.pos) return false;
 
-              let dragNode = view.domAtPos(pos.pos)?.node as HTMLElement;
-              if (!dragNode || dragNode?.classList?.contains("ProseMirror")) {
-                dragNode = view.nodeDOM(pos.pos) as HTMLElement;
-              }
+              const nodeDom =
+                view.nodeDOM(pos.pos) || view.domAtPos(pos.pos)?.node;
+              const $pos = getPosByDOM(view, nodeDom as HTMLElement);
+              const nodeCoords = view.coordsAtPos($pos.pos);
 
-              if (!dragNode) {
-                dragNode = event.target as HTMLElement;
+              let dragNode = nodeDom;
+              if (
+                coords.top < nodeCoords.top ||
+                coords.top > nodeCoords.bottom
+              ) {
+                const pos = view.posAtDOM(dragNode, 0);
+                const $pos = view.state.doc.resolve(pos);
+                const parentNodeDom = view.domAtPos($pos.before())?.node;
+                if (parentNodeDom) {
+                  dragNode = parentNodeDom as HTMLElement;
+                }
               }
 
               if (!dragNode) {
