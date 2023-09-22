@@ -4,10 +4,11 @@ import {
   isActive,
   mergeAttributes,
   Node,
+  type Range,
 } from "@tiptap/core";
 import { Node as PMNode } from "@tiptap/pm/model";
-import type { NodeType, Schema } from "prosemirror-model";
-import { EditorState, TextSelection } from "prosemirror-state";
+import type { NodeType, Schema } from "@tiptap/pm/model";
+import { EditorState, TextSelection } from "@tiptap/pm/state";
 import { markRaw } from "vue";
 import Column from "./column";
 import RiInsertColumnLeft from "~icons/ri/insert-column-left";
@@ -222,7 +223,7 @@ const Columns = Node.create({
           },
         };
       },
-      getBubbleMenu({ editor }: { editor: Editor }) {
+      getBubbleMenu() {
         return {
           pluginKey: "columnsBubbleMenu",
           shouldShow: ({ state }: { state: EditorState }) => {

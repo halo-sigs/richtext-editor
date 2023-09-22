@@ -1,4 +1,4 @@
-import type { ExtensionOptions } from "@/types";
+import type { ExtensionOptions, NodeBubbleMenu } from "@/types";
 import {
   Editor,
   isActive,
@@ -31,7 +31,7 @@ import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red
 import MdiShare from "~icons/mdi/share";
 import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiWebSync from "~icons/mdi/web-sync";
-import type { EditorState } from "prosemirror-state";
+import type { EditorState } from "@tiptap/pm/state";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -209,7 +209,6 @@ const Iframe = Node.create<ExtensionOptions>({
 
   addOptions() {
     return {
-      ...this.parent?.(),
       getCommandMenuItems() {
         return {
           priority: 90,
@@ -246,7 +245,7 @@ const Iframe = Node.create<ExtensionOptions>({
           },
         ];
       },
-      getBubbleMenu({ editor }: { editor: Editor }) {
+      getBubbleMenu({ editor }: { editor: Editor }): NodeBubbleMenu {
         return {
           pluginKey: "iframeBubbleMenu",
           shouldShow: ({ state }: { state: EditorState }) => {

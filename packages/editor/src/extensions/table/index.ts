@@ -1,10 +1,10 @@
 import TiptapTable, { type TableOptions } from "@tiptap/extension-table";
-import type { Node as ProseMirrorNode } from "prosemirror-model";
-import type { NodeView } from "prosemirror-view";
+import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
+import type { NodeView } from "@tiptap/pm/view";
 import TableCell from "./table-cell";
 import TableRow from "./table-row";
 import TableHeader from "./table-header";
-import { isActive, type Editor, type Range } from "@tiptap/vue-3";
+import { isActive, type Editor, type Range } from "@tiptap/core";
 import MdiTable from "~icons/mdi/table";
 import MdiTablePlus from "~icons/mdi/table-plus";
 import MdiTableColumnPlusBefore from "~icons/mdi/table-column-plus-before";
@@ -20,8 +20,8 @@ import MdiTableSplitCell from "~icons/mdi/table-split-cell";
 import FluentTableColumnTopBottom24Regular from "~icons/fluent/table-column-top-bottom-24-regular";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
-import type { ExtensionOptions } from "@/types";
-import type { EditorState } from "prosemirror-state";
+import type { ExtensionOptions, NodeBubbleMenu } from "@/types";
+import type { EditorState } from "@tiptap/pm/state";
 import { BlockActionSeparator, ToolboxItem } from "@/components";
 
 function updateColumns(
@@ -145,7 +145,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
       resizable: true,
       handleWidth: 5,
       cellMinWidth: 25,
-      View: TableView,
+      View: TableView as unknown as NodeView,
       lastColumnResizable: true,
       allowTableNodeSelection: false,
       getToolboxItems({ editor }: { editor: Editor }) {
@@ -181,7 +181,7 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
           },
         };
       },
-      getBubbleMenu({ editor }) {
+      getBubbleMenu({ editor }): NodeBubbleMenu {
         return {
           pluginKey: "tableBubbleMenu",
           shouldShow: ({ state }: { state: EditorState }): boolean => {

@@ -1,13 +1,12 @@
 import { Extension } from "@tiptap/core";
-
-import { Plugin, PluginKey } from "prosemirror-state";
+import { Plugin, PluginKey } from "@tiptap/pm/state";
 
 /**
  * @param {object} args Arguments as deconstructable object
  * @param {Array | object} args.types possible types
  * @param {object} args.node node to check
  */
-function nodeEqualsType({ types, node }) {
+function nodeEqualsType({ types, node }: { types: any; node: any }) {
   return (
     (Array.isArray(types) && types.includes(node.type)) || node.type === types
   );

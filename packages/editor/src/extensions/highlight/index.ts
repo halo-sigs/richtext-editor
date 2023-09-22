@@ -5,7 +5,6 @@ import MdiFormatColorHighlight from "~icons/mdi/format-color-highlight";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
-import HighlightBubbleItem from "./HighlightBubbleItem.vue";
 import HighlightToolbarItem from "./HighlightToolbarItem.vue";
 
 const Highlight = TiptapHighlight.extend<ExtensionOptions & HighlightOptions>({
