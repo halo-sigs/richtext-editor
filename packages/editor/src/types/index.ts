@@ -123,6 +123,6 @@ export interface DraggableItem {
     insertPos: number;
     node: Node;
   }) => boolean | void;
-  // 是否允许拖拽查询向下传播
+  // allow drag-and-drop query propagation downward
   allowPropagationDownward?: boolean;
 }
