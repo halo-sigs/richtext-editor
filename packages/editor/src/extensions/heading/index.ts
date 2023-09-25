@@ -1,5 +1,5 @@
 import type { Editor, Range } from "@tiptap/core";
-import TiptapParagraph from "@tiptap/extension-paragraph";
+import TiptapParagraph from "@/extensions/paragraph";
 import TiptapHeading from "@tiptap/extension-heading";
 import type { HeadingOptions } from "@tiptap/extension-heading";
 import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
