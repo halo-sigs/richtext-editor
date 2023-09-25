@@ -52,6 +52,7 @@ editor:
       restore_size: 恢复原始尺寸
       edit_link: 修改链接
       edit_alt: 修改图片 alt 属性
+      edit_href: 修改图片跳转链接
     video:
       disable_controls: 隐藏控制面板
       enable_controls: 显示控制面板
@@ -107,6 +108,7 @@ editor:
     placeholder:
       link_input: 输入链接，按回车确定
       alt_input: 输入图片 alt 属性值，按回车确认
+      alt_href: 输入图片跳转链接，按回车确认
     button:
       new_line: 换行
       delete: 删除
