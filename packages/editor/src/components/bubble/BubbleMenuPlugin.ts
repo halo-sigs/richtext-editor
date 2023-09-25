@@ -240,7 +240,7 @@ export class BubbleMenuView {
     );
     const offset = this.tippyOptions?.offset as [number, number];
     const offsetX = offset?.[0] ?? 0;
-    const offsetY = otherBubbleMenus.length
+    let offsetY = otherBubbleMenus.length
       ? otherBubbleMenus.reduce((prev, instance, currentIndex, array) => {
           const prevY = array[currentIndex - 1]
             ? array[currentIndex - 1]?.popperInstance?.state?.modifiersData
@@ -258,6 +258,9 @@ export class BubbleMenuView {
           return prev;
         }, 0)
       : offset?.[1] ?? 10;
+    if (!offsetY) {
+      offsetY = 10;
+    }
     this.tippy?.setProps({
       offset: [offsetX, offsetY],
       placement,
