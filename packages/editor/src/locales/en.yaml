@@ -52,6 +52,7 @@ editor:
       restore_size: Restore original size
       edit_link: Edit link
       edit_alt: Edit alt
+      edit_href: Edit the image hyperlink
     video:
       disable_controls: Hide controls
       enable_controls: Show controls
@@ -107,6 +108,7 @@ editor:
     placeholder:
       link_input: Enter the link and press enter to confirm.
       alt_input: Enter the image alt and press enter to confirm.
+      alt_href: Enter the image hyperlink and press enter to confirm.
     button:
       new_line: New line
       delete: Delete

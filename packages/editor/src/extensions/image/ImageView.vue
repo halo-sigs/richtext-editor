@@ -38,6 +38,14 @@ const alt = computed({
   },
 });
 
+const href = computed({
+  get: () => {
+    return props.node?.attrs.href;
+  },
+  set: (href: string) => {
+    props.updateAttributes({ href: href });
+  },
+});
 function handleSetFocus() {
   props.editor.commands.setNodeSelection(props.getPos());
 }
@@ -93,6 +101,7 @@ onMounted(() => {
         :src="src"
         :title="node.attrs.title"
         :alt="alt"
+        :href="href"
         class="w-full h-full"
       />
     </div>

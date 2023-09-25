@@ -1,5 +1,5 @@
 import TiptapImage from "@tiptap/extension-image";
-import { isActive, type Editor } from "@tiptap/core";
+import { isActive, mergeAttributes, type Editor } from "@tiptap/core";
 import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import ImageView from "./ImageView.vue";
 import type { ImageOptions } from "@tiptap/extension-image";
@@ -12,6 +12,7 @@ import type { EditorState } from "@tiptap/pm/state";
 import BubbleItemImageSize from "./BubbleItemImageSize.vue";
 import BubbleItemImageAlt from "./BubbleItemImageAlt.vue";
 import BubbleItemVideoLink from "./BubbleItemImageLink.vue";
+import BubbleItemImageHref from "./BubbleItemImageHref.vue";
 import { BlockActionSeparator } from "@/components";
 import MdiFormatAlignLeft from "~icons/mdi/format-align-left";
 import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
@@ -22,6 +23,7 @@ import MdiShare from "~icons/mdi/share";
 import MdiTextBoxEditOutline from "~icons/mdi/text-box-edit-outline";
 import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
 import { deleteNode } from "@/utils";
+import MdiLink from "~icons/mdi/link";
 
 const Image = TiptapImage.extend<ExtensionOptions & ImageOptions>({
   inline() {
@@ -61,6 +63,18 @@ const Image = TiptapImage.extend<ExtensionOptions & ImageOptions>({
           };
         },
       },
+      href: {
+        default: null,
+        parseHTML: (element) => {
+          const href = element.getAttribute("href") || null;
+          return href;
+        },
+        renderHTML: (attributes) => {
+          return {
+            href: attributes.href,
+          };
+        },
+      },
       style: {
         renderHTML() {
           return {
@@ -84,7 +98,6 @@ const Image = TiptapImage.extend<ExtensionOptions & ImageOptions>({
       },
     ];
   },
-
   addOptions() {
     return {
       ...this.parent?.(),
@@ -186,10 +199,20 @@ const Image = TiptapImage.extend<ExtensionOptions & ImageOptions>({
             },
             {
               priority: 100,
-              component: markRaw(BlockActionSeparator),
+              props: {
+                icon: markRaw(MdiLink),
+                title: i18n.global.t("editor.extensions.image.edit_href"),
+                action: () => {
+                  return markRaw(BubbleItemImageHref);
+                },
+              },
             },
             {
               priority: 110,
+              component: markRaw(BlockActionSeparator),
+            },
+            {
+              priority: 120,
               props: {
                 icon: markRaw(MdiDeleteForeverOutline),
                 title: i18n.global.t("editor.common.button.delete"),
@@ -200,6 +223,16 @@ const Image = TiptapImage.extend<ExtensionOptions & ImageOptions>({
         };
       },
     };
+  },
+  renderHTML({ HTMLAttributes }) {
+    if (HTMLAttributes.href) {
+      return [
+        "a",
+        { href: HTMLAttributes.href },
+        ["img", mergeAttributes(HTMLAttributes)],
+      ];
+    }
+    return ["img", mergeAttributes(HTMLAttributes)];
   },
 });
 
