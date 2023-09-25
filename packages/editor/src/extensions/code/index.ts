@@ -8,6 +8,7 @@ import { i18n } from "@/locales";
 import type { ExtensionOptions } from "@/types";
 
 const Code = TiptapCode.extend<ExtensionOptions & CodeOptions>({
+  exitable: true,
   addOptions() {
     return {
       ...this.parent?.(),
