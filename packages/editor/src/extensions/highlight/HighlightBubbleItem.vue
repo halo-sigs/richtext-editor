@@ -3,7 +3,7 @@ import { BubbleItem } from "@/components";
 import ColorPickerDropdown from "@/components/common/ColorPickerDropdown.vue";
 import MdiFormatColorMarkerCancel from "~icons/mdi/format-color-marker-cancel";
 import { i18n } from "@/locales";
-import type { Editor } from "@tiptap/vue-3";
+import type { Editor } from "@tiptap/core";
 import type { Component } from "vue";
 
 const props = defineProps<{

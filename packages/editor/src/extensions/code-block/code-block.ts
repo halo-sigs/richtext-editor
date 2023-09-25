@@ -1,11 +1,11 @@
 import {
   Editor,
-  VueNodeViewRenderer,
   type Range,
   type CommandProps,
   isActive,
   findParentNode,
-} from "@tiptap/vue-3";
+} from "@tiptap/core";
+import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import type { CodeBlockLowlightOptions } from "@tiptap/extension-code-block-lowlight";
 import CodeBlockViewRenderer from "./CodeBlockViewRenderer.vue";
@@ -14,11 +14,7 @@ import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
-import {
-  EditorState,
-  TextSelection,
-  type Transaction,
-} from "prosemirror-state";
+import { EditorState, TextSelection, type Transaction } from "@tiptap/pm/state";
 import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
 import { deleteNode } from "@/utils";
 
@@ -132,13 +128,13 @@ export default CodeBlockLowlight.extend<
         if (this.editor.isActive("codeBlock")) {
           return this.editor.chain().focus().codeIndent().run();
         }
-        return;
+        return false;
       },
       "Shift-Tab": () => {
         if (this.editor.isActive("codeBlock")) {
           return this.editor.chain().focus().codeOutdent().run();
         }
-        return;
+        return false;
       },
       "Mod-a": () => {
         if (this.editor.isActive("codeBlock")) {
@@ -146,7 +142,9 @@ export default CodeBlockLowlight.extend<
           const codeBlack = findParentNode(
             (node) => node.type.name === CodeBlockLowlight.name
           )(selection);
-          if (!codeBlack) return;
+          if (!codeBlack) {
+            return false;
+          }
           const head = codeBlack.start;
           const anchor = codeBlack.start + codeBlack.node.nodeSize - 1;
           const $head = tr.doc.resolve(head);

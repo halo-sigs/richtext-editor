@@ -1,4 +1,4 @@
-import type { Editor, Range } from "@tiptap/vue-3";
+import type { Editor, Range } from "@tiptap/core";
 import TiptapBulletList from "@tiptap/extension-bullet-list";
 import type { BulletListOptions } from "@tiptap/extension-bullet-list";
 import ExtensionListItem from "@tiptap/extension-list-item";

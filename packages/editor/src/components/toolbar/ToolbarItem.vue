@@ -16,7 +16,7 @@ withDefaults(
     title: undefined,
     action: undefined,
     icon: undefined,
-  }
+  },
 );
 </script>
 

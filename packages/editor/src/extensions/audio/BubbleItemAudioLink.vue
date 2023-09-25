@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Editor } from "@tiptap/vue-3";
+import type { Editor } from "@tiptap/core";
 import { computed, type Component } from "vue";
 import Audio from "./index";
 import { i18n } from "@/locales";

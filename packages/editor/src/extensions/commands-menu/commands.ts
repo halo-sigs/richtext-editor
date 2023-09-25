@@ -1,11 +1,15 @@
-import { VueRenderer, type AnyExtension, type Range } from "@tiptap/vue-3";
-import { Extension } from "@tiptap/vue-3";
+import {
+  Extension,
+  type Editor,
+  type AnyExtension,
+  type Range,
+} from "@tiptap/core";
+import { VueRenderer } from "@tiptap/vue-3";
 import Suggestion from "@tiptap/suggestion";
 import type { CommandMenuItem } from "@/types";
 import type { Instance } from "tippy.js";
 import CommandsView from "./CommandsView.vue";
 import tippy from "tippy.js";
-import type { Editor } from "@tiptap/core";
 
 export default Extension.create({
   name: "commands-menu",

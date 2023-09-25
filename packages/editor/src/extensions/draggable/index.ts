@@ -1,12 +1,6 @@
 import { Editor, Extension } from "@tiptap/core";
-import {
-  Fragment,
-  Node,
-  NodeType,
-  ResolvedPos,
-  Slice,
-} from "prosemirror-model";
-import { NodeSelection, Plugin, PluginKey } from "prosemirror-state";
+import { Fragment, Node, NodeType, ResolvedPos, Slice } from "@tiptap/pm/model";
+import { NodeSelection, Plugin, PluginKey } from "@tiptap/pm/state";
 import type { EditorView } from "@tiptap/pm/view";
 import {
   Decoration,

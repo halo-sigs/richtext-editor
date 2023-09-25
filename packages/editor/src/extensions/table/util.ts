@@ -1,6 +1,7 @@
 import { findParentNode } from "@tiptap/core";
 import { CellSelection, TableMap } from "@tiptap/pm/tables";
-import type { Selection, Transaction } from "prosemirror-state";
+import type { Selection, Transaction } from "@tiptap/pm/state";
+import { Node } from "@tiptap/pm/model";
 
 export const selectTable = (tr: Transaction) => {
   const table = findTable(tr.selection);
@@ -92,7 +93,7 @@ export const getCellsInColumn =
               const node = table.node.nodeAt(nodePos);
               const pos = nodePos + table.start;
               return { pos, start: pos + 1, node };
-            }) as {
+            }) as unknown as {
               pos: number;
               start: number;
               node: Node | null | undefined;
@@ -125,7 +126,7 @@ export const getCellsInRow =
               const node = table.node.nodeAt(nodePos);
               const pos = nodePos + table.start;
               return { pos, start: pos + 1, node };
-            }) as {
+            }) as unknown as {
               pos: number;
               start: number;
               node: Node | null | undefined;
@@ -140,7 +141,14 @@ export const getCellsInRow =
 export const findTable = (selection: Selection) => {
   return findParentNode((node) => node.type.spec.tableRole === "table")(
     selection
-  );
+  ) as
+    | {
+        pos: number;
+        start: number;
+        depth: number;
+        node: Node;
+      }
+    | undefined;
 };
 
 export const isRectSelected = (rect: any) => (selection: CellSelection) => {

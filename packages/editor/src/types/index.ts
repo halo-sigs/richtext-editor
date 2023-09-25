@@ -1,7 +1,7 @@
 import type { Editor, Range } from "@tiptap/core";
-import type { Node, ResolvedPos, Slice } from "prosemirror-model";
-import type { EditorState, Selection } from "prosemirror-state";
-import type { EditorView } from "prosemirror-view";
+import type { Node, ResolvedPos, Slice } from "@tiptap/pm/model";
+import type { EditorState } from "@tiptap/pm/state";
+import type { EditorView } from "@tiptap/pm/view";
 import type { Component } from "vue";
 export interface ToolbarItem {
   priority: number;
@@ -22,9 +22,9 @@ interface BubbleMenuProps {
   editor?: Editor;
   shouldShow: (props: {
     editor: Editor;
+    state: EditorState;
     node?: HTMLElement;
     view?: EditorView;
-    state?: EditorState;
     oldState?: EditorState;
     from?: number;
     to?: number;
@@ -42,8 +42,8 @@ export interface NodeBubbleMenu extends BubbleMenuProps {
 export interface BubbleItem {
   priority: number;
   component?: Component;
-  props: {
-    isActive: ({ editor }: { editor: Editor }) => boolean;
+  props?: {
+    isActive?: ({ editor }: { editor: Editor }) => boolean;
     visible?: ({ editor }: { editor: Editor }) => boolean;
     icon?: Component;
     iconStyle?: string;
@@ -97,8 +97,8 @@ export interface DragSelectionNode {
   el: HTMLElement;
   nodeOffset?: number;
   dragDomOffset?: {
-    x: number;
-    y: number;
+    x?: number;
+    y?: number;
   };
 }
 

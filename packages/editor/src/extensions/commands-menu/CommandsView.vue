@@ -22,7 +22,7 @@ watch(
   () => props.items,
   () => {
     selectedIndex.value = 0;
-  }
+  },
 );
 
 function onKeyDown({ event }: { event: KeyboardEvent }) {
@@ -69,13 +69,13 @@ watch(
   () => selectedIndex.value,
   () => {
     const selected = document.getElementById(
-      `command-item-${selectedIndex.value}`
+      `command-item-${selectedIndex.value}`,
     );
 
     if (selected) {
       scrollIntoView(selected, { behavior: "smooth", scrollMode: "if-needed" });
     }
-  }
+  },
 );
 
 defineExpose({
