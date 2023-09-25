@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import type { Node as ProseMirrorNode } from "prosemirror-model";
-import type { Decoration } from "prosemirror-view";
-import { Editor, NodeViewWrapper, Node } from "@tiptap/vue-3";
+import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
+import type { Decoration } from "@tiptap/pm/view";
+import type { Editor, Node } from "@tiptap/core";
+import { NodeViewWrapper } from "@tiptap/vue-3";
 import { computed, onMounted, ref } from "vue";
 import { i18n } from "@/locales";
 
@@ -51,7 +52,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <node-view-wrapper as="div">
+  <node-view-wrapper as="div" class="inline-block" :class="{ 'w-full': !src }">
     <div
       class="inline-block overflow-hidden transition-all text-center relative h-full"
       :style="{

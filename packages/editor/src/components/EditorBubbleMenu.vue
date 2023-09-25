@@ -4,8 +4,8 @@ import type { Editor, AnyExtension } from "@tiptap/core";
 import BubbleMenu from "@/components/bubble/BubbleMenu.vue";
 import type { NodeBubbleMenu } from "@/types";
 import BubbleItem from "@/components/bubble/BubbleItem.vue";
-import type { EditorView } from "prosemirror-view";
-import type { EditorState } from "prosemirror-state";
+import type { EditorView } from "@tiptap/pm/view";
+import type { EditorState } from "@tiptap/pm/state";
 
 const props = defineProps({
   editor: {
@@ -42,9 +42,9 @@ const getBubbleMenuFromExtensions = () => {
 const shouldShow = (
   props: {
     editor: Editor;
+    state: EditorState;
     node?: HTMLElement;
     view?: EditorView;
-    state?: EditorState;
     oldState?: EditorState;
     from?: number;
     to?: number;
@@ -72,7 +72,7 @@ const shouldShow = (
     :default-animation="bubbleMenu.defaultAnimation"
   >
     <div
-      class="bubble-menu bg-white flex items-center rounded p-1 border drop-shadow space-x-0.5"
+      class="bubble-menu bg-white flex items-center rounded-md p-1 border drop-shadow space-x-0.5"
     >
       <template v-if="bubbleMenu.items">
         <template

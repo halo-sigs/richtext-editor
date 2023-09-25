@@ -43,6 +43,8 @@ import {
   RichTextEditor,
   useEditor,
   ExtensionIndent,
+  ExtensionColumns,
+  ExtensionColumn,
   ExtensionNodeSelected,
   ExtensionTrailingNode,
 } from "@halo-dev/richtext-editor";
@@ -100,6 +102,8 @@ const editor = useEditor({
     ExtensionColor,
     ExtensionFontSize,
     ExtensionIndent,
+    ExtensionColumns,
+    ExtensionColumn,
     ExtensionNodeSelected,
     ExtensionTrailingNode,
   ],

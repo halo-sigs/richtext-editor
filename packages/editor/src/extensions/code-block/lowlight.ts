@@ -1,8 +1,6 @@
-import { lowlight } from "lowlight";
-import "lowlight/lib/common";
+import { common,  createLowlight} from 'lowlight'
+import xml from 'highlight.js/lib/languages/xml'
 
-// https://github.com/highlightjs/highlight.js/issues/3594
-import xml from "highlight.js/lib/languages/xml";
-lowlight.registerLanguage("html", xml);
-
+const lowlight = createLowlight(common)
+lowlight.register("html", xml);
 export default lowlight;

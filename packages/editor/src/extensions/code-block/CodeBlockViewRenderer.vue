@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import type { Node as ProseMirrorNode } from "prosemirror-model";
-import type { Decoration } from "prosemirror-view";
-import { NodeViewContent, NodeViewWrapper, Editor, Node } from "@tiptap/vue-3";
+import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
+import type { Decoration } from "@tiptap/pm/view";
+import type { Editor, Node } from "@tiptap/core";
+import { NodeViewContent, NodeViewWrapper } from "@tiptap/vue-3";
 import lowlight from "./lowlight";
 import { computed } from "vue";
 

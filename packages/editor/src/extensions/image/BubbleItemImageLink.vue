@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { i18n } from "@/locales";
-import type { Editor } from "@tiptap/vue-3";
-import { computed, type Component, watch } from "vue";
+import type { Editor } from "@tiptap/core";
+import { computed, type Component } from "vue";
 import Image from "./index";
 
 const props = defineProps<{

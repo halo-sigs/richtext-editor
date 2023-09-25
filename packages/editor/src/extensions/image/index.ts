@@ -1,14 +1,14 @@
 import TiptapImage from "@tiptap/extension-image";
-import { VueNodeViewRenderer, isActive, mergeAttributes } from "@tiptap/vue-3";
+import { isActive, mergeAttributes, type Editor } from "@tiptap/core";
+import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import ImageView from "./ImageView.vue";
 import type { ImageOptions } from "@tiptap/extension-image";
-import type { ExtensionOptions } from "@/types";
-import type { Editor } from "@tiptap/vue-3";
+import type { ExtensionOptions, NodeBubbleMenu } from "@/types";
 import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
 import MdiFileImageBox from "~icons/mdi/file-image-box";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
-import type { EditorState } from "prosemirror-state";
+import type { EditorState } from "@tiptap/pm/state";
 import BubbleItemImageSize from "./BubbleItemImageSize.vue";
 import BubbleItemImageAlt from "./BubbleItemImageAlt.vue";
 import BubbleItemVideoLink from "./BubbleItemImageLink.vue";
@@ -121,7 +121,7 @@ const Image = TiptapImage.extend<ExtensionOptions & ImageOptions>({
           },
         ];
       },
-      getBubbleMenu({ editor }: { editor: Editor }) {
+      getBubbleMenu({ editor }: { editor: Editor }): NodeBubbleMenu {
         return {
           pluginKey: "imageBubbleMenu",
           shouldShow: ({ state }: { state: EditorState }): boolean => {

@@ -1,4 +1,4 @@
-import type { ExtensionOptions } from "@/types";
+import type { ExtensionOptions, NodeBubbleMenu } from "@/types";
 import {
   Editor,
   isActive,
@@ -11,7 +11,7 @@ import { VueNodeViewRenderer } from "@tiptap/vue-3";
 import { markRaw } from "vue";
 import AudioView from "./AudioView.vue";
 import MdiMusicCircleOutline from "~icons/mdi/music-circle-outline";
-import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
+import ToolboxItemVue from "@/components/toolbox/ToolboxItem.vue";
 import { i18n } from "@/locales";
 import MdiPlayCircle from "~icons/mdi/play-circle";
 import MdiPlayCircleOutline from "~icons/mdi/play-circle-outline";
@@ -23,7 +23,7 @@ import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiShare from "~icons/mdi/share";
 import { deleteNode } from "@/utils";
 import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
-import { NodeSelection, type EditorState } from "prosemirror-state";
+import type { EditorState } from "@tiptap/pm/state";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -153,26 +153,24 @@ const Audio = Node.create<ExtensionOptions>({
         };
       },
       getToolboxItems({ editor }: { editor: Editor }) {
-        return [
-          {
-            priority: 20,
-            component: markRaw(ToolboxItem),
-            props: {
-              editor,
-              icon: markRaw(MdiMusicCircleOutline),
-              title: i18n.global.t("editor.extensions.commands_menu.audio"),
-              action: () => {
-                editor
-                  .chain()
-                  .focus()
-                  .insertContent([{ type: "audio", attrs: { src: "" } }])
-                  .run();
-              },
+        return {
+          priority: 20,
+          component: markRaw(ToolboxItemVue),
+          props: {
+            editor,
+            icon: markRaw(MdiMusicCircleOutline),
+            title: i18n.global.t("editor.extensions.commands_menu.audio"),
+            action: () => {
+              editor
+                .chain()
+                .focus()
+                .insertContent([{ type: "audio", attrs: { src: "" } }])
+                .run();
             },
           },
-        ];
+        };
       },
-      getBubbleMenu({ editor }) {
+      getBubbleMenu({ editor }: { editor: Editor }): NodeBubbleMenu {
         return {
           pluginKey: "audioBubbleMenu",
           shouldShow: ({ state }: { state: EditorState }) => {

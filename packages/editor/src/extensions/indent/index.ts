@@ -6,7 +6,7 @@ import {
   isList,
   Editor,
 } from "@tiptap/core";
-import { TextSelection, Transaction } from "prosemirror-state";
+import { TextSelection, Transaction } from "@tiptap/pm/state";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -205,7 +205,7 @@ const isListActive = (editor: Editor) => {
 };
 
 const isFilterActive = (editor: Editor) => {
-  return editor.isActive("table");
+  return editor.isActive("table") || editor.isActive("columns");
 };
 
 export const getIndent: () => KeyboardShortcutCommand =

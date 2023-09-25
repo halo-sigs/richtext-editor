@@ -61,7 +61,7 @@ onMounted(() => {
       tippyOptions,
       getRenderContainer,
       defaultAnimation,
-    })
+    }),
   );
 });
 
