@@ -153,7 +153,7 @@ export class BubbleMenuView {
       content: this.element,
       interactive: true,
       trigger: "manual",
-      placement: "top",
+      placement: "bottom-start",
       hideOnClick: "toggle",
       plugins: [sticky],
       ...Object.assign(
@@ -231,9 +231,35 @@ export class BubbleMenuView {
       this.hide();
       return;
     }
+
+    const otherBubbleMenus = ACTIVE_BUBBLE_MENUS.filter(
+      (instance) =>
+        instance.id !== this.tippy?.id &&
+        instance.popperInstance &&
+        instance.popperInstance.state
+    );
     const offset = this.tippyOptions?.offset as [number, number];
+    const offsetX = offset?.[0] ?? 0;
+    const offsetY = otherBubbleMenus.length
+      ? otherBubbleMenus.reduce((prev, instance, currentIndex, array) => {
+          const prevY = array[currentIndex - 1]
+            ? array[currentIndex - 1]?.popperInstance?.state?.modifiersData
+                ?.popperOffsets?.y ?? 0
+            : 0;
+          const currentY =
+            instance?.popperInstance?.state?.modifiersData?.popperOffsets?.y ??
+            0;
+          const currentHeight =
+            instance?.popperInstance?.state?.rects?.popper?.height ?? 10;
+          if (Math.abs(prevY - currentY) <= currentHeight) {
+            prev += currentHeight;
+          }
+
+          return prev;
+        }, 0)
+      : offset?.[1] ?? 10;
     this.tippy?.setProps({
-      offset: [offset?.[0], offset?.[1] ?? 10],
+      offset: [offsetX, offsetY],
       placement,
       getReferenceClientRect: () => {
         let toMountNode = null;
