@@ -5,6 +5,7 @@ import type { EditorView } from "@tiptap/pm/view";
 import {
   Decoration,
   DecorationSet,
+  // @ts-ignore
   __serializeForClipboard as serializeForClipboard,
 } from "@tiptap/pm/view";
 import type { DraggableItem, ExtensionOptions } from "@/types";
@@ -56,7 +57,7 @@ const hideDragHandleDOM = () => {
  */
 const renderDragHandleDOM = (
   view: EditorView,
-  activeNode: ActiveNode | undefined
+  activeNode: ActiveNode | undefined,
 ) => {
   const root = view.dom.parentElement;
   if (!root) {
@@ -122,10 +123,10 @@ const handleMouseDownEvent = () => {
   if (NodeSelection.isSelectable(activeNode.node)) {
     const nodeSelection = NodeSelection.create(
       currEditorView.state.doc,
-      activeNode.$pos.pos - activeNode.offset
+      activeNode.$pos.pos - activeNode.offset,
     );
     currEditorView.dispatch(
-      currEditorView.state.tr.setSelection(nodeSelection)
+      currEditorView.state.tr.setSelection(nodeSelection),
     );
     currEditorView.focus();
     activeSelection = nodeSelection;
@@ -165,7 +166,7 @@ const handleDragStartEvent = (event: DragEvent) => {
 const getDOMByPos = (
   view: EditorView,
   root: HTMLElement,
-  $pos: ResolvedPos
+  $pos: ResolvedPos,
 ) => {
   const { node } = view.domAtPos($pos.pos);
 
@@ -181,7 +182,7 @@ const getDOMByPos = (
 
 const getPosByDOM = (
   view: EditorView,
-  dom: HTMLElement
+  dom: HTMLElement,
 ): ResolvedPos | null => {
   const domPos = view.posAtDOM(dom, 0);
   if (domPos < 0) {
@@ -192,7 +193,7 @@ const getPosByDOM = (
 
 export const selectAncestorNodeByDom = (
   dom: HTMLElement,
-  view: EditorView
+  view: EditorView,
 ): ActiveNode | null => {
   const root = view.dom.parentElement;
   if (!root) {
@@ -231,8 +232,8 @@ const getExtensionDraggableItem = (editor: Editor, node: Node) => {
 const getRenderContainer = (
   view: EditorView,
   draggableItem: DraggableItem | undefined,
-  dom: HTMLElement
-): ActiveNode | null => {
+  dom: HTMLElement,
+): ActiveNode => {
   const renderContainer = draggableItem?.getRenderContainer?.({ dom, view });
   const node = selectAncestorNodeByDom(renderContainer?.el || dom, view);
   return {
@@ -248,7 +249,7 @@ const getRenderContainer = (
 const findParentNodeByDepth = (
   view: EditorView,
   dom: HTMLElement,
-  depth = 1
+  depth = 1,
 ): Node | undefined => {
   const $pos = getPosByDOM(view, dom);
   if (!$pos) {
@@ -283,7 +284,7 @@ const getDraggableItem = ({
   dom: HTMLElement;
   event?: any;
   depth?: number;
-}) => {
+}): DraggableItem | boolean | undefined => {
   const parentNode = findParentNodeByDepth(view, dom, depth);
   if (!parentNode) {
     return;
@@ -296,17 +297,20 @@ const getDraggableItem = ({
     const container = getRenderContainer(view, draggableItem, dom);
     const coords = { left: event.clientX, top: event.clientY };
     const pos = view.posAtCoords(coords);
-    if (pos.inside == -1) {
-      return draggableItem;
-    }
 
-    if (
-      !(
-        pos.inside >= container.$pos.start() &&
-        pos.inside <= container.$pos.end()
-      )
-    ) {
-      return draggableItem;
+    if (pos) {
+      if (pos.inside == -1) {
+        return draggableItem;
+      }
+
+      if (
+        !(
+          pos.inside >= container.$pos.start() &&
+          pos.inside <= container.$pos.end()
+        )
+      ) {
+        return draggableItem;
+      }
     }
 
     if (draggableItem.allowPropagationDownward) {
@@ -400,20 +404,20 @@ const Draggable = Extension.create({
           draggableHandleDom = createDragHandleDom();
           draggableHandleDom.addEventListener(
             "mouseenter",
-            handleMouseEnterEvent
+            handleMouseEnterEvent,
           );
           draggableHandleDom.addEventListener(
             "mouseleave",
-            handleMouseLeaveEvent
+            handleMouseLeaveEvent,
           );
           draggableHandleDom.addEventListener(
             "mousedown",
-            handleMouseDownEvent
+            handleMouseDownEvent,
           );
           draggableHandleDom.addEventListener("mouseup", handleMouseUpEvent);
           draggableHandleDom.addEventListener(
             "dragstart",
-            handleDragStartEvent
+            handleDragStartEvent,
           );
           const viewDomParentNode = view.dom.parentNode as HTMLElement;
           viewDomParentNode.appendChild(draggableHandleDom);
@@ -429,23 +433,23 @@ const Draggable = Extension.create({
               clearTimeout(mouseleaveTimer);
               draggableHandleDom.removeEventListener(
                 "mouseenter",
-                handleMouseEnterEvent
+                handleMouseEnterEvent,
               );
               draggableHandleDom.removeEventListener(
                 "mouseleave",
-                handleMouseLeaveEvent
+                handleMouseLeaveEvent,
               );
               draggableHandleDom.removeEventListener(
                 "mousedown",
-                handleMouseDownEvent
+                handleMouseDownEvent,
               );
               draggableHandleDom.removeEventListener(
                 "mouseup",
-                handleMouseUpEvent
+                handleMouseUpEvent,
               );
               draggableHandleDom.removeEventListener(
                 "dragstart",
-                handleDragStartEvent
+                handleDragStartEvent,
               );
               draggableHandleDom.remove();
             },

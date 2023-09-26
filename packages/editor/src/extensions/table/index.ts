@@ -210,7 +210,9 @@ const Table = TiptapTable.extend<ExtensionOptions & TableOptions>({
               props: {
                 icon: markRaw(MdiTableColumnPlusBefore),
                 title: i18n.global.t("editor.menus.table.add_column_before"),
-                action: () => editor.chain().focus().addColumnBefore().run(),
+                action: () => {
+                  editor.chain().focus().addColumnBefore().run();
+                },
               },
             },
             {

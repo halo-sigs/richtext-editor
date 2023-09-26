@@ -20,7 +20,9 @@ const Bold = TiptapBold.extend<ExtensionOptions & BoldOptions>({
             isActive: editor.isActive("bold"),
             icon: markRaw(MdiFormatBold),
             title: i18n.global.t("editor.common.bold"),
-            action: () => editor.chain().focus().toggleBold().run(),
+            action: () => {
+              editor.chain().focus().toggleBold().run();
+            },
           },
         };
       },

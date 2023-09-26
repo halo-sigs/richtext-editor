@@ -1,4 +1,4 @@
-import type { ExtensionOptions } from "@/types";
+import type { ExtensionOptions, NodeBubbleMenu } from "@/types";
 import { Text as TiptapText } from "@tiptap/extension-text";
 import { markRaw } from "vue";
 import ColorBubbleItem from "@/extensions/color/ColorBubbleItem.vue";
@@ -37,7 +37,7 @@ const Text = TiptapText.extend<ExtensionOptions>({
   addOptions() {
     return {
       ...this.parent?.(),
-      getBubbleMenu() {
+      getBubbleMenu(): NodeBubbleMenu {
         return {
           pluginKey: "textBubbleMenu",
           shouldShow: ({ state, from, to }) => {
@@ -79,8 +79,9 @@ const Text = TiptapText.extend<ExtensionOptions>({
                 isActive: ({ editor }) => editor.isActive("bold"),
                 icon: markRaw(MdiFormatBold),
                 title: i18n.global.t("editor.common.bold"),
-                action: ({ editor }) =>
-                  editor.chain().focus().toggleBold().run(),
+                action: ({ editor }) => {
+                  editor.chain().focus().toggleBold().run();
+                },
               },
             },
             {
@@ -89,8 +90,9 @@ const Text = TiptapText.extend<ExtensionOptions>({
                 isActive: ({ editor }) => editor.isActive("italic"),
                 icon: markRaw(MdiFormatItalic),
                 title: i18n.global.t("editor.common.italic"),
-                action: ({ editor }) =>
-                  editor.chain().focus().toggleItalic().run(),
+                action: ({ editor }) => {
+                  editor.chain().focus().toggleItalic().run();
+                },
               },
             },
             {

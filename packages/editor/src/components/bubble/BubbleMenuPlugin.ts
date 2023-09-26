@@ -228,7 +228,7 @@ export class BubbleMenuView {
       ? ACTIVE_BUBBLE_MENUS.length > 1
         ? "bottom"
         : "top"
-      : this.tippy.props.fixed
+      : this.tippy?.props.fixed
       ? "bottom-start"
       : Math.abs(cursorAt - to) <= Math.abs(cursorAt - from)
       ? "bottom-start"
