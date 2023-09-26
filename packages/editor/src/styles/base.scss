@@ -1,4 +1,7 @@
 .halo-rich-text-editor {
+  $editorVerticalPadding: 15px;
+  $editorHorizontalPadding: 20%;
+
   box-sizing: border-box;
   height: calc(100% - 48px);
   width: 100%;
@@ -16,7 +19,7 @@
       height: 100%;
       overflow: auto;
       outline: none !important;
-      padding: 35px;
+      padding: $editorVerticalPadding;
 
       p {
         margin-top: 0.75em;
@@ -73,6 +76,18 @@
 
       code br {
         display: block;
+      }
+    }
+  }
+
+  @media screen {
+    .ProseMirror {
+      @media (min-width: 640px) {
+        padding: $editorVerticalPadding min($editorHorizontalPadding, 10%) !important;
+      }
+
+      @media (min-width: 1024px) {
+        padding: $editorVerticalPadding $editorHorizontalPadding !important;
       }
     }
   }
