@@ -8,6 +8,29 @@ import type { ExtensionOptions } from "@/types";
 import HighlightToolbarItem from "./HighlightToolbarItem.vue";
 
 const Highlight = TiptapHighlight.extend<ExtensionOptions & HighlightOptions>({
+  addAttributes() {
+    if (!this.options.multicolor) {
+      return {};
+    }
+
+    return {
+      color: {
+        default: null,
+        parseHTML: (element) =>
+          element.getAttribute("data-color") || element.style.backgroundColor,
+        renderHTML: (attributes) => {
+          if (!attributes.color) {
+            return {};
+          }
+
+          return {
+            "data-color": attributes.color,
+            style: `background-color: ${attributes.color}; color: inherit; display: inline-block;`,
+          };
+        },
+      },
+    };
+  },
   addOptions() {
     return {
       ...this.parent?.(),
