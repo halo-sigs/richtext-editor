@@ -29,14 +29,14 @@ watch(
   },
   {
     immediate: true,
-  }
+  },
 );
 </script>
 <template>
   <div v-if="editor" class="halo-rich-text-editor">
     <editor-bubble-menu :editor="editor" />
     <editor-header :editor="editor" />
-    <div class="h-full flex flex-row w-full">
+    <div class="h-full flex flex-row w-full overflow-auto relative">
       <editor-content
         :editor="editor"
         :style="contentStyles"

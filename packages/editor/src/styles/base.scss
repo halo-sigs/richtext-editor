@@ -11,15 +11,12 @@
   }
 
   .editor-content {
-    height: 100%;
     width: 100%;
     position: relative;
 
     .ProseMirror {
-      height: 100%;
-      overflow: auto;
       outline: none !important;
-      padding: $editorVerticalPadding;
+      padding: $editorVerticalPadding 20px;
 
       p {
         margin-top: 0.75em;
