@@ -57,7 +57,7 @@ const FontSize = Extension.create<FontSizeOptions>({
                       editor.chain().focus().setFontSize(size).run(),
                   },
                 };
-              }
+              },
             ),
           ],
         };

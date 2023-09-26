@@ -223,7 +223,9 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
               container = container.parentElement as HTMLElement;
             }
             if (!container) {
-              return null;
+              return {
+                el: dom,
+              };
             }
             let y;
             switch (container?.tagName) {

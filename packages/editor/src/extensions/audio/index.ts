@@ -186,10 +186,10 @@ const Audio = Node.create<ExtensionOptions>({
                 icon: markRaw(
                   editor.getAttributes(Audio.name).autoplay
                     ? MdiPlayCircle
-                    : MdiPlayCircleOutline
+                    : MdiPlayCircleOutline,
                 ),
                 action: () => {
-                  return editor
+                  editor
                     .chain()
                     .updateAttributes(Audio.name, {
                       autoplay: editor.getAttributes(Audio.name).autoplay
@@ -214,10 +214,10 @@ const Audio = Node.create<ExtensionOptions>({
                 icon: markRaw(
                   editor.getAttributes(Audio.name).loop
                     ? MdiMotionPlay
-                    : MdiMotionPlayOutline
+                    : MdiMotionPlayOutline,
                 ),
                 action: () => {
-                  return editor
+                  editor
                     .chain()
                     .updateAttributes(Audio.name, {
                       loop: editor.getAttributes(Audio.name).loop ? null : true,
@@ -250,8 +250,9 @@ const Audio = Node.create<ExtensionOptions>({
               props: {
                 icon: markRaw(MdiShare),
                 title: i18n.global.t("editor.common.tooltip.open_link"),
-                action: () =>
-                  window.open(editor.getAttributes(Audio.name).src, "_blank"),
+                action: () => {
+                  window.open(editor.getAttributes(Audio.name).src, "_blank");
+                },
               },
             },
             {
@@ -263,7 +264,9 @@ const Audio = Node.create<ExtensionOptions>({
               props: {
                 icon: markRaw(MdiDeleteForeverOutline),
                 title: i18n.global.t("editor.common.button.delete"),
-                action: ({ editor }) => deleteNode(Audio.name, editor),
+                action: ({ editor }) => {
+                  deleteNode(Audio.name, editor);
+                },
               },
             },
           ],
@@ -277,7 +280,7 @@ const Audio = Node.create<ExtensionOptions>({
               container &&
               !container.hasAttribute("data-node-view-wrapper")
             ) {
-              container = container.parentElement;
+              container = container.parentElement as HTMLElement;
             }
             return {
               el: container,

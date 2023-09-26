@@ -216,7 +216,9 @@ const Image = TiptapImage.extend<ExtensionOptions & ImageOptions>({
               props: {
                 icon: markRaw(MdiDeleteForeverOutline),
                 title: i18n.global.t("editor.common.button.delete"),
-                action: ({ editor }) => deleteNode(Image.name, editor),
+                action: ({ editor }) => {
+                  deleteNode(Image.name, editor);
+                },
               },
             },
           ],
@@ -227,7 +229,7 @@ const Image = TiptapImage.extend<ExtensionOptions & ImageOptions>({
           getRenderContainer({ dom, view }) {
             let container = dom;
             while (container && container.tagName !== "P") {
-              container = container.parentElement;
+              container = container.parentElement as HTMLElement;
             }
             if (container) {
               container = container.firstElementChild

@@ -288,7 +288,7 @@ const Video = Node.create<ExtensionOptions>({
                     : MdiMotionPlayOutline
                 ),
                 action: () => {
-                  return editor
+                  editor
                     .chain()
                     .updateAttributes(Video.name, {
                       loop: editor.getAttributes(Video.name).loop ? null : true,
@@ -399,8 +399,9 @@ const Video = Node.create<ExtensionOptions>({
               props: {
                 icon: markRaw(MdiShare),
                 title: i18n.global.t("editor.common.tooltip.open_link"),
-                action: () =>
-                  window.open(editor.getAttributes(Video.name).src, "_blank"),
+                action: () => {
+                  window.open(editor.getAttributes(Video.name).src, "_blank");
+                },
               },
             },
             {
@@ -412,7 +413,9 @@ const Video = Node.create<ExtensionOptions>({
               props: {
                 icon: markRaw(MdiDeleteForeverOutline),
                 title: i18n.global.t("editor.common.button.delete"),
-                action: ({ editor }) => deleteNode(Video.name, editor),
+                action: ({ editor }) => {
+                  deleteNode(Video.name, editor);
+                },
               },
             },
           ],
@@ -423,7 +426,7 @@ const Video = Node.create<ExtensionOptions>({
           getRenderContainer({ dom, view }) {
             let container = dom;
             while (container && container.tagName !== "P") {
-              container = container.parentElement;
+              container = container.parentElement as HTMLElement;
             }
             if (container) {
               container = container.firstElementChild

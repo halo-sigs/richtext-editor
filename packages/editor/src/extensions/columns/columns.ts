@@ -19,7 +19,6 @@ import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red
 import { i18n } from "@/locales";
 import { deleteNode } from "@/utils";
 import MdiCollage from "~icons/mdi/collage";
-import { ExtensionOptions } from "@/types";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -47,7 +46,7 @@ const createColumns = (schema: Schema, colsCount: number) => {
 };
 
 const getColumnsNodeTypes = (
-  schema: Schema
+  schema: Schema,
 ): {
   columns: NodeType;
   column: NodeType;
@@ -70,13 +69,13 @@ type ColOperateType = "addBefore" | "addAfter" | "delete";
 const addOrDeleteCol = (
   dispatch: any,
   state: EditorState,
-  type: ColOperateType
+  type: ColOperateType,
 ) => {
   const maybeColumns = findParentNode(
-    (node) => node.type.name === Columns.name
+    (node) => node.type.name === Columns.name,
   )(state.selection);
   const maybeColumn = findParentNode((node) => node.type.name === Column.name)(
-    state.selection
+    state.selection,
   );
   if (dispatch && maybeColumns && maybeColumn) {
     const cols = maybeColumns.node;
@@ -123,7 +122,7 @@ const addOrDeleteCol = (
     tr.replaceWith(
       maybeColumns.pos,
       maybeColumns.pos + maybeColumns.node.nodeSize,
-      nextCols
+      nextCols,
     ).setSelection(TextSelection.near(tr.doc.resolve(nextSelectPos)));
 
     dispatch(tr);
@@ -134,10 +133,10 @@ const addOrDeleteCol = (
 type GotoColType = "before" | "after";
 const gotoCol = (state: EditorState, dispatch: any, type: GotoColType) => {
   const maybeColumns = findParentNode(
-    (node) => node.type.name === Columns.name
+    (node) => node.type.name === Columns.name,
   )(state.selection);
   const maybeColumn = findParentNode((node) => node.type.name === Column.name)(
-    state.selection
+    state.selection,
   );
 
   if (dispatch && maybeColumns && maybeColumn) {
@@ -169,7 +168,7 @@ const gotoCol = (state: EditorState, dispatch: any, type: GotoColType) => {
   return false;
 };
 
-const Columns = Node.create<ExtensionOptions>({
+const Columns = Node.create({
   name: "columns",
   group: "block",
   priority: 10,
@@ -250,7 +249,7 @@ const Columns = Node.create<ExtensionOptions>({
               props: {
                 icon: markRaw(RiInsertColumnLeft),
                 title: i18n.global.t(
-                  "editor.extensions.columns.add_column_before"
+                  "editor.extensions.columns.add_column_before",
                 ),
                 action: ({ editor }: { editor: Editor }) => {
                   editor.chain().focus().addColBefore().run();
@@ -262,7 +261,7 @@ const Columns = Node.create<ExtensionOptions>({
               props: {
                 icon: markRaw(RiInsertColumnRight),
                 title: i18n.global.t(
-                  "editor.extensions.columns.add_column_after"
+                  "editor.extensions.columns.add_column_after",
                 ),
                 action: ({ editor }: { editor: Editor }) => {
                   editor.chain().focus().addColAfter().run();
@@ -288,8 +287,9 @@ const Columns = Node.create<ExtensionOptions>({
               props: {
                 icon: markRaw(MdiDeleteForeverOutline),
                 title: i18n.global.t("editor.common.button.delete"),
-                action: ({ editor }: { editor: Editor }) =>
-                  deleteNode(Columns.name, editor),
+                action: ({ editor }: { editor: Editor }) => {
+                  deleteNode(Columns.name, editor);
+                },
               },
             },
           ],
@@ -297,7 +297,7 @@ const Columns = Node.create<ExtensionOptions>({
       },
       getDraggable() {
         return {
-          getRenderContainer({ dom }) {
+          getRenderContainer({ dom }: { dom: HTMLElement }) {
             let container = dom;
             while (container && !container.classList.contains("columns")) {
               container = container.parentElement as HTMLElement;
