@@ -1,5 +1,5 @@
 import type { Editor, Range } from "@tiptap/core";
-import TiptapParagraph from "@tiptap/extension-paragraph";
+import TiptapParagraph from "@/extensions/paragraph";
 import TiptapHeading from "@tiptap/extension-heading";
 import type { HeadingOptions } from "@tiptap/extension-heading";
 import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
@@ -213,6 +213,50 @@ const Blockquote = TiptapHeading.extend<ExtensionOptions & HeadingOptions>({
             },
           },
         ];
+      },
+      getDraggable() {
+        return {
+          getRenderContainer({ dom }: { dom: HTMLElement }) {
+            const tagNames = ["H1", "H2", "H3", "H4", "H5", "H6"];
+            let container = dom;
+            while (container && !tagNames.includes(container.tagName)) {
+              container = container.parentElement as HTMLElement;
+            }
+            if (!container) {
+              return null;
+            }
+            let y;
+            switch (container?.tagName) {
+              case "H1":
+                y = 10;
+                break;
+              case "H2":
+                y = 2;
+                break;
+              case "H3":
+                y = 0;
+                break;
+              case "H4":
+                y = -3;
+                break;
+              case "H5":
+                y = -5;
+                break;
+              case "H6":
+                y = -5;
+                break;
+              default:
+                y = 0;
+                break;
+            }
+            return {
+              el: container,
+              dragDomOffset: {
+                y: y,
+              },
+            };
+          },
+        };
       },
     };
   },

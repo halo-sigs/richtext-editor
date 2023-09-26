@@ -36,6 +36,7 @@ import ExtensionImage from "./image";
 import ExtensionIndent from "./indent";
 import { ExtensionColumns, ExtensionColumn } from "./columns";
 import ExtensionText from "./text";
+import ExtensionDraggable from "./draggable";
 import ExtensionNodeSelected from "./node-selected";
 import ExtensionTrailingNode from "./trailing-node";
 
@@ -45,7 +46,11 @@ const allExtensions = [
   ExtensionBulletList,
   ExtensionCode,
   ExtensionDocument,
-  ExtensionDropcursor,
+  ExtensionDropcursor.configure({
+    width: 2,
+    class: "dropcursor",
+    color: "skyblue",
+  }),
   ExtensionGapcursor,
   ExtensionHardBreak,
   ExtensionHeading,
@@ -128,6 +133,7 @@ export {
   ExtensionColor,
   ExtensionFontSize,
   ExtensionIndent,
+  ExtensionDraggable,
   ExtensionColumns,
   ExtensionColumn,
   ExtensionNodeSelected,

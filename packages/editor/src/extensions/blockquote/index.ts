@@ -28,6 +28,22 @@ const Blockquote = TiptapBlockquote.extend<
           },
         };
       },
+      getDraggable() {
+        return {
+          getRenderContainer({ dom }) {
+            let element: HTMLElement | null = dom;
+            while (element && element.parentElement) {
+              if (element.tagName === "BLOCKQUOTE") {
+                break;
+              }
+              element = element.parentElement;
+            }
+            return {
+              el: element,
+            };
+          },
+        };
+      },
     };
   },
 });
