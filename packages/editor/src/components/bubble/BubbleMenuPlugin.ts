@@ -8,11 +8,14 @@ import { EditorState, Plugin, PluginKey } from "@tiptap/pm/state";
 import type { EditorView } from "@tiptap/pm/view";
 import tippy, { type Instance, type Props, sticky } from "tippy.js";
 
+export interface TippyOptionProps extends Props {
+  fixed?: boolean;
+}
 export interface BubbleMenuPluginProps {
   pluginKey: PluginKey | string;
   editor: Editor;
   element: HTMLElement;
-  tippyOptions?: Partial<Props>;
+  tippyOptions?: Partial<TippyOptionProps>;
   updateDelay?: number;
   shouldShow?:
     | ((props: {
@@ -44,9 +47,9 @@ export class BubbleMenuView {
 
   public preventHide = false;
 
-  public tippy: Instance | undefined;
+  public tippy: Instance<TippyOptionProps> | undefined;
 
-  public tippyOptions?: Partial<Props>;
+  public tippyOptions?: Partial<TippyOptionProps>;
 
   public getRenderContainer?: BubbleMenuPluginProps["getRenderContainer"];
 
@@ -97,8 +100,6 @@ export class BubbleMenuView {
       capture: true,
     });
     this.view.dom.addEventListener("dragstart", this.dragstartHandler);
-    // this.editor.on("focus", this.focusHandler);
-    // this.editor.on('blur', this.blurHandler);
     this.tippyOptions = tippyOptions || {};
     // Detaches menu content from its current parent
     this.element.remove();
@@ -112,11 +113,6 @@ export class BubbleMenuView {
   dragstartHandler = () => {
     this.hide();
   };
-
-  // focusHandler = () => {
-  //   // we use `setTimeout` to make sure `selection` is already updated
-  //   setTimeout(() => this.update(this.editor.view));
-  // };
 
   blurHandler = ({ event }: { event: FocusEvent }) => {
     if (this.preventHide) {
@@ -157,7 +153,7 @@ export class BubbleMenuView {
       content: this.element,
       interactive: true,
       trigger: "manual",
-      placement: "top",
+      placement: "bottom-start",
       hideOnClick: "toggle",
       plugins: [sticky],
       ...Object.assign(
@@ -169,6 +165,7 @@ export class BubbleMenuView {
                 moveTransition: "transform 0.2s ease-in-out",
               }
             : {}),
+          fixed: true,
         },
         this.tippyOptions
       ),
@@ -195,32 +192,14 @@ export class BubbleMenuView {
       return;
     }
 
-    this.createTooltip();
-
     // support for CellSelections
     const { ranges } = selection;
-    const cursorAt = selection.$anchor.pos;
     const from = Math.min(...ranges.map((range) => range.$from.pos));
     const to = Math.max(...ranges.map((range) => range.$to.pos));
-    // prevent the menu from being obscured
-    const tippyParentNode = this.tippy?.popper.parentNode;
-    const siblings =
-      tippyParentNode?.querySelectorAll("[data-tippy-root]") ?? [];
-    const placement = this.tippyOptions?.placement
-      ? this.tippyOptions?.placement
-      : isNodeSelection(selection)
-      ? siblings.length > 1
-        ? "bottom"
-        : "top"
-      : Math.abs(cursorAt - to) <= Math.abs(cursorAt - from)
-      ? siblings.length > 1
-        ? "top-start"
-        : "bottom-start"
-      : "top-start";
+
     const domAtPos = view.domAtPos(from).node as HTMLElement;
     const nodeDOM = view.nodeDOM(from) as HTMLElement;
     const node = nodeDOM || domAtPos;
-
     const shouldShow =
       this.editor.isEditable &&
       this.shouldShow?.({
@@ -238,6 +217,23 @@ export class BubbleMenuView {
       return;
     }
 
+    this.createTooltip();
+
+    const cursorAt = selection.$anchor.pos;
+
+    // prevent the menu from being obscured
+    const placement = this.tippyOptions?.placement
+      ? this.tippyOptions?.placement
+      : isNodeSelection(selection)
+      ? ACTIVE_BUBBLE_MENUS.length > 1
+        ? "bottom"
+        : "top"
+      : this.tippy.props.fixed
+      ? "bottom-start"
+      : Math.abs(cursorAt - to) <= Math.abs(cursorAt - from)
+      ? "bottom-start"
+      : "top-start";
+
     const otherBubbleMenus = ACTIVE_BUBBLE_MENUS.filter(
       (instance) =>
         instance.id !== this.tippy?.id &&
@@ -246,7 +242,7 @@ export class BubbleMenuView {
     );
     const offset = this.tippyOptions?.offset as [number, number];
     const offsetX = offset?.[0] ?? 0;
-    const offsetY = otherBubbleMenus.length
+    let offsetY = otherBubbleMenus.length
       ? otherBubbleMenus.reduce((prev, instance, currentIndex, array) => {
           const prevY = array[currentIndex - 1]
             ? array[currentIndex - 1]?.popperInstance?.state?.modifiersData
@@ -264,6 +260,9 @@ export class BubbleMenuView {
           return prev;
         }, 0)
       : offset?.[1] ?? 10;
+    if (!offsetY) {
+      offsetY = 10;
+    }
     this.tippy?.setProps({
       offset: [offsetX, offsetY],
       placement,

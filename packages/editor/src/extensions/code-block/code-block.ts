@@ -74,6 +74,22 @@ const updateIndent = (tr: Transaction, type: IndentType): Transaction => {
   return tr;
 };
 
+const getRenderContainer = (node: HTMLElement) => {
+  let container = node;
+  // 文本节点
+  if (container.nodeName === "#text") {
+    container = node.parentElement as HTMLElement;
+  }
+  while (
+    container &&
+    container.classList &&
+    !container.classList.contains("code-node")
+  ) {
+    container = container.parentElement as HTMLElement;
+  }
+  return container;
+};
+
 export default CodeBlockLowlight.extend<
   CustomCodeBlockLowlightOptions & CodeBlockLowlightOptions
 >({
@@ -195,19 +211,7 @@ export default CodeBlockLowlight.extend<
             return isActive(state, CodeBlockLowlight.name);
           },
           getRenderContainer: (node: HTMLElement) => {
-            let container = node;
-            // 文本节点
-            if (container.nodeName === "#text") {
-              container = node.parentElement as HTMLElement;
-            }
-            while (
-              container &&
-              container.classList &&
-              !container.classList.contains("code-node")
-            ) {
-              container = container.parentElement as HTMLElement;
-            }
-            return container;
+            return getRenderContainer(node);
           },
           items: [
             {
@@ -220,6 +224,15 @@ export default CodeBlockLowlight.extend<
               },
             },
           ],
+        };
+      },
+      getDraggable() {
+        return {
+          getRenderContainer({ dom }: { dom: HTMLElement }) {
+            return {
+              el: getRenderContainer(dom),
+            };
+          },
         };
       },
     };

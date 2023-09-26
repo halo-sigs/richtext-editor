@@ -36,6 +36,22 @@ const TaskList = TiptapTaskList.extend<ExtensionOptions & TaskListOptions>({
           },
         };
       },
+      getDraggable() {
+        return {
+          getRenderContainer({ dom }) {
+            let container = dom;
+            while (container && !(container.tagName === "LI")) {
+              container = container.parentElement as HTMLElement;
+            }
+            return {
+              el: container,
+              dragDomOffset: {
+                y: -1,
+              },
+            };
+          },
+        };
+      },
     };
   },
   addExtensions() {

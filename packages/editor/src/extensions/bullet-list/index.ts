@@ -38,6 +38,22 @@ const BulletList = TiptapBulletList.extend<
           },
         };
       },
+      getDraggable() {
+        return {
+          getRenderContainer({ dom }) {
+            let container = dom;
+            while (container && !(container.tagName === "LI")) {
+              container = container.parentElement as HTMLElement;
+            }
+            return {
+              el: container,
+              dragDomOffset: {
+                x: -12,
+              },
+            };
+          },
+        };
+      },
     };
   },
   addExtensions() {

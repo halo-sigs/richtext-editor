@@ -19,6 +19,7 @@ import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red
 import { i18n } from "@/locales";
 import { deleteNode } from "@/utils";
 import MdiCollage from "~icons/mdi/collage";
+import { ExtensionOptions } from "@/types";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -168,7 +169,7 @@ const gotoCol = (state: EditorState, dispatch: any, type: GotoColType) => {
   return false;
 };
 
-const Columns = Node.create({
+const Columns = Node.create<ExtensionOptions>({
   name: "columns",
   group: "block",
   priority: 10,
@@ -179,7 +180,6 @@ const Columns = Node.create({
 
   addOptions() {
     return {
-      ...this.parent?.(),
       HTMLAttributes: {
         class: "columns",
       },
@@ -293,6 +293,23 @@ const Columns = Node.create({
               },
             },
           ],
+        };
+      },
+      getDraggable() {
+        return {
+          getRenderContainer({ dom }) {
+            let container = dom;
+            while (container && !container.classList.contains("columns")) {
+              container = container.parentElement as HTMLElement;
+            }
+            return {
+              el: container,
+              dragDomOffset: {
+                y: -5,
+              },
+            };
+          },
+          allowPropagationDownward: true,
         };
       },
     };

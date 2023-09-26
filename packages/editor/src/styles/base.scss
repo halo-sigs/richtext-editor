@@ -10,10 +10,13 @@
   .editor-content {
     height: 100%;
     width: 100%;
+    position: relative;
 
     .ProseMirror {
       height: 100%;
       overflow: auto;
+      outline: none !important;
+      padding: 35px;
 
       p {
         margin-top: 0.75em;
@@ -27,9 +30,6 @@
         pointer-events: none;
         height: 0;
       }
-
-      outline: none !important;
-      padding: 15px;
 
       pre {
         background: #0d0d0d;
@@ -73,19 +73,6 @@
 
       code br {
         display: block;
-      }
-
-      .columns {
-        .column {
-          border: 1px solid #e7e9e8;
-          border-radius: 6px;
-          position: relative;
-
-          p {
-            margin-top: 0;
-            margin-bottom: 0;
-          }
-        }
       }
     }
   }

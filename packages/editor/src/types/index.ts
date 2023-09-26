@@ -1,4 +1,5 @@
 import type { Editor, Range } from "@tiptap/core";
+import type { Node, ResolvedPos, Slice } from "@tiptap/pm/model";
 import type { EditorState } from "@tiptap/pm/state";
 import type { EditorView } from "@tiptap/pm/view";
 import type { Component } from "vue";
@@ -47,7 +48,7 @@ export interface BubbleItem {
     icon?: Component;
     iconStyle?: string;
     title?: string;
-    action?: ({ editor }: { editor: Editor }) => any;
+    action?: ({ editor }: { editor: Editor }) => Component | void;
   };
 }
 export interface ToolboxItem {
@@ -78,6 +79,8 @@ export interface ExtensionOptions {
   }: {
     editor: Editor;
   }) => ToolboxItem | ToolboxItem[];
+
+  getDraggable?: ({ editor }: { editor: Editor }) => DraggableItem | boolean;
 }
 
 export interface CommandMenuItem {
@@ -86,4 +89,40 @@ export interface CommandMenuItem {
   title: string;
   keywords: string[];
   command: ({ editor, range }: { editor: Editor; range: Range }) => void;
+}
+
+export interface DragSelectionNode {
+  $pos?: ResolvedPos;
+  node?: Node;
+  el: HTMLElement;
+  nodeOffset?: number;
+  dragDomOffset?: {
+    x?: number;
+    y?: number;
+  };
+}
+
+export interface DraggableItem {
+  getRenderContainer?: ({
+    dom,
+    view,
+  }: {
+    dom: HTMLElement;
+    view: EditorView;
+  }) => DragSelectionNode;
+  handleDrop?: ({
+    view,
+    event,
+    slice,
+    insertPos,
+    node,
+  }: {
+    view: EditorView;
+    event: DragEvent;
+    slice: Slice;
+    insertPos: number;
+    node: Node;
+  }) => boolean | void;
+  // allow drag-and-drop query propagation downward
+  allowPropagationDownward?: boolean;
 }
