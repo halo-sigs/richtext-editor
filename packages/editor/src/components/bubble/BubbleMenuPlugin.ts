@@ -192,25 +192,10 @@ export class BubbleMenuView {
       return;
     }
 
-    this.createTooltip();
-
     // support for CellSelections
     const { ranges } = selection;
-    const cursorAt = selection.$anchor.pos;
     const from = Math.min(...ranges.map((range) => range.$from.pos));
     const to = Math.max(...ranges.map((range) => range.$to.pos));
-    // prevent the menu from being obscured
-    const placement = this.tippyOptions?.placement
-      ? this.tippyOptions?.placement
-      : isNodeSelection(selection)
-      ? ACTIVE_BUBBLE_MENUS.length > 1
-        ? "bottom"
-        : "top"
-      : this.tippy.props.fixed
-      ? "bottom-start"
-      : Math.abs(cursorAt - to) <= Math.abs(cursorAt - from)
-      ? "bottom-start"
-      : "top-start";
 
     const domAtPos = view.domAtPos(from).node as HTMLElement;
     const nodeDOM = view.nodeDOM(from) as HTMLElement;
@@ -231,6 +216,23 @@ export class BubbleMenuView {
       this.hide();
       return;
     }
+
+    this.createTooltip();
+
+    const cursorAt = selection.$anchor.pos;
+
+    // prevent the menu from being obscured
+    const placement = this.tippyOptions?.placement
+      ? this.tippyOptions?.placement
+      : isNodeSelection(selection)
+      ? ACTIVE_BUBBLE_MENUS.length > 1
+        ? "bottom"
+        : "top"
+      : this.tippy.props.fixed
+      ? "bottom-start"
+      : Math.abs(cursorAt - to) <= Math.abs(cursorAt - from)
+      ? "bottom-start"
+      : "top-start";
 
     const otherBubbleMenus = ACTIVE_BUBBLE_MENUS.filter(
       (instance) =>
