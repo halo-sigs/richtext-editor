@@ -14,20 +14,10 @@ const Highlight = TiptapHighlight.extend<ExtensionOptions & HighlightOptions>({
     }
 
     return {
-      color: {
-        default: null,
-        parseHTML: (element) =>
-          element.getAttribute("data-color") || element.style.backgroundColor,
-        renderHTML: (attributes) => {
-          if (!attributes.color) {
-            return {};
-          }
-
-          return {
-            "data-color": attributes.color,
-            style: `background-color: ${attributes.color}; color: inherit; display: inline-block;`,
-          };
-        },
+      ...this.parent?.(),
+      style: {
+        default: "display: inline-block;",
+        parseHTML: (element) => element.getAttribute("style"),
       },
     };
   },
