@@ -145,13 +145,7 @@ const locale = useLocalStorage("locale", "zh-CN");
 </script>
 
 <template>
-  <div>
-    <select v-model="locale">
-      <option v-for="(item, index) in locales" :key="index" :value="item.code">
-        {{ item.label }}
-      </option>
-    </select>
+  <div style="height: 100vh" class="flex">
+    <RichTextEditor v-if="editor" :editor="editor" :locale="locale" />
   </div>
-
-  <RichTextEditor v-if="editor" :editor="editor" :locale="locale" />
 </template>

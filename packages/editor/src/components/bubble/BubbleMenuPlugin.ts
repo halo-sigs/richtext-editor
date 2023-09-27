@@ -156,6 +156,19 @@ export class BubbleMenuView {
       placement: "bottom-start",
       hideOnClick: "toggle",
       plugins: [sticky],
+      popperOptions: {
+        modifiers: [
+          {
+            name: "customWidth",
+            enabled: true,
+            phase: "beforeWrite",
+            requires: ["computeStyles"],
+            fn({ state }) {
+              state.styles.popper.maxWidth = "98%";
+            },
+          },
+        ],
+      },
       ...Object.assign(
         {
           zIndex: 999,
@@ -167,7 +180,7 @@ export class BubbleMenuView {
             : {}),
           fixed: true,
         },
-        this.tippyOptions
+        this.tippyOptions,
       ),
     });
 
@@ -177,7 +190,7 @@ export class BubbleMenuView {
         "blur",
         (event) => {
           this.blurHandler({ event });
-        }
+        },
       );
     }
   }
@@ -238,7 +251,7 @@ export class BubbleMenuView {
       (instance) =>
         instance.id !== this.tippy?.id &&
         instance.popperInstance &&
-        instance.popperInstance.state
+        instance.popperInstance.state,
     );
     const offset = this.tippyOptions?.offset as [number, number];
     const offsetX = offset?.[0] ?? 0;
@@ -296,7 +309,7 @@ export class BubbleMenuView {
 
   addActiveBubbleMenu = () => {
     const idx = ACTIVE_BUBBLE_MENUS.findIndex(
-      (instance) => instance?.id === this.tippy?.id
+      (instance) => instance?.id === this.tippy?.id,
     );
     if (idx < 0) {
       ACTIVE_BUBBLE_MENUS.push(this.tippy as Instance);
@@ -305,7 +318,7 @@ export class BubbleMenuView {
 
   removeActiveBubbleMenu = () => {
     const idx = ACTIVE_BUBBLE_MENUS.findIndex(
-      (instance) => instance?.id === this.tippy?.id
+      (instance) => instance?.id === this.tippy?.id,
     );
     if (idx > -1) {
       ACTIVE_BUBBLE_MENUS.splice(idx, 1);

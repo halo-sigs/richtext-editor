@@ -29,7 +29,7 @@ watch(
   },
   {
     immediate: true,
-  }
+  },
 );
 </script>
 <template>
@@ -37,13 +37,17 @@ watch(
     <editor-bubble-menu :editor="editor" />
     <editor-header :editor="editor" />
     <div class="h-full flex flex-row w-full">
-      <editor-content
-        :editor="editor"
-        :style="contentStyles"
-        class="editor-content markdown-body"
-        :class="{ 'sm:!w-[calc(100%-18rem)]': $slots.extra }"
-      />
-      <div v-if="$slots.extra" class="h-full hidden sm:!block w-72">
+      <div class="overflow-y-auto overflow-x-hidden flex-1 relative bg-white">
+        <editor-content
+          :editor="editor"
+          :style="contentStyles"
+          class="editor-content markdown-body"
+        />
+      </div>
+      <div
+        v-if="$slots.extra"
+        class="h-full hidden sm:!block w-72 flex-shrink-0"
+      >
         <slot name="extra"></slot>
       </div>
     </div>
