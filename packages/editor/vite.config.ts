@@ -18,6 +18,7 @@ export default ({ mode }: { mode: string }) => {
       }),
       isProduction &&
         dts({
+          tsconfigPath: "./tsconfig.app.json",
           entryRoot: "./src",
           outDir: "./dist",
           insertTypesEntry: true,
