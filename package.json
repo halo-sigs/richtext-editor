@@ -5,6 +5,7 @@
   "scripts": {
     "packages:dev": "pnpm --filter './packages/**' dev",
     "packages:build": "pnpm --filter './packages/**' build",
+    "packages:link": "pnpm link -global --dir ./packages/**",
     "packages:release": "pnpm --filter './packages/**' release",
     "example:dev": "pnpm --filter './example/' run dev",
     "example:build": "pnpm --filter './example/' run build",
