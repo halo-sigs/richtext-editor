@@ -1,16 +1,15 @@
 // block
-import "./block";
+export * from "./block";
 
 // bubble
-import "./bubble";
+export * from "./bubble";
 
 // toolbar
-import "./toolbar";
+export * from "./toolbar";
 
 // toolbox
-import "./toolbox";
+export * from "./toolbox";
 
 export { default as RichTextEditor } from "./Editor.vue";
-import "./EditorHeader.vue";
-import "./EditorBubbleMenu.vue";
-import "./EditorContent.vue";
+export * from "./EditorHeader.vue";
+export * from "./EditorBubbleMenu.vue";
