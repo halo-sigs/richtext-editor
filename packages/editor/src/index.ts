@@ -1,5 +1,5 @@
 import type { App, Plugin } from "vue";
-import RichTextEditor from "./components/Editor.vue";
+import { RichTextEditor } from "./components";
 import "./styles/index.scss";
 import "./styles/tailwind.css";
 import "floating-vue/dist/style.css";
@@ -13,8 +13,6 @@ const plugin: Plugin = {
 };
 
 export default plugin;
-
-export { RichTextEditor };
 
 export * from "@tiptap/vue-3";
 export * from "./extensions";
