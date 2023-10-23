@@ -88,6 +88,10 @@
       }
     }
   }
+
+  .v-popper--theme-tooltip {
+    pointer-events: all;
+  }
 }
 
 .v-popper--theme-editor-block-dropdown {
