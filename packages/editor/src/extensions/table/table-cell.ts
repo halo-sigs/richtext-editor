@@ -1,6 +1,11 @@
-import { mergeAttributes, Node } from "@tiptap/core";
-import { Plugin, PluginKey } from "@tiptap/pm/state";
-import { Decoration, DecorationSet } from "@tiptap/pm/view";
+import { mergeAttributes, Node } from "@/tiptap/vue-3";
+import {
+  Plugin,
+  PluginKey,
+  Decoration,
+  DecorationSet,
+  addRowAfter,
+} from "@/tiptap/pm";
 import {
   getCellsInColumn,
   isRowSelected,
@@ -8,7 +13,6 @@ import {
   selectRow,
   selectTable,
 } from "./util";
-import { addRowAfter } from "@tiptap/pm/tables";
 import { Tooltip } from "floating-vue";
 import { h } from "vue";
 import MdiPlus from "~icons/mdi/plus";
@@ -121,7 +125,7 @@ const TableCell = Node.create<TableCellOptions>({
                       grip.className = className;
                       storage.gripMap.set(key, grip);
                       return grip;
-                    })
+                    }),
                   );
                 }
 
@@ -152,7 +156,7 @@ const TableCell = Node.create<TableCellOptions>({
                           default: () => h(MdiPlus, { class: "plus-icon" }),
                           popper: () =>
                             i18n.global.t("editor.menus.table.add_row_after"),
-                        }
+                        },
                       );
                       render(instance, grip);
                       grip.addEventListener(
@@ -162,20 +166,20 @@ const TableCell = Node.create<TableCellOptions>({
                           event.stopImmediatePropagation();
 
                           editor.view.dispatch(
-                            selectRow(index)(editor.state.tr)
+                            selectRow(index)(editor.state.tr),
                           );
 
                           if (event.target !== grip) {
                             addRowAfter(editor.state, editor.view.dispatch);
                           }
                         },
-                        true
+                        true,
                       );
                     }
                     grip.className = className;
                     storage.gripMap.set(key, grip);
                     return grip;
-                  })
+                  }),
                 );
               });
             }

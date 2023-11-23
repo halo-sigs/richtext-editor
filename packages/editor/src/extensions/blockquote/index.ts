@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@/tiptap/vue-3";
 import TiptapBlockquote from "@tiptap/extension-blockquote";
 import type { BlockquoteOptions } from "@tiptap/extension-blockquote";
 import ToolbarItemVue from "@/components/toolbar/ToolbarItem.vue";

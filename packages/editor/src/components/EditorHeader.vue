@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Menu as VMenu } from "floating-vue";
-import { Editor, type AnyExtension } from "@tiptap/core";
+import { Editor, type AnyExtension } from "@/tiptap/vue-3";
 import MdiPlusCircle from "~icons/mdi/plus-circle";
 import type { ToolbarItem, ToolboxItem } from "@/types";
 

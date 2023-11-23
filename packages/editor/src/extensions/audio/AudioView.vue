@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
-import type { Decoration } from "@tiptap/pm/view";
-import type { Editor, Node } from "@tiptap/core";
-import { NodeViewWrapper } from "@tiptap/vue-3";
+import type { Node as ProseMirrorNode, Decoration } from "@/tiptap/pm";
+import type { Editor, Node } from "@/tiptap/vue-3";
+import { NodeViewWrapper } from "@/tiptap/vue-3";
 import { computed, onMounted, ref } from "vue";
 import { i18n } from "@/locales";
 

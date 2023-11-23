@@ -20,8 +20,8 @@ import MdiFormatAlignCenter from "~icons/mdi/format-align-center";
 import MdiFormatAlignRight from "~icons/mdi/format-align-right";
 import MdiFormatAlignJustify from "~icons/mdi/format-align-justify";
 import MdiFormatUnderline from "~icons/mdi/format-underline";
-import { isActive, isTextSelection } from "@tiptap/core";
-import type { EditorState } from "@tiptap/pm/state";
+import { isActive, isTextSelection } from "@/tiptap/vue-3";
+import type { EditorState } from "@/tiptap/pm";
 import MdiFormatBold from "~icons/mdi/format-bold";
 import { i18n } from "@/locales";
 
@@ -49,7 +49,7 @@ const Text = TiptapText.extend<ExtensionOptions>({
 
             if (
               OTHER_BUBBLE_MENU_TYPES.some((type) =>
-                isActive(state as EditorState, type)
+                isActive(state as EditorState, type),
               )
             ) {
               return false;

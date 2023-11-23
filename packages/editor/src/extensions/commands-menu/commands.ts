@@ -1,10 +1,10 @@
 import {
   Extension,
+  VueRenderer,
   type Editor,
   type AnyExtension,
   type Range,
-} from "@tiptap/core";
-import { VueRenderer } from "@tiptap/vue-3";
+} from "@/tiptap/vue-3";
 import Suggestion from "@tiptap/suggestion";
 import type { CommandMenuItem } from "@/types";
 import type { Instance } from "tippy.js";
@@ -16,7 +16,7 @@ export default Extension.create({
 
   addProseMirrorPlugins() {
     const commandMenuItems = getToolbarItemsFromExtensions(
-      this.editor as Editor
+      this.editor as Editor,
     );
 
     return [
@@ -37,8 +37,8 @@ export default Extension.create({
         items: ({ query }: { query: string }) => {
           return commandMenuItems.filter((item) =>
             [...item.keywords, item.title].some((keyword) =>
-              keyword.includes(query)
-            )
+              keyword.includes(query),
+            ),
           );
         },
         render: () => {

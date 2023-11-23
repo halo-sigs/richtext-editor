@@ -1,9 +1,13 @@
-import { mergeAttributes, Node } from "@tiptap/core";
-import { Plugin, PluginKey } from "@tiptap/pm/state";
-import { Decoration, DecorationSet } from "@tiptap/pm/view";
+import { mergeAttributes, Node } from "@/tiptap/vue-3";
+import {
+  Plugin,
+  PluginKey,
+  Decoration,
+  DecorationSet,
+  addColumnAfter,
+} from "@/tiptap/pm";
 import { getCellsInRow, isColumnSelected, selectColumn } from "./util";
 import { render } from "vue";
-import { addColumnAfter } from "@tiptap/pm/tables";
 import { Tooltip } from "floating-vue";
 import { h } from "vue";
 import MdiPlus from "~icons/mdi/plus";
@@ -110,9 +114,9 @@ const TableHeader = Node.create<TableCellOptions>({
                           default: () => h(MdiPlus, { class: "plus-icon" }),
                           popper: () =>
                             i18n.global.t(
-                              "editor.menus.table.add_column_after"
+                              "editor.menus.table.add_column_after",
                             ),
-                        }
+                        },
                       );
                       render(instance, grip);
                       grip.addEventListener("mousedown", (event) => {
@@ -120,7 +124,7 @@ const TableHeader = Node.create<TableCellOptions>({
                         event.stopImmediatePropagation();
 
                         editor.view.dispatch(
-                          selectColumn(index)(editor.state.tr)
+                          selectColumn(index)(editor.state.tr),
                         );
 
                         if (event.target !== grip) {
@@ -131,7 +135,7 @@ const TableHeader = Node.create<TableCellOptions>({
                     grip.className = className;
                     storage.gripMap.set(key, grip);
                     return grip;
-                  })
+                  }),
                 );
               });
             }

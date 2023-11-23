@@ -1,7 +1,6 @@
-import { findParentNode } from "@tiptap/core";
-import { CellSelection, TableMap } from "@tiptap/pm/tables";
-import type { Selection, Transaction } from "@tiptap/pm/state";
-import { Node } from "@tiptap/pm/model";
+import { findParentNode } from "@/tiptap/vue-3";
+import { Node, CellSelection, TableMap } from "@/tiptap/pm";
+import type { Selection, Transaction } from "@/tiptap/pm";
 
 export const selectTable = (tr: Transaction) => {
   const table = findTable(tr.selection);
@@ -80,28 +79,31 @@ export const getCellsInColumn =
       const indexes = Array.isArray(columnIndex)
         ? columnIndex
         : Array.from([columnIndex]);
-      return indexes.reduce((acc, index) => {
-        if (index >= 0 && index <= map.width - 1) {
-          const cells = map.cellsInRect({
-            left: index,
-            right: index + 1,
-            top: 0,
-            bottom: map.height,
-          });
-          return acc.concat(
-            cells.map((nodePos: number) => {
-              const node = table.node.nodeAt(nodePos);
-              const pos = nodePos + table.start;
-              return { pos, start: pos + 1, node };
-            }) as unknown as {
-              pos: number;
-              start: number;
-              node: Node | null | undefined;
-            }[]
-          );
-        }
-        return acc;
-      }, [] as { pos: number; start: number; node: Node | null | undefined }[]);
+      return indexes.reduce(
+        (acc, index) => {
+          if (index >= 0 && index <= map.width - 1) {
+            const cells = map.cellsInRect({
+              left: index,
+              right: index + 1,
+              top: 0,
+              bottom: map.height,
+            });
+            return acc.concat(
+              cells.map((nodePos: number) => {
+                const node = table.node.nodeAt(nodePos);
+                const pos = nodePos + table.start;
+                return { pos, start: pos + 1, node };
+              }) as unknown as {
+                pos: number;
+                start: number;
+                node: Node | null | undefined;
+              }[],
+            );
+          }
+          return acc;
+        },
+        [] as { pos: number; start: number; node: Node | null | undefined }[],
+      );
     }
   };
 
@@ -113,34 +115,37 @@ export const getCellsInRow =
       const indexes = Array.isArray(rowIndex)
         ? rowIndex
         : Array.from([rowIndex]);
-      return indexes.reduce((acc, index) => {
-        if (index >= 0 && index <= map.height - 1) {
-          const cells = map.cellsInRect({
-            left: 0,
-            right: map.width,
-            top: index,
-            bottom: index + 1,
-          });
-          return acc.concat(
-            cells.map((nodePos) => {
-              const node = table.node.nodeAt(nodePos);
-              const pos = nodePos + table.start;
-              return { pos, start: pos + 1, node };
-            }) as unknown as {
-              pos: number;
-              start: number;
-              node: Node | null | undefined;
-            }[]
-          );
-        }
-        return acc;
-      }, [] as { pos: number; start: number; node: Node | null | undefined }[]);
+      return indexes.reduce(
+        (acc, index) => {
+          if (index >= 0 && index <= map.height - 1) {
+            const cells = map.cellsInRect({
+              left: 0,
+              right: map.width,
+              top: index,
+              bottom: index + 1,
+            });
+            return acc.concat(
+              cells.map((nodePos) => {
+                const node = table.node.nodeAt(nodePos);
+                const pos = nodePos + table.start;
+                return { pos, start: pos + 1, node };
+              }) as unknown as {
+                pos: number;
+                start: number;
+                node: Node | null | undefined;
+              }[],
+            );
+          }
+          return acc;
+        },
+        [] as { pos: number; start: number; node: Node | null | undefined }[],
+      );
     }
   };
 
 export const findTable = (selection: Selection) => {
   return findParentNode((node) => node.type.spec.tableRole === "table")(
-    selection
+    selection,
   ) as
     | {
         pos: number;
@@ -158,8 +163,8 @@ export const isRectSelected = (rect: any) => (selection: CellSelection) => {
   const selectedCells = map.cellsInRect(
     map.rectBetween(
       selection.$anchorCell.pos - start,
-      selection.$headCell.pos - start
-    )
+      selection.$headCell.pos - start,
+    ),
   );
 
   for (let i = 0, count = cells.length; i < count; i++) {

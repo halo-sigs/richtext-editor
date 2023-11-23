@@ -1,4 +1,4 @@
-import type { Editor, Range } from "@tiptap/core";
+import type { Editor, Range } from "@/tiptap/vue-3";
 import TiptapOrderedList from "@tiptap/extension-ordered-list";
 import type { OrderedListOptions } from "@tiptap/extension-ordered-list";
 import ExtensionListItem from "@tiptap/extension-list-item";

@@ -1,7 +1,6 @@
-import { Extension } from "@tiptap/core";
+import { Extension } from "@/tiptap/vue-3";
 
-import { Plugin, PluginKey } from "@tiptap/pm/state";
-import { Decoration, DecorationSet } from "@tiptap/pm/view";
+import { Plugin, PluginKey, Decoration, DecorationSet } from "@/tiptap/pm";
 
 export interface NodeSelectedOptions {
   className: string;
@@ -45,7 +44,7 @@ const NodeSelected = Extension.create<NodeSelectedOptions>({
               decorations.push(
                 Decoration.node(pos, pos + node.nodeSize, {
                   class: this.options.className,
-                })
+                }),
               );
             });
 

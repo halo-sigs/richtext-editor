@@ -14,6 +14,6 @@ const plugin: Plugin = {
 
 export default plugin;
 
-export * from "@tiptap/vue-3";
+export * from "./tiptap";
 export * from "./extensions";
 export * from "./components";

@@ -1,5 +1,5 @@
-import { Extension } from "@tiptap/core";
-import { Plugin, PluginKey } from "@tiptap/pm/state";
+import { Extension } from "@/tiptap/vue-3";
+import { Plugin, PluginKey } from "@/tiptap/pm";
 
 /**
  * @param {object} args Arguments as deconstructable object

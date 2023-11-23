@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { Component } from "vue";
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@/tiptap/vue-3";
 
 const props = withDefaults(
   defineProps<{
@@ -16,7 +16,7 @@ const props = withDefaults(
     description: undefined,
     action: undefined,
     icon: undefined,
-  }
+  },
 );
 
 const action = () => {

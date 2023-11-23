@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@/tiptap/vue-3";
 import TiptapTextAlign from "@tiptap/extension-text-align";
 import type { TextAlignOptions } from "@tiptap/extension-text-align";
 import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";

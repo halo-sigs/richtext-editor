@@ -2,7 +2,7 @@ import type { ExtensionOptions } from "@/types";
 import TiptapColor from "@tiptap/extension-color";
 import type { ColorOptions } from "@tiptap/extension-color";
 import TiptapTextStyle from "@tiptap/extension-text-style";
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@/tiptap/vue-3";
 import { markRaw } from "vue";
 import MdiFormatColor from "~icons/mdi/format-color";
 import ColorToolbarItem from "./ColorToolbarItem.vue";
