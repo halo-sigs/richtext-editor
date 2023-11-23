@@ -109,6 +109,9 @@ importers:
       '@ckpack/vue-color':
         specifier: ^1.5.0
         version: 1.5.0(vue@3.3.4)
+      '@tiptap/core':
+        specifier: ^2.1.10
+        version: 2.1.10(@tiptap/pm@2.1.10)
       '@tiptap/extension-blockquote':
         specifier: ^2.1.10
         version: 2.1.10(@tiptap/core@2.1.10)
@@ -208,9 +211,15 @@ importers:
       '@tiptap/extension-underline':
         specifier: ^2.1.10
         version: 2.1.10(@tiptap/core@2.1.10)
+      '@tiptap/pm':
+        specifier: ^2.1.10
+        version: 2.1.10
       '@tiptap/suggestion':
         specifier: ^2.1.10
         version: 2.1.10(@tiptap/core@2.1.10)(@tiptap/pm@2.1.10)
+      '@tiptap/vue-3':
+        specifier: ^2.1.10
+        version: 2.1.10(@tiptap/core@2.1.10)(@tiptap/pm@2.1.10)(vue@3.3.4)
       floating-vue:
         specifier: 2.0.0-beta.24
         version: 2.0.0-beta.24(vue@3.3.4)
@@ -1367,6 +1376,17 @@ packages:
       '@tiptap/core': 2.1.10(@tiptap/pm@2.1.10)
     dev: false
 
+  /@tiptap/extension-bubble-menu@2.1.12(@tiptap/core@2.1.10)(@tiptap/pm@2.1.10):
+    resolution: {integrity: sha512-gAGi21EQ4wvLmT7klgariAc2Hf+cIjaNU2NWze3ut6Ku9gUo5ZLqj1t9SKHmNf4d5JG63O8GxpErqpA7lHlRtw==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+      '@tiptap/pm': ^2.0.0
+    dependencies:
+      '@tiptap/core': 2.1.10(@tiptap/pm@2.1.10)
+      '@tiptap/pm': 2.1.10
+      tippy.js: 6.3.7
+    dev: false
+
   /@tiptap/extension-bullet-list@2.1.10(@tiptap/core@2.1.10):
     resolution: {integrity: sha512-e6aFr29OSOmXsjFZB2zt3p8aeCWOx0C9Ayrpdf4QBUCOUJtt6FQPxxiYc+XZcdrYbLGLznA7QJlulCK9SGv2Fw==}
     peerDependencies:
@@ -1431,6 +1451,17 @@ packages:
     dependencies:
       '@tiptap/core': 2.1.10(@tiptap/pm@2.1.10)
       '@tiptap/pm': 2.1.10
+    dev: false
+
+  /@tiptap/extension-floating-menu@2.1.12(@tiptap/core@2.1.10)(@tiptap/pm@2.1.10):
+    resolution: {integrity: sha512-uo0ydCJNg6AWwLT6cMUJYVChfvw2PY9ZfvKRhh9YJlGfM02jS4RUG/bJBts6R37f+a5FsOvAVwg8EvqPlNND1A==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+      '@tiptap/pm': ^2.0.0
+    dependencies:
+      '@tiptap/core': 2.1.10(@tiptap/pm@2.1.10)
+      '@tiptap/pm': 2.1.10
+      tippy.js: 6.3.7
     dev: false
 
   /@tiptap/extension-gapcursor@2.1.10(@tiptap/core@2.1.10)(@tiptap/pm@2.1.10):
@@ -1671,6 +1702,20 @@ packages:
     dependencies:
       '@tiptap/core': 2.1.10(@tiptap/pm@2.1.10)
       '@tiptap/pm': 2.1.10
+    dev: false
+
+  /@tiptap/vue-3@2.1.10(@tiptap/core@2.1.10)(@tiptap/pm@2.1.10)(vue@3.3.4):
+    resolution: {integrity: sha512-GE2fDERHXfbFSGvw9Ov/Wf9RbmYRRSii4oC05Xf2Jw9F2x8NjJWJvZVFEzAGoJSc5UskzXfwtNOmlt4AcBYuew==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+      '@tiptap/pm': ^2.0.0
+      vue: ^3.0.0
+    dependencies:
+      '@tiptap/core': 2.1.10(@tiptap/pm@2.1.10)
+      '@tiptap/extension-bubble-menu': 2.1.12(@tiptap/core@2.1.10)(@tiptap/pm@2.1.10)
+      '@tiptap/extension-floating-menu': 2.1.12(@tiptap/core@2.1.10)(@tiptap/pm@2.1.10)
+      '@tiptap/pm': 2.1.10
+      vue: 3.3.4
     dev: false
 
   /@tootallnate/once@2.0.0:
