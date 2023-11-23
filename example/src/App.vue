@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import "@halo-dev/richtext-editor/dist/style.css";
-import { computed, watchEffect, markRaw } from "vue";
+import { computed, watchEffect } from "vue";
 import { unified } from "unified";
 import rehypeParse from "rehype-parse";
 import rehypeFormat from "rehype-format";
