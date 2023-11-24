@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@/tiptap/vue-3";
 import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
 import MdiArrowULeftBottom from "~icons/mdi/arrow-u-left-bottom";
 import BlockActionSeparator from "./BlockActionSeparator.vue";
@@ -15,7 +15,7 @@ const props = withDefaults(
   }>(),
   {
     selected: false,
-  }
+  },
 );
 
 function handleInsertNewLine() {
@@ -24,7 +24,7 @@ function handleInsertNewLine() {
     [{ type: "paragraph", content: "" }],
     {
       updateSelection: true,
-    }
+    },
   );
   props.editor.commands.focus(props.getPos() + 2, {
     scrollIntoView: true,

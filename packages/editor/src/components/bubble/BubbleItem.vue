@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { VTooltip, Dropdown as VDropdown } from "floating-vue";
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@/tiptap/vue-3";
 import { ref, type Component } from "vue";
 
 const props = withDefaults(
@@ -20,7 +20,7 @@ const props = withDefaults(
     action: undefined,
     icon: undefined,
     iconStyle: undefined,
-  }
+  },
 );
 
 const componentRef = ref<Component | void>();

@@ -6,8 +6,9 @@ import {
   Node,
   nodeInputRule,
   type Range,
-} from "@tiptap/core";
-import { VueNodeViewRenderer } from "@tiptap/vue-3";
+  VueNodeViewRenderer,
+} from "@/tiptap/vue-3";
+import type { EditorState } from "@/tiptap/pm";
 import { markRaw } from "vue";
 import AudioView from "./AudioView.vue";
 import MdiMusicCircleOutline from "~icons/mdi/music-circle-outline";
@@ -23,9 +24,8 @@ import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiShare from "~icons/mdi/share";
 import { deleteNode } from "@/utils";
 import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
-import type { EditorState } from "@tiptap/pm/state";
 
-declare module "@tiptap/core" {
+declare module "@/tiptap" {
   interface Commands<ReturnType> {
     audio: {
       setAudio: (options: { src: string }) => ReturnType;

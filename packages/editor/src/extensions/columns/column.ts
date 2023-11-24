@@ -1,4 +1,4 @@
-import { mergeAttributes, Node } from "@tiptap/core";
+import { mergeAttributes, Node } from "@/tiptap/vue-3";
 
 const Column = Node.create({
   name: "column",

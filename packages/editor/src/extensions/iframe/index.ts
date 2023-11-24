@@ -7,8 +7,9 @@ import {
   nodeInputRule,
   nodePasteRule,
   type Range,
-} from "@tiptap/core";
-import { VueNodeViewRenderer } from "@tiptap/vue-3";
+  VueNodeViewRenderer,
+} from "@/tiptap/vue-3";
+import type { EditorState } from "@/tiptap/pm";
 import { markRaw } from "vue";
 import IframeView from "./IframeView.vue";
 import MdiWeb from "~icons/mdi/web";
@@ -31,9 +32,8 @@ import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red
 import MdiShare from "~icons/mdi/share";
 import MdiLinkVariant from "~icons/mdi/link-variant";
 import MdiWebSync from "~icons/mdi/web-sync";
-import type { EditorState } from "@tiptap/pm/state";
 
-declare module "@tiptap/core" {
+declare module "@/tiptap" {
   interface Commands<ReturnType> {
     iframe: {
       setIframe: (options: { src: string }) => ReturnType;

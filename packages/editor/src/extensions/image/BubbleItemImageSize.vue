@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { i18n } from "@/locales";
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@/tiptap/vue-3";
 import { computed, type Component, onUnmounted, ref, watch } from "vue";
 import Image from "./index";
 import {
@@ -28,7 +28,7 @@ const nodeDom = computed(() => {
     return;
   }
   const nodeDomParent = props.editor.view.nodeDOM(
-    props.editor.state.selection.from
+    props.editor.state.selection.from,
   ) as HTMLElement;
   if (nodeDomParent && nodeDomParent.hasChildNodes()) {
     return nodeDomParent.childNodes[0] as HTMLElement;
@@ -92,7 +92,7 @@ const reuseResizeObserver = () => {
         .focus()
         .run();
     },
-    { box: "border-box" }
+    { box: "border-box" },
   );
 };
 

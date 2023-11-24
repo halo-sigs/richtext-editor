@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@/tiptap/vue-3";
 
 export const deleteNode = (nodeType: string, editor: Editor) => {
   const { state } = editor;

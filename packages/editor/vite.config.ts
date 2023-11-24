@@ -27,6 +27,9 @@ export default ({ mode }: { mode: string }) => {
         include: [path.resolve(__dirname, "./src/locales/*.yaml")],
       }),
     ],
+    define: {
+      "process.env": process.env,
+    },
     resolve: {
       alias: {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
@@ -40,7 +43,7 @@ export default ({ mode }: { mode: string }) => {
         formats: ["es", "iife"],
         fileName: (format) => `rich-text-editor.${format}.js`,
       },
-      minify: false,
+      minify: isProduction,
       rollupOptions: {
         external: ["vue"],
         output: {

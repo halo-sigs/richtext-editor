@@ -1,10 +1,13 @@
 import TiptapTable, { type TableOptions } from "@tiptap/extension-table";
-import type { Node as ProseMirrorNode } from "@tiptap/pm/model";
-import type { NodeView } from "@tiptap/pm/view";
+import { isActive, type Editor, type Range } from "@/tiptap/vue-3";
+import type {
+  Node as ProseMirrorNode,
+  NodeView,
+  EditorState,
+} from "@/tiptap/pm";
 import TableCell from "./table-cell";
 import TableRow from "./table-row";
 import TableHeader from "./table-header";
-import { isActive, type Editor, type Range } from "@tiptap/core";
 import MdiTable from "~icons/mdi/table";
 import MdiTablePlus from "~icons/mdi/table-plus";
 import MdiTableColumnPlusBefore from "~icons/mdi/table-column-plus-before";
@@ -21,7 +24,6 @@ import FluentTableColumnTopBottom24Regular from "~icons/fluent/table-column-top-
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import type { ExtensionOptions, NodeBubbleMenu } from "@/types";
-import type { EditorState } from "@tiptap/pm/state";
 import { BlockActionSeparator, ToolboxItem } from "@/components";
 
 function updateColumns(
@@ -30,7 +32,7 @@ function updateColumns(
   table: HTMLElement,
   cellMinWidth: number,
   overrideCol?: number,
-  overrideValue?: any
+  overrideValue?: any,
 ) {
   let totalWidth = 0;
   let fixedWidth = true;
@@ -124,7 +126,7 @@ class TableView implements NodeView {
   }
 
   ignoreMutation(
-    mutation: MutationRecord | { type: "selection"; target: Element }
+    mutation: MutationRecord | { type: "selection"; target: Element },
   ) {
     return (
       mutation.type === "attributes" &&

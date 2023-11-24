@@ -1,13 +1,20 @@
-import { Editor, Extension } from "@tiptap/core";
-import { Fragment, Node, NodeType, ResolvedPos, Slice } from "@tiptap/pm/model";
-import { NodeSelection, Plugin, PluginKey } from "@tiptap/pm/state";
-import type { EditorView } from "@tiptap/pm/view";
+import { Editor, Extension } from "@/tiptap/vue-3";
 import {
+  Fragment,
+  Node,
+  NodeType,
+  ResolvedPos,
+  Slice,
+  NodeSelection,
+  Plugin,
+  PluginKey,
   Decoration,
   DecorationSet,
   // @ts-ignore
   __serializeForClipboard as serializeForClipboard,
-} from "@tiptap/pm/view";
+} from "@/tiptap/pm";
+import {} from "@/tiptap";
+import type { EditorView } from "@/tiptap/pm";
 import type { DraggableItem, ExtensionOptions } from "@/types";
 
 // https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API

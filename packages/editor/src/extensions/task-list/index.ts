@@ -1,4 +1,4 @@
-import type { Editor, Range } from "@tiptap/core";
+import type { Editor, Range } from "@/tiptap/vue-3";
 import TiptapTaskList from "@tiptap/extension-task-list";
 import type { TaskListOptions } from "@tiptap/extension-task-list";
 import ExtensionTaskItem from "@tiptap/extension-task-item";

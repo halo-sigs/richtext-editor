@@ -1,5 +1,5 @@
 import { ToolbarItem, ToolbarSubItem } from "@/components";
-import { Extension, type Editor } from "@tiptap/core";
+import { Extension, type Editor } from "@/tiptap/vue-3";
 import { markRaw } from "vue";
 import MdiFormatSize from "~icons/mdi/format-size";
 import TiptapTextStyle from "@tiptap/extension-text-style";
@@ -9,7 +9,7 @@ export type FontSizeOptions = {
   types: string[];
 };
 
-declare module "@tiptap/core" {
+declare module "@/tiptap" {
   interface Commands<ReturnType> {
     fontSize: {
       setFontSize: (size: number) => ReturnType;

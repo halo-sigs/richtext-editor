@@ -1,6 +1,11 @@
 import TiptapImage from "@tiptap/extension-image";
-import { isActive, mergeAttributes, type Editor } from "@tiptap/core";
-import { VueNodeViewRenderer } from "@tiptap/vue-3";
+import {
+  isActive,
+  mergeAttributes,
+  VueNodeViewRenderer,
+  type Editor,
+} from "@/tiptap/vue-3";
+import type { EditorState } from "@/tiptap/pm";
 import ImageView from "./ImageView.vue";
 import type { ImageOptions } from "@tiptap/extension-image";
 import type { ExtensionOptions, NodeBubbleMenu } from "@/types";
@@ -8,7 +13,6 @@ import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
 import MdiFileImageBox from "~icons/mdi/file-image-box";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
-import type { EditorState } from "@tiptap/pm/state";
 import BubbleItemImageSize from "./BubbleItemImageSize.vue";
 import BubbleItemImageAlt from "./BubbleItemImageAlt.vue";
 import BubbleItemVideoLink from "./BubbleItemImageLink.vue";
@@ -268,7 +272,7 @@ const Image = TiptapImage.extend<ExtensionOptions & ImageOptions>({
 
 const handleSetTextAlign = (
   editor: Editor,
-  align: "left" | "center" | "right" | "justify"
+  align: "left" | "center" | "right" | "justify",
 ) => {
   editor.chain().focus().setTextAlign(align).run();
 };

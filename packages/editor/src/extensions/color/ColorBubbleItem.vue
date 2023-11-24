@@ -2,7 +2,7 @@
 import { BubbleItem } from "@/components";
 import ColorPickerDropdown from "@/components/common/ColorPickerDropdown.vue";
 import { i18n } from "@/locales";
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@/tiptap/vue-3";
 import type { Component } from "vue";
 
 const props = defineProps<{

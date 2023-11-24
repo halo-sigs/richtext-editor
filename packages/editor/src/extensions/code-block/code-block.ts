@@ -4,8 +4,9 @@ import {
   type CommandProps,
   isActive,
   findParentNode,
-} from "@tiptap/core";
-import { VueNodeViewRenderer } from "@tiptap/vue-3";
+  VueNodeViewRenderer,
+} from "@/tiptap/vue-3";
+import { EditorState, TextSelection, type Transaction } from "@/tiptap/pm";
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import type { CodeBlockLowlightOptions } from "@tiptap/extension-code-block-lowlight";
 import CodeBlockViewRenderer from "./CodeBlockViewRenderer.vue";
@@ -14,7 +15,6 @@ import MdiCodeBracesBox from "~icons/mdi/code-braces-box";
 import { markRaw } from "vue";
 import { i18n } from "@/locales";
 import ToolboxItem from "@/components/toolbox/ToolboxItem.vue";
-import { EditorState, TextSelection, type Transaction } from "@tiptap/pm/state";
 import MdiDeleteForeverOutline from "~icons/mdi/delete-forever-outline?color=red";
 import { deleteNode } from "@/utils";
 
@@ -24,7 +24,7 @@ export interface CustomCodeBlockLowlightOptions
   defaultLanguage: string | null | undefined;
 }
 
-declare module "@tiptap/core" {
+declare module "@/tiptap" {
   interface Commands<ReturnType> {
     codeIndent: {
       codeIndent: () => ReturnType;
@@ -140,7 +140,7 @@ export default CodeBlockLowlight.extend<
         if (this.editor.isActive("codeBlock")) {
           const { tr, selection } = this.editor.state;
           const codeBlack = findParentNode(
-            (node) => node.type.name === CodeBlockLowlight.name
+            (node) => node.type.name === CodeBlockLowlight.name,
           )(selection);
           if (!codeBlack) {
             return false;
@@ -150,7 +150,7 @@ export default CodeBlockLowlight.extend<
           const $head = tr.doc.resolve(head);
           const $anchor = tr.doc.resolve(anchor);
           this.editor.view.dispatch(
-            tr.setSelection(new TextSelection($head, $anchor))
+            tr.setSelection(new TextSelection($head, $anchor)),
           );
           return true;
         }

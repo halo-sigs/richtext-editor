@@ -5,10 +5,9 @@ import {
   mergeAttributes,
   Node,
   type Range,
-} from "@tiptap/core";
-import { Node as PMNode } from "@tiptap/pm/model";
-import type { NodeType, Schema } from "@tiptap/pm/model";
-import { EditorState, TextSelection } from "@tiptap/pm/state";
+} from "@/tiptap/vue-3";
+import { Node as PMNode, EditorState, TextSelection } from "@/tiptap/pm";
+import type { NodeType, Schema } from "@/tiptap/pm";
 import { markRaw } from "vue";
 import Column from "./column";
 import RiInsertColumnLeft from "~icons/ri/insert-column-left";
@@ -20,7 +19,7 @@ import { i18n } from "@/locales";
 import { deleteNode } from "@/utils";
 import MdiCollage from "~icons/mdi/collage";
 
-declare module "@tiptap/core" {
+declare module "@/tiptap" {
   interface Commands<ReturnType> {
     columns: {
       insertColumns: (attrs?: { cols: number }) => ReturnType;

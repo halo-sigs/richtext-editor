@@ -1,4 +1,4 @@
-import type { Editor } from "@tiptap/core";
+import type { Editor } from "@/tiptap/vue-3";
 import TiptapItalic from "@tiptap/extension-italic";
 import type { ItalicOptions } from "@tiptap/extension-italic";
 import ToolbarItem from "@/components/toolbar/ToolbarItem.vue";
