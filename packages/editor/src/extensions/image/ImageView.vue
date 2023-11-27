@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { i18n } from "@/locales";
-import type { Editor, Node, NodeViewWrapper } from "@/tiptap/vue-3";
+import type { Editor, Node } from "@/tiptap/vue-3";
+import { NodeViewWrapper } from "@/tiptap/vue-3";
 import type { Node as ProseMirrorNode, Decoration } from "@/tiptap/pm";
 import { computed, onMounted, ref } from "vue";
 import { useResizeObserver } from "@vueuse/core";
