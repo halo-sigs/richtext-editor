@@ -20,6 +20,11 @@ const props = defineProps({
     required: false,
     default: "zh-CN",
   },
+  bubbleElement: {
+    type: String || (Object as PropType<HTMLElement>),
+    required: false,
+    default: ".halo-rich-text-editor",
+  },
 });
 
 watch(
@@ -34,7 +39,7 @@ watch(
 </script>
 <template>
   <div v-if="editor" class="halo-rich-text-editor">
-    <editor-bubble-menu :editor="editor" />
+    <editor-bubble-menu :editor="editor" :bubble-element="bubbleElement" />
     <editor-header :editor="editor" />
     <div class="h-full flex flex-row w-full">
       <div class="overflow-y-auto overflow-x-hidden flex-1 relative bg-white">

@@ -16,6 +16,11 @@ const props = defineProps({
     required: true,
   },
 
+  bubbleElement: {
+    type: [String, Object] as PropType<BubbleMenuPluginProps["bubbleElement"]>,
+    required: true,
+  },
+
   tippyOptions: {
     type: Object as PropType<BubbleMenuPluginProps["tippyOptions"]>,
     default: () => ({}),
@@ -45,6 +50,7 @@ const root = ref<HTMLElement | null>(null);
 onMounted(() => {
   const {
     editor,
+    bubbleElement,
     pluginKey,
     shouldShow,
     tippyOptions,
@@ -55,6 +61,7 @@ onMounted(() => {
   editor.registerPlugin(
     BubbleMenuPlugin({
       editor,
+      bubbleElement,
       element: root.value as HTMLElement,
       pluginKey,
       shouldShow,

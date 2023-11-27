@@ -14,6 +14,7 @@ export interface TippyOptionProps extends Props {
 export interface BubbleMenuPluginProps {
   pluginKey: PluginKey | string;
   editor: Editor;
+  bubbleElement: string | HTMLElement;
   element: HTMLElement;
   tippyOptions?: Partial<TippyOptionProps>;
   updateDelay?: number;
@@ -40,6 +41,8 @@ const ACTIVE_BUBBLE_MENUS: Instance[] = [];
 
 export class BubbleMenuView {
   public editor: Editor;
+
+  public bubbleMenuContainer: HTMLElement;
 
   public element: HTMLElement;
 
@@ -79,6 +82,7 @@ export class BubbleMenuView {
 
   constructor({
     editor,
+    bubbleElement,
     element,
     view,
     tippyOptions = {},
@@ -104,6 +108,10 @@ export class BubbleMenuView {
     // Detaches menu content from its current parent
     this.element.remove();
     this.element.style.visibility = "visible";
+    this.bubbleMenuContainer =
+      (typeof bubbleElement === "string"
+        ? (document.querySelector(bubbleElement) as HTMLElement)
+        : bubbleElement) || editor.options.element;
   }
 
   mousedownHandler = () => {
@@ -141,14 +149,11 @@ export class BubbleMenuView {
   };
 
   createTooltip() {
-    const { element: editorElement } = this.editor.options;
-    const editorIsAttached = !!editorElement.parentElement;
-
-    if (this.tippy || !editorIsAttached) {
+    if (this.tippy) {
       return;
     }
 
-    this.tippy = tippy(editorElement, {
+    this.tippy = tippy(this.bubbleMenuContainer, {
       getReferenceClientRect: null,
       content: this.element,
       interactive: true,

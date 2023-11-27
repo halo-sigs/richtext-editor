@@ -11,6 +11,10 @@ const props = defineProps({
     type: Object as PropType<Editor>,
     required: true,
   },
+  bubbleElement: {
+    type: String || (Object as PropType<HTMLElement>),
+    required: true,
+  },
 });
 
 const getBubbleMenuFromExtensions = () => {
@@ -62,6 +66,7 @@ const shouldShow = (
     :key="index"
     :plugin-key="bubbleMenu?.pluginKey"
     :should-show="(prop) => shouldShow(prop, bubbleMenu)"
+    :bubble-element="bubbleElement"
     :editor="editor"
     :tippy-options="{
       maxWidth: '100%',
